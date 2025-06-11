@@ -21,15 +21,30 @@ const Navbar = () => {
     ]
 
   return (
-    <header className='p-5 flex justify-between items-center'>
-       <Link href='/'>
+    <header className='p-5 md:py-10 md:px-12 flex justify-between items-center'>
+       <div className="flex gap-14 items-center">
+        <Link href='/'>
          <Image
             src={'/images/logo.png'}
             alt="Logo"
-            width={50}
-            height={35}
+            width={55}
+            height={40}
         />
        </Link>
+
+       {/* Desktop Menu */}
+       <nav className='hidden md:block'>
+        <ul className='flex items-center gap-5 text-sm'>
+            {navItems.map((item, index) => (
+                <li key={index}>
+                    <Link href={item.path}>
+                        <span>{item.name}</span>
+                    </Link>
+                </li>
+            ))}
+        </ul>
+       </nav>
+       </div>
 
        {/* Sliding Menu */}
        <div className={`fixed top-0 right-0 h-full w-[280px] bg-white transform transition-transform duration-300 ease-in-out ${
@@ -75,6 +90,12 @@ const Navbar = () => {
                     </button>
                 </div>
             </div>
+       </div>
+
+       {/* Desktop Login & Sign up buttons */}
+       <div className='flex gap-5 items-center'>
+        <button className='py-2 px-5'>Login</button>
+        <button className='bg-[#57132A] text-white py-2 px-5 rounded-md'>Sign up</button>
        </div>
 
        <Menu size={30} onClick={toggleMenu} className="text-[#0A2F1E] md:hidden" />
