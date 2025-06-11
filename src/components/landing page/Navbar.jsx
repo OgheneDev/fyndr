@@ -93,7 +93,7 @@ const Navbar = () => {
        </div>
 
        {/* Desktop Login & Sign up buttons */}
-       <div className='flex gap-5 items-center'>
+       <div className='hidden md:flex gap-5 items-center'>
         <button className='py-2 px-5'>Login</button>
         <button className='bg-[#57132A] text-white py-2 px-5 rounded-md'>Sign up</button>
        </div>
