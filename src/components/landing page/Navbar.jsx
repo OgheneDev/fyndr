@@ -94,8 +94,8 @@ const Navbar = () => {
 
        {/* Desktop Login & Sign up buttons */}
        <div className='hidden md:flex gap-5 items-center'>
-        <button className='py-2 px-5'>Login</button>
-        <button className='bg-[#57132A] text-white py-2 px-5 rounded-md'>Sign up</button>
+        <button className='py-2 px-5 text-sm'>Login</button>
+        <button className='bg-[#57132A] text-white text-sm py-2 px-5 rounded-md'>Sign up</button>
        </div>
 
        <Menu size={30} onClick={toggleMenu} className="text-[#0A2F1E] md:hidden" />

@@ -7,8 +7,8 @@ const HeroSection = () => {
         <div className="text-content md:w-[40%]">
             <article className='space-y-5 mb-7'>
                 <h1 className='text-3xl md:text-5xl font-bold'>
-                    Connect with nearby<br className='hidden md:block' /> 
-                    Merchants offering<br className='hidden md:block' />
+                    Connect with nearby <br className='hidden md:block' /> 
+                    Merchants offering <br className='hidden md:block' />
                      services you need 
                 </h1>
                 <p className='text-sm'>Connect with nearby Merchants offering services you<br className='hidden md:block' />
