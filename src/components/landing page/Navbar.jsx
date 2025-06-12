@@ -21,7 +21,7 @@ const Navbar = () => {
     ]
 
   return (
-    <header className='p-5 md:py-10 md:px-12 flex justify-between items-center'>
+    <header className='p-5 md:py-10 md:px-12 flex justify-between w-full bg-white items-center fixed top-0 z-50'>
        <div className="flex gap-14 items-center">
         <Link href='/'>
          <Image

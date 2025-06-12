@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const HeroSection = () => {
   return (
-    <section className='flex flex-col md:flex-row md:gap-0 md:justify-between gap-5 p-5 md:py-10 md:px-12'>
+    <section className='flex flex-col md:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[80px] md:py-10 md:pt-[160px] md:px-12'>
         <div className="text-content md:w-[40%]">
             <article className='space-y-5 mb-7'>
                 <h1 className='text-3xl md:text-5xl font-bold'>
@@ -17,7 +17,7 @@ const HeroSection = () => {
                    offering services you need Connect with nearby<br className='hidden md:block' />
                     Merchants offering services you need </p>
             </article>
-            <div className='flex items-center gap-7'>
+            <div className='flex items-center gap-4 md:gap-6'>
                 <button className='bg-[#57132A] text-white py-3 px-5 rounded-md text-sm'>
                     Learn More
                 </button>

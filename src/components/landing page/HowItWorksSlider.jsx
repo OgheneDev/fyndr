@@ -133,7 +133,7 @@ const HowItWorksSlider = () => {
   const groupedWorks = getGroupedWorks();
 
   return (
-    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-10 md:mx-0 px-5 md:px-0 lg:px-0 gap-4 md:max-w-full overflow-hidden'>
+    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-10 md:mx-0  lg:px-0 gap-4 md:max-w-full overflow-hidden'>
         {/* Slider Container */}
         <div
           ref={sliderRef}
