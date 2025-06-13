@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const BrowseMerchants = () => {
   return (
-    <section className='px-5 py-8 md:py-14 md:px-12'>
+    <section id='services' className='px-5 py-8 md:py-14 md:px-12'>
         <article className='mb-10'>
             <h2 className='text-2xl md:text-3xl font-bold mb-3'>Browse Merchants by Services</h2>
             <p>Check services we offer with merchants offering them</p>

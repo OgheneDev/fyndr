@@ -47,4 +47,22 @@ export const services = [
         title: 'Cleaning Services',
         description: 'Book professional cleaning services for your home or office.'
     }
+];
+
+export const info = [
+    {
+        icon: 'images/reliability.png',
+        title: 'Proof of Quality',
+        description: 'We have proven quality and verified service providers for you. '
+    },
+    {
+        icon: 'images/low-price.png',
+        title: 'Very low Cost of usage',
+        description: 'With low cost of usage, we had all client in mind while putting this together'
+    },
+    {
+        icon: 'images/safe.png',
+        title: 'Safe and Secure',
+        description: 'All Merchants identity and service details properly verfied'
+    },
 ]
