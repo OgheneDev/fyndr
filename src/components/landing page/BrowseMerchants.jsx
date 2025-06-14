@@ -117,7 +117,7 @@ const BrowseMerchants = () => {
         {services.map((service, index) => (
           <motion.div
             key={index}
-            className='md:w-[294px]'
+            className='md:w-[294px] cursor-pointer'
             variants={serviceCardVariants}
             whileHover={{ 
               y: -5,

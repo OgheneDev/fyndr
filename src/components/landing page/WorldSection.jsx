@@ -138,7 +138,7 @@ const WorldSection = () => {
           {info.map((item, index) => (
             <motion.div
               key={index}
-              className='flex gap-5 items-start'
+              className='flex gap-5 items-start cursor-pointer'
               variants={infoItemVariants}
               whileHover={{
                 x: 5,
