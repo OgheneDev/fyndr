@@ -1,0 +1,93 @@
+import React from 'react';
+import { Instagram, Facebook, Twitter, Linkedin, Youtube } from 'lucide-react';
+
+const Footer = () => {
+  return (
+    <footer className="bg-[#57132A] text-white px-5 md:px-12 py-8 md:py-10">
+      {/* Top section with links and social icons */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 space-y-4 sm:space-y-0">
+        {/* Left side links */}
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 lg:space-x-16">
+          <a href="#" className="text-white hover:underline text-sm">Terms of Service</a>
+          <a href="#" className="text-white hover:underline text-sm">Privacy Policy</a>
+          <a href="#" className="text-white hover:underline text-sm">Site Map</a>
+        </div>
+        
+        {/* Right side social media */}
+        <div className="flex items-center space-x-3 sm:space-x-4">
+          <span className="text-white text-sm">Follow Us :</span>
+          <div className="flex space-x-2 sm:space-x-3">
+            <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
+            <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
+            <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
+            <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
+            <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80">
+              <span className="text-[#57132A] text-xs font-bold">r</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Horizontal line */}
+      <div className="border-t border-white/30 mb-8"></div>
+
+      {/* Bottom section with columns */}
+      <div className="flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0">
+        {/* Left side columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-20">
+          {/* Services column */}
+          <div>
+            <h3 className="text-white font-medium mb-4 text-sm">Services</h3>
+            <div className="space-y-2">
+              <a href="#" className="block text-white hover:underline text-sm">Real Estate</a>
+              <a href="#" className="block text-white hover:underline text-sm">Car Hire</a>
+              <a href="#" className="block text-white hover:underline text-sm">Car Parts</a>
+              <a href="#" className="block text-white hover:underline text-sm">Cleaning Services</a>
+            </div>
+          </div>
+
+          {/* Support column */}
+          <div>
+            <h3 className="text-white font-medium mb-4 text-sm">Support</h3>
+            <div className="space-y-2">
+              <a href="#" className="block text-white hover:underline text-sm">Help & Support</a>
+              <a href="#" className="block text-white hover:underline text-sm">FAQ</a>
+              <a href="#" className="block text-white hover:underline text-sm">Contact Us</a>
+              <a href="#" className="block text-white hover:underline text-sm">Terms of Service</a>
+              <a href="#" className="block text-white hover:underline text-sm">Privacy Policy</a>
+            </div>
+          </div>
+
+          {/* About column */}
+          <div>
+            <h3 className="text-white font-medium mb-4 text-sm">About</h3>
+            <div className="space-y-2">
+              <a href="#" className="block text-white hover:underline text-sm">About Us</a>
+              <a href="#" className="block text-white hover:underline text-sm">Become a Merchant</a>
+              <a href="#" className="block text-white hover:underline text-sm">Services on Fynder</a>
+              <a href="#" className="block text-white hover:underline text-sm">Pricing</a>
+              <a href="#" className="block text-white hover:underline text-sm">Terms of Service</a>
+              <a href="#" className="block text-white hover:underline text-sm">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+
+        {/* Newsletter subscription */}
+        <div className="w-full lg:max-w-md mt-8 lg:mt-0">
+          <h3 className="text-white text-xl  font-bold mb-6">Subscribe to our Newsletter</h3>
+          <div className='bg-white px-5 py-3 w-fit flex gap-10 rounded-sm'>
+            <input type="email" placeholder='Your Email Address' className='placeholder:text-[12px] outline-0 placeholder:text-[#000000]' />
+            <button
+              className='bg-[#57132A] text-white text-sm py-2 px-5 rounded-sm'
+            >
+                Send
+            </button>
+        </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

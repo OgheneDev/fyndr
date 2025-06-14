@@ -26,11 +26,11 @@ const WorldSection = () => {
                 <Image
                  src={item.icon}
                  alt='icon'
-                 width={40}
-                 height={40}
+                 width={30}
+                 height={30}
                 />
                 <article>
-                  <h3 className='font-bold text-[16px] mb-1'>{item.title}</h3>
+                  <h3 className='font-bold text-[15px] mb-1'>{item.title}</h3>
                   <p className='text-sm'>{item.description}</p>
                 </article>
               </div>

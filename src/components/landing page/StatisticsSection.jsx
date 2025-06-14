@@ -10,7 +10,7 @@ const StatisticsSection = () => {
                  key={index}
                  className='flex flex-col items-center gap-2'
                 >
-                    <h3 className='font-bold text-2xl'>{stat.value}</h3>
+                    <h3 className='font-bold text-3xl'>{stat.value}</h3>
                     <p className='text-sm'>{stat.title}</p>
                 </div>
             ))}

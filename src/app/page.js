@@ -5,6 +5,8 @@ import BrowseMerchants from "@/components/landing page/BrowseMerchants";
 import WorldSection from "@/components/landing page/WorldSection";
 import StatisticsSection from "@/components/landing page/StatisticsSection";
 import TestimonialsSection from "@/components/landing page/TestimonialsSection";
+import NewsletterSection from "@/components/landing page/NewsletterSection";
+import Footer from "@/components/landing page/Footer";
 
 export default function Home() {
   return (
@@ -16,6 +18,8 @@ export default function Home() {
       <WorldSection />
       <StatisticsSection />
       <TestimonialsSection />
+      <NewsletterSection />
+      <Footer />
     </div>
   );
 }
