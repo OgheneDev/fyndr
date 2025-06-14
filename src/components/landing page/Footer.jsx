@@ -76,7 +76,7 @@ const Footer = () => {
         {/* Newsletter subscription */}
         <div className="w-full lg:max-w-md mt-8 lg:mt-0">
           <h3 className="text-white text-xl  font-bold mb-6">Subscribe to our Newsletter</h3>
-          <div className='bg-white px-5 py-3 w-fit flex gap-5 md:gap-10 rounded-sm'>
+          <div className='bg-white px-5 py-3 w-fit flex gap-0 md:gap-10 rounded-sm'>
             <input type="email" placeholder='Your Email Address' className='placeholder:text-[12px] outline-0 placeholder:text-[#000000]' />
             <button
               className='bg-[#57132A] text-white text-sm py-2 px-5 rounded-sm'
