@@ -55,13 +55,13 @@ const HeroSection = () => {
 
   return (
     <motion.section 
-      className='flex flex-col md:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[72px] md:py-10 md:pt-[160px] md:px-12'
+      className='flex flex-col md:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[72px] md:py-10 md:pt-[160px] md:px-12 overflow-hidden'
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.div 
-        className="text-content md:w-1/2"
+        className="text-content md:w-1/2 overflow-hidden"
         variants={textVariants}
       >
         <article className='space-y-5 mb-7 text-center md:text-start'>
@@ -106,7 +106,7 @@ const HeroSection = () => {
       </motion.div>
 
       <motion.div 
-        className="image-content md:w-1/2"
+        className="image-content md:w-1/2 overflow-hidden"
         variants={imageVariants}
       >
         <Image

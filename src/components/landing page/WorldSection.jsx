@@ -101,14 +101,14 @@ const WorldSection = () => {
 
   return (
     <motion.section 
-      className='px-5 py-8 md:py-17 md:px-12 bg-[#DBD0C84D] flex flex-col md:flex-row gap-5 md:gap-12'
+      className='px-5 py-8 md:py-17 md:px-12 bg-[#DBD0C84D] flex flex-col md:flex-row gap-5 md:gap-12 overflow-hidden'
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div 
-        className="image-content md:w-1/2"
+        className="image-content md:w-1/2 overflow-hidden"
         variants={imageVariants}
       >
         <Image
@@ -121,7 +121,7 @@ const WorldSection = () => {
       </motion.div>
 
       <motion.div 
-        className="text-content md:w-1/2"
+        className="text-content md:w-1/2 overflow-hidden"
         variants={textContentVariants}
       >
         <motion.h1 
