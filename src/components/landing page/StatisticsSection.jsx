@@ -86,7 +86,7 @@ const StatisticsSection = () => {
         {statistics.map((stat, index) => (
           <motion.div
             key={index}
-            className='flex flex-col items-center gap-2'
+            className='flex flex-col items-center gap-2 md:cursor-pointer'
             variants={statItemVariants}
             whileHover={{
               scale: 1.05,
