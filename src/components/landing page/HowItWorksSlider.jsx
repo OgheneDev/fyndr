@@ -206,7 +206,7 @@ const HowItWorksSlider = () => {
               key={index}
               onClick={() => handleSlideChange(index)}
               className={`w-1 h-1 rounded-full transition-all cursor-pointer ${
-                currentIndex === index ? 'bg-white ' : 'bg-gray-600'
+                currentIndex === index ? 'bg-white ' : 'bg-gray-500'
               }`}
               aria-label={`Go to slide ${index + 1}`}
               disabled={isTransitioning}

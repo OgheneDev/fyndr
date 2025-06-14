@@ -1,5 +1,6 @@
 import React from 'react';
-import { Instagram, Facebook, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Instagram, Twitter } from 'lucide-react';
+import { RiFacebookCircleFill, RiLinkedinBoxFill, RiYoutubeFill, RiRedditFill } from 'react-icons/ri';
 
 const Footer = () => {
   return (
@@ -17,14 +18,12 @@ const Footer = () => {
         <div className="flex items-center space-x-3 sm:space-x-4">
           <span className="text-white text-sm">Follow Us :</span>
           <div className="flex space-x-2 sm:space-x-3">
-            <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
-            <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
-            <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
-            <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
-            <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
-            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80">
-              <span className="text-[#57132A] text-xs font-bold">r</span>
-            </div>
+            <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
+            <RiFacebookCircleFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
+            <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
+            <RiLinkedinBoxFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
+            <RiYoutubeFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
+            <RiRedditFill className="w-5 h-5 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
           </div>
         </div>
       </div>
