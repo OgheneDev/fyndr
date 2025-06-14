@@ -1,17 +1,54 @@
+'use client'
+
 import React from 'react';
 import { Instagram, Twitter } from 'lucide-react';
 import { RiFacebookCircleFill, RiLinkedinBoxFill, RiYoutubeFill, RiRedditFill } from 'react-icons/ri';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const Footer = () => {
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <footer className="bg-[#57132A] text-white px-5 md:px-12 py-8 md:py-10">
+    <motion.footer 
+      className="bg-[#57132A] text-white px-5 md:px-12 py-8 md:py-10"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
       {/* Top section with links and social icons */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 space-y-4 sm:space-y-0">
+      <motion.div 
+        className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 space-y-4 sm:space-y-0"
+        variants={itemVariants}
+      >
         {/* Left side links */}
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 lg:space-x-16">
-          <a href="#" className="text-white hover:underline text-sm">Terms of Service</a>
-          <a href="#" className="text-white hover:underline text-sm">Privacy Policy</a>
-          <a href="#" className="text-white hover:underline text-sm">Site Map</a>
+          <Link href="#" className="text-white hover:underline text-sm">Terms of Service</Link>
+          <Link href="#" className="text-white hover:underline text-sm">Privacy Policy</Link>
+          <Link href="#" className="text-white hover:underline text-sm">Site Map</Link>
         </div>
         
         {/* Right side social media */}
@@ -26,54 +63,63 @@ const Footer = () => {
             <RiRedditFill className="w-5 h-5 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Horizontal line */}
-      <div className="border-t border-white/30 mb-8"></div>
+      <motion.div 
+        className="border-t border-white/30 mb-8"
+        variants={itemVariants}
+      ></motion.div>
 
       {/* Bottom section with columns */}
-      <div className="flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0">
+      <motion.div 
+        className="flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0"
+        variants={itemVariants}
+      >
         {/* Left side columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-20">
           {/* Services column */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h3 className="text-white font-medium mb-4 text-sm">Services</h3>
             <div className="space-y-2">
-              <a href="#" className="block text-white hover:underline text-sm">Real Estate</a>
-              <a href="#" className="block text-white hover:underline text-sm">Car Hire</a>
-              <a href="#" className="block text-white hover:underline text-sm">Car Parts</a>
-              <a href="#" className="block text-white hover:underline text-sm">Cleaning Services</a>
+              <Link href="#" className="block text-white hover:underline text-sm">Real Estate</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Car Hire</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Car Parts</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Cleaning Services</Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Support column */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h3 className="text-white font-medium mb-4 text-sm">Support</h3>
             <div className="space-y-2">
-              <a href="#" className="block text-white hover:underline text-sm">Help & Support</a>
-              <a href="#" className="block text-white hover:underline text-sm">FAQ</a>
-              <a href="#" className="block text-white hover:underline text-sm">Contact Us</a>
-              <a href="#" className="block text-white hover:underline text-sm">Terms of Service</a>
-              <a href="#" className="block text-white hover:underline text-sm">Privacy Policy</a>
+              <Link href="#" className="block text-white hover:underline text-sm">Help & Support</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">FAQ</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Contact Us</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Terms of Service</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Privacy Policy</Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* About column */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h3 className="text-white font-medium mb-4 text-sm">About</h3>
             <div className="space-y-2">
-              <a href="#" className="block text-white hover:underline text-sm">About Us</a>
-              <a href="#" className="block text-white hover:underline text-sm">Become a Merchant</a>
-              <a href="#" className="block text-white hover:underline text-sm">Services on Fynder</a>
-              <a href="#" className="block text-white hover:underline text-sm">Pricing</a>
-              <a href="#" className="block text-white hover:underline text-sm">Terms of Service</a>
-              <a href="#" className="block text-white hover:underline text-sm">Privacy Policy</a>
+              <Link href="#" className="block text-white hover:underline text-sm">About Us</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Become a Merchant</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Services on Fynder</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Pricing</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Terms of Service</Link>
+              <Link href="#" className="block text-white hover:underline text-sm">Privacy Policy</Link>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Newsletter subscription */}
-        <div className="w-full lg:max-w-md mt-8 lg:mt-0">
+        <motion.div 
+          className="w-full lg:max-w-md mt-8 lg:mt-0"
+          variants={itemVariants}
+        >
           <h3 className="text-white text-xl  font-bold mb-6">Subscribe to our Newsletter</h3>
            <div className='bg-white px-3 md:px-5 py-3 w-full md:w-fit flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-10 rounded-sm'>
               <input 
@@ -87,9 +133,9 @@ const Footer = () => {
                   Send
               </button>
           </div>
-        </div>
-      </div>
-    </footer>
+        </motion.div>
+      </motion.div>
+    </motion.footer>
   );
 };
 
