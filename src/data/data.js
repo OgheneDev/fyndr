@@ -66,3 +66,66 @@ export const info = [
         description: 'All Merchants identity and service details properly verfied'
     },
 ]
+
+export const statistics = [
+    {
+        value: '250+',
+        title: 'Total Requests'
+    },
+    {
+        value: '250+',
+        title: 'Total Merchants'
+    },
+    {
+        value: '400+',
+        title: 'Total Customers'
+    },
+    {
+        value: '400+',
+        title: 'Clients Connected'
+    }
+]
+
+export const testimonials = [
+  {
+    quote: 'Fynder has been a blessing to me, it makes life much easier and more productive for me.',
+    customer: 'John Okafor',
+    location: 'Abuja'
+  },
+  {
+    quote: 'I found a reliable electrician in less than 10 minutes. Fynder is a game changer!',
+    customer: 'Amina Yusuf',
+    location: 'Kano'
+  },
+  {
+    quote: 'As a small business owner, Fynder has helped me reach new customers I never knew existed.',
+    customer: 'Chidi Nwosu',
+    location: 'Enugu'
+  },
+  {
+    quote: 'Fast, simple, and very useful. I use Fynder anytime I need a quick home repair.',
+    customer: 'Fatima Bello',
+    location: 'Kaduna'
+  },
+  {
+    quote: 'No more asking around or waiting endlessly—Fynder connects me with service providers instantly.',
+    customer: 'Tolu Adebayo',
+    location: 'Lagos'
+  },
+  {
+    quote: 'I was skeptical at first, but now I can’t imagine getting services any other way.',
+    customer: 'Bola Adeyemi',
+    location: 'Ibadan'
+  },
+  {
+    quote: 'Whether it’s plumbing or laundry, Fynder always has someone nearby who can help.',
+    customer: 'Kingsley Obiora',
+    location: 'Port Harcourt'
+  },
+  {
+    quote: 'Great interface, smooth experience, and I always find what I need. Kudos to the Fynder team!',
+    customer: 'Grace Eze',
+    location: 'Asaba'
+  }
+]
+ 

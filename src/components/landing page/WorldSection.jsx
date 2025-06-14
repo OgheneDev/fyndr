@@ -5,7 +5,7 @@ import { info } from '@/data/data'
 const WorldSection = () => {
   return (
     <section className='px-5 py-8 md:py-17 md:px-12 bg-[#DBD0C84D] flex flex-col md:flex-row gap-5 md:gap-12'>
-        <div className="image-content w-1/2">
+        <div className="image-content md:w-1/2">
           <Image
             src={'/images/man.jpg'}
             alt='Delivery Man'
@@ -15,7 +15,7 @@ const WorldSection = () => {
           />
         </div>
 
-        <div className="text-content w-1/2">
+        <div className="text-content md:w-1/2">
           <h1 className='text-3xl md:text-5xl font-bold mb-5 md:mb-8'>The whole world at <br className='hidden md:block' /> your fingertips</h1>
           <div className='grid grid-cols-1 gap-5 md:gap-8 md:w-[60%]'>
             {info.map((item, index) => (
