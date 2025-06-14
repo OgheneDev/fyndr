@@ -8,14 +8,18 @@ const NewsletterSection = () => {
             <p className='text-[12px]'>Subscribe to get latest news and updates from us</p>
         </article>
 
-        <div className='bg-white px-5 py-3 w-fit max-w-full flex gap-0 md:gap-10 rounded-sm'>
-            <input type="email" placeholder='Your Email Address' className='placeholder:text-[12px] outline-0 placeholder:text-[#000000]' />
-            <button
-              className='bg-[#57132A] text-white text-sm py-2 px-5 rounded-sm'
-            >
-                Send
-            </button>
-        </div>
+        <div className='bg-white px-3 md:px-5 py-3 w-full md:w-fit flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-10 rounded-sm'>
+    <input 
+        type="email" 
+        placeholder='Your Email Address' 
+        className='w-full md:w-auto min-w-0 placeholder:text-[12px] outline-0 placeholder:text-[#000000]'
+    />
+    <button
+        className='w-full md:w-auto bg-[#57132A] text-white text-sm py-2 px-5 rounded-sm'
+    >
+        Send
+    </button>
+</div>
     </section>
   )
 }
