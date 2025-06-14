@@ -133,7 +133,7 @@ const TestimonialsSlider = () => {
       // Get grouped Testimonials
       const groupedTestimonials = getGroupedTestimonials();
   return (
-    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-10 px-1 md:px-0  lg:px-0 gap-4 md:max-w-3xl overflow-hidden'>
+    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-10 px-1 md:px-0  lg:px-0 gap-4 md:max-w-xl overflow-hidden'>
         {/* Slider Container */}
         <div
           ref={sliderRef}
@@ -167,9 +167,9 @@ const TestimonialsSlider = () => {
                                  className='flex flex-col items-center px-5'
                                 >
                                     <RiDoubleQuotesL className='w-[50px] h-[50px] text-green-600 mb-5' />
-                                    <p className='text-sm mb-3'>"{testimonial.quote}"</p>
+                                    <p className='text-sm mb-3 text-center'>"{testimonial.quote}"</p>
                                     <p>{testimonial.customer}</p>
-                                    <span className='text-sm'>Customer in {testimonial.location}</span>
+                                    <span className='text-[12px] mt-2'>Customer in {testimonial.location}</span>
                                 </div>
                             </div>
                         ))}
