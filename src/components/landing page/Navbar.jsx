@@ -237,10 +237,11 @@ const Navbar = () => {
 
             {/* Desktop Login & Sign up buttons */}
             <motion.div 
-                className='hidden md:flex gap-5 items-center ml-auto'
+                className='hidden md:flex gap-5 items-center cursor-pointer ml-auto'
                 variants={navbarVariants}
             >
-                <motion.button 
+                <Link href={'/login'}>
+                  <motion.button 
                     className='py-2 px-5 text-sm'
                     variants={buttonVariants}
                     whileHover={{ 
@@ -250,8 +251,10 @@ const Navbar = () => {
                 >
                     Login
                 </motion.button>
-                <motion.button 
-                    className='bg-[#57132A] text-white text-sm py-2 px-5 rounded-md'
+                </Link>
+                <Link href={'register'}>
+                  <motion.button 
+                    className='bg-[#57132A] text-white text-sm cursor-pointer py-2 px-5 rounded-md'
                     variants={buttonVariants}
                     whileHover={{ 
                         scale: 1.02,
@@ -262,6 +265,7 @@ const Navbar = () => {
                 >
                     Sign up
                 </motion.button>
+                </Link>
             </motion.div>
 
             <motion.div
