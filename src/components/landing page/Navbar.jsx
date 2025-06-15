@@ -219,16 +219,27 @@ const Navbar = () => {
 
                             {/* Login & Signup buttons */}
                             <motion.div 
-                                className="p-6 border-t"
+                                className="p-6 border-t flex flex-col gap-3"
                                 variants={mobileNavItemVariants}
                             >
-                                <motion.button 
+                                <Link href={'/login'}>
+                                 <motion.button 
                                     className='bg-[#57132A] text-white py-3 rounded-full text-sm w-full'
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
                                     Login
                                 </motion.button>
+                                </Link>
+                                <Link href={'register'}>
+                                    <motion.button 
+                                    className='text-[#57132A] border border-[#57132A] py-3 rounded-full text-sm w-full'
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    Sign up
+                                </motion.button>
+                                </Link>
                             </motion.div>
                         </div>
                     </motion.div>

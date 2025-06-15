@@ -127,7 +127,7 @@ const RegistrationPage = () => {
       <div className="max-w-4xl w-full">
         <div className="text-center mb-12">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Join Fyndr</h1>
-          <p className="text-sm text-[gray-600]">Choose how you'd like to get started</p>
+          <p className="text-sm text-[gray-600]">Choose how you&apos;d like to get started</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
