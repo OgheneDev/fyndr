@@ -127,7 +127,7 @@ export const RegistrationForm = ({ userType, onBack }) => {
           <button
             onClick={handleOTPSubmit}
             disabled={!canProceedOTP || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-lg font-semibold  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg font-semibold  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? 'Verifying...' : 'Verify Code'}
           </button>
@@ -149,7 +149,7 @@ export const RegistrationForm = ({ userType, onBack }) => {
           <button
             onClick={handleDetailsSubmit}
             disabled={!canProceedDetails || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-lg font-semibold  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg font-semibold  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? 'Creating Account...' : 'Complete Registration'}
           </button>
