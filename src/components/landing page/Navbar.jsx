@@ -224,7 +224,7 @@ const Navbar = () => {
                             >
                                 <Link href={'/login'}>
                                  <motion.button 
-                                    className='bg-[#57132A] text-white py-3 rounded-full text-sm w-full'
+                                    className='bg-[#57132A] text-white py-3 cursor-pointer rounded-full text-sm w-full'
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -253,7 +253,7 @@ const Navbar = () => {
             >
                 <Link href={'/login'}>
                   <motion.button 
-                    className='py-2 px-5 text-sm'
+                    className='py-2 px-5 text-sm cursor-pointer'
                     variants={buttonVariants}
                     whileHover={{ 
                         y: -1,

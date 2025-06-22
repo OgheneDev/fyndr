@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const HeroSection = () => {
   // Animation variants
@@ -89,19 +90,21 @@ const HeroSection = () => {
           variants={buttonVariants}
         >
           <motion.button 
-            className='bg-[#57132A] text-white py-3 px-5 rounded-md text-sm'
+            className='bg-[#57132A] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Learn More
           </motion.button>
+          <Link href={'/register'}>
           <motion.button 
-            className='bg-[#57132A] text-white py-3 px-5 rounded-md text-sm'
+            className='bg-[#57132A] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Register
           </motion.button>
+          </Link>
         </motion.div>
       </motion.div>
 

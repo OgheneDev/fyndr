@@ -3,10 +3,10 @@ import { PhoneInput } from "../general/PhoneInput";
 import { OTPInput } from "../general/OTPInput";
 import { UserDetailsForm } from "./UserDetailsForm";
 import { MerchantDetailsForm } from "./MerchantDetailsForm";
-import { User, Store, ChevronLeft, CheckCircle } from "lucide-react";
+import { User, Store, CheckCircle } from "lucide-react";
 
-export const RegistrationForm = ({ userType, onBack }) => {
-  const [step, setStep] = useState(1); // 1: Phone, 2: OTP, 3: Details
+export const RegistrationForm = ({ userType }) => {
+  const [step, setStep] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [formData, setFormData] = useState({});
@@ -55,14 +55,6 @@ export const RegistrationForm = ({ userType, onBack }) => {
     <div className="w-full max-w-md mx-auto">
       {/* Header */}
       <div className="flex items-center mb-6">
-        {step > 1 && (
-          <button
-            onClick={() => setStep(step - 1)}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors mr-3"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-        )}
         <div className="flex items-center">
           {userType === 'user' ? (
             <User className="w-6 h-6 text-[#541229] mr-2" />
