@@ -4,8 +4,10 @@ import { OTPInput } from "../general/OTPInput";
 import { UserDetailsForm } from "./UserDetailsForm";
 import { MerchantDetailsForm } from "./MerchantDetailsForm";
 import { User, Store, CheckCircle } from "lucide-react";
+import { useUserStore } from "@/store/userStore";
 
 export const RegistrationForm = ({ userType }) => {
+  const setUserType = useUserStore((state) => state.setUserType);
   const [step, setStep] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
@@ -37,6 +39,8 @@ export const RegistrationForm = ({ userType }) => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsLoading(false);
+    setUserType(userType);
+    window.location.href = '/dashboard'
     alert(`${userType} registration completed successfully!`);
   };
 
@@ -123,7 +127,7 @@ export const RegistrationForm = ({ userType }) => {
           >
             {isLoading ? 'Verifying...' : 'Verify Code'}
           </button>
-        </div>
+        </div> 
       )}
 
       {step === 3 && (

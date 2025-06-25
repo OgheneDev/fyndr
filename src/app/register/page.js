@@ -1,14 +1,15 @@
 "use client"
-
 import { useState } from "react";
 import { RegistrationForm } from "@/components/register page/RegistrationForm";
-import { Store, User } from "lucide-react";
+import { useUserStore } from "@/store/userStore";
 
 const RegistrationPage = () => {
   const [selectedType, setSelectedType] = useState(null);
+  const setUserType = useUserStore((state) => state.setUserType);
 
   const handleTypeSelect = (type) => {
     setSelectedType(type);
+    setUserType(type);
   };
 
   if (selectedType) {
@@ -24,32 +25,45 @@ const RegistrationPage = () => {
     );
   }
 
+
+
   // Initial Selection Screen
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="max-w-4xl w-full">
-        <div className="text-center mb-12">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Join Fyndr</h1>
-          <p className="text-sm text-[gray-600]">Choose how you&apos;d like to get started</p>
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+      <div className="max-w-md w-full text-center">
+        {/* Placeholder Image */}
+        <div className="w-48 h-48 mx-auto mb-8">
+          <img 
+            src="/images/live-chat.png" 
+            alt="Chat safely illustration" 
+            className="w-full h-full object-contain"
+          />
         </div>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-          <button
-            onClick={() => handleTypeSelect('user')}
-            className="bg-white p-8 rounded-xl shadow-sm border-2 cursor-pointer border-transparent hover:border-purple-200 hover:shadow-md transition-all group"
-          >
-            <User className="w-16 h-16 text-[#541229] mx-auto mb-4 group-hover:scale-110 transition-transform" />
-            <h3 className="text-xl font-semibold mb-2">Join as User</h3>
-            <p className="text-[gray-600] text-sm">Compare prices and find the best deals</p>
-          </button>
-
+        
+        {/* Heading */}
+        <h1 className="text-2xl font-bold mb-4">
+          Chat Safely On App
+        </h1>
+        
+        {/* Description */}
+        <p className=" text-base mb-12 leading-relaxed">
+          We keep communication secure — no spam, just real solutions.
+        </p>
+        
+        {/* Buttons */}
+        <div className="space-y-4">
           <button
             onClick={() => handleTypeSelect('merchant')}
-            className="bg-white p-8 rounded-xl shadow-sm border-2 border-transparent cursor-pointer hover:border-purple-200 hover:shadow-md transition-all group"
+            className="w-full py-4 px-6 bg-white border-2 border-[#57132A] cursor-pointer  font-semibold rounded-lg transition-all duration-200"
           >
-            <Store className="w-16 h-16 text-[#541229] mx-auto mb-4 group-hover:scale-110 transition-transform" />
-            <h3 className="text-xl font-semibold mb-2">Join as Merchant</h3>
-            <p className="text-[gray-600] text-sm">List your services and reach more customers</p>
+            Sign in as Merchant
+          </button>
+          
+          <button
+            onClick={() => handleTypeSelect('user')}
+            className="w-full py-4 px-6 bg-[#57132A] text-white cursor-pointer font-semibold rounded-lg  transition-all duration-200"
+          >
+            Sign in as Customer
           </button>
         </div>
       </div>

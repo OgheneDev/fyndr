@@ -100,50 +100,46 @@ const MessagesPage = () => {
     const messages = chatMessages[selectedChat.id] || []
     
     return (
-      <div className="flex flex-col h-screen bg-white">
+      <div className="flex flex-col h-screen bg-gray-50">
         {/* Chat Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSelectedChat(null)}
-              className="p-2 hover:bg-gray-100 rounded-full cursor-pointer transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
-            </button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full flex items-center justify-center">
-                <span className="text-sm font-medium text-gray-700">
-                  {getInitials(selectedChat.name)}
-                </span>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">{selectedChat.name}</h3>
-                <p className="text-sm text-gray-500">{selectedChat.service}</p>
-              </div>
-            </div>
+        <div className="flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-200">
+          <button
+            onClick={() => setSelectedChat(null)}
+            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+          <div className="w-10 h-10 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full flex items-center justify-center flex-shrink-0">
+            <span className="text-sm font-medium text-gray-700">
+              {getInitials(selectedChat.name)}
+            </span>
           </div>
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <MoreVertical className="w-5 h-5 text-gray-600" />
+          <div className="flex-1 min-w-0">
+            <h3 className="font-medium text-gray-900 truncate">{selectedChat.name}</h3>
+            <p className="text-sm text-gray-500 truncate">{selectedChat.service}</p>
+          </div>
+          <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+            <MoreVertical className="w-6 h-6 text-gray-600" />
           </button>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto px-4 py-2 space-y-3">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                className={`max-w-[80%] px-4 py-2 rounded-lg ${
                   message.sender === 'me'
-                    ? 'bg-[#541229] text-white'
-                    : 'bg-gray-100 text-gray-900'
+                    ? 'bg-[#541229] text-white rounded-br-sm'
+                    : 'bg-white text-gray-900 rounded-bl-sm'
                 }`}
               >
-                <p className="text-sm">{message.text}</p>
+                <p className="text-sm leading-relaxed">{message.text}</p>
                 <p className={`text-xs mt-1 ${
-                  message.sender === 'me' ? 'text-blue-100' : 'text-gray-500'
+                  message.sender === 'me' ? 'text-gray-200' : 'text-gray-500'
                 }`}>
                   {message.time}
                 </p>
@@ -153,22 +149,22 @@ const MessagesPage = () => {
         </div>
 
         {/* Message Input */}
-        <div className="px-6 py-4 border-t border-gray-200 bg-white">
-          <div className="flex items-center gap-3">
-            <div className="flex-1 relative">
+        <div className="px-4 py-3 bg-white border-t border-gray-200">
+          <div className="flex items-end gap-2">
+            <div className="flex-1">
               <textarea
                 value={messageInput}
                 onChange={(e) => setMessageInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg resize-none outline-none"
+                placeholder="Type a message..."
+                className="w-full px-4 py-2 border border-gray-200 rounded-full resize-none outline-none text-sm max-h-20"
                 rows="1"
               />
             </div>
             <button
               onClick={handleSendMessage}
               disabled={!messageInput.trim()}
-              className="p-2 bg-[#541229]  disabled:bg-gray-300 text-white rounded-lg transition-colors"
+              className="p-2 bg-[#541229] disabled:bg-gray-300 text-white rounded-full transition-colors flex-shrink-0"
             >
               <Send className="w-5 h-5" />
             </button>
@@ -179,71 +175,65 @@ const MessagesPage = () => {
   }
 
   return (
-    <div className="min-h-screen p-6 md:px-12 md:py-10">
-      <div className="md:max-w-5xl md:mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Messages</h1>
-          <p className="text-gray-600 text-sm">Manage your conversations with service providers.</p>
-        </div>
-
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search messages"
-              className="w-full pl-12 pr-4 py-3 bg-gray-100 border-0 rounded-lg  outline-none transition-all"
-            />
-          </div>
-        </div>
-
-        {/* Conversations List */}
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          {conversations.map((conversation) => (
-            <div
-              key={conversation.id}
-              onClick={() => setSelectedChat(conversation)}
-              className="flex items-center justify-between p-6 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
-            >
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full flex items-center justify-center">
-                    <span className="text-sm font-medium text-gray-700">
-                      {getInitials(conversation.name)}
-                    </span>
-                  </div>
-                  {conversation.unread && (
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#541229] rounded-full"></div>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-gray-900">{conversation.name}</h3>
-                  </div>
-                  <p className="text-sm text-gray-500 mb-1">{conversation.service}</p>
-                  <p className="text-sm text-gray-600 truncate">{conversation.lastMessage}</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <span className="text-sm text-gray-500">{conversation.time}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {conversations.length === 0 && (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-gray-400" />
-            </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No messages yet</h3>
-            <p className="text-gray-500">Start a conversation with service providers.</p>
-          </div>
-        )}
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white px-4 py-4 border-b border-gray-200">
+        <h1 className="text-xl font-semibold text-gray-900">Messages</h1>
       </div>
+
+      {/* Search Bar */}
+      <div className="px-4 py-3 bg-white border-b border-gray-200">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-full text-sm outline-none"
+          />
+        </div>
+      </div>
+
+      {/* Conversations List */}
+      <div className="bg-white">
+        {conversations.map((conversation, index) => (
+          <div
+            key={conversation.id}
+            onClick={() => setSelectedChat(conversation)}
+            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 active:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+          >
+            <div className="relative flex-shrink-0">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full flex items-center justify-center">
+                <span className="text-sm font-medium text-gray-700">
+                  {getInitials(conversation.name)}
+                </span>
+              </div>
+              {conversation.unread && (
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#541229] rounded-full"></div>
+              )}
+            </div>
+            
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="font-medium text-gray-900 truncate">{conversation.name}</h3>
+                <span className="text-xs text-gray-500 flex-shrink-0 ml-2">{conversation.time}</span>
+              </div>
+              <p className="text-xs text-gray-500 truncate mb-1">{conversation.service}</p>
+              <p className="text-sm text-gray-600 truncate">{conversation.lastMessage}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {conversations.length === 0 && (
+        <div className="text-center py-16 px-4">
+          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Search className="w-8 h-8 text-gray-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No messages yet</h3>
+          <p className="text-gray-500 text-sm">Start a conversation with service providers.</p>
+        </div>
+      )}
     </div>
   )
 }

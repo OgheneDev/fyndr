@@ -64,7 +64,7 @@ export const UserDetailsForm = ({ formData, onChange }) => {
         <input
          type="text"
          value={formData.location || ''}
-         onChange={(e) => onchange({ ...formData, location: e.target.value })}
+         onChange={(e) => onChange({ ...formData, location: e.target.value })}
          placeholder="Input your location e.g Ikeja" 
          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all" />
       </div>

@@ -2,21 +2,32 @@
 import React from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { Home, MessageCircle, Star, User, List } from 'lucide-react'
+import { Home, MessageCircle, User, List } from 'lucide-react'
 import Image from 'next/image'
+import { useUserStore } from '@/store/userStore'
 
-const menuItems = [
-    { icon: Home, name: 'Home', path: '/dashboard' },
+// Common menu items (for both user and merchant)
+const commonMenuItems = [
     { icon: List, name: 'My requests', path: '/dashboard/requests' },
     { icon: MessageCircle, name: 'Messages', path: '/dashboard/messages' },
-    { icon: Star, name: 'Reviews', path: '/dashboard/reviews' },
     { icon: User, name: 'Profile', path: '/dashboard/profile' }
+]
+
+// User-specific additional items
+const userAdditionalItems = [
+    { icon: Home, name: 'Home', path: '/dashboard' }
 ]
 
 const Sidebar = () => {
     const pathname = usePathname();
+    const { userType } = useUserStore();
     const sidebarClass = pathname === '/login' || pathname === '/register' || pathname === '/' ? 'hidden' : 'flex'
     
+    // Combine menu items based on user type
+    const menuItems = userType === 'user' 
+        ? [...userAdditionalItems, ...commonMenuItems] 
+        : [...commonMenuItems]; // Merchant gets only common items
+
     return (
         <div className={`bg-white w-[280px] flex-col h-full hidden md:${sidebarClass} fixed top-0 left-0 border-r border-gray-100`}>
             {/* Header */}

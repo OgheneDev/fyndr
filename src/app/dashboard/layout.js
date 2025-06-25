@@ -1,4 +1,5 @@
 import Sidebar from "@/components/general/Sidebar"
+import BottomNavbar from "@/components/general/BottomNavbar"
 
 export default function DashboardLayout({children}) {
     return(
@@ -8,6 +9,7 @@ export default function DashboardLayout({children}) {
            <div className="">
             {children}
            </div>
+           <BottomNavbar />
           </main>
         </div>
     )
