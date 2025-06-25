@@ -54,16 +54,16 @@ const RegistrationPage = () => {
         <div className="space-y-4">
           <button
             onClick={() => handleTypeSelect('merchant')}
-            className="w-full py-4 px-6 bg-white border-2 border-[#57132A] cursor-pointer  font-semibold rounded-lg transition-all duration-200"
+            className="w-full py-4 px-6 bg-white border-2 border-[#57132A] text-[#57132A] cursor-pointer rounded-lg transition-all duration-200"
           >
-            Sign in as Merchant
+            Sign up as a Merchant
           </button>
           
           <button
             onClick={() => handleTypeSelect('user')}
-            className="w-full py-4 px-6 bg-[#57132A] text-white cursor-pointer font-semibold rounded-lg  transition-all duration-200"
+            className="w-full py-4 px-6 bg-[#57132A] text-white cursor-pointer rounded-lg  transition-all duration-200"
           >
-            Sign in as Customer
+            Sign up as a Customer
           </button>
         </div>
       </div>

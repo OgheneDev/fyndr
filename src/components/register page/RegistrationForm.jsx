@@ -104,7 +104,7 @@ export const RegistrationForm = ({ userType }) => {
           <button
             onClick={handlePhoneSubmit}
             disabled={!canProceedPhone || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? 'Sending...' : 'Send Code'}
           </button>
@@ -123,7 +123,7 @@ export const RegistrationForm = ({ userType }) => {
           <button
             onClick={handleOTPSubmit}
             disabled={!canProceedOTP || isLoading}
-            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg font-semibold  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? 'Verifying...' : 'Verify Code'}
           </button>
@@ -145,7 +145,7 @@ export const RegistrationForm = ({ userType }) => {
           <button
             onClick={handleDetailsSubmit}
             disabled={!canProceedDetails || isLoading}
-            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg font-semibold  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg text-sm  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? 'Creating Account...' : 'Complete Registration'}
           </button>
