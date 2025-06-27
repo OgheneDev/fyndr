@@ -1,4 +1,5 @@
 import { ChevronRight, Wrench } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ServiceRequests() {
   const requests = [
@@ -78,9 +79,11 @@ export default function ServiceRequests() {
         </div>
 
         {/* Create Request Button */}
-        <button className='text-white w-full mb-10 bg-[#57132A] text-center py-5 rounded-md'>
+        <Link href={'/dashboard/new-request'}>
+          <button className='text-white w-full md:w-fit px-7 mb-10 md:text-sm cursor-pointer bg-[#57132A] text-center py-5 rounded-md'>
             Create New Request
         </button>
+        </Link>
 
         {/* New Requests Section */}
         <RequestSection title="New" requests={newRequests} />

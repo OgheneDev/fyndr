@@ -4,13 +4,19 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useUserStore } from '@/store/userStore';
 
+// Common menu items (for both user and merchant)
 const commonMenuItems = [
-  { icon: List, label: 'My requests', path: '/dashboard/requests' },
   { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
   { icon: User, label: 'Profile', path: '/dashboard/profile' }
 ];
+// User-specific additional items
 const userAdditionalItems = [
-  { icon: Home, label: 'Home', path: '/dashboard' }
+  { icon: Home, label: 'Home', path: '/dashboard' },
+  { icon: List, label: 'My requests', path: '/dashboard/my-requests' },
+];
+// Merchant-specific additional items
+const merchantAdditionalItems = [
+  { icon: List, label: 'My requests', path: '/dashboard/open-requests' },
 ];
 
 const BottomNavbar = () => {
@@ -20,7 +26,9 @@ const BottomNavbar = () => {
   // Combine menu items based on user type
   const menuItems = userType === 'user'
     ? [...userAdditionalItems, ...commonMenuItems]
-    : [...commonMenuItems];
+    : userType === 'merchant'
+      ? [...merchantAdditionalItems, ...commonMenuItems]
+      : [...commonMenuItems];
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-black/40 bg-blend-overlay bg-opacity-90 backdrop-blur-md border-opacity-20 md:hidden z-50">

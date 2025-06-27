@@ -8,28 +8,35 @@ import { useUserStore } from '@/store/userStore'
 
 // Common menu items (for both user and merchant)
 const commonMenuItems = [
-    { icon: List, name: 'My requests', path: '/dashboard/requests' },
     { icon: MessageCircle, name: 'Messages', path: '/dashboard/messages' },
     { icon: User, name: 'Profile', path: '/dashboard/profile' }
 ]
 
 // User-specific additional items
 const userAdditionalItems = [
-    { icon: Home, name: 'Home', path: '/dashboard' }
+    { icon: Home, name: 'Home', path: '/dashboard' },
+    { icon: List, name: 'My requests', path: '/dashboard/my-requests' },
 ]
+
+const merchantAdditionalItems = [
+    { icon: List, name: 'My requests', path: '/dashboard/open-requests' },
+]
+
+
 
 const Sidebar = () => {
     const pathname = usePathname();
     const { userType } = useUserStore();
-    const sidebarClass = pathname === '/login' || pathname === '/register' || pathname === '/' ? 'hidden' : 'flex'
     
     // Combine menu items based on user type
     const menuItems = userType === 'user' 
         ? [...userAdditionalItems, ...commonMenuItems] 
-        : [...commonMenuItems]; // Merchant gets only common items
+        : userType === 'merchant'
+            ? [...merchantAdditionalItems, ...commonMenuItems]
+            : [...commonMenuItems]; // Merchant gets only common items
 
     return (
-        <div className={`bg-white w-[280px] flex-col h-full hidden md:${sidebarClass} fixed top-0 left-0 border-r border-gray-100`}>
+        <div className={`bg-white w-[280px] flex-col h-full hidden md:flex fixed top-0 left-0 border-r border-gray-100`}>
             {/* Header */}
             <div className='px-6 py-6 border-b border-gray-100'>
                 <div className='flex items-center gap-3'>
