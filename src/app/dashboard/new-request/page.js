@@ -93,21 +93,21 @@ const NewRequestPage = () => {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <div className="bg-white py-8 lg:px-8">
-        <div className="md:max-w-2xl md:mx-auto">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-2">
+        <div className="md:max-w-4xl md:mx-auto">
+          <h1 className="text-2xl font-bold text-gray-900 text-center mb-2 md:mb-5">
             Post a Request
           </h1>
 
           {/* Tabs */}
-          <div className="flex flex-wrap gap-1 px-1 mb-8 rounded-lg">
+          <div className="flex flex-wrap gap-1 md:gap-5 px-1 mb-8">
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`flex-1 min-w-0 px-2 py-2 text-[12px] cursor-pointer border-b-2 md:text-sm transition-all duration-200 ${
+                className={` px-2 md:px-0 py-2 text-[12px] cursor-pointer border-b-2 transition-all duration-200 ${
                   activeTab === tab
                     ? ' text-gray-900'
-                    : 'border-[#E5E8EB]'
+                    : 'border-[#E5E8EB] text-[#637587]'
                 }`}
               >
                 {tab}
@@ -122,6 +122,7 @@ const NewRequestPage = () => {
                 <PropertiesForm
                   formData={formData}
                   onChange={handleInputChange}
+                  nigerianStates={nigerianStates}
                 />
               )}
               {activeTab === 'Car Hire' && (
@@ -155,7 +156,7 @@ const NewRequestPage = () => {
 
             {/* Submit Button */}
             <div className="mt-8 flex justify-end">
-              <button className="w-full sm:w-auto px-8 py-3 bg-[#541229] text-white rounded-lg ">
+              <button className="w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg ">
                 Create New Request
               </button>
             </div>
