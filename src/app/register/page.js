@@ -2,14 +2,25 @@
 import { useState } from "react";
 import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
+import { useRouter } from "next/navigation"; // Add this import
 
 const RegistrationPage = () => {
   const [selectedType, setSelectedType] = useState(null);
   const setUserType = useUserStore((state) => state.setUserType);
+  const router = useRouter(); // Add this line
 
   const handleTypeSelect = (type) => {
-    setSelectedType(type);
+    setSelectedType(type); 
     setUserType(type);
+  };
+
+  // Add this handler to redirect after registration
+  const handleRegistrationSuccess = () => {
+    if (selectedType === "merchant") {
+      router.push("/dashboard/open-requests");
+    } else {
+      router.push("/dashboard");
+    }
   };
 
   if (selectedType) {
@@ -19,7 +30,7 @@ const RegistrationPage = () => {
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-900">Join Fyndr</h1>
           </div>
-          <RegistrationForm userType={selectedType} />
+          <RegistrationForm userType={selectedType} onSuccess={handleRegistrationSuccess} />
         </div>
       </div>
     );

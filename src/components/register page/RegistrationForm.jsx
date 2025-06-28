@@ -5,43 +5,79 @@ import { UserDetailsForm } from "./UserDetailsForm";
 import { MerchantDetailsForm } from "./MerchantDetailsForm";
 import { User, Store, CheckCircle } from "lucide-react";
 import { useUserStore } from "@/store/userStore";
+import { 
+  requestMerchantOtp, 
+  verifyOtp, 
+  registerMerchant 
+} from "@/api/auth/merchants/requests";
 
-export const RegistrationForm = ({ userType }) => {
+export const RegistrationForm = ({ userType, onSuccess }) => {
   const setUserType = useUserStore((state) => state.setUserType);
   const [step, setStep] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [formData, setFormData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Always send phone number with +234 prefix
+  const getFullPhoneNumber = () => {
+    const trimmed = phoneNumber.trim();
+    return trimmed.startsWith("+234") ? trimmed : `+234${trimmed}`;
+  };
 
   const handlePhoneSubmit = async () => {
     if (!phoneNumber.trim()) return;
-    
     setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    setError(null);
+    try {
+      if (userType === "merchant") {
+        await requestMerchantOtp({ number: getFullPhoneNumber() });
+      }
+      // else: add user OTP request later
+      setStep(2);
+    } catch (err) {
+      setError("Failed to send OTP. Please try again.");
+    }
     setIsLoading(false);
-    setStep(2);
   };
 
   const handleOTPSubmit = async () => {
     if (otp.length !== 4) return;
-    
     setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    setError(null);
+    try {
+      const res = await verifyOtp({ usertype: userType, number: getFullPhoneNumber(), otp });
+      // Save token to localStorage if present
+      if (res && res.token) {
+        localStorage.setItem("authToken", res.token);
+      }
+      setStep(3);
+    } catch (err) {
+      setError("Invalid OTP. Please try again.");
+    }
     setIsLoading(false);
-    setStep(3);
   };
 
   const handleDetailsSubmit = async () => {
     setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    setError(null);
+    try {
+      if (userType === "merchant") {
+        await registerMerchant({
+          ...formData,
+          phoneNumber: getFullPhoneNumber(),
+        });
+      }
+      // else: add user registration later
+      setUserType(userType);
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (err) {
+      setError("Registration failed. Please try again.");
+    }
     setIsLoading(false);
-    setUserType(userType);
-    window.location.href = '/dashboard'
-    alert(`${userType} registration completed successfully!`);
   };
 
   const canProceedPhone = phoneNumber.trim().length >= 10;
@@ -88,6 +124,10 @@ export const RegistrationForm = ({ userType }) => {
           </div>
         ))}
       </div>
+
+      {error && (
+        <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
+      )}
 
       {/* Form Steps */}
       {step === 1 && (

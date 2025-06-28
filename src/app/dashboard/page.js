@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Bell } from "lucide-react";
 
-const CreateRequestPage = () => {
+const DashboardPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const categories = [
@@ -186,4 +186,4 @@ const CreateRequestPage = () => {
   );
 };
 
-export default CreateRequestPage;
+export default DashboardPage;
