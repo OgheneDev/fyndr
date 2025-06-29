@@ -1,10 +1,22 @@
 import Image from 'next/image';
 import React, {useState} from 'react';
+import { nigerianStates } from '@/data/nigerianStates';
 
 export const MerchantDetailsForm = ({ formData, onChange }) => {
   // Add preview URL state
   const [imagePreview, setImagePreview] = React.useState(null);
 
+  // Get list of states and LGAs for the selected state
+  const stateOptions = Object.keys(nigerianStates);
+  const lgaOptions = formData.state ? nigerianStates[formData.state] : [];
+
+  const SERVICE_OPTIONS = [
+  { label: 'Car Hire', value: 'car-hire' },
+  { label: 'Cleaning', value: 'cleaning' },
+  { label: 'Real Estate', value: 'real-estate' },
+  { label: 'Car Parts', value: 'car-parts' },
+  { label: 'Automobile', value: 'automobile' },
+];
   return (
     <div className="space-y-4">
       <div>
@@ -22,8 +34,8 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
         <label className="block text-sm font-medium text-gray-700 mb-2">WhatsApp Phone Number</label>
         <input
           type="tel"
-          value={formData.whatsappPhoneNumber || ''}
-          onChange={(e) => onChange({ ...formData, whatsappPhoneNumber: e.target.value })}
+          value={formData.whatsappNumber || ''}
+          onChange={(e) => onChange({ ...formData, whatsappNumber: e.target.value })}
           placeholder="Enter your WhatsApp number"
           className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
         />
@@ -90,7 +102,7 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
               type="button"
               onClick={() => {
                 setImagePreview(null);
-                onChange({ ...formData, faceVerificationImage: null });
+                onChange({ ...formData, avatar: null });
               }}
               className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 text-xs"
             >
@@ -114,7 +126,7 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
               if (file) {
                 const url = URL.createObjectURL(file);
                 setImagePreview(url);
-                onChange({ ...formData, faceVerificationImage: file });
+                onChange({ ...formData, avatar: file });
               }
             };
             input.click();
@@ -131,8 +143,8 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
         <p className="text-sm text-gray-600 mb-2">Input Validation number</p>
         <input
           type="text"
-          value={formData.ninNumber || ''}
-          onChange={(e) => onChange({ ...formData, ninNumber: e.target.value })}
+          value={formData.nin || ''}
+          onChange={(e) => onChange({ ...formData, nin: e.target.value })}
           placeholder="Nin number"
           className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
         />
@@ -142,26 +154,26 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Services Offered</label>
         <div className="space-y-2">
-          {['Car Hire', 'Cleaning', 'Property', 'Car Parts'].map((service) => (
-            <label key={service} className="flex items-center">
-              <input
-                type="checkbox"
-                checked={formData.servicesOffered?.includes(service) || false}
-                onChange={(e) => {
-                  const currentServices = formData.servicesOffered || [];
-                  const updatedServices = e.target.checked
-                    ? [...currentServices, service]
-                    : currentServices.filter(s => s !== service);
-                  onChange({ ...formData, servicesOffered: updatedServices });
-                }}
-                className="w-4 h-4 text-[#541229] border-gray-300 rounded focus:ring-[#541229]"
-              />
-              <span className="ml-2 text-sm text-gray-700">{service}</span>
-            </label>
-          ))}
-        </div>
+    {SERVICE_OPTIONS.map(({ label, value }) => (
+      <label key={value} className="flex items-center">
+        <input
+          type="checkbox"
+          checked={formData.servicesOffered?.includes(value) || false}
+          onChange={(e) => {
+            const currentServices = formData.servicesOffered || [];
+            const updatedServices = e.target.checked
+              ? [...currentServices, value]
+              : currentServices.filter(s => s !== value);
+            onChange({ ...formData, servicesOffered: updatedServices });
+          }}
+          className="w-4 h-4 text-[#541229] border-gray-300 rounded focus:ring-[#541229]"
+        />
+        <span className="ml-2 text-sm text-gray-700">{label}</span>
+      </label>
+    ))}
+  </div>
         
-        <button
+        {/*<button
           type="button"
           onClick={() => {
             // Handle suggesting more services
@@ -170,7 +182,45 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
           className="mt-2 text-sm text-[#541229] hover:text-[#541229] underline"
         >
           Suggest More Services
-        </button>
+        </button>*/}
+      </div>
+
+      {/* State Select */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+        <select
+          value={formData.state || ''}
+          onChange={e => {
+            const selectedState = e.target.value;
+            onChange({
+              ...formData,
+              state: selectedState,
+              lga: '' // Reset LGA when state changes
+            });
+          }}
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+        >
+          <option value="">Select a state</option>
+          {stateOptions.map(state => (
+            <option key={state} value={state}>{state}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* LGA Select */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">LGA</label>
+        <select
+          value={formData.lga || ''}
+          onChange={e => onChange({ ...formData, lga: e.target.value })}
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          disabled={!formData.state}
+        >
+          <option value="">Select an LGA</option>
+          {lgaOptions.map(lga => (
+            <option key={lga} value={lga}>{lga}</option>
+          ))}
+        </select>
       </div>
     </div>
   );

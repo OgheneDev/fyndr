@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
         console.log("Attaching Token:", token); // Debugging
 
         if (token) {
-            config.headers.Authorization = token; // No "Bearer"
+            config.headers.Authorization = `Bearer ${token}`; // No "Bearer"
         }
 
         return config;

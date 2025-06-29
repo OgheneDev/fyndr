@@ -1,41 +1,28 @@
 import axiosInstance from "@/api/axios";
 
-// Request OTP for merchant
-export const requestMerchantOtp = async ({ number }) => {
+// Request OTP for users
+export const requestUserOtp = async ({ number }) => {
     try {
         const response = await axiosInstance.post(
-            '/v1/auth/otp/merchant',
+            '/v1/auth/otp/user',
             { number }
         );
         console.log(response);
         return response.data;
-    } catch (error) { 
-        throw error;
-    }
-};
-
-// Verify OTP (general route)
-export const verifyOtp = async ({ number, otp, userType }) => {
-    try {
-        const response = await axiosInstance.post(
-            '/v1/auth/otp/verify',
-            { userType, number, otp }
-        );
-        return response.data;
     } catch (error) {
         throw error;
     }
-};
+}
 
-// Register merchant
-export const registerMerchant = async (merchantData) => {
+// Register User
+export const registerUser = async (userData) => {
     try {
         const response = await axiosInstance.post(
-            '/v1/auth/register/merchant',
-            merchantData
+            '/v1/auth/register/user',
+            userData
         );
-        console.log(response)
-        return response.data;
+
+        return response.data
     } catch (error) {
         // Log detailed error info
         if (error.response) {
@@ -52,4 +39,4 @@ export const registerMerchant = async (merchantData) => {
             throw error.message;
         }
     }
-};
+}

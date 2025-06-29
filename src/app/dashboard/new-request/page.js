@@ -6,12 +6,21 @@ import {
   PropertiesForm,
   CarHireForm,
   CleaningForm,
-  CarPartsForm
+  CarPartsForm,
+  AutomobileForm
 } from './RequestForms'
+import {
+  realEstateRequest,
+  carHireRequest,
+  cleaningRequest,
+  carPartsRequest,
+  automobileRequest
+} from '@/api/requests/users/requests'
+import Swal from 'sweetalert2'
 
 const carTypes = ['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Van', 'Truck']
 const propertyTypes = ['Apartment', 'Detached', 'Semi-Detached', 'Terrace', 'Bungalow', 'Duplex', 'Mansion']
-const cleaningTypes = ['Regular', 'Post Construction']
+const cleaningTypes = ['regular', 'post-construction']
 const carMakes = ['Toyota', 'Honda', 'Ford', 'Nissan', 'Hyundai', 'Kia', 'Mercedes', 'BMW', 'Lexus']
 const carModels = {
   Toyota: ['Corolla', 'Camry', 'RAV4', 'Highlander'],
@@ -19,50 +28,82 @@ const carModels = {
   Ford: ['Focus', 'Fusion', 'Escape'],
   Nissan: ['Altima', 'Sentra', 'Rogue'],
   Hyundai: ['Elantra', 'Sonata', 'Tucson'],
-  Kia: ['Rio', 'Sportage', 'Sorento'],
+  Kia: ['Rio', 'Sportage', 'Sorento'], 
   Mercedes: ['C-Class', 'E-Class', 'GLA'],
   BMW: ['3 Series', '5 Series', 'X3'],
   Lexus: ['RX', 'ES', 'GX']
 }
 const carYears = Array.from({ length: 25 }, (_, i) => `${2000 + i}`)
 
+const tabs = [
+  { label: 'Properties', category: 'real-estate' },
+  { label: 'Car Hire', category: 'car-hire' },
+  { label: 'Cleaning', category: 'cleaning' },
+  { label: 'Car Parts', category: 'car-parts' },
+  { label: 'Automobiles', category: 'automobile' }
+]
+
 const NewRequestPage = () => {
   const [activeTab, setActiveTab] = useState('Properties')
   const [formData, setFormData] = useState({
-    leaseOrBuy: 'Lease',
-    currentLocation: '',
-    targetLocation: '',
-    role: 'Landlord or Agent'
+    title: '',
+    state: '',
+    axis: [],
+    details: '',
+    rentType: '',
+    propertyType: '',
+    roomNumber: '',
+    propertyCondition: '',
+    upperPriceLimit: '',
+    lowerPriceLimit: ''
   })
   const [carHireData, setCarHireData] = useState({
+    title: '',
     state: '',
-    typeOfCar: '',
+    details: '',
+    carType: '',
+    hireDuration: '',
     pickupLocation: '',
-    duration: '',
     airport: '',
-    travel: '',
-    additionalDetails: ''
+    travel: ''
   })
   const [cleaningData, setCleaningData] = useState({
+    title: '',
     state: '',
-    propertyLocation: '',
+    lga: '',
+    details: '',
     propertyType: '',
-    numberOfRooms: '',
-    regularOrPostConstructionCleaning: '',
-    additionalDetails: '',
+    cleaningType: '',
+    propertyLocation: '',
+    roomNumber: ''
   })
   const [carPartsData, setCarPartsData] = useState({
-    currentState: '',
+    title: '',
+    state: '',
+    details: '',
     currentLocation: '',
-    desiredSourcingLocation: '',
-    make: '',
-    model: '',
-    year: '',
-    description: '',
-    attachment: ''
+    sourcingLocation: '',
+    carMake: '',
+    carModel: '',
+    carYear: '',
+    attachment: null
   })
-
-  const tabs = ['Properties', 'Car Hire', 'Cleaning', 'Car Parts']
+  const [automobileData, setAutomobileData] = useState({
+    title: '',
+    state: '',
+    details: '',
+    location: '',
+    carMake: '',
+    carModel: '',
+    carYearFrom: '',
+    carYearTo: '',
+    transmission: '',
+    upperPriceLimit: '',
+    lowerPriceLimit: ''
+  })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
@@ -88,6 +129,107 @@ const NewRequestPage = () => {
       [field]: value
     }))
   }
+  const handleAutomobileChange = (field, value) => {
+    setAutomobileData(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  const getCategory = () => {
+    const tab = tabs.find(t => t.label === activeTab)
+    return tab ? tab.category : ''
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    setLoading(true)
+    try {
+      const category = getCategory()
+      let label = tabs.find(t => t.category === category)?.label || 'Request'
+      if (category === 'real-estate') {
+        // Real Estate
+        await realEstateRequest({
+          title: formData.title,
+          state: formData.state,
+          axis: formData.axis,
+          details: formData.details,
+          rentType: formData.rentType,
+          propertyType: formData.propertyType,
+          roomNumber: formData.roomNumber,
+          propertyCondition: formData.propertyCondition,
+          upperPriceLimit: Number(formData.upperPriceLimit) || 0,
+          lowerPriceLimit: Number(formData.lowerPriceLimit) || 0
+        })
+      } else if (category === 'car-hire') {
+        // Car Hire
+        await carHireRequest({
+          title: carHireData.title,
+          state: carHireData.state,
+          details: carHireData.details,
+          carType: carHireData.carType,
+          hireDuration: Number(carHireData.hireDuration) || 0,
+          pickupLocation: carHireData.pickupLocation,
+          airport: carHireData.airport,
+          travel: carHireData.travel === 'Yes'
+        })
+      } else if (category === 'cleaning') {
+        // Cleaning
+        await cleaningRequest({
+          title: cleaningData.title,
+          state: cleaningData.state,
+          lga: cleaningData.lga,
+          details: cleaningData.details,
+          propertyType: cleaningData.propertyType,
+          cleaningType: cleaningData.cleaningType,
+          propertyLocation: cleaningData.propertyLocation,
+          roomNumber: cleaningData.roomNumber
+        })
+      } else if (category === 'car-parts') {
+        // Car Parts (multipart/form-data)
+        const fd = new FormData()
+        fd.append('title', carPartsData.title)
+        fd.append('state', carPartsData.state)
+        fd.append('details', carPartsData.details)
+        fd.append('currentLocation', carPartsData.currentLocation)
+        fd.append('sourcingLocation', carPartsData.sourcingLocation)
+        fd.append('carMake', carPartsData.carMake)
+        fd.append('carModel', carPartsData.carModel)
+        fd.append('carYear', Number(carPartsData.carYear) || 0)
+        if (carPartsData.attachment) {
+          fd.append('car_part_image', carPartsData.attachment)
+        }
+        await carPartsRequest(fd)
+      } else if (category === 'automobile') {
+        // Automobile
+        await automobileRequest({
+          title: automobileData.title,
+          state: automobileData.state,
+          details: automobileData.details,
+          location: automobileData.location,
+          carMake: automobileData.carMake,
+          carModel: automobileData.carModel,
+          carYearFrom: Number(automobileData.carYearFrom) || 0,
+          carYearTo: Number(automobileData.carYearTo) || 0,
+          transmission: automobileData.transmission,
+          upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
+          lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0
+        })
+      }
+      setSuccess('Request submitted successfully!')
+      Swal.fire({
+        icon: 'success',
+        title: `${label} request posted successfully`,
+        showConfirmButton: false,
+        timer: 2000
+      })
+    } catch (err) {
+      setError('Failed to submit request.')
+    }
+    setLoading(false)
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -102,27 +244,28 @@ const NewRequestPage = () => {
           <div className="flex flex-wrap gap-1 md:gap-5 px-1 mb-8">
             {tabs.map((tab) => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
+                key={tab.label}
+                onClick={() => setActiveTab(tab.label)}
                 className={` px-2 md:px-0 py-2 text-[12px] cursor-pointer border-b-2 transition-all duration-200 ${
-                  activeTab === tab
+                  activeTab === tab.label
                     ? ' text-gray-900'
                     : 'border-[#E5E8EB] text-[#637587]'
                 }`}
               >
-                {tab}
+                {tab.label}
               </button>
             ))}
           </div>
 
           <div className='px-5'>
             {/* Form Content */}
-            <div className="bg-white">
+            <form className="bg-white" onSubmit={handleSubmit}>
               {activeTab === 'Properties' && (
                 <PropertiesForm
                   formData={formData}
                   onChange={handleInputChange}
                   nigerianStates={nigerianStates}
+                  propertyTypes={propertyTypes}
                 />
               )}
               {activeTab === 'Car Hire' && (
@@ -152,14 +295,30 @@ const NewRequestPage = () => {
                   carYears={carYears}
                 />
               )}
-            </div>
+              {activeTab === 'Automobiles' && (
+                <AutomobileForm
+                  automobileData={automobileData}
+                  onChange={handleAutomobileChange}
+                  nigerianStates={nigerianStates}
+                  carMakes={carMakes}
+                  carModels={carModels}
+                  carYears={carYears}
+                />
+              )}
 
-            {/* Submit Button */}
-            <div className="mt-8 flex justify-end">
-              <button className="w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg ">
-                Create New Request
-              </button>
-            </div>
+              {/* Submit Button */}
+              <div className="mt-8 flex flex-col items-end">
+                {error && <div className="text-red-500 mb-2">{error}</div>}
+                {success && <div className="text-green-600 mb-2">{success}</div>}
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg"
+                  disabled={loading}
+                >
+                  {loading ? 'Submitting...' : 'Create New Request'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

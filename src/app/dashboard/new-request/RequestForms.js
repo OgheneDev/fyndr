@@ -1,12 +1,12 @@
 import React from 'react'
 
 // Properties Form
-export function PropertiesForm({ formData, onChange, nigerianStates }) {
+export function PropertiesForm({ formData, onChange, nigerianStates, propertyTypes }) {
   const priceRanges = [
-    "Below ₦500k",
-    "₦500k - ₦1m",
-    "₦1m - ₦5m",
-    "Above ₦5m"
+    { label: "Below ₦500k", lower: 0, upper: 500000 },
+    { label: "₦500k - ₦1m", lower: 500000, upper: 1000000 },
+    { label: "₦1m - ₦5m", lower: 1000000, upper: 5000000 },
+    { label: "Above ₦5m", lower: 5000000, upper: 1000000000 }
   ]
 
   // Helper for multi-select axis
@@ -15,35 +15,81 @@ export function PropertiesForm({ formData, onChange, nigerianStates }) {
       .filter(opt => opt.selected)
       .map(opt => opt.value)
       .slice(0, 3)
-    onChange('targetAxis', options)
+    onChange('axis', options)
+  }
+
+  // Handle price range selection
+  const handlePriceRangeChange = (e) => {
+    const selected = priceRanges.find(r => r.label === e.target.value)
+    if (selected) {
+      onChange('lowerPriceLimit', selected.lower)
+      onChange('upperPriceLimit', selected.upper)
+    } else {
+      onChange('lowerPriceLimit', '')
+      onChange('upperPriceLimit', '')
+    }
   }
 
   // fallback to empty object if nigerianStates is not provided
   const safeStates = nigerianStates || {};
-  const selectedState = formData.targetState
+  const selectedState = formData.state
   const axisOptions = selectedState && safeStates[selectedState] ? safeStates[selectedState] : []
+
+  // Find which price range is currently selected
+  const selectedPriceRange = priceRanges.find(
+    r => Number(formData.lowerPriceLimit) === r.lower && Number(formData.upperPriceLimit) === r.upper
+  )?.label || ''
+
+  // Default propertyTypes to empty array if not provided
+  const safePropertyTypes = propertyTypes || [];
 
   return (
     <div className="space-y-6">
+      {/* Title */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Title</label>
+        <input
+          type="text"
+          value={formData.title || ''}
+          onChange={e => onChange('title', e.target.value)}
+          min={1}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          placeholder="Enter Title"
+        />
+      </div>
       {/* Rent or Buy */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Rent or Buy</label>
         <select
-          value={formData.rentOrBuy || ''}
-          onChange={e => onChange('rentOrBuy', e.target.value)}
+          value={formData.rentType || ''}
+          onChange={e => onChange('rentType', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         >
           <option value="">Select</option>
-          <option value="Rent">Rent</option>
-          <option value="Buy">Buy</option>
+          <option value="rent">Rent</option>
+          <option value="buy">Buy</option>
+        </select>
+      </div>
+      {/* Property Type */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Property Type</label>
+        <select
+          value={formData.propertyType}
+          onChange={e => onChange('propertyType', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
+        >
+          <option value="">Select Type</option>
+          {safePropertyTypes.map(type => (
+            <option key={type} value={type}>{type}</option>
+          ))}
         </select>
       </div>
       {/* Target State */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Target State</label>
         <select
-          value={formData.targetState || ''}
-          onChange={e => onChange('targetState', e.target.value)}
+          value={formData.state || ''}
+          onChange={e => onChange('state', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
@@ -57,7 +103,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates }) {
         <label className="block text-[#171214] mb-3 text-sm">Target Axis (up to 3)</label>
         <select
           multiple
-          value={formData.targetAxis || []}
+          value={formData.axis || []}
           onChange={handleAxisChange}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
           size={Math.min(4, axisOptions.length)}
@@ -68,17 +114,43 @@ export function PropertiesForm({ formData, onChange, nigerianStates }) {
         </select>
         <div className="text-xs text-gray-500 mt-1">Hold Ctrl (Windows) or Cmd (Mac) to select multiple</div>
       </div>
+      {/* Property Condition */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Property Condition</label>
+        <select
+          value={formData.propertyCondition || ''}
+          onChange={e => onChange('propertyCondition', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Condition</option>
+          <option value="new">New</option>
+          <option value="old">Old</option>
+          <option value="any">Any</option>
+        </select>
+      </div>
+      {/* Room Number */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Room Number</label>
+        <input
+          type="number"
+          value={formData.roomNumber || ''}
+          onChange={e => onChange('roomNumber', e.target.value)}
+          min={1}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          placeholder="Enter number of rooms"
+        />
+      </div>
       {/* Price Range */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Price Range</label>
         <select
-          value={formData.priceRange || ''}
-          onChange={e => onChange('priceRange', e.target.value)}
+          value={selectedPriceRange}
+          onChange={handlePriceRangeChange}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         >
           <option value="">Select Price Range</option>
           {priceRanges.map(range => (
-            <option key={range} value={range}>{range}</option>
+            <option key={range.label} value={range.label}>{range.label}</option>
           ))}
         </select>
       </div>
@@ -86,8 +158,8 @@ export function PropertiesForm({ formData, onChange, nigerianStates }) {
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
-          value={formData.additionalDetails || ''}
-          onChange={e => onChange('additionalDetails', e.target.value)}
+          value={formData.details || ''}
+          onChange={e => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
@@ -382,6 +454,152 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           accept="image/*,video/*"
           onChange={e => onChange('attachment', e.target.files[0])}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
+        />
+      </div>
+    </div>
+  )
+}
+
+// Automobile Form
+export function AutomobileForm({ automobileData, onChange, nigerianStates, carMakes, carModels, carYears }) {
+  return (
+    <div className="space-y-6">
+      {/* Title */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Title</label>
+        <input
+          type="text"
+          value={automobileData.title}
+          onChange={e => onChange('title', e.target.value)}
+          placeholder="Request title"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      {/* State */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={automobileData.state}
+          onChange={e => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map(state => (
+            <option key={state} value={state}>{state}</option>
+          ))}
+        </select>
+      </div>
+      {/* Details */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Details</label>
+        <textarea
+          value={automobileData.details}
+          onChange={e => onChange('details', e.target.value)}
+          placeholder="Enter details"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      {/* Location */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Location</label>
+        <input
+          type="text"
+          value={automobileData.location}
+          onChange={e => onChange('location', e.target.value)}
+          placeholder="Location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      {/* Car Make */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Car Make</label>
+        <select
+          value={automobileData.carMake}
+          onChange={e => onChange('carMake', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Make</option>
+          {carMakes.map(make => (
+            <option key={make} value={make}>{make}</option>
+          ))}
+        </select>
+      </div>
+      {/* Car Model */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Car Model</label>
+        <select
+          value={automobileData.carModel}
+          onChange={e => onChange('carModel', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          disabled={!automobileData.carMake}
+        >
+          <option value="">Select Model</option>
+          {(carModels[automobileData.carMake] || []).map(model => (
+            <option key={model} value={model}>{model}</option>
+          ))}
+        </select>
+      </div>
+      {/* Car Year From */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Car Year From</label>
+        <select
+          value={automobileData.carYearFrom}
+          onChange={e => onChange('carYearFrom', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Year</option>
+          {carYears.map(year => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </select>
+      </div>
+      {/* Car Year To */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Car Year To</label>
+        <select
+          value={automobileData.carYearTo}
+          onChange={e => onChange('carYearTo', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Year</option>
+          {carYears.map(year => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </select>
+      </div>
+      {/* Transmission */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Transmission</label>
+        <select
+          value={automobileData.transmission}
+          onChange={e => onChange('transmission', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select</option>
+          <option value="manual">Manual</option>
+          <option value="automatic">Automatic</option>
+        </select>
+      </div>
+      {/* Upper Price Limit */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Upper Price Limit</label>
+        <input
+          type="number"
+          value={automobileData.upperPriceLimit}
+          onChange={e => onChange('upperPriceLimit', e.target.value)}
+          placeholder="Upper price limit"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      {/* Lower Price Limit */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Lower Price Limit</label>
+        <input
+          type="number"
+          value={automobileData.lowerPriceLimit}
+          onChange={e => onChange('lowerPriceLimit', e.target.value)}
+          placeholder="Lower price limit"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
     </div>

@@ -3,7 +3,9 @@ import React, { useState } from 'react'
 import { PhoneInput } from "@/components/general/PhoneInput";
 import { OTPInput } from "@/components/general/OTPInput";
 import { useUserStore } from "@/store/userStore";
-import { useRouter } from "next/navigation"; // Add this import
+import { useRouter } from "next/navigation";
+import { requestMerchantOtp, verifyOtp } from '@/api/auth/merchants/requests';
+import { requestUserOtp } from '@/api/auth/users/requests';
 
 const LoginPage = () => {
   const [step, setStep] = useState(0); // 0: select type, 1: phone, 2: otp
@@ -11,38 +13,64 @@ const LoginPage = () => {
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [localUserType, setLocalUserType] = useState(null);
+  const [error, setError] = useState(null);
 
   const setUserType = useUserStore((state) => state.setUserType);
-  const router = useRouter(); // Add this line
+  const router = useRouter();
 
   const canProceedPhone = phoneNumber.trim().length >= 10;
   const canProceedOTP = otp.length === 4;
+
+  // Always send phone number with +234 prefix
+  const getFullPhoneNumber = () => {
+    const trimmed = phoneNumber.trim();
+    return trimmed.startsWith("+234") ? trimmed : `+234${trimmed}`;
+  };
 
   const handleTypeSelect = (type) => { 
     setUserType(type); // Save to store
     setLocalUserType(type); // For local rendering
     setStep(1);
+    setError(null);
   };
 
   const handlePhoneSubmit = async () => {
     if (!canProceedPhone) return;
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    setError(null);
+    try {
+      if (localUserType === "merchant") {
+        await requestMerchantOtp({ number: getFullPhoneNumber() });
+      } else {
+        await requestUserOtp({ number: getFullPhoneNumber() });
+      }
+      setStep(2);
+    } catch (err) {
+      setError("Failed to send OTP. Please try again.");
+    }
     setIsLoading(false);
-    setStep(2);
   };
 
   const handleOTPSubmit = async () => {
     if (!canProceedOTP) return;
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsLoading(false);
-    // Redirect or show success (simulate login)
-    if (localUserType === "merchant") {
-      router.push("/dashboard/open-requests");
-    } else {
-      router.push("/dashboard");
+    setError(null);
+    try {
+      const res = await verifyOtp({ number: getFullPhoneNumber(), otp, userType: localUserType });
+      // Save token to localStorage if present
+      if (res && res.data && res.data.token) {
+        localStorage.setItem("authToken", res.data.token);
+      }
+      // Redirect or show success (simulate login)
+      if (localUserType === "merchant") {
+        router.push("/dashboard/open-requests");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      setError("Invalid OTP. Please try again.");
     }
+    setIsLoading(false);
   };
 
   // Initial selection screen
@@ -87,6 +115,9 @@ const LoginPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          {error && (
+            <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
+          )}
           <div>
             <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
             <p className="text-gray-600 text-sm mb-4">Enter your phone number to receive a verification code.</p>
@@ -113,6 +144,9 @@ const LoginPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          {error && (
+            <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
+          )}
           <div>
             <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
             <p className="text-gray-600 text-sm mb-4">

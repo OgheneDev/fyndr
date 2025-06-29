@@ -11,14 +11,14 @@ const RegistrationPage = () => {
 
   const handleTypeSelect = (type) => {
     setSelectedType(type); 
-    setUserType(type);
+    setUserType(type); 
   };
 
   // Add this handler to redirect after registration
   const handleRegistrationSuccess = () => {
     if (selectedType === "merchant") {
       router.push("/dashboard/open-requests");
-    } else {
+    } else { 
       router.push("/dashboard");
     }
   };

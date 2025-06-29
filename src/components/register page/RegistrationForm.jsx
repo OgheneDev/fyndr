@@ -10,6 +10,8 @@ import {
   verifyOtp, 
   registerMerchant 
 } from "@/api/auth/merchants/requests";
+import { requestUserOtp, registerUser } from "@/api/auth/users/requests";
+import Swal from "sweetalert2";
 
 export const RegistrationForm = ({ userType, onSuccess }) => {
   const setUserType = useUserStore((state) => state.setUserType);
@@ -33,11 +35,12 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
     try {
       if (userType === "merchant") {
         await requestMerchantOtp({ number: getFullPhoneNumber() });
+      } else {
+        await requestUserOtp({ number: getFullPhoneNumber() })
       }
-      // else: add user OTP request later
       setStep(2);
     } catch (err) {
-      setError("Failed to send OTP. Please try again.");
+      setError("Failed to send OTP. Please try again.", err);
     }
     setIsLoading(false);
   };
@@ -47,49 +50,68 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await verifyOtp({ usertype: userType, number: getFullPhoneNumber(), otp });
+      console.log({ number: getFullPhoneNumber(), otp, userType: userType });
+      const res = await verifyOtp({  number: getFullPhoneNumber(), otp, userType: userType });
       // Save token to localStorage if present
-      if (res && res.token) {
-        localStorage.setItem("authToken", res.token);
+      console.log("OTP verify response:", res);
+      if (res && res.data.token) {
+        localStorage.setItem("authToken", res.data.token);
       }
       setStep(3);
     } catch (err) {
       setError("Invalid OTP. Please try again.");
+      console.error("OTP verification error:", err);
     }
     setIsLoading(false);
   };
 
-  const handleDetailsSubmit = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      if (userType === "merchant") {
-        await registerMerchant({
-          ...formData,
-          phoneNumber: getFullPhoneNumber(),
-        });
-      }
-      // else: add user registration later
-      setUserType(userType);
-      if (onSuccess) {
-        onSuccess();
-      }
-    } catch (err) {
-      setError("Registration failed. Please try again.");
+  // ...existing code...
+const handleDetailsSubmit = async () => {
+  setIsLoading(true);
+  setError(null);
+  try {
+    if (userType === "merchant") {
+      await registerMerchant({
+        ...formData,
+        number: getFullPhoneNumber() // <-- FIXED
+      });
+    } else {
+      await registerUser({
+        ...formData
+      })
     }
-    setIsLoading(false);
-  };
+    setUserType(userType);
+    await Swal.fire({
+      icon: "success",
+      title: "Registration Successful!",
+      text: "Your account has been created.",
+      confirmButtonColor: "#541229"
+    });
+    if (onSuccess) {
+      onSuccess();
+    }
+  } catch (err) {
+    setError("Registration failed. Please try again.");
+  }
+  setIsLoading(false);
+};
+// ...existing code...
 
   const canProceedPhone = phoneNumber.trim().length >= 10;
   const canProceedOTP = otp.length === 4;
   const canProceedDetails = userType === 'user' 
   ? formData.name && formData.email && formData.state && formData.lga && formData.location
-  : formData.name && 
-    formData.whatsappPhoneNumber && 
+  : formData.name &&  
+    formData.whatsappNumber && 
     formData.email && 
     formData.businessName && 
     formData.businessAddress && 
-    formData.businessLocation;
+    formData.businessLocation &&
+    formData.nin &&
+    formData.servicesOffered &&
+    formData.state &&
+    formData.lga &&
+    formData.avatar
 
   return (
     <div className="w-full max-w-md mx-auto">
