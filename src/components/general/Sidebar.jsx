@@ -1,10 +1,12 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Home, MessageCircle, User, List } from 'lucide-react'
 import Image from 'next/image'
 import { useUserStore } from '@/store/userStore'
+import { getMerchantProfile } from '@/api/profile/merchants/requests'
+import { getUserProfile } from '@/api/profile/users/request'
 
 // Common menu items (for both user and merchant)
 const commonMenuItems = [
@@ -27,7 +29,35 @@ const merchantAdditionalItems = [
 const Sidebar = () => {
     const pathname = usePathname();
     const { userType } = useUserStore();
-    
+
+    // State for profile (user or merchant)
+    const [profile, setProfile] = useState(null);
+    const [profileLoading, setProfileLoading] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+        const fetchProfile = async () => {
+            setProfileLoading(true);
+            try {
+                let data = null;
+                if (userType === 'merchant') {
+                    data = await getMerchantProfile();
+                } else if (userType === 'user') {
+                    data = await getUserProfile();
+                }
+                if (isMounted) setProfile(data);
+            } catch {
+                if (isMounted) setProfile(null);
+            } finally {
+                if (isMounted) setProfileLoading(false);
+            }
+        };
+        if (userType === 'merchant' || userType === 'user') {
+            fetchProfile();
+        }
+        return () => { isMounted = false; };
+    }, [userType]);
+
     // Combine menu items based on user type
     const menuItems = userType === 'user' 
         ? [...userAdditionalItems, ...commonMenuItems] 
@@ -35,22 +65,52 @@ const Sidebar = () => {
             ? [...merchantAdditionalItems, ...commonMenuItems]
             : [...commonMenuItems]; // Merchant gets only common items
 
+    // Helper for avatar rendering
+    const renderAvatar = () => {
+        if (profileLoading) {
+            return <div className="animate-pulse w-10 h-10 rounded-full bg-gray-200" />;
+        }
+        const avatarUrl = profile?.avatar;
+        if (avatarUrl) {
+            return (
+                <Image
+                    src={avatarUrl}
+                    alt="avatar"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover"
+                />
+            );
+        }
+        // Default icon with gray background
+        return (
+            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                <User size={24} className="text-gray-500" />
+            </div>
+        );
+    };
+
+    // Helper for name rendering
+    const renderName = () => {
+        if (profileLoading) {
+            return <div className="h-4 w-24 bg-gray-200 rounded animate-pulse mb-2" />;
+        }
+        if (profile?.name) {
+            return <p className='font-medium text-gray-900 text-base'>{profile.name}</p>;
+        }
+        return <p className='font-medium text-gray-900 text-base'>User</p>;
+    };
+
     return (
         <div className={`bg-white w-[280px] flex-col h-full hidden md:flex fixed top-0 left-0 border-r border-gray-100`}>
             {/* Header */}
             <div className='px-6 py-6 border-b border-gray-100'>
                 <div className='flex items-center gap-3'>
-                    <div className='w-10 h-10 rounded-full overflow-hidden flex-shrink-0'>
-                        <Image
-                            src={'/images/sofia.png'}
-                            alt='avatar'
-                            width={40}
-                            height={40}
-                            className='w-full h-full object-cover'
-                        />
+                    <div className='w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center'>
+                        {renderAvatar()}
                     </div>
                     <div>
-                        <p className='font-medium text-gray-900 text-base'>Sophia</p>
+                        {renderName()}
                         <Link href={'/profile'} className='text-sm text-gray-500 hover:text-gray-700'>
                             View profile
                         </Link>

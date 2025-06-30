@@ -158,8 +158,8 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
-          value={formData.details || ''}
-          onChange={e => onChange('details', e.target.value)}
+          value={formData.additionalDetails || ''}
+          onChange={e => onChange('additionalDetails', e.target.value)}
           placeholder="Enter any additional details"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
@@ -172,11 +172,23 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
 export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes }) {
   return (
     <div className="space-y-6">
+      {/* Title */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Title</label>
+        <input
+          type="text"
+          value={carHireData.title || ''}
+          onChange={e => onChange('title', e.target.value)}
+          min={1}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          placeholder="Enter Title"
+        />
+      </div>
       {/* State */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
-          value={carHireData.state}
+          value={carHireData.state || ''}
           onChange={e => onChange('state', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
@@ -190,7 +202,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Type of Car</label>
         <select
-          value={carHireData.typeOfCar}
+          value={carHireData.typeOfCar || ''}
           onChange={e => onChange('typeOfCar', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
@@ -206,7 +218,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
         <label className="block text-[#171214] mb-3 text-sm">Pickup Location</label>
         <input
           type="text"
-          value={carHireData.pickupLocation}
+          value={carHireData.pickupLocation || ''}
           onChange={e => onChange('pickupLocation', e.target.value)}
           placeholder="Pickup location"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
@@ -216,9 +228,9 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
       <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Duration</label>
         <input
-          type="text"
-          value={carHireData.duration}
-          onChange={e => onChange('duration', e.target.value)}
+          type="number"
+          value={carHireData.hireDuration || ''}
+          onChange={e => onChange('hireDuration', e.target.value)}
           placeholder="e.g. 3 days"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         />
@@ -229,7 +241,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
       <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Airport</label>
         <select
-          value={carHireData.airport}
+          value={carHireData.airport || ''}
           onChange={e => onChange('airport', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
@@ -242,7 +254,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
       <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Travel</label>
         <select
-          value={carHireData.travel}
+          value={carHireData.travel || ''}
           onChange={e => onChange('travel', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
@@ -256,7 +268,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
-          value={carHireData.additionalDetails}
+          value={carHireData.additionalDetails || ''}
           onChange={e => onChange('additionalDetails', e.target.value)}
           placeholder="Enter any additional details"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
@@ -268,19 +280,51 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
 
 // Cleaning Form
 export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyTypes, cleaningTypes }) {
+  // Get LGAs for the selected state
+  const lgaOptions = cleaningData.state && nigerianStates && nigerianStates[cleaningData.state]
+    ? nigerianStates[cleaningData.state]
+    : [];
+
   return (
     <div className="space-y-6">
+      {/* Title */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Title</label>
+        <input
+          type="text"
+          value={cleaningData.title || ''}
+          onChange={e => onChange('title', e.target.value)}
+          min={1}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          placeholder="Enter Title"
+        />
+      </div>
       {/* State */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
-          value={cleaningData.state}
+          value={cleaningData.state || ''}
           onChange={e => onChange('state', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map(state => (
             <option key={state} value={state}>{state}</option>
+          ))}
+        </select>
+      </div>
+      {/* LGA */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">LGA</label>
+        <select
+          value={cleaningData.lga || ''}
+          onChange={e => onChange('lga', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          disabled={!cleaningData.state}
+        >
+          <option value="">Select LGA</option>
+          {lgaOptions.map(lga => (
+            <option key={lga} value={lga}>{lga}</option>
           ))}
         </select>
       </div>
@@ -314,7 +358,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
         <label className="block text-[#171214] mb-3 text-sm">Number of Rooms</label>
         <input
           type="number"
-          value={cleaningData.numberOfRooms}
+          value={cleaningData.numberOfRooms || ''}
           onChange={e => onChange('numberOfRooms', e.target.value)}
           min={1}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
@@ -324,8 +368,8 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Cleaning Type</label>
         <select
-          value={cleaningData.regularOrPostConstructionCleaning}
-          onChange={e => onChange('regularOrPostConstructionCleaning', e.target.value)}
+          value={cleaningData.cleaningType}
+          onChange={e => onChange('cleaningType', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
           <option value="">Select</option>
@@ -350,14 +394,50 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
 
 // Car Parts Form
 export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes, carModels, carYears }) {
+  // Preview for image input
+  const imagePreview = carPartsData.attachment
+    ? URL.createObjectURL(carPartsData.attachment)
+    : null;
+
   return (
     <div className="space-y-6">
+      {/* Attachment (Image/Video) - now first */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Attachment (Image/Video)</label>
+        <input
+          type="file"
+          accept="image/*,video/*"
+          onChange={e => onChange('attachment', e.target.files[0])}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
+        />
+        {imagePreview && (
+          <div className="mt-2">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-32 h-32 object-cover rounded border"
+            />
+          </div>
+        )}
+      </div>
+      {/* Title */}
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Title</label>
+        <input
+          type="text"
+          value={carPartsData.title || ''}
+          onChange={e => onChange('title', e.target.value)}
+          min={1}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          placeholder="Enter Title"
+        />
+      </div>
       {/* Current State */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Current State</label>
         <select
-          value={carPartsData.currentState}
-          onChange={e => onChange('currentState', e.target.value)}
+          value={carPartsData.state}
+          onChange={e => onChange('state', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
           <option value="">Select State</option>
@@ -377,12 +457,12 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         />
       </div>
-      {/* Desired Sourcing Location */}
+      {/*  Sourcing Location */}
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">Desired Sourcing Location</label>
+        <label className="block text-[#171214] mb-3 text-sm"> Sourcing Location</label>
         <select
-          value={carPartsData.desiredSourcingLocation}
-          onChange={e => onChange('desiredSourcingLocation', e.target.value)}
+          value={carPartsData.sourcingLocation}
+          onChange={e => onChange('sourcingLocation', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
           <option value="">Select State</option>
@@ -396,8 +476,8 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
       <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Make</label>
         <select
-          value={carPartsData.make}
-          onChange={e => onChange('make', e.target.value)}
+          value={carPartsData.carMake}
+          onChange={e => onChange('carMake', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
           <option value="">Select Make</option>
@@ -407,26 +487,26 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
         </select>
       </div>
       {/* Model */}
-      <div className='flex-1'>
-        <label className="block text-[#171214] mb-3 text-sm">Model</label>
-        <select
-          value={carPartsData.model}
-          onChange={e => onChange('model', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
-          disabled={!carPartsData.make}
-        >
-          <option value="">Select Model</option>
-          {(carModels[carPartsData.make] || []).map(model => (
-            <option key={model} value={model}>{model}</option>
-          ))}
-        </select>
-      </div>
+<div className='flex-1'>
+  <label className="block text-[#171214] mb-3 text-sm">Model</label>
+  <select
+    value={carPartsData.carModel}
+    onChange={e => onChange('carModel', e.target.value)}
+    className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
+    disabled={!carPartsData.carMake} // <-- change this line
+  >
+    <option value="">Select Model</option>
+    {(carModels[carPartsData.carMake] || []).map(model => ( // <-- change this line
+      <option key={model} value={model}>{model}</option>
+    ))}
+  </select>
+</div>
       {/* Year */}
       <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Year</label>
         <select
-          value={carPartsData.year}
-          onChange={e => onChange('year', e.target.value)}
+          value={carPartsData.carYear}
+          onChange={e => onChange('carYear', e.target.value)}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         >
           <option value="">Select Year</option>
@@ -443,16 +523,6 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           value={carPartsData.description}
           onChange={e => onChange('description', e.target.value)}
           placeholder="Describe the car part"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
-        />
-      </div>
-      {/* Attachment */}
-      <div>
-        <label className="block text-[#171214] mb-3 text-sm">Attachment (Image/Video)</label>
-        <input
-          type="file"
-          accept="image/*,video/*"
-          onChange={e => onChange('attachment', e.target.files[0])}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         />
       </div>

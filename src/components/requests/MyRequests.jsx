@@ -70,7 +70,14 @@ export default function ServiceRequests() {
           ? Array.from({ length: 3 }).map((_, i) => <SkeletonItem key={i} />)
           : requests.length > 0
             ? requests.map((request) => (
-                <RequestItem key={request._id} request={request} />
+                <Link
+                  key={request._id}
+                  href={`/dashboard/request?id=${request._id}`}
+                  className="block"
+                  passHref
+                >
+                  <RequestItem request={request} />
+                </Link>
               ))
             : <div className="text-gray-400 px-4 py-6">No requests found.</div>
         }

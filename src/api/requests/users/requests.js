@@ -25,6 +25,23 @@ export const getRequests = async () => {
     }
 }
 
+export const getRequestById = async (requestId) => {
+    try {
+        const response = await axiosInstance.get(
+            `/v1/request/user/${requestId}`
+        );
+        console.log('API response:', response);
+        const { data, status } = response;
+        if (response.status !== 200) {
+            throw new Error(`Failed to fetch requests: status ${response.status}`)
+        }
+        return data.data
+    } catch (error) {
+        console.error("Error fetching request");
+        throw error
+    }
+}
+
 export const realEstateRequest = async (formData) => {
     try {
         const response = await axiosInstance.post(

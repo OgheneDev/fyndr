@@ -49,7 +49,7 @@ const NewRequestPage = () => {
     title: '',
     state: '',
     axis: [],
-    details: '',
+    additionalDetails: '',
     rentType: '',
     propertyType: '',
     roomNumber: '',
@@ -78,6 +78,7 @@ const NewRequestPage = () => {
     roomNumber: ''
   })
   const [carPartsData, setCarPartsData] = useState({
+    car_part_image: '',
     title: '',
     state: '',
     details: '',
@@ -163,6 +164,18 @@ const NewRequestPage = () => {
           upperPriceLimit: Number(formData.upperPriceLimit) || 0,
           lowerPriceLimit: Number(formData.lowerPriceLimit) || 0
         })
+        setFormData({
+          title: '',
+          state: '',
+          axis: [],
+          details: '',
+          rentType: '',
+          propertyType: '',
+          roomNumber: '',
+          propertyCondition: '',
+          upperPriceLimit: '',
+          lowerPriceLimit: ''
+        })
       } else if (category === 'car-hire') {
         // Car Hire
         await carHireRequest({
@@ -175,6 +188,16 @@ const NewRequestPage = () => {
           airport: carHireData.airport,
           travel: carHireData.travel === 'Yes'
         })
+        setCarHireData({
+          title: '',
+          state: '',
+          details: '',
+          carType: '',
+          hireDuration: '',
+          pickupLocation: '',
+          airport: '',
+          travel: ''
+        })
       } else if (category === 'cleaning') {
         // Cleaning
         await cleaningRequest({
@@ -186,6 +209,16 @@ const NewRequestPage = () => {
           cleaningType: cleaningData.cleaningType,
           propertyLocation: cleaningData.propertyLocation,
           roomNumber: cleaningData.roomNumber
+        })
+        setCleaningData({
+          title: '',
+          state: '',
+          lga: '',
+          details: '',
+          propertyType: '',
+          cleaningType: '',
+          propertyLocation: '',
+          roomNumber: ''
         })
       } else if (category === 'car-parts') {
         // Car Parts (multipart/form-data)
@@ -202,6 +235,17 @@ const NewRequestPage = () => {
           fd.append('car_part_image', carPartsData.attachment)
         }
         await carPartsRequest(fd)
+        setCarPartsData({
+          title: '',
+          state: '',
+          details: '',
+          currentLocation: '',
+          sourcingLocation: '',
+          carMake: '',
+          carModel: '',
+          carYear: '',
+          attachment: null
+        })
       } else if (category === 'automobile') {
         // Automobile
         await automobileRequest({
@@ -216,6 +260,19 @@ const NewRequestPage = () => {
           transmission: automobileData.transmission,
           upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
           lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0
+        })
+        setAutomobileData({
+          title: '',
+          state: '',
+          details: '',
+          location: '',
+          carMake: '',
+          carModel: '',
+          carYearFrom: '',
+          carYearTo: '',
+          transmission: '',
+          upperPriceLimit: '',
+          lowerPriceLimit: ''
         })
       }
       setSuccess('Request submitted successfully!')
