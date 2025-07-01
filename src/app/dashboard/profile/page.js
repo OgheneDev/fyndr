@@ -200,7 +200,6 @@ const ProfilePage = () => {
         <div className="px-8 py-8 text-center ">
           {renderAvatar()}
           <h2 className="text-xl font-semibold text-gray-900 mb-1">{renderName()}</h2>
-          <p className="text-gray-500 text-sm">Member since 2021</p>
         </div>
 
         {/* Account Settings */}
