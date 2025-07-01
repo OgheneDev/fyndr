@@ -17,18 +17,93 @@ export const getMerchantProfile = async () => {
     }
 }
 
-export const updateMerchantProfileImage = async ({avatar}) => {
+export const updateMerchantAvatar = async (formData) => {
     try {
         const response = await axiosInstance.put(
             '/v1/merchant/profile-image',
-            {avatar}
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         );
 
-        if (response !== 200) {
+        if (response.status !== 200) {
             throw new Error("Failed to update profile image");
         }
     } catch (error) {
-        console.error('Error updating profile image', error);
-        throw error;
+        // Log detailed error info
+        if (error.response) {
+            // Server responded with a status other than 2xx
+            console.error("Error response:", error.response.data);
+            throw error.response.data; // or return error.response.data;
+        } else if (error.request) {
+            // Request was made but no response received
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            // Something else happened
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
+}
+
+export const updateMerchantAvailability = async (isAvailable) => {
+    try {
+        const response = await axiosInstance.put(
+            '/v1/merchant/update/availability',
+            { isAvailable }
+        );
+        console.log(response);
+        if (response.status !== 200) {
+            throw new Error("Failed to update availability");
+        }
+        return response.data;
+    } catch (error) {
+        // Log detailed error info
+        if (error.response) {
+            // Server responded with a status other than 2xx
+            console.error("Error response:", error.response.data);
+            throw error.response.data; // or return error.response.data;
+        } else if (error.request) {
+            // Request was made but no response received
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            // Something else happened
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
+}
+
+export const updateMerchantBusinessDetails = async ({ servicesOffered, businessAddress, businessLocation }) => {
+    try {
+        const response = await axiosInstance.put(
+            '/v1/merchant/update/business',
+            { servicesOffered, businessAddress, businessLocation }
+        );
+        console.log(response);
+        if (response.status !== 200) {
+            throw new Error("Failed to update business details");
+        }
+        return response.data;
+    } catch (error) {
+        // Log detailed error info
+        if (error.response) {
+            // Server responded with a status other than 2xx
+            console.error("Error response:", error.response.data);
+            throw error.response.data; // or return error.response.data;
+        } else if (error.request) {
+            // Request was made but no response received
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            // Something else happened
+            console.error("Error:", error.message);
+            throw error.message;
+        }
     }
 }

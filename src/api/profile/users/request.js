@@ -16,3 +16,25 @@ export const getUserProfile = async () => {
         return [];
     }
 }
+
+export const updateUserAvatar = async (formData) => {
+    try {
+        const response = await axiosInstance.put(
+            '/v1/user/profile-image',
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+        if (response.status !== 200) {
+            throw new Error('failed to update avatar');
+        }
+        return response.data;
+    } catch (error) {
+        console.error('Error updating avatar', error);
+        throw error;
+    }
+}
+
