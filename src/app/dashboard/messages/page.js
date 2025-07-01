@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useUserStore } from '@/store/userStore'
 import { sendMessage, getChatById, getChats } from '@/api/messages/requests'
-import { Search, ArrowLeft, Send, MoreVertical, User } from 'lucide-react'
+import { Search, ArrowLeft, Send, MoreVertical, User, Image } from 'lucide-react'
 
 const MessagesPage = () => {
   const [selectedChat, setSelectedChat] = useState(null)
@@ -17,6 +17,17 @@ const MessagesPage = () => {
 
   // Fetch all chats on mount
   useEffect(() => {
+    // Check if a chat was passed from the request page
+    const storedChat = typeof window !== 'undefined' ? localStorage.getItem('fynder_selected_chat') : null;
+    if (storedChat) {
+      try {
+        const chatObj = JSON.parse(storedChat);
+        setSelectedChat(chatObj);
+      } catch (e) {
+        // ignore parse error
+      }
+      localStorage.removeItem('fynder_selected_chat');
+    }
     setConversationsLoading(true)
     getChats()
       .then(data => setConversations(data || []))
@@ -66,10 +77,6 @@ const MessagesPage = () => {
     }
   }
 
-  const getInitials = (name) => {
-    return name?.split(' ').map(n => n[0]).join('').toUpperCase()
-  }
-
   // Skeleton for conversations
   const ConversationSkeleton = () => (
     <div className="flex items-center gap-3 px-4 py-3">
@@ -95,9 +102,51 @@ const MessagesPage = () => {
     </div>
   )
 
+  // Helper to render avatar or fallback
+  const renderAvatar = (party) => {
+    if (party?.avatar) {
+      return (
+        <img
+          src={party.avatar}
+          alt={party.name}
+          className="w-12 h-12 rounded-full object-cover"
+        />
+      )
+    }
+    return (
+      <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+        <User className="w-6 h-6 text-gray-400" />
+      </div>
+    )
+  }
+
+  // Helper for message avatar (smaller)
+  const renderMessageAvatar = (party) => {
+    if (party?.avatar) {
+      return (
+        <img
+          src={party.avatar}
+          alt={party.name}
+          className="w-8 h-8 rounded-full object-cover"
+        />
+      )
+    }
+    return (
+      <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+        <User className="w-4 h-4 text-gray-400" />
+      </div>
+    )
+  }
+
+  // Helper to get current user/merchant info for avatar
+  const getCurrentUserParty = () => {
+    if (!chatInfo) return null
+    return userType === 'merchant' ? chatInfo.merchant : chatInfo.user
+  }
+
   if (selectedChat) {
     return (
-      <div className="flex flex-col h-screen bg-gray-50">
+      <div className="flex flex-col h-screen">
         {/* Chat Header */}
         <div className="flex items-center gap-3 px-4 py-3 bg-white ">
           <button
@@ -106,22 +155,18 @@ const MessagesPage = () => {
           >
             <ArrowLeft className="w-6 h-6 text-gray-600" />
           </button>
-          <div className="w-10 h-10 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full flex items-center justify-center flex-shrink-0">
-            <span className="text-sm font-medium text-gray-700">
-              {getInitials(chatInfo?.user?.name || chatInfo?.merchant?.name || '')}
-            </span>
+          {/* Avatar or fallback */}
+          <div className="flex-shrink-0">
+            {renderAvatar(chatInfo?.user || chatInfo?.merchant)}
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-medium text-gray-900 truncate">
-              {chatInfo?.user?.name || chatInfo?.merchant?.name || <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />}
+              {chatInfo?.user?.name || chatInfo?.merchant?.name || <span className="inline-block h-4 w-24 bg-gray-200 rounded animate-pulse align-middle" />}
             </h3>
             <p className="text-sm text-gray-500 truncate">
-              {chatInfo?.request?.title || <div className="h-3 w-20 bg-gray-100 rounded animate-pulse" />}
+              {chatInfo?.request?.title || <span className="inline-block h-3 w-20 bg-gray-100 rounded animate-pulse align-middle" />}
             </p>
           </div>
-          <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
-            <MoreVertical className="w-6 h-6 text-gray-600" />
-          </button>
         </div>
 
         {/* Messages */}
@@ -129,55 +174,63 @@ const MessagesPage = () => {
           {chatLoading ? (
             <ChatSkeleton />
           ) : (
-            chatMessages.map((message) => (
-              <div
-                key={message._id}
-                className={`flex ${message.sender?.senderType === (userType === 'merchant' ? 'Merchant' : 'User') ? 'justify-end' : 'justify-start'}`}
-              >
+            chatMessages.map((message) => {
+              const isOwn = message.sender?.senderType === (userType === 'merchant' ? 'Merchant' : 'User')
+              const party = message.sender?.senderType === 'Merchant' ? chatInfo?.merchant : chatInfo?.user
+              return (
                 <div
-                  className={`max-w-[80%] px-4 py-2 rounded-lg ${
-                    message.sender?.senderType === (userType === 'merchant' ? 'Merchant' : 'User')
-                      ? 'bg-[#541229] text-white rounded-br-sm'
-                      : 'bg-white text-gray-900 rounded-bl-sm'
-                  }`}
+                  key={message._id}
+                  className={`flex items-end ${isOwn ? 'justify-end' : 'justify-start'} gap-2`}
                 >
-                  <p className="text-sm leading-relaxed">{message.content}</p>
-                  <p className={`text-xs mt-1 ${
-                    message.sender?.senderType === (userType === 'merchant' ? 'Merchant' : 'User')
-                      ? 'text-gray-200'
-                      : 'text-gray-500'
-                  }`}>
-                    {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </p>
+                  {/* Avatar on left for other, right for own */}
+                  {!isOwn && renderMessageAvatar(party)}
+                  <div
+                    className={`max-w-[80%] px-4 py-2 rounded-lg ${
+                      isOwn
+                        ? 'bg-[#B2C9E5] text-[#121417] rounded-br-sm'
+                        : 'bg-[#F2F2F5] text-[#121417] rounded-bl-sm'
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed">{message.content}</p>
+                  </div>
+                  {isOwn && renderMessageAvatar(party)}
                 </div>
-              </div>
-            ))
+              )
+            })
           )}
         </div>
 
         {/* Message Input */}
-        <div className="px-4 py-3 bg-white border-t border-gray-200">
-          <div className="flex items-end gap-2">
-            <div className="flex-1">
-              <textarea
-                value={messageInput}
-                onChange={(e) => setMessageInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type a message..."
-                className="w-full px-4 py-2 border border-gray-200 rounded-full resize-none outline-none text-sm max-h-20"
-                rows="1"
-                disabled={chatLoading}
-              />
-            </div>
-            <button
-              onClick={handleSendMessage}
-              disabled={!messageInput.trim() || chatLoading}
-              className="p-2 bg-[#541229] disabled:bg-gray-300 text-white rounded-full transition-colors flex-shrink-0"
-            >
-              <Send className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+<div className="px-4 py-3 bg-white border-t border-gray-200">
+  <div className="flex items-center gap-2">
+    {/* Current user avatar */}
+    <div className="flex items-center h-10">
+      {renderMessageAvatar(getCurrentUserParty())}
+    </div>
+    <div className="flex-1 flex items-center">
+      <textarea
+        value={messageInput}
+        onChange={(e) => setMessageInput(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder="Type a message..."
+        className="w-full px-4 py-2 border border-gray-200 rounded-full resize-none outline-none text-sm max-h-20"
+        rows="1"
+        disabled={chatLoading}
+        style={{ minHeight: 40 }} // Ensures textarea matches avatar/button height
+      />
+    </div>
+    <div className="flex items-center h-10">
+      <button
+        onClick={handleSendMessage}
+        disabled={!messageInput.trim() || chatLoading}
+        className="p-2 bg-[#541229] disabled:bg-gray-300 text-white rounded-full cursor-pointer transition-colors flex-shrink-0"
+        style={{ height: 40, width: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <Send className="w-5 h-5" />
+      </button>
+    </div>
+  </div>
+</div>
       </div>
     )
   }
@@ -207,26 +260,16 @@ const MessagesPage = () => {
                 className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 active:bg-gray-100 cursor-pointer"
               >
                 <div className="relative flex-shrink-0">
-                  {otherParty?.avatar ? (
-                    <img
-                      src={otherParty.avatar}
-                      alt={otherParty.name}
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full flex items-center justify-center">
-                      <span className="text-sm font-medium text-gray-700">
-                        {getInitials(otherParty?.name || '')}
-                      </span>
-                    </div>
-                  )}
+                  {renderAvatar(otherParty)}
                   {unread && (
                     <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#541229] rounded-full"></div>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <h3 className="font-medium text-gray-900 truncate">{otherParty?.name || <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />}</h3>
+                    <h3 className="font-medium text-gray-900 truncate">
+                      {otherParty?.name || <span className="inline-block h-4 w-24 bg-gray-200 rounded animate-pulse align-middle" />}
+                    </h3>
                     <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
                       {lastMsg?.createdAt ? new Date(lastMsg.createdAt).toLocaleDateString() : ''}
                     </span>

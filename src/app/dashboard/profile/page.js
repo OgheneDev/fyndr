@@ -1,40 +1,32 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 
 const ProfilePage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    phoneNumber: '',
-    city: '',
-    state: ''
-  })
+  const [activeSetting, setActiveSetting] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
+  const handleBack = () => setActiveSetting(null);
 
-  const handleSaveChanges = () => {
-    // Handle save logic here
-    console.log('Saving changes:', formData)
-  }
+  const SERVICE_OPTIONS = [
+    { label: 'Car Hire', value: 'car-hire' },
+    { label: 'Cleaning', value: 'cleaning' },
+    { label: 'Real Estate', value: 'real-estate' },
+    { label: 'Car Parts', value: 'car-parts' },
+    { label: 'Automobile', value: 'automobile' },
+  ];
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-6 md:max-w-4xl md:mx-auto">
       <div className="">
         {/* Header */}
-        <div className="px-8 py-6 border-b border-gray-100">
-          <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
+        <div className="px-8 py-6  ">
+          <h1 className="text-2xl font-bold text-center text-gray-900">Profile</h1>
         </div>
 
         {/* Profile Section */}
-        <div className="px-8 py-8 text-center border-b border-gray-100">
+        <div className="px-8 py-8 text-center ">
           <div className=" flex items-center justify-center overflow-hidden">
               <Image
                 src={'/images/sofia.png'}
@@ -48,106 +40,136 @@ const ProfilePage = () => {
           <p className="text-gray-500 text-sm">Member since 2021</p>
         </div>
 
-        {/* Personal Information */}
-        <div className="px-0 md:px-8 py-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">Personal Information</h3>
-          
-          <div className="space-y-6">
-            {/* Name Field */}
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg  outline-none transition-all"
-                placeholder="Enter your name"
-              />
-            </div>
-
-            {/* Phone Number Field */}
-            <div>
-              <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number
-              </label>
-              <input
-                type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg  outline-none transition-all"
-                placeholder="Enter your phone number"
-              />
-            </div>
-
-            {/* City and State Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
-                  City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg  outline-none transition-all"
-                  placeholder="Enter your city"
-                />
-              </div>
-              <div>
-                <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-2">
-                  State
-                </label>
-                <input
-                  type="text"
-                  id="state"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg  outline-none transition-all"
-                  placeholder="Enter your state"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Account Settings */}
-        <div className="px-0 md:px-8 py-6 border-t border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">Account Settings</h3>
-          
-          <div className="space-y-4">
-            {/* Change Password */}
-            <button className="w-full flex items-center cursor-pointer justify-between py-4 px-0 text-left hover:bg-gray-50 rounded-lg transition-colors group">
-              <span className="text-gray-700 font-medium">Change Password</span>
-              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
-            </button>
+        <div className="px-0 md:px-8 py-6">
+          {!activeSetting && (
+          <>
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Account Settings</h3>
+            <div className="space-y-4">
+              {/* Change Password */}
+              <button
+                className="w-full flex items-center cursor-pointer justify-between py-4 px-0 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                onClick={() => setActiveSetting('password')}
+              >
+                <span className="text-gray-700 font-medium">Change Password</span>
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+              </button>
 
-            {/* Manage Account */}
-            <button className="w-full flex items-center cursor-pointer justify-between py-4 px-0 text-left hover:bg-gray-50 rounded-lg transition-colors group">
-              <span className="text-gray-700 font-medium">Manage Account</span>
-              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
-            </button>
-          </div>
-        </div>
+              {/* Edit Services & Location */}
+              <button
+                className="w-full flex items-center cursor-pointer justify-between py-4 px-0 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                onClick={() => setActiveSetting('services')}
+              >
+                <span className="text-gray-700 font-medium">Edit Services & Location</span>
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+              </button>
 
-        {/* Save Button */}
-        <div className="md:px-8 px-0 py-6 ">
-          <div className="flex md:justify-end">
-            <button
-              onClick={handleSaveChanges}
-              className="px-6 py-3 bg-purple-200 hover:bg-purple-300 cursor-pointer w-full md:w-fit text-purple-800 text-sm font-medium rounded-lg transition-colors"
-            >
-              Save Changes
-            </button>
+              {/* Privacy Policy */}
+              <button
+                className="w-full flex items-center cursor-pointer justify-between py-4 px-0 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                onClick={() => setActiveSetting('privacy')}
+              >
+                <span className="text-gray-700 font-medium">Privacy Policy</span>
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+              </button>
+
+              {/* Terms and conditions */}
+              <button
+                className="w-full flex items-center cursor-pointer justify-between py-4 px-0 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                onClick={() => setActiveSetting('terms')}
+              >
+                <span className="text-gray-700 font-medium">Terms and conditions</span>
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* Change Password UI */}
+        {activeSetting === 'password' && (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Change Password</h3>
+            {/* Replace with your password change form */}
+            <div className='flex flex-col gap-3'>
+            <input type="password" placeholder="New Password" className="bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 placeholder:text-sm" />
+            <input type="password" placeholder="Confirm Password" className=" bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 placeholder:text-sm" />
+            </div>
+            <div className='flex items-center mt-4 justify-between'>
+              <button onClick={handleBack} className='bg-[#F0F2F5] px-4 py-2 rounded text-sm cursor-pointer'>Cancel</button>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm cursor-pointer">Save</button>
+            </div>
           </div>
+        )}
+
+        {/* Edit Services & Location UI */}
+        {activeSetting === 'services' && (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Services Offered</h3>
+            <div className='space-y-2 mb-6'>
+              {SERVICE_OPTIONS.map(({ label, value }) => (
+                <div key={value} className="flex items-center">
+                  <input
+                   type='checkbox'
+                   className="w-4 h-4 text-[#541229] border-gray-300 rounded focus:ring-[#541229]"
+                />
+                <span className="ml-2 text-sm text-gray-700">{label}</span>
+                </div>
+              ))}
+            </div>
+            <div className='flex flex-col gap-7'>
+            <div className='space-y-2 flex flex-col'>
+              <label className='text-sm'>Business Address</label>
+              <input type="text" placeholder="Enter your business address" className="bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 placeholder:text-sm" />
+            </div>
+            <div className='space-y-2 flex flex-col'>
+              <label className='text-sm'>Business Location (e.g., Ikeja Axis)</label>
+              <input type="text" placeholder="Specify your business location" className=" bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 placeholder:text-sm" />
+            </div>
+            </div>
+            <div className='flex items-center mt-4 justify-between'>
+              <button onClick={handleBack} className='bg-[#F0F2F5] px-4 py-2 rounded text-sm cursor-pointer'>Cancel</button>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm cursor-pointer">Save</button>
+            </div>
+          </div>
+        )}
+
+        {/* Privacy Policy UI */}
+        {activeSetting === 'privacy' && (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Privacy Policy</h3>
+            <div className="text-sm text-gray-700 max-h-72 overflow-y-auto mb-4">
+              {/* Replace with your actual privacy policy content */}
+              <p>
+                Your privacy is important to us. We do not share your personal information with third parties except as necessary to provide our services or as required by law.
+              </p>
+              <p className="mt-2">
+                Please review our full privacy policy for more details about how your data is collected, used, and protected.
+              </p>
+            </div>
+            <div className='flex items-center justify-end'>
+              <button onClick={handleBack} className='bg-[#F0F2F5] px-4 py-2 rounded text-sm cursor-pointer'>Back</button>
+            </div>
+          </div>
+        )}
+
+        {/* Terms and Conditions UI */}
+        {activeSetting === 'terms' && (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Terms and Conditions</h3>
+            <div className=" text-sm text-gray-700 max-h-72 overflow-y-auto mb-4">
+              {/* Replace with your actual terms and conditions content */}
+              <p>
+                By using our platform, you agree to abide by all applicable rules and regulations.
+              </p>
+              <p className="mt-2">
+                Please review our full terms and conditions for more information about your rights and responsibilities.
+              </p>
+            </div>
+            <div className='flex items-center justify-end'>
+              <button onClick={handleBack} className='bg-[#F0F2F5] px-4 py-2 rounded text-sm cursor-pointer'>Back</button>
+            </div>
+          </div>
+        )}
         </div>
       </div>
     </div>

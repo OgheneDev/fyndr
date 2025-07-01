@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MessagesSquare } from "lucide-react";
 import { getUserRequestById } from "@/api/requests/users/requests";
 import { getMerchantRequestById } from "@/api/requests/merchants/requests";
 import { initiatePayment, verifyPayment } from "@/api/payments/requests";
+import { startNewChat } from "@/api/messages/requests";
 import { useUserStore } from "@/store/userStore";
 
 // Add this mapping before the component
@@ -77,9 +78,22 @@ const RequestDetailPage = () => {
         router.back();
     };
 
-    const handleContactUser = () => {
-        // Add your contact logic here
-        console.log("Contact user clicked");
+    const handleContactUser = async () => {
+        if (userType !== "merchant") return;
+        try {
+            const res = await startNewChat({ requestId: id });
+            if (res && res.data) {
+                // Store chat data in localStorage for the messages page to pick up
+                localStorage.setItem('fynder_selected_chat', JSON.stringify(res.data));
+                router.push('/dashboard/messages');
+            }
+        } catch (err) {
+            // Optionally show error to user
+            alert(
+                (err && err.message) ||
+                (typeof err === "string" ? err : "Failed to start chat.")
+            );
+        }
     };
 
     const handleMakePayment = async () => {
@@ -199,13 +213,13 @@ const data = request;
                 <div className="flex items-center">
                     <button 
                         onClick={handleBack}
-                        className="mr-4 p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
+                        className="mr-4 p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                     >
                         <ArrowLeft className="w-6 h-6 text-gray-700" />
                     </button>
                     <h1 className="text-xl font-semibold text-gray-900">Request Details</h1>
                 </div>
-            </div>
+            </div> 
 
             {/* Content */}
             <div className="px-6 py-6 space-y-8">
@@ -357,9 +371,10 @@ const data = request;
                     )}
                     {userType === "merchant" && (
                         <button
-                            className='bg-[#57132A] py-3 px-5 rounded-md w-full cursor-pointer text-white'
+                            className='bg-[#57132A] py-3 px-5 rounded-md flex items-center justify-center gap-3 w-full cursor-pointer text-white'
                             onClick={handleContactUser}
                         >
+                            <MessagesSquare size={18} />
                             Chat with user
                         </button>
                     )}
