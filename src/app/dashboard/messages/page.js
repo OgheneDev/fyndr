@@ -146,7 +146,7 @@ const MessagesPage = () => {
 
   if (selectedChat) {
     return (
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-screen ">
         {/* Chat Header */}
         <div className="flex items-center gap-3 px-4 py-3 bg-white ">
           <button
@@ -170,7 +170,7 @@ const MessagesPage = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-2 space-y-3">
+        <div className="flex-1 overflow-y-auto px-4 py-2  space-y-3">
           {chatLoading ? (
             <ChatSkeleton />
           ) : (
@@ -201,7 +201,7 @@ const MessagesPage = () => {
         </div>
 
         {/* Message Input */}
-<div className="px-4 py-3 bg-white border-t border-gray-200">
+<div className="px-4 py-3 bg-white border-t mb-13 md:mb-0 border-gray-200">
   <div className="flex items-center gap-2">
     {/* Current user avatar */}
     <div className="flex items-center h-10">
