@@ -1,7 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Home } from 'lucide-react'
+import { Home, Car, Building2, BrushCleaning, Wrench, CarFront } from 'lucide-react'
 import { getRequests } from '@/api/requests/merchants/requests'
+import Link from 'next/link'
 
 // Service and status mappings
 const SERVICE_OPTIONS = [
@@ -18,6 +19,15 @@ const STATUS_OPTIONS = [
   { value: 'closed', label: 'Closed' },
   { value: 'cancelled', label: 'Cancelled' }
 ]
+
+// Map category to icon component
+const CATEGORY_ICONS = {
+  'real-estate': Building2,
+  'car-hire': Car,
+  'cleaning': BrushCleaning,
+  'car-parts': Wrench,
+  'automobile': CarFront
+};
 
 const OpenRequestsPage = () => {
   const [requests, setRequests] = useState([])
@@ -161,13 +171,15 @@ const OpenRequestsPage = () => {
             ))
           ) : (
             <>
-              {filteredRequests.map((request) => (
+              {filteredRequests.map((request) => {
+                const Icon = CATEGORY_ICONS[request.category] || Home;
+                return (
                 <div key={request._id} className="bg-white rounded-lg md:p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4">
-                      {/* House Icon */}
+                      {/* Category Icon */}
                       <div className='bg-[#F0F2F5] p-4 rounded-md'>
-                        <Home size={20} />
+                        <Icon size={20} />
                       </div>
 
                       {/* Content */}
@@ -182,13 +194,17 @@ const OpenRequestsPage = () => {
 
                     {/* More Details Button */}
                     <div className="flex-shrink-0 ml-4">
-                      <button className="text-sm font-medium bg-[#F0F2F5] px-5 py-2 rounded-full">
-                        More Details
-                      </button>
+                      <Link
+                        href={`/dashboard/request?id=${request._id}`}
+                      >
+                        <button className="text-sm font-medium cursor-pointer bg-[#F0F2F5] px-5 py-2 rounded-full">
+                          More Details
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
-              ))}
+              )})}
               {filteredRequests.length === 0 && (
                 <div className="text-center text-gray-500 py-10">No requests available.</div>
               )}

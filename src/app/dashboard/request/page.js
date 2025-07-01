@@ -3,8 +3,19 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { getRequestById } from "@/api/requests/users/requests";
+import { getUserRequestById } from "@/api/requests/users/requests";
+import { getMerchantRequestById } from "@/api/requests/merchants/requests";
 import { initiatePayment, verifyPayment } from "@/api/payments/requests";
+import { useUserStore } from "@/store/userStore";
+
+// Add this mapping before the component
+const CATEGORY_LABELS = {
+    "real-estate": "Real Estate",
+    "car-hire": "Car Hire",
+    "car-parts": "Car Parts",
+    "cleaning": "Cleaning",
+    "automobile": "Automobile"
+};
 
 const RequestDetailPage = () => {
     const router = useRouter();
@@ -18,11 +29,33 @@ const RequestDetailPage = () => {
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [paymentReference, setPaymentReference] = useState(null);
     const [authorizationUrl, setAuthorizationUrl] = useState(null);
+    const userType = useUserStore((state) => state.userType);
+    const userData = useUserStore((state) => state.userData);
+
+    // Determine user type from store or fallback to request path
+    const [resolvedUserType, setResolvedUserType] = useState(userType);
 
     useEffect(() => {
-        if (!id) return;
+        // If userType is not set, try to infer from userData or fallback logic
+        if (!userType && userData) {
+            if (userData.role === "merchant" || userData.type === "merchant") {
+                setResolvedUserType("merchant");
+            } else {
+                setResolvedUserType("user");
+            }
+        } else if (userType) {
+            setResolvedUserType(userType);
+        }
+    }, [userType, userData]);
+
+    useEffect(() => {
+        if (!id || !resolvedUserType) return;
         setLoading(true);
-        getRequestById(id)
+        const fetchRequest =
+            resolvedUserType === "merchant"
+                ? getMerchantRequestById
+                : getUserRequestById;
+        fetchRequest(id)
             .then(data => {
                 setRequest(data);
                 setLoading(false);
@@ -31,7 +64,7 @@ const RequestDetailPage = () => {
                 setError(err);
                 setLoading(false);
             });
-    }, [id]);
+    }, [id, resolvedUserType]);
 
     // On mount, if request has transaction_reference, set it
     useEffect(() => {
@@ -159,15 +192,8 @@ const data = request;
         return "Not specified";
     };
 
-    const getDeadlineText = () => {
-        if (data.deadline) {
-            return new Date(data.deadline).toLocaleDateString();
-        }
-        return "ASAP";
-    };
-
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen pb-[60px]">
             {/* Header */}
             <div className="bg-white px-4 py-4">
                 <div className="flex items-center">
@@ -186,12 +212,14 @@ const data = request;
                 {/* Service Category */}
                 <div>
                     <h2 className="text-lg font-semibold text-gray-900 mb-3">Service Category</h2>
-                    <p className="text-gray-700 text-base">{data.category || "Plumbing"}</p>
+                    <p className="text-gray-700 text-base">
+                        {CATEGORY_LABELS[data.category] || data.category || "Unknown"}
+                    </p>
                 </div>
 
-                {/* Specific Requirements */}
+                {/* Additional details */}
                 <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-3">Specific Requirements</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 mb-3">Additional details</h2>
                     <p className="text-gray-700 text-base leading-relaxed">
                         {data.additionalDetails || "No additional details."}
                     </p>
@@ -207,12 +235,6 @@ const data = request;
                 <div>
                     <h2 className="text-lg font-semibold text-gray-900 mb-3">Budget</h2>
                     <p className="text-gray-700 text-base">{getBudgetText()}</p>
-                </div>
-
-                {/* Deadline */}
-                <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-3">Deadline</h2>
-                    <p className="text-gray-700 text-base">{getDeadlineText()}</p>
                 </div>
 
                 {/* Service-specific details sections */}
@@ -249,8 +271,6 @@ const data = request;
                             <p className="text-gray-700"><span className="font-medium">Property Type:</span> {data.realEstate.propertyType}</p>
                             <p className="text-gray-700"><span className="font-medium">Rooms:</span> {data.realEstate.roomNumber}</p>
                             <p className="text-gray-700"><span className="font-medium">Condition:</span> {data.realEstate.propertyCondition}</p>
-                            <p className="text-gray-700"><span className="font-medium">Lower Price Limit:</span> {data.realEstate.lowerPriceLimit}</p>
-                            <p className="text-gray-700"><span className="font-medium">Upper Price Limit:</span> {data.realEstate.upperPriceLimit}</p>
                         </div>
                     </div>
                 )}
@@ -305,31 +325,43 @@ const data = request;
                         </div>
                     </div>
                 )}
-                {/* Payment Button and Status */}
+                {/* Payment/Chat Button and Status */}
                 <div className="mt-6">
-                    {!paymentReference && (
+                    {userType === "user" && (
+                        <>
+                            {!paymentReference && (
+                                <button
+                                    className='bg-[#57132A] py-2 px-5 rounded-full text-sm cursor-pointer text-white disabled:opacity-60'
+                                    onClick={handleMakePayment}
+                                    disabled={paymentLoading}
+                                >
+                                    {paymentLoading ? "Processing..." : "Make Payment"}
+                                </button>
+                            )}
+                            {paymentReference && (
+                                <button
+                                    className='bg-blue-700 py-2 px-5 rounded-full text-sm cursor-pointer text-white disabled:opacity-60'
+                                    onClick={handleVerifyPayment}
+                                    disabled={paymentLoading}
+                                >
+                                    {paymentLoading ? "Verifying..." : "I've made the payment"}
+                                </button>
+                            )}
+                            {paymentError && (
+                                <div className="text-red-600 mt-2 text-sm">{paymentError}</div>
+                            )}
+                            {paymentSuccess && (
+                                <div className="text-green-600 mt-2 text-sm">Payment successful!</div>
+                            )}
+                        </>
+                    )}
+                    {userType === "merchant" && (
                         <button
-                            className='bg-[#57132A] py-2 px-5 rounded-full text-sm cursor-pointer text-white disabled:opacity-60'
-                            onClick={handleMakePayment}
-                            disabled={paymentLoading}
+                            className='bg-[#57132A] py-3 px-5 rounded-md w-full cursor-pointer text-white'
+                            onClick={handleContactUser}
                         >
-                            {paymentLoading ? "Processing..." : "Make Payment"}
+                            Chat with user
                         </button>
-                    )}
-                    {paymentReference && (
-                        <button
-                            className='bg-blue-700 py-2 px-5 rounded-full text-sm cursor-pointer text-white disabled:opacity-60'
-                            onClick={handleVerifyPayment}
-                            disabled={paymentLoading}
-                        >
-                            {paymentLoading ? "Verifying..." : "I've made the payment"}
-                        </button>
-                    )}
-                    {paymentError && (
-                        <div className="text-red-600 mt-2 text-sm">{paymentError}</div>
-                    )}
-                    {paymentSuccess && (
-                        <div className="text-green-600 mt-2 text-sm">Payment successful!</div>
                     )}
                 </div>
             </div>

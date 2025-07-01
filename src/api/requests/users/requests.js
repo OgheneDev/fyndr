@@ -25,7 +25,7 @@ export const getRequests = async () => {
     }
 }
 
-export const getRequestById = async (requestId) => {
+export const getUserRequestById = async (requestId) => {
     try {
         const response = await axiosInstance.get(
             `/v1/request/user/${requestId}`
