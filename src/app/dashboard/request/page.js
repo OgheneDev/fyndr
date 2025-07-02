@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, MessagesSquare } from "lucide-react";
 import { getUserRequestById } from "@/api/requests/users/requests";
@@ -18,7 +18,8 @@ const CATEGORY_LABELS = {
     "automobile": "Automobile"
 };
 
-const RequestDetailPage = () => {
+// Move the main logic to an inner component
+function RequestDetailPageInner() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get("id")
@@ -386,4 +387,10 @@ const data = request;
     );
 };
 
-export default RequestDetailPage;
+export default function RequestDetailPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <RequestDetailPageInner />
+        </Suspense>
+    );
+}
