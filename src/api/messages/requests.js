@@ -12,8 +12,20 @@ export const getChats = async () => {
         console.log('API response:', response)
         return data.data
     } catch (error) {
-        console.error('Error fetching chats', error);
-        return [];
+         // Log detailed error info
+        if (error.response) {
+            // Server responded with a status other than 2xx
+            console.error("Error response:", error.response.data);
+            throw error.response.data; // or return error.response.data;
+        } else if (error.request) {
+            // Request was made but no response received
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            // Something else happened
+            console.error("Error:", error.message);
+            throw error.message;
+        }
     }
 }
 

@@ -1,33 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Home, Car, Building2, BrushCleaning, Wrench, CarFront } from 'lucide-react'
 import { getRequests } from '@/api/requests/merchants/requests'
-import Link from 'next/link'
-
-// Service and status mappings
-const SERVICE_OPTIONS = [
-  { value: '', label: 'All Services' },
-  { value: 'car-hire', label: 'Car Hire' },
-  { value: 'cleaning', label: 'Cleaning' },
-  { value: 'real-estate', label: 'Real Estate' },
-  { value: 'car-parts', label: 'Car Parts' },
-  { value: 'automobile', label: 'Automobile' }
-]
-const STATUS_OPTIONS = [
-  { value: '', label: 'All Statuses' },
-  { value: 'submitted', label: 'Submitted' },
-  { value: 'closed', label: 'Closed' },
-  { value: 'cancelled', label: 'Cancelled' }
-]
-
-// Map category to icon component
-const CATEGORY_ICONS = {
-  'real-estate': Building2,
-  'car-hire': Car,
-  'cleaning': BrushCleaning,
-  'car-parts': Wrench,
-  'automobile': CarFront
-};
+import ServiceOptions, { SERVICE_OPTIONS } from '@/components/open-requests/ServiceOptions'
+import StatusOptions, { STATUS_OPTIONS } from '@/components/open-requests/StatusOptions'
+import RequestsList from '@/components/open-requests/RequestsList'
 
 const OpenRequestsPage = () => {
   const [requests, setRequests] = useState([])
@@ -105,20 +81,7 @@ const OpenRequestsPage = () => {
 
         {/* Filter Dropdowns */}
         <div className="flex flex-wrap gap-3 mb-8">
-          {/* Service Filter */}
-          <div className="relative">
-            <select
-              value={service}
-              onChange={e => setService(e.target.value)}
-              className="inline-flex cursor-pointer items-center px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              {SERVICE_OPTIONS.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Location Filter */}
+          <ServiceOptions value={service} onChange={setService} />
           <div className="relative">
             <select
               value={targetState}
@@ -131,86 +94,15 @@ const OpenRequestsPage = () => {
               ))}
             </select>
           </div>
-
-          {/* Status Filter */}
-          <div className="relative">
-            <select
-              value={status}
-              onChange={e => setStatus(e.target.value)}
-              className="inline-flex items-center cursor-pointer px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              {STATUS_OPTIONS.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-          </div>
+          <StatusOptions value={status} onChange={setStatus} />
         </div>
 
         {/* Request Cards */}
-        <div className="space-y-6">
-          {loading ? (
-            // Skeleton Loader
-            Array.from({ length: 4 }).map((_, idx) => (
-              <div key={idx} className="bg-white rounded-lg md:p-6 animate-pulse">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start space-x-4">
-                    <div className='bg-[#F0F2F5] p-4 rounded-md'>
-                      <div className="h-5 w-5 bg-gray-300 rounded" />
-                    </div>
-                    <div className="flex-1 min-w-0 space-y-2">
-                      <div className="h-5 w-32 bg-gray-200 rounded" />
-                      <div className="h-4 w-24 bg-gray-100 rounded" />
-                      <div className="h-4 w-40 bg-gray-100 rounded" />
-                    </div>
-                  </div>
-                  <div className="flex-shrink-0 ml-4">
-                    <div className="h-8 w-24 bg-gray-200 rounded-full" />
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <>
-              {filteredRequests.map((request) => {
-                const Icon = CATEGORY_ICONS[request.category] || Home;
-                return (
-                <div key={request._id} className="bg-white rounded-lg md:p-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-4">
-                      {/* Category Icon */}
-                      <div className='bg-[#F0F2F5] p-4 rounded-md'>
-                        <Icon size={20} />
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-semibold text-gray-900">{getServiceLabel(request.category)}</h3>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-2">{request.targetState}</p>
-                        <p className="text-sm text-gray-600">{request.additionalDetails || request.title}</p>
-                      </div>
-                    </div>
-
-                    {/* More Details Button */}
-                    <div className="flex-shrink-0 ml-4">
-                      <Link
-                        href={`/dashboard/request?id=${request._id}`}
-                      >
-                        <button className="text-sm font-medium cursor-pointer bg-[#F0F2F5] px-5 py-2 rounded-full">
-                          More Details
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )})}
-              {filteredRequests.length === 0 && (
-                <div className="text-center text-gray-500 py-10">No requests available.</div>
-              )}
-            </>
-          )}
-        </div>
+        <RequestsList
+          loading={loading}
+          filteredRequests={filteredRequests}
+          getServiceLabel={getServiceLabel}
+        />
       </div>
     </div>
   )

@@ -346,7 +346,7 @@ const data = request;
                         <>
                             {!paymentReference && (
                                 <button
-                                    className='bg-[#57132A] py-2 px-5 rounded-full text-sm cursor-pointer text-white disabled:opacity-60'
+                                    className='bg-[#57132A] py-3 px-5 rounded-md flex items-center justify-center gap-3 w-full cursor-pointer text-white disabled:opacity-60'
                                     onClick={handleMakePayment}
                                     disabled={paymentLoading}
                                 >
