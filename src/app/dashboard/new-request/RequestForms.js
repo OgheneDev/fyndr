@@ -48,19 +48,19 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
 
   return (
     <div className="space-y-6">
-      <div className='flex items-start '>
+      <div className='flex items-start gap-7 fixed top-0 bg-white z-50 w-full'>
         <Link href={'/dashboard'}>
           <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
             <ArrowLeft className="w-6 h-6 text-gray-600" />
           </button>
         </Link>
-        <article className='mx-auto text-center'>
+        <article className=' text-center'>
         <h2 className='text-xl font-bold mb-1'>Post a Properties Request</h2>
         <p className='text-sm'>Find lands, homes or rentals</p>
         </article>
       </div>
       {/* Title */}
-      <div>
+      <div className='mt-10'>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
