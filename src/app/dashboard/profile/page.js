@@ -195,38 +195,26 @@ const ProfilePage = () => {
               SERVICE_OPTIONS={SERVICE_OPTIONS}
             />
           )}
-          {activeSetting === 'privacy' && (
-            <PolicyModal
-              title="Privacy Policy"
-              onBack={handleBack}
-              children={
-                <>
-                  <p>
-                    Your privacy is important to us. We do not share your personal information with third parties except as necessary to provide our services or as required by law.
-                  </p>
-                  <p className="mt-2">
-                    Please review our full privacy policy for more details about how your data is collected, used, and protected.
-                  </p>
-                </>
-              }
-            />
-          )}
-          {activeSetting === 'terms' && (
-            <PolicyModal
-              title="Terms and Conditions"
-              onBack={handleBack}
-              children={
-                <>
-                  <p>
-                    By using our platform, you agree to abide by all applicable rules and regulations.
-                  </p>
-                  <p className="mt-2">
-                    Please review our full terms and conditions for more information about your rights and responsibilities.
-                  </p>
-                </>
-              }
-            />
-          )}
+{activeSetting === 'privacy' && (
+  <PolicyModal title="Privacy Policy" onBack={handleBack}>
+    <p>
+      Your privacy is important to us. We do not share your personal information with third parties except as necessary to provide our services or as required by law.
+    </p>
+    <p className="mt-2">
+      Please review our full privacy policy for more details about how your data is collected, used, and protected.
+    </p>
+  </PolicyModal>
+)}
+{activeSetting === 'terms' && (
+  <PolicyModal title="Terms and Conditions" onBack={handleBack}>
+    <p>
+      By using our platform, you agree to abide by all applicable rules and regulations.
+    </p>
+    <p className="mt-2">
+      Please review our full terms and conditions for more information about your rights and responsibilities.
+    </p>
+  </PolicyModal>
+)}
           {/* Floating Confirm Delete Modal */}
           {showConfirmDelete && (
             <div className="fixed inset-0 z-50 flex items-center justify-center">
