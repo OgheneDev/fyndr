@@ -46,11 +46,25 @@ const tabs = [
   { label: 'Automobiles', category: 'automobile' }
 ]
 
+const SearchParamsTab = ({ setActiveTab, initialTab }) => {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  const tab = tabs.find((tab) => tab.category === categoryParam)?.label || 'Properties';
+
+  React.useEffect(() => {
+    if (categoryParam && tab !== initialTab) {
+      setActiveTab(tab);
+    }
+  }, [categoryParam, setActiveTab, initialTab]);
+
+  return null; // This component only handles side effects
+};
+
 const NewRequestPage = () => {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
-  const initialTab = tabs.find(tab => tab.category === categoryParam)?.label || 'Properties';
-  const [activeTab, setActiveTab] = useState(initialTab)
+  const initialTab = 'Properties';
+  const [activeTab, setActiveTab] = React.useState(initialTab);
   const [formData, setFormData] = useState({
     title: '',
     state: '',
@@ -307,6 +321,9 @@ const NewRequestPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Suspense fallback={<div>Loading tabs...</div>}>
+        <SearchParamsTab setActiveTab={setActiveTab} initialTab={initialTab} />
+      </Suspense>
       {/* Header */}
       <div className="bg-white py-8 lg:px-8">
         <div className="md:max-w-4xl md:mx-auto">
