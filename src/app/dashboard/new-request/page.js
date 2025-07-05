@@ -303,15 +303,8 @@ const NewRequestPage = () => {
         </Suspense>
         <div className="bg-white py-8 lg:px-8">
           <div className="md:max-w-4xl md:mx-auto">
-            <Link href={'/dashboard/my-requests'}>
-              <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
-                <ArrowLeft className="w-6 h-6 text-gray-600" />
-              </button>
-            </Link>
-            <h1 className="text-2xl font-bold text-gray-900 text-center mb-2 md:mb-5">
-              Post a Request
-            </h1>
-            <div className="flex flex-wrap gap-1 md:gap-5 px-1 mb-8">
+            
+            <div className=" hidden gap-1 md:gap-5 px-1 mb-8">
               {tabs.map((tab) => (
                 <button
                   key={tab.label}
