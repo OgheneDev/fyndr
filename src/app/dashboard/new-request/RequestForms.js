@@ -49,7 +49,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
   return (
     <div className="space-y-6">
       <div className='flex items-start '>
-        <Link href={'/dashboard/my-requests'}>
+        <Link href={'/dashboard'}>
           <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
             <ArrowLeft className="w-6 h-6 text-gray-600" />
           </button>
