@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { nigerianStates } from '@/data/nigerianStates'
 import {
   PropertiesForm,
@@ -17,6 +18,8 @@ import {
   automobileRequest
 } from '@/api/requests/users/requests'
 import Swal from 'sweetalert2'
+import { Loader2, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 
 const carTypes = ['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Van', 'Truck']
 const propertyTypes = ['Apartment', 'Detached', 'Semi-Detached', 'Terrace', 'Bungalow', 'Duplex', 'Mansion']
@@ -44,7 +47,10 @@ const tabs = [
 ]
 
 const NewRequestPage = () => {
-  const [activeTab, setActiveTab] = useState('Properties')
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  const initialTab = tabs.find(tab => tab.category === categoryParam)?.label || 'Properties';
+  const [activeTab, setActiveTab] = useState(initialTab)
   const [formData, setFormData] = useState({
     title: '',
     state: '',
@@ -288,11 +294,29 @@ const NewRequestPage = () => {
     setLoading(false)
   }
 
+  // Keep tab in sync if query param changes (optional)
+  useEffect(() => {
+    if (categoryParam) {
+      const found = tabs.find(tab => tab.category === categoryParam);
+      if (found && found.label !== activeTab) {
+        setActiveTab(found.label);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryParam]);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
       <div className="bg-white py-8 lg:px-8">
         <div className="md:max-w-4xl md:mx-auto">
+          <Link href={'/dashboard/my-requests'}> 
+            <button
+           className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors"
+          >
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+          </Link>
           <h1 className="text-2xl font-bold text-gray-900 text-center mb-2 md:mb-5">
             Post a Request
           </h1>
@@ -366,14 +390,20 @@ const NewRequestPage = () => {
               {/* Submit Button */}
               <div className="mt-8 flex flex-col items-end">
                 {error && <div className="text-red-500 mb-2">{error}</div>}
-                {success && <div className="text-green-600 mb-2">{success}</div>}
                 <button
-                  type="submit"
-                  className="w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg"
-                  disabled={loading}
+                 type="submit"
+                 className="w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg flex items-center justify-center gap-2"
+                 disabled={loading}
                 >
-                  {loading ? 'Submitting...' : 'Create New Request'}
-                </button>
+                 {loading ? (
+                   <>
+                     <Loader2 className="animate-spin w-4 h-4" />
+                     Submitting...
+                    </>
+                  ) : (
+                    'Create New Request'
+                  )}
+               </button>
               </div>
             </form>
           </div>

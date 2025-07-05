@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { getUserProfile, updateUserAvatar } from '@/api/profile/users/request'
-import { getMerchantProfile, updateMerchantAvatar, updateMerchantAvailability, updateMerchantBusinessDetails } from '@/api/profile/merchants/requests'
+import { getUserProfile, updateUserAvatar, deleteUser} from '@/api/profile/users/request'
+import { getMerchantProfile, updateMerchantAvatar, updateMerchantAvailability, updateMerchantBusinessDetails, deleteMerchant } from '@/api/profile/merchants/requests'
 import { useUserStore } from '@/store/userStore'
 import ProfileHeader from '@/components/profile/ProfileHeader'
 import ProfileSection from '@/components/profile/ProfileSection'
@@ -10,6 +10,7 @@ import AccountSettings from '@/components/profile/AccountSettings'
 import EditServicesLocationForm from '@/components/profile/EditServicesLocationForm'
 import PolicyModal from '@/components/profile/PolicyModal'
 import { SERVICE_OPTIONS } from '@/components/open-requests/ServiceOptions'
+import { useRouter } from 'next/navigation'
 
 const ProfilePage = () => {
   const [activeSetting, setActiveSetting] = useState(null);
@@ -22,6 +23,11 @@ const ProfilePage = () => {
   const [businessAddress, setBusinessAddress] = useState('');
   const [businessLocation, setBusinessLocation] = useState('');
   const [servicesLoading, setServicesLoading] = useState(false);
+  const router = useRouter();
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
+  const [deleteNameInput, setDeleteNameInput] = useState('');
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const handleBack = () => setActiveSetting(null);
 
@@ -127,6 +133,26 @@ const ProfilePage = () => {
     }
   };
 
+  // Delete account handler (for modal confirm)
+  const handleDeleteAccount = async () => {
+    setDeleteLoading(true);
+    setDeleteError(null);
+    try {
+      if (userType === 'merchant') {
+        await deleteMerchant({ name: profile?.name || "" });
+      } else {
+        await deleteUser({ name: profile?.name || "" });
+      }
+      router.push('/');
+    } catch (err) {
+      setDeleteError(
+        (err && err.message) || (typeof err === "string" ? err : "Failed to delete account.")
+      );
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen p-6 pb-12 md:pb-0 md:max-w-4xl md:mx-auto">
       <div>
@@ -139,14 +165,20 @@ const ProfilePage = () => {
         />
         <div className="px-0 md:px-8 py-6">
           {!activeSetting && (
-            <AccountSettings
-              userType={userType}
-              isAvailable={isAvailable}
-              onToggleAvailability={handleToggleAvailability}
-              onEditServices={() => setActiveSetting('services')}
-              onShowPrivacy={() => setActiveSetting('privacy')}
-              onShowTerms={() => setActiveSetting('terms')}
-            />
+            <>
+              <AccountSettings
+                userType={userType}
+                isAvailable={isAvailable}
+                onToggleAvailability={handleToggleAvailability}
+                onEditServices={() => setActiveSetting('services')}
+                onShowPrivacy={() => setActiveSetting('privacy')}
+                onShowTerms={() => setActiveSetting('terms')}
+                onShowDeleteAccount={() => setShowConfirmDelete(true)}
+              />
+              {deleteError && (
+                <div className="text-red-600 mt-2 text-sm">{deleteError}</div>
+              )}
+            </>
           )}
           {activeSetting === 'services' && userType === 'merchant' && (
             <EditServicesLocationForm
@@ -194,6 +226,57 @@ const ProfilePage = () => {
                 </>
               }
             />
+          )}
+          {/* Floating Confirm Delete Modal */}
+          {showConfirmDelete && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+              <div className="fixed inset-0 bg-black/40 bg-opacity-70"></div>
+              <div className="relative bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-8 z-10">
+                <h2 className="text-xl font-bold mb-4">Confirm Deletion</h2>
+                <p className="mb-4 text-gray-700 text-sm">
+                  Type your full name to confirm account deletion:
+                </p>
+                <input
+                  type="text"
+                  className="border border-gray-300 rounded outline-0 px-3 py-2 w-full mb-4"
+                  placeholder="Enter your full name"
+                  value={deleteNameInput}
+                  onChange={e => setDeleteNameInput(e.target.value)}
+                  disabled={deleteLoading}
+                  autoFocus
+                />
+                <div className="flex gap-3 mt-5 justify-end">
+                  <button
+                    className=" text-gray-800 text-sm cursor-pointer"
+                    onClick={() => {
+                      setDeleteNameInput('');
+                      setShowConfirmDelete(false);
+                    }}
+                    disabled={deleteLoading}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className=" text-red-500 disabled:opacity-60 text-sm cursor-pointer"
+                    onClick={async () => {
+                      await handleDeleteAccount();
+                      setShowConfirmDelete(false);
+                      setDeleteNameInput('');
+                    }}
+                    disabled={
+                      deleteLoading ||
+                      !profile?.name ||
+                      deleteNameInput.trim() !== profile?.name
+                    }
+                  >
+                    {deleteLoading ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
+                {deleteError && (
+                  <div className="text-red-600 mt-2 text-sm">{deleteError}</div>
+                )}
+              </div>
+            </div>
           )}
         </div>
       </div>

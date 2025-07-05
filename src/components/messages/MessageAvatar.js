@@ -1,12 +1,15 @@
 import React from 'react'
 import { User } from 'lucide-react'
+import Image from 'next/image'
 
 const MessageAvatar = ({ party }) => {
   if (party?.avatar) {
     return (
-      <img
+      <Image
         src={party.avatar}
         alt={party.name}
+        width={50}
+        height={50}
         className="w-8 h-8 rounded-full object-cover"
       />
     )

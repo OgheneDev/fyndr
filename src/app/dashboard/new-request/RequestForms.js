@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 // Properties Form
 export function PropertiesForm({ formData, onChange, nigerianStates, propertyTypes }) {
@@ -412,10 +413,12 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
         />
         {imagePreview && (
           <div className="mt-2">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-32 h-32 object-cover rounded border"
+            <Image
+             src={imagePreview}
+             height={50}
+             width={50}
+             alt='Preview'
+             className="w-32 h-32 object-cover rounded border"
             />
           </div>
         )}
@@ -532,6 +535,31 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
 
 // Automobile Form
 export function AutomobileForm({ automobileData, onChange, nigerianStates, carMakes, carModels, carYears }) {
+  // Define price ranges (same as PropertiesForm)
+  const priceRanges = [
+    { label: "Below ₦500k", lower: 0, upper: 500000 },
+    { label: "₦500k - ₦1m", lower: 500000, upper: 1000000 },
+    { label: "₦1m - ₦5m", lower: 1000000, upper: 5000000 },
+    { label: "Above ₦5m", lower: 5000000, upper: 1000000000 }
+  ];
+
+  // Find which price range is currently selected
+  const selectedPriceRange = priceRanges.find(
+    r => Number(automobileData.lowerPriceLimit) === r.lower && Number(automobileData.upperPriceLimit) === r.upper
+  )?.label || '';
+
+  // Handle price range selection
+  const handlePriceRangeChange = (e) => {
+    const selected = priceRanges.find(r => r.label === e.target.value);
+    if (selected) {
+      onChange('lowerPriceLimit', selected.lower);
+      onChange('upperPriceLimit', selected.upper);
+    } else {
+      onChange('lowerPriceLimit', '');
+      onChange('upperPriceLimit', '');
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Title */}
@@ -650,28 +678,21 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <option value="automatic">Automatic</option>
         </select>
       </div>
-      {/* Upper Price Limit */}
+      {/* Price Range */}
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">Upper Price Limit</label>
-        <input
-          type="number"
-          value={automobileData.upperPriceLimit}
-          onChange={e => onChange('upperPriceLimit', e.target.value)}
-          placeholder="Upper price limit"
+        <label className="block text-[#171214] mb-3 text-sm">Price Range</label>
+        <select
+          value={selectedPriceRange}
+          onChange={handlePriceRangeChange}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        />
+        >
+          <option value="">Select Price Range</option>
+          {priceRanges.map(range => (
+            <option key={range.label} value={range.label}>{range.label}</option>
+          ))}
+        </select>
       </div>
-      {/* Lower Price Limit */}
-      <div>
-        <label className="block text-[#171214] mb-3 text-sm">Lower Price Limit</label>
-        <input
-          type="number"
-          value={automobileData.lowerPriceLimit}
-          onChange={e => onChange('lowerPriceLimit', e.target.value)}
-          placeholder="Lower price limit"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        />
-      </div>
+      {/* Remove Upper Price Limit and Lower Price Limit fields */}
     </div>
   )
 }

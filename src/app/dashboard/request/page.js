@@ -1,13 +1,30 @@
 'use client'
 
 import { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, MessagesSquare } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { getUserRequestById } from "@/api/requests/users/requests";
 import { getMerchantRequestById } from "@/api/requests/merchants/requests";
 import { initiatePayment, verifyPayment } from "@/api/payments/requests";
+import { rateMerchant } from "@/api/ratings/requests";
 import { startNewChat } from "@/api/messages/requests";
 import { useUserStore } from "@/store/userStore";
+import {
+    acceptMerchantInterest,
+    cancelUserRequest,
+    closeUserRequest,
+    chooseMerchantForRequest
+} from "@/api/requests/users/requests";
+import { useRouter, useSearchParams } from "next/navigation";
+
+
+// Modularized components
+import RequestDetailsHeader from "@/components/request/RequestDetailsHeader";
+import RequestDetailsSections from "@/components/request/RequestDetailsSections";
+import InterestedMerchants from "@/components/request/InterestedMerchants";
+import ChooseMerchant from "@/components/request/ChooseMerchant";
+import RequestActions from "@/components/request/RequestActions";
+import PaymentChatSection from "@/components/request/PaymentChatSection";
+import RatingModal from "@/components/request/RatingModal";
 
 // Add this mapping before the component
 const CATEGORY_LABELS = {
@@ -33,6 +50,24 @@ function RequestDetailPageInner() {
     const [authorizationUrl, setAuthorizationUrl] = useState(null);
     const userType = useUserStore((state) => state.userType);
     const userData = useUserStore((state) => state.userData);
+    const [reloadFlag, setReloadFlag] = useState(0);
+    const [actionLoading, setActionLoading] = useState(false);
+    const [actionError, setActionError] = useState(null);
+    const [chooseMerchantId, setChooseMerchantId] = useState("");
+
+    // Loading states for separate actions
+    const [chooseMerchantLoading, setChooseMerchantLoading] = useState(false);
+    const [cancelLoading, setCancelLoading] = useState(false);
+    const [closeLoading, setCloseLoading] = useState(false);
+
+    // Rating state
+    const [showRatingModal, setShowRatingModal] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [hoverRating, setHoverRating] = useState(0);
+    const [review, setReview] = useState("");
+    const [ratingLoading, setRatingLoading] = useState(false);
+    const [ratingError, setRatingError] = useState(null);
+    const [ratingSuccess, setRatingSuccess] = useState(false);
 
     // Determine user type from store or fallback to request path
     const [resolvedUserType, setResolvedUserType] = useState(userType);
@@ -66,7 +101,7 @@ function RequestDetailPageInner() {
                 setError(err);
                 setLoading(false);
             });
-    }, [id, resolvedUserType]);
+    }, [id, resolvedUserType, reloadFlag]);
 
     // On mount, if request has transaction_reference, set it
     useEffect(() => {
@@ -125,33 +160,131 @@ function RequestDetailPageInner() {
     };
 
     const handleVerifyPayment = async () => {
-        if (!paymentReference) {
-            setPaymentError("No payment reference found.");
-            return;
-        }
-        setPaymentLoading(true);
-        setPaymentError(null);
-        setPaymentSuccess(false);
+  setPaymentLoading(true);
+  setPaymentError(null);
+  try {
+    await verifyPayment({ requestId: id, reference: paymentReference });
+    // Option 1: Force reload
+    window.location.reload();
+    // Option 2: Or, update state to set isPaid = true (if you want to avoid reload)
+  } catch (error) {
+    setPaymentError(error?.message || "Payment verification failed");
+  } finally {
+    setPaymentLoading(false);
+  }
+};
+
+    // Accept merchant interest handler
+    const handleAcceptMerchant = async (interestId) => {
+        setActionLoading(true);
+        setActionError(null);
         try {
-            const verifyRes = await verifyPayment({ requestId: id, reference: paymentReference });
-            if (verifyRes.status === "success" || verifyRes.verified) {
-                setPaymentSuccess(true);
-            } else {
-                setPaymentError("Payment verification failed.");
-            }
+            await acceptMerchantInterest(id, interestId);
+            setReloadFlag(f => f + 1);
         } catch (err) {
-            setPaymentError(
-                (err && err.message) || (typeof err === "string" ? err : "Payment verification failed.")
+            setActionError(
+                (err && err.message) || (typeof err === "string" ? err : "Failed to accept merchant.")
             );
         } finally {
-            setPaymentLoading(false);
+            setActionLoading(false);
         }
     };
+
+    // Cancel request handler
+    const handleCancelRequest = async () => {
+        setCancelLoading(true);
+        setActionError(null);
+        try {
+            await cancelUserRequest(id);
+            setReloadFlag(f => f + 1);
+        } catch (err) {
+            setActionError(
+                (err && err.message) || (typeof err === "string" ? err : "Failed to cancel request.")
+            );
+        } finally {
+            setCancelLoading(false);
+        }
+    };
+
+   const handleCloseRequest = async () => {
+    setCloseLoading(true);
+    setActionError(null);
+    try {
+        await closeUserRequest(id);
+        setShowRatingModal(true);
+        setRating(0);
+        setHoverRating(0);
+        setReview("");
+        setRatingError(null);
+        setRatingSuccess(false);
+    } catch (err) {
+        setActionError(err?.message || "Failed to close request.");
+        console.error("Error in handleCloseRequest:", err);
+    } finally {
+        setCloseLoading(false);
+    }
+};
+
+    // Choose merchant handler
+    const handleChooseMerchant = async () => {
+        if (!chooseMerchantId) return;
+        setChooseMerchantLoading(true);
+        setActionError(null);
+        try {
+            await chooseMerchantForRequest(id, chooseMerchantId);
+            setReloadFlag(f => f + 1);
+        } catch (err) {
+            setActionError(
+                (err && err.message) || (typeof err === "string" ? err : "Failed to choose merchant.")
+            );
+        } finally {
+            setChooseMerchantLoading(false);
+        }
+    };
+    
+
+    // Find accepted merchant (if any)
+    const acceptedMerchant = request?.interestedMerchants?.find(m => m.isAccepted);
+
+
+    const handleSubmitRating = async () => {
+    console.log("Request:", request); // Debug log
+    console.log("Accepted Merchant:", acceptedMerchant); // Debug log
+    const payload = {
+        merchantId: acceptedMerchant?.merchant?._id,
+        rating,
+        review
+    };
+    console.log("Payload to rateMerchant:", payload); // Log payload
+    if (!acceptedMerchant?.merchant?._id) {
+        setRatingError("No accepted merchant found to rate.");
+        console.error("Interested Merchants:", request?.interestedMerchants);
+        return;
+    }
+    if (rating < 1 || rating > 5) {
+        setRatingError("Please select a rating between 1 and 5.");
+        return;
+    }
+    setRatingLoading(true);
+    setRatingError(null);
+    try {
+        const response = await rateMerchant(payload);
+        console.log("rateMerchant Response:", response); // Log successful response
+        setRatingSuccess(true);
+        setShowRatingModal(false);
+        setReloadFlag(f => f + 1); // Reload after rating
+    } catch (err) {
+        console.error("rateMerchant Error:", err.response?.data || err.message); // Log error details
+        setRatingError(err.response?.data?.message || err.message || "Failed to submit rating.");
+    } finally {
+        setRatingLoading(false);
+    }
+};
 
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="text-lg text-gray-600">Loading...</div>
+                <Loader2 className="animate-spin w-10 h-10 text-gray-500" />
             </div>
         );
     }
@@ -167,18 +300,15 @@ function RequestDetailPageInner() {
         );
     }
 
-    
-if (!request) {
-    return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="text-lg text-gray-600">No request found.</div>
-        </div>
-    );
-}
+    if (!request) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-lg text-gray-600">No request found.</div>
+            </div>
+        );
+    }
 
-// Use request directly instead of request.data
-const data = request;
-
+    const data = request?.data || request;
 
     const formatBudget = (lower, upper) => {
         if (lower && upper) {
@@ -207,185 +337,88 @@ const data = request;
         return "Not specified";
     };
 
+    // Determine if paid (robust for your API structure)
+    const isPaid =
+        data?.transaction_status === "completed" ||
+        data?.requestStatus === "paid" ||
+        data?.requestStatus === "completed" ||
+        paymentSuccess;
+
+    // Only show merchant management features if paid
+    const showMerchantActions = isPaid;
+
     return (
         <div className="min-h-screen pb-[60px]">
             {/* Header */}
-            <div className="bg-white px-4 py-4">
-                <div className="flex items-center">
-                    <button 
-                        onClick={handleBack}
-                        className="mr-4 p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
-                    >
-                        <ArrowLeft className="w-6 h-6 text-gray-700" />
-                    </button>
-                    <h1 className="text-xl font-semibold text-gray-900">Request Details</h1>
-                </div>
-            </div> 
+            <RequestDetailsHeader onBack={handleBack} />
 
             {/* Content */}
             <div className="px-6 py-6 space-y-8">
-                {/* Service Category */}
-                <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-3">Service Category</h2>
-                    <p className="text-gray-700 text-base">
-                        {CATEGORY_LABELS[data.category] || data.category || "Unknown"}
-                    </p>
-                </div>
-
-                {/* Additional details */}
-                <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-3">Additional details</h2>
-                    <p className="text-gray-700 text-base leading-relaxed">
-                        {data.additionalDetails || "No additional details."}
-                    </p>
-                </div>
-
-                {/* Location */}
-                <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-3">Location</h2>
-                    <p className="text-gray-700 text-base">{getLocationText()}</p>
-                </div>
-
-                {/* Budget */}
-                <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-3">Budget</h2>
-                    <p className="text-gray-700 text-base">{getBudgetText()}</p>
-                </div>
-
-                {/* Service-specific details sections */}
-                {data.carHire && (
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-900 mb-3">Car Hire Details</h2>
-                        <div className="space-y-2">
-                            <p className="text-gray-700"><span className="font-medium">Car Type:</span> {data.carHire.carType}</p>
-                            <p className="text-gray-700"><span className="font-medium">Duration:</span> {data.carHire.hireDuration}</p>
-                            <p className="text-gray-700"><span className="font-medium">Pickup Location:</span> {data.carHire.pickupLocation}</p>
-                            <p className="text-gray-700"><span className="font-medium">Airport:</span> {data.carHire.airport}</p>
-                            <p className="text-gray-700"><span className="font-medium">Travel:</span> {data.carHire.travel ? "Yes" : "No"}</p>
-                        </div>
-                    </div>
-                )}
-
-                {data.cleaning && (
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-900 mb-3">Cleaning Details</h2>
-                        <div className="space-y-2">
-                            <p className="text-gray-700"><span className="font-medium">Property Type:</span> {data.cleaning.propertyType}</p>
-                            <p className="text-gray-700"><span className="font-medium">Property Location:</span> {data.cleaning.propertyLocation}</p>
-                            <p className="text-gray-700"><span className="font-medium">Rooms:</span> {data.cleaning.roomNumber}</p>
-                            <p className="text-gray-700"><span className="font-medium">Cleaning Type:</span> {data.cleaning.cleaningType}</p>
-                        </div>
-                    </div>
-                )}
-
-                {data.realEstate && (
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-900 mb-3">Real Estate Details</h2>
-                        <div className="space-y-2">
-                            <p className="text-gray-700"><span className="font-medium">Rent Type:</span> {data.realEstate.rentType}</p>
-                            <p className="text-gray-700"><span className="font-medium">Property Type:</span> {data.realEstate.propertyType}</p>
-                            <p className="text-gray-700"><span className="font-medium">Rooms:</span> {data.realEstate.roomNumber}</p>
-                            <p className="text-gray-700"><span className="font-medium">Condition:</span> {data.realEstate.propertyCondition}</p>
-                        </div>
-                    </div>
-                )}
-
-                {data.carPart && (
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-900 mb-3">Car Part Details</h2>
-                        <div className="space-y-2">
-                            <p className="text-gray-700"><span className="font-medium">Current Location:</span> {data.carPart.currentLocation}</p>
-                            <p className="text-gray-700"><span className="font-medium">Sourcing Location:</span> {data.carPart.sourcingLocation}</p>
-                            <p className="text-gray-700"><span className="font-medium">Car Make:</span> {data.carPart.carMake}</p>
-                            <p className="text-gray-700"><span className="font-medium">Car Model:</span> {data.carPart.carModel}</p>
-                            <p className="text-gray-700"><span className="font-medium">Car Year:</span> {data.carPart.carYear}</p>
-                            {data.carPart.image && (
-                                <div>
-                                    <span className="font-medium">Image:</span>
-                                    <img src={data.carPart.image} alt="Car Part" className="mt-2 max-w-xs rounded" />
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {data.automobile && (
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-900 mb-3">Automobile Details</h2>
-                        <div className="space-y-2">
-                            <p className="text-gray-700"><span className="font-medium">Location:</span> {data.automobile.location}</p>
-                            <p className="text-gray-700"><span className="font-medium">Car Make:</span> {data.automobile.carMake}</p>
-                            <p className="text-gray-700"><span className="font-medium">Car Model:</span> {data.automobile.carModel}</p>
-                            <p className="text-gray-700"><span className="font-medium">Car Year From:</span> {data.automobile.carYearFrom}</p>
-                            <p className="text-gray-700"><span className="font-medium">Car Year To:</span> {data.automobile.carYearTo}</p>
-                            <p className="text-gray-700"><span className="font-medium">Transmission:</span> {data.automobile.transmission}</p>
-                            <p className="text-gray-700"><span className="font-medium">Lower Price Limit:</span> {data.automobile.lowerPriceLimit}</p>
-                            <p className="text-gray-700"><span className="font-medium">Upper Price Limit:</span> {data.automobile.upperPriceLimit}</p>
-                        </div>
-                    </div>
-                )}
+                <RequestDetailsSections data={data} />
 
                 {/* Interested Merchants */}
-                {data.interestedMerchants && data.interestedMerchants.length > 0 && (
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-900 mb-3">Interested Merchants</h2>
-                        <div className="space-y-4">
-                            {data.interestedMerchants.map((merchant) => (
-                                <div key={merchant._id} className="bg-white p-4 rounded-lg border border-gray-200">
-                                    <p className="text-gray-700 mb-2"><span className="font-medium">Merchant:</span> {merchant.merchant}</p>
-                                    <p className="text-gray-700 mb-2"><span className="font-medium">Message:</span> {merchant.message}</p>
-                                    <p className="text-gray-700"><span className="font-medium">Status:</span> {merchant.isAccepted ? "Accepted" : "Pending"}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                {showMerchantActions && data.interestedMerchants && data.interestedMerchants.length > 0 && (
+                    <InterestedMerchants
+                        merchants={data.interestedMerchants}
+                        onAccept={handleAcceptMerchant}
+                        actionLoading={actionLoading}
+                    />
                 )}
+
+                {/* Choose Merchant */}
+                {showMerchantActions && data.interestedMerchants && data.interestedMerchants.length > 0 && (
+                    <ChooseMerchant
+                        merchants={data.interestedMerchants}
+                        chooseMerchantId={chooseMerchantId}
+                        setChooseMerchantId={setChooseMerchantId}
+                        onChoose={handleChooseMerchant}
+                        loading={chooseMerchantLoading}
+                    />
+                )}
+
+                {/* Cancel and Close Request Buttons */}
+                {showMerchantActions && (
+                    <RequestActions
+                        onCancel={handleCancelRequest}
+                        onClose={handleCloseRequest}
+                        cancelLoading={cancelLoading}
+                        closeLoading={closeLoading}
+                        actionError={actionError}
+                    />
+                )}
+
                 {/* Payment/Chat Button and Status */}
-                <div className="mt-6">
-                    {userType === "user" && (
-                        <>
-                            {!paymentReference && (
-                                <button
-                                    className='bg-[#57132A] py-3 px-5 rounded-md flex items-center justify-center gap-3 w-full cursor-pointer text-white disabled:opacity-60'
-                                    onClick={handleMakePayment}
-                                    disabled={paymentLoading}
-                                >
-                                    {paymentLoading ? "Processing..." : "Make Payment"}
-                                </button>
-                            )}
-                            {paymentReference && (
-                                <button
-                                    className='bg-blue-700 py-2 px-5 rounded-full text-sm cursor-pointer text-white disabled:opacity-60'
-                                    onClick={handleVerifyPayment}
-                                    disabled={paymentLoading}
-                                >
-                                    {paymentLoading ? "Verifying..." : "I've made the payment"}
-                                </button>
-                            )}
-                            {paymentError && (
-                                <div className="text-red-600 mt-2 text-sm">{paymentError}</div>
-                            )}
-                            {paymentSuccess && (
-                                <div className="text-green-600 mt-2 text-sm">Payment successful!</div>
-                            )}
-                        </>
-                    )}
-                    {userType === "merchant" && (
-                        <button
-                            className='bg-[#57132A] py-3 px-5 rounded-md flex items-center justify-center gap-3 w-full cursor-pointer text-white'
-                            onClick={handleContactUser}
-                        >
-                            <MessagesSquare size={18} />
-                            Chat with user
-                        </button>
-                    )}
-                </div>
+                <PaymentChatSection
+                    userType={userType}
+                    isPaid={isPaid}
+                    paymentReference={paymentReference}
+                    paymentLoading={paymentLoading}
+                    paymentError={paymentError}
+                    paymentSuccess={paymentSuccess}
+                    handleMakePayment={handleMakePayment}
+                    handleVerifyPayment={handleVerifyPayment}
+                    handleContactUser={handleContactUser}
+                />
             </div>
 
-            
+            {/* Rating Modal */}
+            <RatingModal
+                show={showRatingModal}
+                onClose={() => setShowRatingModal(false)}
+                rating={rating}
+                setRating={setRating}
+                hoverRating={hoverRating}
+                setHoverRating={setHoverRating}
+                review={review}
+                setReview={setReview}
+                loading={ratingLoading}
+                error={ratingError}
+                success={ratingSuccess}
+                onSubmit={handleSubmitRating}
+            />
         </div>
     );
-};
+}
 
 export default function RequestDetailPage() {
     return (

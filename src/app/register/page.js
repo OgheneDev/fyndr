@@ -3,6 +3,7 @@ import { useState } from "react";
 import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation"; // Add this import
+import Image from "next/image";
 
 const RegistrationPage = () => {
   const [selectedType, setSelectedType] = useState(null);
@@ -44,9 +45,11 @@ const RegistrationPage = () => {
       <div className="max-w-md w-full text-center">
         {/* Placeholder Image */}
         <div className="w-48 h-48 mx-auto mb-8">
-          <img 
-            src="/images/live-chat.png" 
+          <Image 
+            src={"/images/live-chat.png"} 
             alt="Chat safely illustration" 
+            width={50}
+            height={50}
             className="w-full h-full object-contain"
           />
         </div>

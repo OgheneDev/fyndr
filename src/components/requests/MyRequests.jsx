@@ -89,7 +89,7 @@ export default function ServiceRequests() {
     <div className="min-h-screen">
       <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-5">
           <h1 className="text-2xl sm:text-3xl font-bold text-[#121417]">
             My requests
           </h1>
@@ -97,16 +97,16 @@ export default function ServiceRequests() {
 
         {/* Create Request Button */}
         <Link href={'/dashboard/new-request'}>
-          <button className='text-white w-full md:w-fit px-7 mb-10 md:text-sm cursor-pointer bg-[#57132A] text-center py-5 rounded-md'>
+          <button className='text-white w-full md:w-fit px-10 mb-10 md:text-sm cursor-pointer bg-[#57132A] text-center py-4 rounded-md'>
             Create New Request
           </button>
         </Link>
 
         {/* New Requests Section */}
-        <RequestSection title="New" requests={newRequests} />
+        <RequestSection title="Awaiting Payment" requests={newRequests} />
 
         {/* Old Requests Section */}
-        <RequestSection title="Old" requests={oldRequests} />
+        <RequestSection title="Live Requests" requests={oldRequests} />
       </div>
     </div>
   );

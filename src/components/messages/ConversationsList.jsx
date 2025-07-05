@@ -25,9 +25,6 @@ export const ConversationsList = ({
           >
             <div className="relative flex-shrink-0">
               <Avatar party={otherParty} />
-              {unread && (
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#541229] rounded-full"></div>
-              )}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">

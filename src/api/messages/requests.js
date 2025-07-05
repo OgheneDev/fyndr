@@ -14,7 +14,7 @@ export const getChats = async () => {
     } catch (error) {
          // Log detailed error info
         if (error.response) {
-            // Server responded with a status other than 2xx
+            // Server responded with a status other than 2xx  
             console.error("Error response:", error.response.data);
             throw error.response.data; // or return error.response.data;
         } else if (error.request) {

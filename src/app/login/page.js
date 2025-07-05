@@ -6,6 +6,7 @@ import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 import { requestMerchantOtp, verifyOtp } from '@/api/auth/merchants/requests';
 import { requestUserOtp } from '@/api/auth/users/requests';
+import Image from 'next/image';
 
 const LoginPage = () => {
   const [step, setStep] = useState(0); // 0: select type, 1: phone, 2: otp
@@ -79,9 +80,11 @@ const LoginPage = () => {
       <div className="min-h-screen bg-white flex items-center justify-center px-4">
         <div className="max-w-md w-full text-center">
           <div className="w-48 h-48 mx-auto mb-8">
-            <img 
-              src="/images/live-chat.png" 
+            <Image 
+              src={"/images/live-chat.png" }
               alt="Chat safely illustration" 
+              width={50}
+              height={50}
               className="w-full h-full object-contain"
             />
           </div>

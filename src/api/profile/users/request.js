@@ -38,3 +38,32 @@ export const updateUserAvatar = async (formData) => {
     }
 }
 
+export const deleteUser = async ({ name }) => {
+    try {
+        const response = await axiosInstance.delete(
+            '/v1/user/destroy',
+            { name }
+        );
+        console.log(response);
+        if (response.status !== 200) {
+            throw new Error("Failed to delete user");
+        }
+        return response.data;
+    } catch (error) {
+        // Log detailed error info
+        if (error.response) {
+            // Server responded with a status other than 2xx
+            console.error("Error response:", error.response.data);
+            throw error.response.data; // or return error.response.data;
+        } else if (error.request) {
+            // Request was made but no response received
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            // Something else happened
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
+}
+
