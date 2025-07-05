@@ -3,13 +3,7 @@
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { nigerianStates } from '@/data/nigerianStates';
-import {
-  PropertiesForm,
-  CarHireForm,
-  CleaningForm,
-  CarPartsForm,
-  AutomobileForm,
-} from 'RequestForms';
+import { PropertiesForm, CarHireForm, CarPartsForm, CleaningForm, AutomobileForm } from './RequestForms';
 import {
   realEstateRequest,
   carHireRequest,
