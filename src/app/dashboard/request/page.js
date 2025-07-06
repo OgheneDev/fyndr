@@ -7,7 +7,7 @@ import { getMerchantRequestById } from "@/api/requests/merchants/requests";
 import { initiatePayment, verifyPayment } from "@/api/payments/requests";
 import { rateMerchant } from "@/api/ratings/requests";
 import { startNewChat } from "@/api/messages/requests";
-import { useUserStore } from "@/store/userStore";
+import { useUserStore } from "@/store/userStore"; 
 import {
     acceptMerchantInterest,
     cancelUserRequest,
