@@ -388,7 +388,7 @@ function RequestDetailPageInner() {
                 )}
 
                 {/* Payment/Chat Button and Status */}
-                <PaymentChatSection
+                <PaymentChatSection 
                     userType={userType}
                     isPaid={isPaid}
                     paymentReference={paymentReference}
