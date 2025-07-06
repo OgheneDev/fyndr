@@ -55,8 +55,8 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           </button>
         </Link>
         <article className=' text-center'>
-        <h2 className='text-xl font-bold mb-1'>Post a Properties Request</h2>
-        <p className='text-sm'>Find lands, homes or rentals</p>
+        <h2 className='text-lg font-bold mb-1'>Post a Properties Request</h2>
+        <p className='text-[12px]'>Find lands, homes or rentals</p>
         </article>
       </div>
       {/* Title */}
@@ -193,8 +193,8 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
           </button>
         </Link>
         <article className=' text-center'>
-        <h2 className='text-xl font-bold mb-1'>Post a Car Parts Request</h2>
-        <p className='text-sm'>Find quality parts from verified sellers.</p>
+        <h2 className='text-lg font-bold mb-1'>Post a Car Parts Request</h2>
+        <p className='text-[12px]'>Find quality parts from verified sellers.</p>
         </article>
       </div>
       {/* Title */}
@@ -319,8 +319,8 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
           </button>
         </Link>
         <article className=' text-center'>
-        <h2 className='text-xl font-bold mb-1'>Post a Cleaning Request</h2>
-        <p className='text-sm'>Get professional cleaning in your area.</p>
+        <h2 className='text-lg font-bold mb-1'>Post a Cleaning Request</h2>
+        <p className='text-[12px]'>Get professional cleaning in your area.</p>
         </article>
       </div>
       {/* Title */}
@@ -444,8 +444,8 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           </button>
         </Link>
         <article className=' text-center'>
-        <h2 className='text-xl font-bold mb-1'>Post a Car Parts Request</h2>
-        <p className='text-sm'>Find quality parts from verified sellers.</p>
+        <h2 className='text-lg font-bold mb-1'>Post a Car Parts Request</h2>
+        <p className='text-[12px]'>Find quality parts from verified sellers.</p>
         </article>
       </div>
       {/* Attachment (Image/Video) - now first */}
@@ -615,8 +615,8 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           </button>
         </Link>
         <article className=' text-center'>
-        <h2 className='text-xl font-bold mb-1'>Post an Automobile Request</h2>
-        <p className='text-sm'>Get vehicles for sale around you.</p>
+        <h2 className='text-lg font-bold mb-1'>Post an Automobile Request</h2>
+        <p className='text-[12px]'>Get vehicles for sale around you.</p>
         </article>
       </div>
       {/* Title */}
