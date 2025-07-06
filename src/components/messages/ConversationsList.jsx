@@ -1,3 +1,4 @@
+import React from 'react'
 import Avatar from "./Avatar"
 import ConversationSkeleton from "./ConversationSkeleton"
 
@@ -7,7 +8,7 @@ export const ConversationsList = ({
   setSelectedChat,
   userType
 }) => (
-  <div className="bg-white md:max-w-4xl mx-auto">
+  <div className="bg-white md:max-w-4xl mx-auto overflow-hidden">
     {conversationsLoading ? (
       <>
         {[...Array(5)].map((_, i) => <ConversationSkeleton key={i} />)}
@@ -17,6 +18,10 @@ export const ConversationsList = ({
         const otherParty = userType === 'merchant' ? conversation.user : conversation.merchant
         const lastMsg = conversation.lastMessage
         const unread = userType === 'merchant' ? conversation.merchantUnreadCount > 0 : conversation.userUnreadCount > 0
+        // Truncate last message to 50 characters to prevent overflow
+        const truncatedMessage = lastMsg?.content?.length > 50 
+          ? lastMsg.content.substring(0, 47) + '...' 
+          : lastMsg?.content || ''
         return (
           <div
             key={conversation._id}
@@ -28,14 +33,14 @@ export const ConversationsList = ({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">
-                <h3 className="font-medium text-gray-900 truncate">
+                <h3 className="font-medium text-gray-900 truncate text-base sm:text-lg">
                   {otherParty?.name || <span className="inline-block h-4 w-24 bg-gray-200 rounded animate-pulse align-middle" />}
                 </h3>
                 <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
                   {lastMsg?.createdAt ? new Date(lastMsg.createdAt).toLocaleDateString() : ''}
                 </span>
               </div>
-              <p className="text-sm text-gray-600 truncate">{lastMsg?.content || ''}</p>
+              <p className="text-sm text-gray-600 truncate">{truncatedMessage}</p>
             </div>
           </div>
         )

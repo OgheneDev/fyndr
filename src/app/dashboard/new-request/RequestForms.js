@@ -449,7 +449,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
         </article>
       </div>
       {/* Attachment (Image/Video) - now first */}
-      <div className='mt-10 md:mt-20'>
+      <div className='mt-12 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Attachment (Image/Video)</label>
         <input
           type="file"
