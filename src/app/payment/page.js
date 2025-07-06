@@ -100,7 +100,7 @@ function PaymentDetailPageInner() {
     }
 
     setLoading(true);
-    axios.get(`${BASE_URL}/v1/requests/${requestId}`, {
+    axios.get(`${BASE_URL}/v1/request/user/${requestId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
