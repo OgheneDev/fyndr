@@ -2,8 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { Loader2 } from "lucide-react";
-import { initiatePayment, verifyPayment } from "@/api/payments/requests";
-import { getUserRequestById } from "@/api/requests/users/requests";
+import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
 // Payment Section Component
@@ -99,12 +98,14 @@ function PaymentDetailPageInner() {
     }
 
     setLoading(true);
-    getUserRequestById(requestId, { headers: { Authorization: `Bearer ${token}` } })
-      .then(data => {
-        setRequest(data);
+    axios.get(`/v1/requests/${requestId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        setRequest(response.data);
         setLoading(false);
-        if (data.transaction_reference) {
-          setPaymentReference(data.transaction_reference);
+        if (response.data.transaction_reference) {
+          setPaymentReference(response.data.transaction_reference);
         }
       })
       .catch(err => {
@@ -118,12 +119,13 @@ function PaymentDetailPageInner() {
     setPaymentError(null);
     setPaymentSuccess(false);
     try {
-      const initRes = await initiatePayment(
+      const response = await axios.post(
+        '/v1/payment/initiate',
         { requestId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      const reference = initRes.reference || initRes.data?.reference;
-      const authUrl = initRes.authorization_url || initRes.data?.authorization_url;
+      const reference = response.data.reference || response.data.data?.reference;
+      const authUrl = response.data.authorization_url || response.data.data?.authorization_url;
       if (!reference || !authUrl) {
         throw new Error("No payment reference or authorization URL returned from server.");
       }
@@ -141,15 +143,18 @@ function PaymentDetailPageInner() {
     setPaymentLoading(true);
     setPaymentError(null);
     try {
-      await verifyPayment(
+      await axios.post(
+        '/v1/payment/verify',
         { requestId, reference: paymentReference },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setPaymentSuccess(true);
-      setLoading(true); // Reload request data to reflect updated status
-      getUserRequestById(requestId, { headers: { Authorization: `Bearer ${token}` } })
-        .then(data => {
-          setRequest(data);
+      setLoading(true);
+      axios.get(`/v1/requests/${requestId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(response => {
+          setRequest(response.data);
           setLoading(false);
         })
         .catch(err => {
@@ -252,7 +257,7 @@ function PaymentDetailPageInner() {
 
 export default function PaymentDetailPage() {
   return (
-    <Suspense boothallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
       <PaymentDetailPageInner />
     </Suspense>
   );
