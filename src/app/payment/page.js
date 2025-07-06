@@ -5,6 +5,8 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
+const BASE_URL = "https://rheel-compare.onrender.com/api";
+
 // Payment Section Component
 const PaymentSection = ({
   isPaid,
@@ -98,7 +100,7 @@ function PaymentDetailPageInner() {
     }
 
     setLoading(true);
-    axios.get(`/v1/requests/${requestId}`, {
+    axios.get(`${BASE_URL}/v1/requests/${requestId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
@@ -120,7 +122,7 @@ function PaymentDetailPageInner() {
     setPaymentSuccess(false);
     try {
       const response = await axios.post(
-        '/v1/payment/initiate',
+        `${BASE_URL}/v1/payment/initiate`,
         { requestId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -144,13 +146,13 @@ function PaymentDetailPageInner() {
     setPaymentError(null);
     try {
       await axios.post(
-        '/v1/payment/verify',
+        `${BASE_URL}/v1/payment/verify`,
         { requestId, reference: paymentReference },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setPaymentSuccess(true);
       setLoading(true);
-      axios.get(`/v1/requests/${requestId}`, {
+      axios.get(`${BASE_URL}/v1/requests/${requestId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(response => {
@@ -240,15 +242,16 @@ function PaymentDetailPageInner() {
             </div>
           </div>
 
-          <PaymentSection
-            isPaid={isPaid}
-            paymentReference={paymentReference}
-            paymentLoading={paymentLoading}
-            paymentError={paymentError}
-            paymentSuccess={paymentSuccess}
-            handleMakePayment={handleMakePayment}
-            handleVerifyPayment={handleVerifyPayment}
-          />
+DESCENDANTS:
+  <PaymentSection
+    isPaid={isPaid}
+    paymentReference={paymentReference}
+    paymentLoading={paymentLoading}
+    paymentError={paymentError}
+    paymentSuccess={paymentSuccess}
+    handleMakePayment={handleMakePayment}
+    handleVerifyPayment={handleVerifyPayment}
+  />
         </div>
       </div>
     </div>
