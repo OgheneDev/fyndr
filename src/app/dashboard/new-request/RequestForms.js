@@ -48,7 +48,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
 
   return (
     <div className="space-y-6">
-      <div className='flex items-start gap-7 py-3 fixed top-0 bg-white z-50 w-full'>
+      <div className='flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full'>
         <Link href={'/dashboard'}>
           <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
             <ArrowLeft className="w-6 h-6 text-gray-600" />
@@ -60,7 +60,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         </article>
       </div>
       {/* Title */}
-      <div className='mt-10'>
+      <div className='mt-10 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -186,8 +186,19 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
 export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes }) {
   return (
     <div className="space-y-6">
+       <div className='flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full'>
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className=' text-center'>
+        <h2 className='text-xl font-bold mb-1'>Post a Car Parts Request</h2>
+        <p className='text-sm'>Find quality parts from verified sellers.</p>
+        </article>
+      </div>
       {/* Title */}
-      <div>
+      <div className='mt-10 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -301,8 +312,19 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
 
   return (
     <div className="space-y-6">
+       <div className='flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full'>
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className=' text-center'>
+        <h2 className='text-xl font-bold mb-1'>Post a Cleaning Request</h2>
+        <p className='text-sm'>Get professional cleaning in your area.</p>
+        </article>
+      </div>
       {/* Title */}
-      <div>
+      <div className='mt-10 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -415,8 +437,19 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
 
   return (
     <div className="space-y-6">
+      <div className='flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full'>
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className=' text-center'>
+        <h2 className='text-xl font-bold mb-1'>Post a Car Parts Request</h2>
+        <p className='text-sm'>Find quality parts from verified sellers.</p>
+        </article>
+      </div>
       {/* Attachment (Image/Video) - now first */}
-      <div>
+      <div className='mt-10 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Attachment (Image/Video)</label>
         <input
           type="file"
@@ -575,8 +608,19 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
 
   return (
     <div className="space-y-6">
+      <div className='flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full'>
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className=' text-center'>
+        <h2 className='text-xl font-bold mb-1'>Post an Automobile Request</h2>
+        <p className='text-sm'>Get vehicles for sale around you.</p>
+        </article>
+      </div>
       {/* Title */}
-      <div>
+      <div className='mt-10 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"

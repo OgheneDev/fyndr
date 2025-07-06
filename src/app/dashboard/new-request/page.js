@@ -302,7 +302,7 @@ const NewRequestPage = () => {
           <SearchParamsTab setActiveTab={setActiveTab} initialTab={initialTab} />
         </Suspense>
         <div className="bg-white py-8 lg:px-8">
-          <div className="md:max-w-4xl md:mx-auto">
+          <div className="md:max-w-3xl md:mx-auto">
             
             <div className=" hidden gap-1 md:gap-5 px-1 mb-8">
               {tabs.map((tab) => (
