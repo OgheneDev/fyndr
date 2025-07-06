@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { initiatePayment, verifyPayment } from "@/api/payments/requests";
 import { getUserRequestById } from "@/api/requests/users/requests";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 // Payment Section Component
 const PaymentSection = ({
@@ -74,11 +74,9 @@ const CATEGORY_LABELS = {
 };
 
 function PaymentDetailPageInner() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const requestId = searchParams.get("id");
   const token = searchParams.get("token");
-  const returnUrl = searchParams.get("returnUrl") || "myapp://payment-complete"; // Default app deep link
   const [request, setRequest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -148,17 +146,21 @@ function PaymentDetailPageInner() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setPaymentSuccess(true);
-      // Redirect back to the mobile app
-      window.location.href = returnUrl;
+      setLoading(true); // Reload request data to reflect updated status
+      getUserRequestById(requestId, { headers: { Authorization: `Bearer ${token}` } })
+        .then(data => {
+          setRequest(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err);
+          setLoading(false);
+        });
     } catch (err) {
       setPaymentError(err.message || "Payment verification failed.");
     } finally {
       setPaymentLoading(false);
     }
-  };
-
-  const handleBack = () => {
-    window.location.href = returnUrl; // Redirect to app instead of router.back()
   };
 
   if (loading) {
@@ -175,12 +177,6 @@ function PaymentDetailPageInner() {
         <div className="text-center">
           <div className="text-red-600 text-lg mb-4">Error loading payment details</div>
           <div className="text-gray-600">{error.message || error.toString()}</div>
-          <button
-            onClick={handleBack}
-            className="mt-4 bg-[#57132A] py-2 px-4 rounded-md text-white"
-          >
-            Return to App
-          </button>
         </div>
       </div>
     );
@@ -190,12 +186,6 @@ function PaymentDetailPageInner() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-lg text-gray-600">No request found.</div>
-        <button
-          onClick={handleBack}
-          className="mt-4 bg-[#57132A] py-2 px-4 rounded-md text-white"
-        >
-          Return to App
-        </button>
       </div>
     );
   }
@@ -212,16 +202,7 @@ function PaymentDetailPageInner() {
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={handleBack}
-            className="text-gray-600 hover:text-gray-800 flex items-center"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Return to App
-          </button>
-          <h1 className="text-2xl font-bold text-gray-900 mt-2">Payment Details</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Payment Details</h1>
         </div>
       </div>
 
@@ -271,7 +252,7 @@ function PaymentDetailPageInner() {
 
 export default function PaymentDetailPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+    <Suspense boothallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
       <PaymentDetailPageInner />
     </Suspense>
   );
