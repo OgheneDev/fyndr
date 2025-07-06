@@ -10,13 +10,13 @@ const MessageAvatar = ({ party }) => {
         alt={party.name}
         width={50}
         height={50}
-        className="w-8 h-8 rounded-full object-cover"
+        className="w-9 h-9 rounded-full object-cover"
       />
     )
   }
   return (
-    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-      <User className="w-4 h-4 text-gray-400" />
+    <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+      <User className="w-5 h-5 text-gray-400" />
     </div>
   )
 }

@@ -11,7 +11,7 @@ export const ConversationsList = ({
   <div className="bg-white md:max-w-4xl mx-auto overflow-hidden">
     {conversationsLoading ? (
       <>
-        {[...Array(5)].map((_, i) => <ConversationSkeleton key={i} />)}
+        {[...Array(7)].map((_, i) => <ConversationSkeleton key={i} />)}
       </>
     ) : (
       conversations.map((conversation) => {
@@ -33,7 +33,7 @@ export const ConversationsList = ({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">
-                <h3 className="font-medium text-gray-900 truncate text-base sm:text-lg">
+                <h3 className="font-medium text-gray-900 truncate ">
                   {otherParty?.name || <span className="inline-block h-4 w-24 bg-gray-200 rounded animate-pulse align-middle" />}
                 </h3>
                 <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
