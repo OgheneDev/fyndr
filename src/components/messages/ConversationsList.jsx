@@ -19,8 +19,8 @@ export const ConversationsList = ({
         const lastMsg = conversation.lastMessage
         const unread = userType === 'merchant' ? conversation.merchantUnreadCount > 0 : conversation.userUnreadCount > 0
         // Truncate last message to 50 characters to prevent overflow
-        const truncatedMessage = lastMsg?.content?.length > 50 
-          ? lastMsg.content.substring(0, 47) + '...' 
+        const truncatedMessage = lastMsg?.content?.length > 40 
+          ? lastMsg.content.substring(0, 37) + '...' 
           : lastMsg?.content || ''
         return (
           <div
