@@ -120,7 +120,7 @@ const MessagesPage = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-16 md:pb-0">
       {/* Header */}
       <div className="bg-white px-4 py-4 pt-6 md:max-w-4xl mx-auto">
         <h1 className="text-2xl font-semibold text-center md:text-start text-gray-900">Messages</h1>
