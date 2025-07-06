@@ -11,12 +11,12 @@ import EditServicesLocationForm from '@/components/profile/EditServicesLocationF
 import PolicyModal from '@/components/profile/PolicyModal'
 import { SERVICE_OPTIONS } from '@/components/open-requests/ServiceOptions'
 import { useRouter } from 'next/navigation'
+import { logout } from '@/api/auth/merchants/requests'
 
 const ProfilePage = () => {
   const [activeSetting, setActiveSetting] = useState(null);
   const [isAvailable, setIsAvailable] = useState(true);
-  const { userType } = useUserStore();
-  const [profile, setProfile] = useState(null);
+  const { userType, profile, setProfile } = useUserStore();
   const [profileLoading, setProfileLoading] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [servicesOffered, setServicesOffered] = useState([]);
@@ -42,9 +42,13 @@ const ProfilePage = () => {
         } else if (userType === 'user') {
           data = await getUserProfile();
         }
-        if (isMounted) setProfile(data);
+        if (isMounted) {
+          setProfile(data); // Update store
+        }
       } catch {
-        if (isMounted) setProfile(null);
+        if (isMounted) {
+          setProfile(null); // Clear store on error
+        }
       } finally {
         if (isMounted) setProfileLoading(false);
       }
@@ -52,8 +56,10 @@ const ProfilePage = () => {
     if (userType === 'merchant' || userType === 'user') {
       fetchProfile();
     }
-    return () => { isMounted = false; };
-  }, [userType]);
+    return () => {
+      isMounted = false;
+    };
+  }, [userType, setProfile]);
 
   useEffect(() => {
     if (profile && userType === 'merchant' && typeof profile.isAvailable === 'boolean') {
@@ -69,15 +75,18 @@ const ProfilePage = () => {
       const formData = new FormData();
       formData.append('avatar', file);
 
+      let updatedProfile;
       if (userType === 'merchant') {
         await updateMerchantAvatar(formData);
-        setProfile(await getMerchantProfile());
+        updatedProfile = await getMerchantProfile();
       } else {
         await updateUserAvatar(formData);
-        setProfile(await getUserProfile());
+        updatedProfile = await getUserProfile();
       }
+      setProfile(updatedProfile); // Update store with new profile
     } catch (err) {
-      // handle error
+      console.error('Avatar upload failed:', err);
+      // Optionally show error to user (e.g., toast notification)
     } finally {
       setAvatarUploading(false);
     }
@@ -90,8 +99,9 @@ const ProfilePage = () => {
     if (userType === 'merchant') {
       try {
         await updateMerchantAvailability(newValue);
+        setProfile({ ...profile, isAvailable: newValue }); // Update store
       } catch (err) {
-        setIsAvailable(!newValue);
+        setIsAvailable(!newValue); // Revert on error
       }
     }
   };
@@ -108,9 +118,7 @@ const ProfilePage = () => {
   // Handle checkbox change
   const handleServiceChange = (value) => {
     setServicesOffered((prev) =>
-      prev.includes(value)
-        ? prev.filter((v) => v !== value)
-        : [...prev, value]
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   };
 
@@ -124,10 +132,12 @@ const ProfilePage = () => {
         businessAddress,
         businessLocation,
       });
-      setProfile(await getMerchantProfile());
+      const updatedProfile = await getMerchantProfile();
+      setProfile(updatedProfile); // Update store
       setActiveSetting(null);
     } catch (err) {
-      // handle error
+      console.error('Service update failed:', err);
+      // Optionally show error to user
     } finally {
       setServicesLoading(false);
     }
@@ -139,26 +149,36 @@ const ProfilePage = () => {
     setDeleteError(null);
     try {
       if (userType === 'merchant') {
-        await deleteMerchant({ name: profile?.name || "" });
+        await deleteMerchant({ name: profile?.name || '' });
       } else {
-        await deleteUser({ name: profile?.name || "" });
+        await deleteUser({ name: profile?.name || '' });
       }
+      setProfile(null); // Clear store on deletion
       router.push('/');
     } catch (err) {
-      setDeleteError(
-        (err && err.message) || (typeof err === "string" ? err : "Failed to delete account.")
-      );
+      setDeleteError(err?.message || (typeof err === 'string' ? err : 'Failed to delete account.'));
     } finally {
       setDeleteLoading(false);
     }
   };
+
+  const handleLogout = async () => {
+    const success = logout();
+    if (success) {
+        // Optional: Add any additional client-side cleanup
+        console.log("Successfully logged out");
+    } else {
+        // Handle logout failure
+        console.log("Logout failed");
+    }
+};
 
   return (
     <div className="min-h-screen p-6 pb-12 md:pb-0 md:max-w-4xl md:mx-auto">
       <div>
         <ProfileHeader />
         <ProfileSection
-          profile={profile}
+          profile={profile} 
           profileLoading={profileLoading}
           avatarUploading={avatarUploading}
           onAvatarChange={handleAvatarChange}
@@ -266,6 +286,9 @@ const ProfilePage = () => {
               </div>
             </div>
           )}
+          <button onClick={handleLogout} className='w-full text-center mt-5 text-sm text-white bg-[#57132A] py-3 rounded-md cursor-pointer'>
+            Log Out
+          </button>
         </div>
       </div>
     </div>

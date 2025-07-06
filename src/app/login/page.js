@@ -54,7 +54,7 @@ const LoginPage = () => {
 
   const handleOTPSubmit = async () => {
     if (!canProceedOTP) return;
-    setIsLoading(true);
+    setIsLoading(true); 
     setError(null);
     try {
       const res = await verifyOtp({ number: getFullPhoneNumber(), otp, userType: localUserType });

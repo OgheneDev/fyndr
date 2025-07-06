@@ -15,7 +15,7 @@ const AccountSettings = ({
     <div className="space-y-4">
       {userType === 'merchant' && (
         <div className="w-full flex items-center justify-between py-4 px-3">
-          <span className="text-gray-700 font-medium">Availability</span>
+          <span className="text-gray- безпеки7 font-medium">Availability</span>
           <button
             onClick={onToggleAvailability}
             className={`relative inline-flex h-6 cursor-pointer w-11 items-center rounded-full transition-colors focus:outline-none ${isAvailable ? 'bg-green-500' : 'bg-gray-300'}`}
@@ -51,17 +51,16 @@ const AccountSettings = ({
         <span className="text-gray-700 font-medium">Terms and conditions</span>
         <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
       </button>
+      <button
+        className="w-full flex items-center cursor-pointer justify-between py-4 px-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+        onClick={onShowDeleteAccount}
+        type="button"
+      >
+        <span className="text-gray-700 font-medium">Delete Account</span>
+        <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+      </button>
     </div>
-    <button
-      className="w-full flex items-center cursor-pointer justify-between py-4 px-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
-      onClick={onShowDeleteAccount}
-      type="button"
-    >
-      <span className="text-gray-700 font-medium">Delete Account</span>
-      <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
-    </button>
   </>
 )
-
 
 export default AccountSettings

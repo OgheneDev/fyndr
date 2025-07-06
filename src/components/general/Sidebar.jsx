@@ -24,14 +24,11 @@ const merchantAdditionalItems = [
     { icon: List, name: 'My requests', path: '/dashboard/open-requests' },
 ]
 
-
-
 const Sidebar = () => {
     const pathname = usePathname();
-    const { userType } = useUserStore();
+    const { userType, profile, setProfile } = useUserStore();
 
     // State for profile (user or merchant)
-    const [profile, setProfile] = useState(null);
     const [profileLoading, setProfileLoading] = useState(false);
 
     useEffect(() => {

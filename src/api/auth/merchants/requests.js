@@ -27,6 +27,19 @@ export const verifyOtp = async ({ number, otp, userType }) => {
     }
 };
 
+// Logout
+export const logout = () => {
+    try {
+        localStorage.removeItem("authToken");
+        sessionStorage.removeItem("authToken");
+        window.location.href = "/login";
+        return true;
+    } catch (error) {
+        console.error("Logout error:", error);
+        return false;
+    }
+};
+
 // Register merchant
 export const registerMerchant = async (merchantData) => {
     try {
