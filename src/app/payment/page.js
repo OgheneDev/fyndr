@@ -241,8 +241,6 @@ function PaymentDetailPageInner() {
               </span>
             </div>
           </div>
-
-DESCENDANTS:
   <PaymentSection
     isPaid={isPaid}
     paymentReference={paymentReference}
