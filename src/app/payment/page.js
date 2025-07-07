@@ -134,8 +134,17 @@ function PaymentDetailPageInner() {
       setPaymentReference(reference);
       setAuthorizationUrl(authUrl);
       window.location.href = authUrl;
-    } catch (err) {
-      setPaymentError(err.message || "Payment initiation failed.");
+    } catch (error) {
+      if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
     } finally {
       setPaymentLoading(false);
     }
