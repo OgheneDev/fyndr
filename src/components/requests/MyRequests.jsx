@@ -78,7 +78,7 @@ export default function ServiceRequests() {
 
         {/* Swipeable content area with sliding transition */}
         <div 
-          className="touch-pan-y overflow-hidden"
+          className="relative w-full overflow-hidden touch-pan-y"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -90,12 +90,12 @@ export default function ServiceRequests() {
             style={{ width: '200%' }}
           >
             {/* Live Requests Section */}
-            <div className="w-1/2 flex-shrink-0 px-0">
+            <div className="w-1/2 flex-shrink-0">
               <RequestSection loading={loading} requests={liveRequests} />
             </div>
             
             {/* Awaiting Payment Section */}
-            <div className="w-1/2 flex-shrink-0 px-0">
+            <div className="w-1/2 flex-shrink-0">
               <RequestSection requests={awaitingRequests} />
             </div>
           </div>
