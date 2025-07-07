@@ -11,7 +11,7 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
           Live Requests
           {activeTab === 'completed' && (
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-[#57132A] rounded-t-md" 
-                 style={{ width: 'calc(100% - 2rem)' }}></div>
+                style={{ width: 'calc(100% - 2rem)' }}></div>
           )}
         </button>
         <button
@@ -23,7 +23,7 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
           Awaiting Payment
           {activeTab === 'pending' && (
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-[#57132A] rounded-t-md" 
-                 style={{ width: 'calc(100% - 2rem)' }}></div>
+             style={{ width: 'calc(100% - 2rem)' }}></div>
           )}
         </button>
       </div>
