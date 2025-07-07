@@ -84,18 +84,18 @@ export default function ServiceRequests() {
           onTouchEnd={onTouchEnd}
         >
           <div 
-            className={`flex transition-transform duration-300 ease-in-out ${
-              activeTab === 'completed' ? 'transform translate-x-0' : 'transform -translate-x-full'
+            className={`flex transition-transform duration-500 ease-out ${
+              activeTab === 'completed' ? 'transform translate-x-0' : 'transform -translate-x-1/2'
             }`}
             style={{ width: '200%' }}
           >
             {/* Live Requests Section */}
-            <div className="w-1/2 flex-shrink-0">
+            <div className="w-1/2 flex-shrink-0 px-0">
               <RequestSection loading={loading} requests={liveRequests} />
             </div>
             
             {/* Awaiting Payment Section */}
-            <div className="w-1/2 flex-shrink-0">
+            <div className="w-1/2 flex-shrink-0 px-0">
               <RequestSection requests={awaitingRequests} />
             </div>
           </div>
