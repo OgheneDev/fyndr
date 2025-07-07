@@ -9,10 +9,6 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
           }`}
         >
           Live Requests
-          {activeTab === 'completed' && (
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-[#57132A] rounded-t-md" 
-                style={{ width: 'calc(100% - 2rem)' }}></div>
-          )}
         </button>
         <button
           onClick={() => setActiveTab('pending')}
@@ -21,11 +17,14 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
           }`}
         >
           Awaiting Payment
-          {activeTab === 'pending' && (
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-[#57132A] rounded-t-md" 
-             style={{ width: 'calc(100% - 2rem)' }}></div>
-          )}
         </button>
+        
+        {/* Sliding indicator */}
+        <div 
+          className={`absolute bottom-0 h-1 bg-[#57132A] rounded-t-md transition-all duration-300 ease-in-out ${
+            activeTab === 'completed' ? 'left-4 right-1/2 mr-2' : 'left-1/2 ml-2 right-4'
+          }`}
+        ></div>
       </div>
     </div>
   );

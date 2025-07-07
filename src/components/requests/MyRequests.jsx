@@ -1,5 +1,4 @@
 'use client'
-
 import Link from 'next/link';
 import { getRequests } from '@/api/requests/users/requests';
 import { useEffect, useState } from 'react';
@@ -10,6 +9,10 @@ export default function ServiceRequests() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('completed'); // Default to Live Requests
+  
+  // Touch/swipe state
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   useEffect(() => {
     async function fetchRequests() {
@@ -26,6 +29,35 @@ export default function ServiceRequests() {
   // Categorize requests based on transaction_status
   const liveRequests = requests.filter(request => request.transaction_status === "completed");
   const awaitingRequests = requests.filter(request => request.transaction_status === "pending");
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isRightSwipe && activeTab === 'completed') {
+      // Swipe right on Live Requests -> go to Awaiting Payment
+      setActiveTab('pending');
+    }
+    if (isLeftSwipe && activeTab === 'pending') {
+      // Swipe left on Awaiting Payment -> go to Live Requests
+      setActiveTab('completed');
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -44,12 +76,20 @@ export default function ServiceRequests() {
 
         <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {activeTab === 'completed' && (
-          <RequestSection loading={loading}  requests={liveRequests} />
-        )}
-        {activeTab === 'pending' && (
-          <RequestSection  requests={awaitingRequests} />
-        )}
+        {/* Swipeable content area */}
+        <div 
+          className="touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          {activeTab === 'completed' && (
+            <RequestSection loading={loading} requests={liveRequests} />
+          )}
+          {activeTab === 'pending' && (
+            <RequestSection requests={awaitingRequests} />
+          )}
+        </div>
       </div>
     </div>
   );
