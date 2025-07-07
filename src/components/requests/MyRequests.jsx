@@ -49,12 +49,12 @@ export default function ServiceRequests() {
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
-    if (isRightSwipe && activeTab === 'completed') {
-      // Swipe right on Live Requests -> go to Awaiting Payment
+    if (isLeftSwipe && activeTab === 'completed') {
+      // Swipe left on Live Requests -> go to Awaiting Payment
       setActiveTab('pending');
     }
-    if (isLeftSwipe && activeTab === 'pending') {
-      // Swipe left on Awaiting Payment -> go to Live Requests
+    if (isRightSwipe && activeTab === 'pending') {
+      // Swipe right on Awaiting Payment -> go to Live Requests
       setActiveTab('completed');
     }
   };
@@ -76,19 +76,29 @@ export default function ServiceRequests() {
 
         <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Swipeable content area */}
+        {/* Swipeable content area with sliding transition */}
         <div 
-          className="touch-pan-y"
+          className="touch-pan-y overflow-hidden"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {activeTab === 'completed' && (
-            <RequestSection loading={loading} requests={liveRequests} />
-          )}
-          {activeTab === 'pending' && (
-            <RequestSection requests={awaitingRequests} />
-          )}
+          <div 
+            className={`flex transition-transform duration-300 ease-in-out ${
+              activeTab === 'completed' ? 'transform translate-x-0' : 'transform -translate-x-full'
+            }`}
+            style={{ width: '200%' }}
+          >
+            {/* Live Requests Section */}
+            <div className="w-1/2 flex-shrink-0">
+              <RequestSection loading={loading} requests={liveRequests} />
+            </div>
+            
+            {/* Awaiting Payment Section */}
+            <div className="w-1/2 flex-shrink-0">
+              <RequestSection requests={awaitingRequests} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
