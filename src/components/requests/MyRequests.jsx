@@ -8,7 +8,7 @@ import { RequestSection } from './RequestSection';
 export default function ServiceRequests() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('completed'); // Default to Live Requests
+  const [activeTab, setActiveTab] = useState('completed');
   
   // Touch/swipe state
   const [touchStart, setTouchStart] = useState(null);
@@ -18,7 +18,6 @@ export default function ServiceRequests() {
     async function fetchRequests() {
       setLoading(true);
       const data = await getRequests();
-      // Sort requests by createdAt in descending order (newest first)
       const sortedData = (data || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setRequests(sortedData);
       setLoading(false);
@@ -26,11 +25,9 @@ export default function ServiceRequests() {
     fetchRequests();
   }, []);
 
-  // Categorize requests based on transaction_status
   const liveRequests = requests.filter(request => request.transaction_status === "completed");
   const awaitingRequests = requests.filter(request => request.transaction_status === "pending");
 
-  // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
 
   const onTouchStart = (e) => {
@@ -50,11 +47,9 @@ export default function ServiceRequests() {
     const isRightSwipe = distance < -minSwipeDistance;
 
     if (isLeftSwipe && activeTab === 'completed') {
-      // Swipe left on Live Requests -> go to Awaiting Payment
       setActiveTab('pending');
     }
     if (isRightSwipe && activeTab === 'pending') {
-      // Swipe right on Awaiting Payment -> go to Live Requests
       setActiveTab('completed');
     }
   };
@@ -76,19 +71,30 @@ export default function ServiceRequests() {
 
         <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Swipeable content area */}
+        {/* Sliding content container */}
         <div 
-          className="touch-pan-y"
+          className="relative overflow-hidden"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {activeTab === 'completed' && (
+          {/* Live Requests */}
+          <div 
+            className={`w-full transition-transform duration-300 ease-in-out ${
+              activeTab === 'completed' ? 'translate-x-0' : '-translate-x-full'
+            }`}
+          >
             <RequestSection loading={loading} requests={liveRequests} />
-          )}
-          {activeTab === 'pending' && (
+          </div>
+          
+          {/* Awaiting Requests */}
+          <div 
+            className={`absolute top-0 left-0 w-full transition-transform duration-300 ease-in-out ${
+              activeTab === 'pending' ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
             <RequestSection requests={awaitingRequests} />
-          )}
+          </div>
         </div>
       </div>
     </div>
