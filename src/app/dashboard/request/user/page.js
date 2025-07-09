@@ -10,12 +10,12 @@ import {
 } from "@/api/requests/users/requests";
 import { rateMerchant } from "@/api/ratings/requests";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 // Modularized components
 import RequestDetailsHeader from "@/components/request/RequestDetailsHeader";
 import RequestDetailsSections from "@/components/request/RequestDetailsSections";
 import InterestedMerchants from "@/components/request/InterestedMerchants";
-import ChooseMerchant from "@/components/request/ChooseMerchant";
 import RequestActions from "@/components/request/RequestActions";
 import RatingModal from "@/components/request/RatingModal";
 import { PaymentDetails } from "@/components/request/PaymentDetails";
@@ -186,12 +186,21 @@ function UserRequestDetailPageInner() {
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <Loader2 className="animate-spin w-10 h-10 text-gray-500" />
+    return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="animate-pulse">
+                <Image
+                    src="/images/logo.png"
+                    alt="Company Logo"
+                    width={100}
+                    height={100}
+                    className="transition-all duration-1000 hover:scale-110"
+                />
             </div>
-        );
-    }
+        </div>
+    );
+}
+
 
     if (error) {
         return (
