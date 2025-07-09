@@ -172,8 +172,8 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
-          value={formData.additionalDetails || ''}
-          onChange={e => onChange('additionalDetails', e.target.value)}
+          value={formData.details || ''}
+          onChange={e => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
@@ -293,8 +293,8 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
-          value={carHireData.additionalDetails || ''}
-          onChange={e => onChange('additionalDetails', e.target.value)}
+          value={carHireData.details || ''}
+          onChange={e => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         />
@@ -418,8 +418,8 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
-          value={cleaningData.additionalDetails}
-          onChange={e => onChange('additionalDetails', e.target.value)}
+          value={cleaningData.details}
+          onChange={e => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         />
@@ -569,8 +569,8 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Description</label>
         <textarea
-          value={carPartsData.description}
-          onChange={e => onChange('description', e.target.value)}
+          value={carPartsData.details}
+          onChange={e => onChange('details', e.target.value)}
           placeholder="Describe the car part"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
         />
@@ -643,7 +643,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
             <option key={state} value={state}>{state}</option>
           ))}
         </select>
-      </div>
+      </div> 
       {/* Details */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Details</label>

@@ -12,8 +12,8 @@ import {
   automobileRequest,
 } from '@/api/requests/users/requests';
 import Swal from 'sweetalert2';
-import { Loader2, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 const carTypes = ['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Van', 'Truck'];
 const propertyTypes = ['Apartment', 'Detached', 'Semi-Detached', 'Terrace', 'Bungalow', 'Duplex', 'Mansion'];
@@ -61,7 +61,7 @@ const NewRequestPage = () => {
     title: '',
     state: '',
     axis: [],
-    additionalDetails: '',
+    details: '',
     rentType: '',
     propertyType: '',
     roomNumber: '',
@@ -294,11 +294,31 @@ const NewRequestPage = () => {
     }
     setLoading(false);
   };
-
+ 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
+                <div className="animate-pulse">
+                    <Image
+                        src="/images/logo.png"
+                        alt="Company Logo"
+                        width={100}
+                        height={100}
+                        className="transition-all duration-1000 hover:scale-110"
+                    />
+                </div>
+            </div>}>
       <div className="min-h-screen bg-white">
-        <Suspense fallback={<div>Loading tabs...</div>}>
+        <Suspense fallback={<div><div className="min-h-screen bg-white flex items-center justify-center">
+                    <div className="animate-pulse">
+                        <Image
+                            src="/images/logo.png"
+                            alt="Company Logo"
+                            width={100}
+                            height={100}
+                            className="transition-all duration-1000 hover:scale-110"
+                        />
+                    </div>
+                </div></div>}>
           <SearchParamsTab setActiveTab={setActiveTab} initialTab={initialTab} />
         </Suspense>
         <div className="bg-white py-8 lg:px-8">
