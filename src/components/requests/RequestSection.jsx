@@ -12,7 +12,7 @@ export const RequestSection = ({ requests, loading }) => (
         requests.map((request) => (
           <Link
             key={request._id}
-            href={`/dashboard/request?id=${request._id}`}
+            href={`/dashboard/request/user?id=${request._id}`}
             className="block max-w-full"
             passHref
           >
