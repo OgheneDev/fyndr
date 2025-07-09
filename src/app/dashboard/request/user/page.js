@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState, Suspense } from "react";
-import { Loader2 } from "lucide-react";
+import { Bell } from "lucide-react";
 import { getUserRequestById } from "@/api/requests/users/requests";
 import {
     acceptMerchantInterest,
@@ -215,9 +215,12 @@ function UserRequestDetailPageInner() {
 
     if (!request) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="text-lg text-gray-600">No request found.</div>
-            </div>
+            <div className="text-center py-10">
+          <div className="mb-5">
+            <Bell className="w-12 h-12 mx-auto text-gray-500" />
+          </div>
+          <span>No request found.</span>
+        </div>
         );
     }
 
@@ -271,7 +274,12 @@ function UserRequestDetailPageInner() {
                                 />*/}
                             </>
                         ) : (
-                            <div className="text-gray-600">No interested merchants available.</div>
+                            <div className="text-center py-10">
+          <div className="mb-5">
+            <Bell className="w-12 h-12 mx-auto text-gray-500" />
+          </div>
+          <span>No merchants available.</span>
+        </div>
                         )}
                     </div>
                     <div 
