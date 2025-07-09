@@ -18,16 +18,16 @@ const RequestActions = ({
   }
 
   return (
-    <div className="flex gap-3 mt-6">
+    <div className="flex gap-5 mt-6">
       <button
-        className="bg-[#57132A] text-sm text-white px-5 py-3 cursor-pointer rounded-md disabled:opacity-60"
+        className="bg-[#57132A] text-[12px] text-white px-5 py-3 cursor-pointer rounded-md disabled:opacity-60"
         onClick={onCancel}
         disabled={cancelLoading}
       >
         {cancelLoading ? 'Cancelling...' : 'Cancel Request'}
       </button>
       <button
-        className="bg-[#57132A] text-sm text-white px-5 py-3 cursor-pointer rounded-md disabled:opacity-60"
+        className="bg-[#57132A] text-[12px] text-white px-5 py-3 cursor-pointer rounded-md disabled:opacity-60"
         onClick={onClose}
         disabled={closeLoading}
       >

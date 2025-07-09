@@ -10,7 +10,6 @@ import {
 } from "@/api/requests/users/requests";
 import { rateMerchant } from "@/api/ratings/requests";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from 'next/link';
 
 // Modularized components
 import RequestDetailsHeader from "@/components/request/RequestDetailsHeader";
@@ -21,14 +20,6 @@ import RequestActions from "@/components/request/RequestActions";
 import RatingModal from "@/components/request/RatingModal";
 import { PaymentDetails } from "@/components/request/PaymentDetails";
 import { ToggleButtons } from "@/components/request/ToggleButtons";
-
-const CATEGORY_LABELS = {
-    "real-estate": "Real Estate",
-    "car-hire": "Car Hire",
-    "car-parts": "Car Parts",
-    "cleaning": "Cleaning",
-    "automobile": "Automobile"
-};
 
 function UserRequestDetailPageInner() {
     const router = useRouter();
@@ -226,7 +217,7 @@ function UserRequestDetailPageInner() {
     return (
         <div className="min-h-screen pb-[60px]">
             <RequestDetailsHeader onBack={handleBack} />
-            <div className="px-4 sm:px-6 lg:px-8 py-6">
+            <div className="px-4 sm:px-6 lg:px-8">
                 <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
                 <div 
                     className="relative overflow-hidden"
@@ -262,13 +253,13 @@ function UserRequestDetailPageInner() {
                                     onAccept={handleAcceptMerchant}
                                     actionLoading={actionLoading}
                                 />
-                                <ChooseMerchant
+                                {/*<ChooseMerchant
                                     merchants={data.interestedMerchants}
                                     chooseMerchantId={chooseMerchantId}
                                     setChooseMerchantId={setChooseMerchantId}
                                     onChoose={handleChooseMerchant}
                                     loading={chooseMerchantLoading}
-                                />
+                                />*/}
                             </>
                         ) : (
                             <div className="text-gray-600">No interested merchants available.</div>

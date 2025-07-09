@@ -1,13 +1,6 @@
 import React from "react";
 import Image from "next/image";
-
-const CATEGORY_LABELS = {
-  "real-estate": "Real Estate",
-  "car-hire": "Car Hire",
-  "car-parts": "Car Parts",
-  "cleaning": "Cleaning",
-  "automobile": "Automobile"
-};
+import { CATEGORY_LABELS } from "@/data/data";
 
 const formatBudget = (lower, upper) => {
   if (lower && upper) {
@@ -37,7 +30,7 @@ const getBudgetText = (data) => {
 
 const RequestDetailsSections = ({ data }) => (
   <>
-    <div className="space-y-1">
+    <div className="space-y-1 text-sm">
       <div>
       <p>Title: {data.title}</p>
     </div>
@@ -55,7 +48,7 @@ const RequestDetailsSections = ({ data }) => (
     </div>
     </div>
     {data.carHire && (
-      <div>
+      <div className="text-sm">
         <div className="space-y-1">
           <p><span className="font-medium">Car Type:</span> {data.carHire.carType}</p>
           <p><span className="font-medium">Duration:</span> {data.carHire.hireDuration}</p>
@@ -66,7 +59,7 @@ const RequestDetailsSections = ({ data }) => (
       </div>
     )}
     {data.cleaning && (
-      <div>
+      <div className="text-sm">
         <div className="space-y-1">
           <p><span className="font-medium">Property Type:</span> {data.cleaning.propertyType}</p>
           <p><span className="font-medium">Property Location:</span> {data.cleaning.propertyLocation}</p>
@@ -76,7 +69,7 @@ const RequestDetailsSections = ({ data }) => (
       </div>
     )}
     {data.realEstate && (
-      <div>
+      <div className="text-sm">
         <div className="space-y-1">
           <p><span className="font-medium">Rent Type:</span> {data.realEstate.rentType}</p>
           <p><span className="font-medium">Property Type:</span> {data.realEstate.propertyType}</p>
@@ -86,7 +79,7 @@ const RequestDetailsSections = ({ data }) => (
       </div>
     )}
     {data.carPart && (
-      <div>
+      <div className="text-sm">
         <div className="space-y-1">
           <p><span className="font-medium">Current Location:</span> {data.carPart.currentLocation}</p>
           <p><span className="font-medium">Sourcing Location:</span> {data.carPart.sourcingLocation}</p>
@@ -103,7 +96,7 @@ const RequestDetailsSections = ({ data }) => (
       </div>
     )}
     {data.automobile && (
-      <div>
+      <div className="text-sm">
         <div className="space-y-1">
           <p><span className="font-medium">Location:</span> {data.automobile.location}</p>
           <p><span className="font-medium">Car Make:</span> {data.automobile.carMake}</p>

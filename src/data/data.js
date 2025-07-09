@@ -128,4 +128,12 @@ export const testimonials = [
     location: 'Asaba'
   }
 ]
+
+export const CATEGORY_LABELS = {
+    "real-estate": "Real Estate",
+    "car-hire": "Car Hire",
+    "car-parts": "Car Parts",
+    "cleaning": "Cleaning",
+    "automobile": "Automobile"
+};
  

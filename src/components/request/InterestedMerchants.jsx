@@ -2,7 +2,6 @@ import React from "react";
 
 const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
   <div>
-    <h2 className="text-lg font-semibold text-gray-900 mb-3">Interested Merchants</h2>
     <div className="space-y-4">
       {merchants.map((merchant) => (
         <div key={merchant._id} className="bg-white p-4 rounded-lg border border-gray-200">

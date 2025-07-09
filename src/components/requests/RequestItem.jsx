@@ -1,5 +1,6 @@
 import { formatRelativeTime } from '@/utils/dateUtils';
 import { ChevronRight, Wrench } from 'lucide-react';
+import { CATEGORY_LABELS } from '@/data/data';
 
 export const RequestItem = ({ request }) => (
   <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors duration-200 cursor-pointer max-w-full">
@@ -14,7 +15,7 @@ export const RequestItem = ({ request }) => (
           {request.title}
         </h3>
         <p className="text-sm text-gray-500 mt-1 truncate">
-          {request.category} • {formatRelativeTime(request.createdAt)}
+          {CATEGORY_LABELS[request.category]} • {formatRelativeTime(request.createdAt)}
         </p>
       </div>
     </div>
