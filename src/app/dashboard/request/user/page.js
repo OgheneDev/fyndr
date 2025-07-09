@@ -187,7 +187,7 @@ function UserRequestDetailPageInner() {
 
     if (loading) {
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-white flex items-center justify-center">
             <div className="animate-pulse">
                 <Image
                     src="/images/logo.png"
@@ -303,7 +303,17 @@ function UserRequestDetailPageInner() {
 
 export default function UserRequestDetailPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
+            <div className="animate-pulse">
+                <Image
+                    src="/images/logo.png"
+                    alt="Company Logo"
+                    width={100}
+                    height={100}
+                    className="transition-all duration-1000 hover:scale-110"
+                />
+            </div>
+        </div>}>
             <UserRequestDetailPageInner />
         </Suspense>
     );

@@ -10,8 +10,8 @@ export function PaymentDetails({ data }) {
 
 
     return (
-        <div className="space-y-1 text-sm" >
-            <div className="mb-10">
+        <div className="space-y-1 text-sm mb-10" >
+            <div className="mb-15">
                 <div>
                 <h3 className=" font-medium">Transaction ID: {data.transaction_id || "Not available"}</h3>
             </div>

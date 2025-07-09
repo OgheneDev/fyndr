@@ -30,7 +30,7 @@ const getBudgetText = (data) => {
 
 const RequestDetailsSections = ({ data }) => (
   <>
-    <div className="space-y-1 text-sm">
+    <div className="space-y-1 text-sm mb-15">
       <div>
       <p>Title: {data.title}</p>
     </div>
