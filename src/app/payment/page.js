@@ -314,7 +314,7 @@ function PaymentDetailPageInner() {
                     <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Request ID</label>
                   </div>
                   <div className="pl-5">
-                    <p className="text-lg font-mono text-gray-900 bg-gray-50 px-3 py-2 rounded-lg border">{requestId}</p>
+                    <p className="text-md font-mono text-gray-900 bg-gray-50 px-3 py-2 rounded-lg border">{requestId}</p>
                   </div>
                 </div>
 
@@ -324,7 +324,7 @@ function PaymentDetailPageInner() {
                     <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Category</label>
                   </div>
                   <div className="pl-7">
-                    <p className="text-lg text-gray-900">
+                    <p className="text-md text-gray-900">
                       {data.category ? (CATEGORY_LABELS[data.category] || data.category) : "N/A"}
                     </p>
                   </div>
@@ -334,7 +334,7 @@ function PaymentDetailPageInner() {
               <div className="space-y-6">
                 <div className="group">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-gray-500 text-sm">₦</span>
+                    <span className="text-gray-500">₦</span>
                     <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Amount</label>
                   </div>
                   <div className="pl-7">
