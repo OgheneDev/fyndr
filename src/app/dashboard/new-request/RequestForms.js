@@ -202,8 +202,8 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes })
           </button>
         </Link>
         <article className=' text-center'>
-        <h2 className='text-lg font-bold mb-1'>Post a Car Parts Request</h2>
-        <p className='text-[12px]'>Find quality parts from verified sellers.</p>
+        <h2 className='text-lg font-bold mb-1'>Post a Car Hire Request</h2>
+        <p className='text-[12px]'>Hire vehicles for in-town or out-of-town use.</p>
         </article>
       </div>
       {/* Title */}
@@ -648,11 +648,12 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           type="text"
           value={automobileData.location}
           onChange={e => onChange('location', e.target.value)}
-          placeholder="Location"
+          placeholder="Input Search Location"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
-      <div>
+      <div className='flex gap-3'>
+        <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Car Make</label>
         <select
           value={automobileData.carMake}
@@ -665,7 +666,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           ))}
         </select>
       </div>
-      <div>
+      <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Car Model</label>
         <select
           value={automobileData.carModel}
@@ -679,7 +680,9 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           ))}
         </select>
       </div>
-      <div>
+      </div>
+      <div className='flex gap-3'>
+        <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Car Year From</label>
         <select
           value={automobileData.carYearFrom}
@@ -692,7 +695,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           ))}
         </select>
       </div>
-      <div>
+      <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Car Year To</label>
         <select
           value={automobileData.carYearTo}
@@ -704,6 +707,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
             <option key={year} value={year}>{year}</option>
           ))}
         </select>
+      </div>
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Transmission</label>
