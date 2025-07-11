@@ -18,7 +18,7 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
         >
           Awaiting Payment
         </button>
-                 
+        
         {/* Sliding indicator */}
         <div 
           className={`absolute bottom-0 h-1 bg-[#57132A] rounded-t-md transition-all duration-300 ease-in-out ${

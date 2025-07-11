@@ -23,7 +23,7 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
             </article>
             <p className="text-sm text-gray-500">{merchant.message?.content}</p>
             {!merchant.isAccepted && (
-
+             <div className="flex justify-end"> 
               <button
               className="bg-gray-500 text-sm text-white px-4 py-2 rounded-md mt-2 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200"
               onClick={() => onAccept(merchant._id)}
@@ -31,6 +31,7 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
             >
               {actionLoading ? "Interviewing..." : "Interview"}
             </button>
+             </div>
           )}
           </div>
          </div>

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -14,6 +14,7 @@ import {
 import Swal from 'sweetalert2';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
+
 
 const carTypes = ['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Van', 'Truck'];
 const propertyTypes = ['Apartment', 'Detached', 'Semi-Detached', 'Terrace', 'Bungalow', 'Duplex', 'Mansion'];
@@ -117,6 +118,8 @@ const NewRequestPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -154,8 +157,74 @@ const NewRequestPage = () => {
     return tab ? tab.category : '';
   };
 
+  const isFormValid = () => {
+    const category = getCategory();
+    if (category === 'real-estate') {
+      return (
+        formData.title &&
+        formData.state &&
+        formData.axis.length > 0 &&
+        formData.rentType &&
+        formData.propertyType &&
+        formData.roomNumber &&
+        formData.propertyCondition &&
+        formData.lowerPriceLimit &&
+        formData.upperPriceLimit
+      );
+    } else if (category === 'car-hire') {
+      return (
+        carHireData.title &&
+        carHireData.state &&
+        carHireData.carType &&
+        carHireData.hireDuration &&
+        carHireData.pickupLocation &&
+        carHireData.airport &&
+        carHireData.travel
+      );
+    } else if (category === 'cleaning') {
+      return (
+        cleaningData.title &&
+        cleaningData.state &&
+        cleaningData.lga &&
+        cleaningData.propertyType &&
+        cleaningData.cleaningType &&
+        cleaningData.propertyLocation &&
+        cleaningData.roomNumber
+      );
+    } else if (category === 'car-parts') {
+      return (
+        carPartsData.title &&
+        carPartsData.state &&
+        carPartsData.currentLocation &&
+        carPartsData.sourcingLocation &&
+        carPartsData.carMake &&
+        carPartsData.carModel &&
+        carPartsData.carYear
+      );
+    } else if (category === 'automobile') {
+      return (
+        automobileData.title &&
+        automobileData.state &&
+        automobileData.location &&
+        automobileData.carMake &&
+        automobileData.carModel &&
+        automobileData.carYearFrom &&
+        automobileData.carYearTo &&
+        automobileData.transmission &&
+        automobileData.lowerPriceLimit &&
+        automobileData.upperPriceLimit
+      );
+    }
+    return false;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowDisclaimer(true);
+  };
+
+  const handleDisclaimerAgree = async () => {
+    setShowDisclaimer(false);
     setError('');
     setSuccess('');
     setLoading(true);
@@ -289,50 +358,60 @@ const NewRequestPage = () => {
         showConfirmButton: false,
         timer: 2000,
       });
+      setIsChecked(false);
     } catch (err) {
       setError('Failed to submit request.');
     }
     setLoading(false);
   };
- 
+
+  const handleDisclaimerCancel = () => {
+    setShowDisclaimer(false);
+  };
+
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
-                <div className="animate-pulse">
-                    <Image
-                        src="/images/logo.png"
-                        alt="Company Logo"
-                        width={100}
-                        height={100}
-                        className="transition-all duration-1000 hover:scale-110"
-                    />
-                </div>
-            </div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-white flex items-center justify-center">
+          <div className="animate-pulse">
+            <Image
+              src="/images/logo.png"
+              alt="Company Logo"
+              width={100}
+              height={100}
+              className="transition-all duration-1000 hover:scale-110"
+            />
+          </div>
+        </div>
+      }
+    >
       <div className="min-h-screen bg-white">
-        <Suspense fallback={<div><div className="min-h-screen bg-white flex items-center justify-center">
-                    <div className="animate-pulse">
-                        <Image
-                            src="/images/logo.png"
-                            alt="Company Logo"
-                            width={100}
-                            height={100}
-                            className="transition-all duration-1000 hover:scale-110"
-                        />
-                    </div>
-                </div></div>}>
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-white flex items-center justify-center">
+              <div className="animate-pulse">
+                <Image
+                  src="/images/logo.png"
+                  alt="Company Logo"
+                  width={100}
+                  height={100}
+                  className="transition-all duration-1000 hover:scale-110"
+                />
+              </div>
+            </div>
+          }
+        >
           <SearchParamsTab setActiveTab={setActiveTab} initialTab={initialTab} />
         </Suspense>
         <div className="bg-white py-8 lg:px-8">
           <div className="md:max-w-3xl md:mx-auto">
-            
-            <div className=" hidden gap-1 md:gap-5 px-1 mb-8">
+            <div className="hidden gap-1 md:gap-5 px-1 mb-8">
               {tabs.map((tab) => (
                 <button
                   key={tab.label}
                   onClick={() => setActiveTab(tab.label)}
                   className={`px-2 md:px-0 py-2 text-[12px] cursor-pointer border-b-2 transition-all duration-200 ${
-                    activeTab === tab.label
-                      ? ' text-gray-900'
-                      : 'border-[#E5E8EB] text-[#637587]'
+                    activeTab === tab.label ? 'text-gray-900' : 'border-[#E5E8EB] text-[#637587]'
                   }`}
                 >
                   {tab.label}
@@ -347,6 +426,8 @@ const NewRequestPage = () => {
                     onChange={handleInputChange}
                     nigerianStates={nigerianStates}
                     propertyTypes={propertyTypes}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
                   />
                 )}
                 {activeTab === 'Car Hire' && (
@@ -355,6 +436,8 @@ const NewRequestPage = () => {
                     onChange={handleCarHireChange}
                     nigerianStates={nigerianStates}
                     carTypes={carTypes}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
                   />
                 )}
                 {activeTab === 'Cleaning' && (
@@ -364,6 +447,8 @@ const NewRequestPage = () => {
                     nigerianStates={nigerianStates}
                     propertyTypes={propertyTypes}
                     cleaningTypes={cleaningTypes}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
                   />
                 )}
                 {activeTab === 'Car Parts' && (
@@ -374,6 +459,8 @@ const NewRequestPage = () => {
                     carMakes={carMakes}
                     carModels={carModels}
                     carYears={carYears}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
                   />
                 )}
                 {activeTab === 'Automobiles' && (
@@ -384,14 +471,18 @@ const NewRequestPage = () => {
                     carMakes={carMakes}
                     carModels={carModels}
                     carYears={carYears}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
                   />
                 )}
                 <div className="mt-8 flex flex-col items-end">
                   {error && <div className="text-red-500 mb-2">{error}</div>}
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg flex items-center justify-center gap-2"
-                    disabled={loading}
+                    className={`w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg flex items-center justify-center gap-2 ${
+                      !isFormValid() || !isChecked || loading ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                    disabled={!isFormValid() || !isChecked || loading}
                   >
                     {loading ? (
                       <>
@@ -404,6 +495,30 @@ const NewRequestPage = () => {
                   </button>
                 </div>
               </form>
+              {showDisclaimer && (
+                <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center z-50">
+                  <div className="bg-white p-6 rounded-lg max-w-md w-full">
+                    <h2 className="text-lg font-bold mb-4">Disclaimer</h2>
+                    <p className="text-sm mb-6">
+                      Fyndr acts solely as a platform to ensure your request is delivered to your selected service providers. We are not affiliated with, nor do we endorse or partner with, any of the service providers listed on the platform. Our involvement ends once communication begins between you and the service provider. The fee paid is strictly for facilitating the delivery of your request and does not guarantee the outcome or success of any transaction. 
+                    </p>
+                    <div className="flex justify-end gap-4">
+                      <button
+                        onClick={handleDisclaimerCancel}
+                        className="px-4 py-2 bg-gray-200 text-sm cursor-pointer text-gray-800 rounded-lg"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={handleDisclaimerAgree}
+                        className="px-4 py-2 bg-[#541229] text-sm cursor-pointer text-white rounded-lg"
+                      >
+                        I Agree
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
