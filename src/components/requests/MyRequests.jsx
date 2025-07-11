@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getRequests } from '@/api/requests/users/requests';
@@ -62,12 +61,7 @@ export default function ServiceRequests() {
   };
 
   return (
-    <div 
-      className="min-h-screen md:max-w-4xl md:mx-auto"
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
+    <div className="min-h-screen md:max-w-4xl md:mx-auto">
       <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="mb-8">
           <h1 className="text-2xl text-center sm:text-3xl font-bold text-[#121417]">
@@ -83,24 +77,33 @@ export default function ServiceRequests() {
 
         <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Content container with strict width control */}
-        <div className="relative w-full overflow-hidden" style={{ minHeight: '60vh' }}>
-          {/* Live Requests - always takes full width */}
+        {/* Sliding content container - Fixed overflow handling */}
+        <div
+          className="relative overflow-hidden"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          {/* Completed Requests - main container */}
           <div
             className={`w-full transition-transform duration-300 ease-in-out ${
               activeTab === 'completed' ? 'translate-x-0' : '-translate-x-full'
             }`}
           >
-            <RequestSection loading={loading} requests={liveRequests} />
+            <div className="space-y-6">
+              <RequestSection loading={loading} requests={liveRequests} />
+            </div>
           </div>
 
-          {/* Awaiting Requests - absolutely positioned */}
+          {/* Pending Requests - absolutely positioned */}
           <div
             className={`absolute top-0 left-0 w-full transition-transform duration-300 ease-in-out ${
               activeTab === 'pending' ? 'translate-x-0' : 'translate-x-full'
             }`}
           >
-            <RequestSection requests={awaitingRequests} />
+            <div className="space-y-6">
+              <RequestSection loading={loading} requests={awaitingRequests} />
+            </div>
           </div>
         </div>
       </div>
