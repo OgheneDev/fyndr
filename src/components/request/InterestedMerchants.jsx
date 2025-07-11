@@ -11,9 +11,9 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
             <Image
               src={merchant.merchant?.avatar}
               alt="Merchant avatar"
-              height={80}
-              width={80}
-              className="rounded-full"
+              height={70}
+              width={70}
+              className="rounded-full w-13 h-13"
             />
           </div>
           <div>

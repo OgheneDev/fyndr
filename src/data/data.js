@@ -134,6 +134,6 @@ export const CATEGORY_LABELS = {
     "car-hire": "Car Hire",
     "car-parts": "Car Parts",
     "cleaning": "Cleaning",
-    "automobile": "Automobile"
+    "automobile": "Automobile Purchase"
 };
  

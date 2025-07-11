@@ -83,7 +83,7 @@ const DashboardPage = () => {
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className="rounded-2xl p-4 cursor-pointer border-white border text-white w-32 h-32 md:w-36 md:h-36"
+                className="rounded-2xl p-4 cursor-pointer border-white border text-white w-32 h-32 md:w-40 md:h-40"
               >
                 <div className="flex flex-col items-center justify-center h-full">
                   <div className="w-12 h-12 mb-2">
@@ -107,7 +107,7 @@ const DashboardPage = () => {
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className="rounded-2xl cursor-pointer p-4 border-white border text-white w-32 h-32 md:w-36 md:h-36"
+                className="rounded-2xl cursor-pointer p-4 border-white border text-white w-32 h-32 md:w-40 md:h-40"
               >
                 <div className="flex flex-col items-center justify-center h-full">
                   <div className="w-12 h-12 mb-2">
@@ -131,7 +131,7 @@ const DashboardPage = () => {
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className="rounded-2xl cursor-pointer p-4 border-white border text-white w-32 h-32 md:w-36 md:h-36"
+                className="rounded-2xl cursor-pointer p-4 border-white border text-white w-32 h-32 md:w-40 md:h-40"
               >
                 <div className="flex flex-col items-center justify-center h-full">
                   <div className="w-12 h-12 mb-2">

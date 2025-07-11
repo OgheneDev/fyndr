@@ -6,7 +6,7 @@ const AvatarUpload = ({ profile, profileLoading, avatarUploading, onAvatarChange
   <div className="relative w-20 h-20 rounded-full mx-auto overflow-hidden mb-2 flex-shrink-0 bg-gray-100 flex items-center justify-center group cursor-pointer">
     <label className="w-full h-full flex items-center justify-center cursor-pointer">
       {profileLoading ? (
-        <div className="animate-pulse w-20 h-20 rounded-full bg-gray-200" />
+        <div className="animate-pulse w-23 h-23 rounded-full bg-gray-200" />
       ) : profile?.avatar ? (
         <Image
           src={profile.avatar}
