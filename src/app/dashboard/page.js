@@ -64,9 +64,9 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="min-h-screen relative bg-[url('/images/bg.jpg')] bg-blend-overlay bg-black/40">
+    <div className="min-h-screen relative bg-[url('/images/bg.jpg')]">
       {/* Content */}
-      <div className="relative z-10 px-6 py-8">
+      <div className="relative z-50 px-6 py-8">
         {/* Header */}
         <div className="mb-12">
           <div className="flex-1"></div>
@@ -76,74 +76,74 @@ const DashboardPage = () => {
         </div>
 
         {/* Categories Container */}
-        <div className="max-w-sm md:max-w-2xl mx-auto">
+        <div className="max-w-xs md:max-w-lg mx-auto">
           {/* Top Row - Medium Cards */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-2 gap-6 mb-6">
             {categories.slice(0, 2).map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className="rounded-2xl p-6 cursor-pointer border-white border text-white"
+                className="rounded-2xl p-4 cursor-pointer border-white border text-white w-32 h-32 md:w-36 md:h-36"
               >
-                <div className="flex flex-col items-center space-y-3">
-                  <div className="w-20 h-20">
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="w-12 h-12 mb-2">
                     <Image
                       src={category.icon}
                       alt={`${category.title} icon`}
-                      width={50}
-                      height={50}
+                      width={48}
+                      height={48}
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-medium text-center leading-tight">{category.title}</span>
+                  <span className="text-[12px] md:text-sm text-center leading-tight font-medium">{category.title}</span>
                 </div>
               </button>
             ))}
           </div>
 
           {/* Middle Row - Medium Cards */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-2 gap-6 mb-6">
             {categories.slice(2, 4).map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className="rounded-2xl cursor-pointer p-6 border-white border text-white"
+                className="rounded-2xl cursor-pointer p-4 border-white border text-white w-32 h-32 md:w-36 md:h-36"
               >
-                <div className="flex flex-col items-center space-y-3">
-                  <div className="w-20 h-20">
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="w-12 h-12 mb-2">
                     <Image
                       src={category.icon}
                       alt={`${category.title} icon`}
-                      width={50}
-                      height={50}
+                      width={48}
+                      height={48}
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-medium text-center leading-tight">{category.title}</span>
+                  <span className="text-[12px] md:text-sm text-center leading-tight font-medium">{category.title}</span>
                 </div>
               </button>
             ))}
           </div>
 
-          {/* Middle Row - Medium Cards */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          {/* Bottom Row - Medium Cards */}
+          <div className="grid grid-cols-2 gap-6">
             {categories.slice(4, 6).map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className="rounded-2xl cursor-pointer p-6 border-white border text-white"
+                className="rounded-2xl cursor-pointer p-4 border-white border text-white w-32 h-32 md:w-36 md:h-36"
               >
-                <div className="flex flex-col items-center space-y-3">
-                  <div className="w-20 h-20">
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="w-12 h-12 mb-2">
                     <Image
                       src={category.icon}
                       alt={`${category.title} icon`}
-                      width={50}
-                      height={50}
+                      width={48}
+                      height={48}
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-medium text-center leading-tight">{category.title}</span>
+                  <span className="text-[12px] md:text-sm text-center leading-tight font-medium">{category.title}</span>
                 </div>
               </button>
             ))}
