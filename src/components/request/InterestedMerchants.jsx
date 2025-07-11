@@ -11,14 +11,14 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
             <Image
               src={merchant.merchant?.avatar}
               alt="Merchant avatar"
-              height={60}
-              width={60}
+              height={80}
+              width={80}
               className="rounded-full"
             />
           </div>
           <div>
             <article>
-              <h4 className="text-md text-gray-900 uppercase">{merchant.merchant?.businessName}</h4>
+              <h4 className="text-md text-gray-900 uppercase font-medium">{merchant.merchant?.businessName}</h4>
               <p className="text-sm text-gray-500">{merchant.merchant?.state}, {merchant.merchant?.lga}</p>
             </article>
             <p className="text-sm text-gray-500">{merchant.message?.content}</p>

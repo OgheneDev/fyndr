@@ -176,19 +176,21 @@ function RequestDetailPageInner() {
 
     // Accept merchant interest handler
     const handleAcceptMerchant = async (interestId) => {
-        setActionLoading(true);
-        setActionError(null);
-        try {
-            await acceptMerchantInterest(id, interestId);
-            setReloadFlag(f => f + 1);
-        } catch (err) {
-            setActionError(
-                (err && err.message) || (typeof err === "string" ? err : "Failed to accept merchant.")
-            );
-        } finally {
-            setActionLoading(false);
-        }
-    };
+    setActionLoading(true);
+    setActionError(null);
+    try {
+        await acceptMerchantInterest(id, interestId);
+        setReloadFlag(f => f + 1); // Optional: Keep this if you still need to reload data
+        // Navigate to /dashboard/messages after successful acceptance
+        router.push('/dashboard/messages');
+    } catch (err) {
+        setActionError(
+            (err && err.message) || (typeof err === "string" ? err : "Failed to accept merchant.")
+        );
+    } finally {
+        setActionLoading(false);
+    }
+};
 
     // Cancel request handler
     const handleCancelRequest = async () => {
