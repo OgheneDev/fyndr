@@ -6,15 +6,13 @@ import { CATEGORY_LABELS } from '@/data/data';
 // Map categories to their respective image paths
 const CATEGORY_IMAGES = {
   "real-estate": "/images/real-estate.png",
-  "car-hire": "/images/car-hire.png",
+  "car-hire": "/images/carHire.png",
   "car-parts": "/images/car-parts.png",
   "cleaning": "/images/cleaning.png",
   "automobile": "/images/automobile.png",
 };
 
 export const RequestItem = ({ request }) => {
-  // Determine if the filter should be applied (exclude automobile)
-  const applyFilter = request.category !== 'automobile';
 
   return (
     <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors duration-200 cursor-pointer max-w-full">
@@ -26,7 +24,7 @@ export const RequestItem = ({ request }) => {
               alt={`${CATEGORY_LABELS[request.category]} icon`}
               width={35}
               height={35}
-              className={`object-contain ${applyFilter ? 'filter invert' : ''}`}
+              className="object-contain filter invert"
             />
           </div>
         </div>
