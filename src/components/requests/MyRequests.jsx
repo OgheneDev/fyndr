@@ -71,17 +71,17 @@ export default function ServiceRequests() {
 
         <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Content container with proper height management */}
+        {/* Sliding content container */}
         <div 
-          className="relative"
+          className="relative overflow-hidden"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           {/* Live Requests */}
           <div 
-            className={`w-full transition-opacity duration-300 ease-in-out ${
-              activeTab === 'completed' ? 'opacity-100 block' : 'opacity-0 hidden'
+            className={`w-full transition-transform duration-300 ease-in-out ${
+              activeTab === 'completed' ? 'translate-x-0' : '-translate-x-full'
             }`}
           >
             <RequestSection loading={loading} requests={liveRequests} />
@@ -89,9 +89,9 @@ export default function ServiceRequests() {
           
           {/* Awaiting Requests */}
           <div 
-            className={`w-full transition-opacity duration-300 ease-in-out ${
-              activeTab === 'pending' ? 'opacity-100 block' : 'opacity-0 hidden'
-            }`}
+            className={`w-full transition-transform duration-300 ease-in-out ${
+              activeTab === 'pending' ? 'translate-x-0' : 'translate-x-full'
+            } ${activeTab === 'pending' ? 'relative' : 'absolute top-0 left-0'}`}
           >
             <RequestSection requests={awaitingRequests} />
           </div>
