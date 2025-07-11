@@ -64,7 +64,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="min-h-screen relative bg-[url('/images/bg.jpg')]">
+    <div className="min-h-screen relative bg-[url('/images/bg.jpg')] bg-blend-overlay bg-black/30">
       {/* Content */}
       <div className="relative z-50 px-6 py-8">
         {/* Header */}
@@ -78,7 +78,7 @@ const DashboardPage = () => {
         {/* Categories Container */}
         <div className="max-w-xs md:max-w-lg mx-auto">
           {/* Top Row - Medium Cards */}
-          <div className="grid grid-cols-2 gap-6 mb-6">
+          <div className="flex justify-between mb-6">
             {categories.slice(0, 2).map((category) => (
               <button
                 key={category.id}
@@ -102,7 +102,7 @@ const DashboardPage = () => {
           </div>
 
           {/* Middle Row - Medium Cards */}
-          <div className="grid grid-cols-2 gap-6 mb-6">
+          <div className="flex justify-between mb-6">
             {categories.slice(2, 4).map((category) => (
               <button
                 key={category.id}
@@ -126,7 +126,7 @@ const DashboardPage = () => {
           </div>
 
           {/* Bottom Row - Medium Cards */}
-          <div className="grid grid-cols-2 gap-6">
+          <div className="flex justify-between">
             {categories.slice(4, 6).map((category) => (
               <button
                 key={category.id}
