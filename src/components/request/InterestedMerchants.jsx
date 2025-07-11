@@ -1,38 +1,39 @@
 import React from "react";
+import Image from "next/image";
 
 const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
   <div>
-    <div className="space-y-4">
+    <div className="">
       {merchants.map((merchant) => (
         <div key={merchant._id} className="bg-gray-100 shadow-md p-4 rounded-xl">
-          <p className="mb-2 text-sm">
-            <span className="">Name:</span>{" "}
-            {merchant.merchant?.name ||
-              merchant.merchant?.businessName ||
-              merchant.merchant?.email ||
-              "Unknown"}
-          </p>
-          <p className="mb-2 text-gray-500 text-sm">
-            <span className="">Message:</span>{" "}
-            {merchant.message?.content || merchant.message || ""}
-          </p>
-          <p className="mb-2 text-sm">
-            <span className="">Status:</span>{" "}
-            {merchant.isAccepted ? (
-              <span className="text-green-700 font-semibold">Accepted</span>
-            ) : (
-              <span className="text-yellow-700 font-semibold">Pending</span>
-            )}
-          </p>
-          {!merchant.isAccepted && (
-            <button
-              className="border border-gray-300 text-sm hover:border-gray-400 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-md mt-2 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200"
+         <div className="flex items-start gap-5">
+          <div>
+            <Image
+              src={merchant.merchant?.avatar}
+              alt="Merchant avatar"
+              height={60}
+              width={60}
+              className="rounded-full"
+            />
+          </div>
+          <div>
+            <article>
+              <h4 className="text-md text-gray-900 uppercase">{merchant.merchant?.businessName}</h4>
+              <p className="text-sm text-gray-500">{merchant.merchant?.state}, {merchant.merchant?.lga}</p>
+            </article>
+            <p className="text-sm text-gray-500">{merchant.message?.content}</p>
+            {!merchant.isAccepted && (
+
+              <button
+              className="bg-gray-500 text-sm text-white px-4 py-2 rounded-md mt-2 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200"
               onClick={() => onAccept(merchant._id)}
               disabled={actionLoading}
             >
-              {actionLoading ? "Processing..." : "Interview"}
+              {actionLoading ? "Interviewing..." : "Interview"}
             </button>
           )}
+          </div>
+         </div>
         </div>
       ))}
     </div>
