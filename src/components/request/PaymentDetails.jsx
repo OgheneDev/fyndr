@@ -24,23 +24,23 @@ export function PaymentDetails({ data }) {
         <div className="space-y-1 text-sm mb-10">
             <div className="mb-15">
                 <div>
-                    <h3 className="font-medium">Transaction ID: {data.transaction_id || 'Not available'}</h3>
+                    <h3 className="">Transaction ID: {data.transaction_id || 'Not available'}</h3>
                 </div>
                 <div>
-                    <h3 className="font-medium">Reference: {data.transaction_reference || 'Not available'}</h3>
+                    <h3 className="">Reference: {data.transaction_reference || 'Not available'}</h3>
                 </div>
                 <div>
-                    <h3 className="font-medium">Payment Method: {data.payment_method || 'Not specified'}</h3>
+                    <h3 className="">Payment Method: {data.payment_method || 'Not specified'}</h3>
                 </div>
                 <div>
-                    <h3 className="font-medium">Status: {data.transaction_status || 'Not available'}</h3>
+                    <h3 className="">Status: {data.transaction_status || 'Not available'}</h3>
                 </div>
                 <div>
-                    <h3 className="font-medium">Attempts: {data.payment_attempts || '0'}</h3>
+                    <h3 className="">Attempts: {data.payment_attempts || '0'}</h3>
                 </div>
             </div>
             <Link href={`/payment?id=${data._id}&token=${encodeURIComponent(authToken || '')}`}>
-                <button className="w-full py-3 px-4 bg-[#57132A] text-white rounded-lg text-sm font-medium">
+                <button className="w-full py-3 px-4 bg-[#57132A] text-white rounded-lg text-sm ">
                     Initiate Payment
                 </button>
             </Link>

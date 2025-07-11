@@ -32,63 +32,61 @@ const RequestDetailsSections = ({ data }) => (
   <>
     <div className="space-y-1 text-sm mb-15">
       <div>
-      <p>Title: {data.title}</p>
-    </div>
-    <div>
-      <p>Category: {CATEGORY_LABELS[data.category] || data.category || "Unknown"}</p>
-    </div>
-    <div>
-      <p>State: {data.targetState}</p>
-    </div>
-    <div>
-      <p>Additional description: {data.additionalDetails || "No additional details."}</p>
-    </div>
-    <div>
-      <p>Price Range: {getBudgetText(data)}</p>
-    </div>
+        <p>Title: {data.title}</p>
+      </div>
+      <div>
+        <p>Category: {CATEGORY_LABELS[data.category] || data.category || "Unknown"}</p>
+      </div>
+      <div>
+        <p>State: {data.targetState}</p>
+      </div>
+      <div>
+        <p>Additional description: {data.additionalDetails || "No additional details."}</p>
+      </div>
     </div>
     {data.carHire && (
       <div className="text-sm">
         <div className="space-y-1">
-          <p><span className="font-medium">Car Type:</span> {data.carHire.carType}</p>
-          <p><span className="font-medium">Duration:</span> {data.carHire.hireDuration}</p>
-          <p><span className="font-medium">Pickup Location:</span> {data.carHire.pickupLocation}</p>
-          <p><span className="font-medium">Airport:</span> {data.carHire.airport}</p>
-          <p><span className="font-medium">Travel:</span> {data.carHire.travel ? "Yes" : "No"}</p>
+          <p><span className="">Car Type:</span> {data.carHire.carType}</p>
+          <p><span className="">Duration:</span> {data.carHire.hireDuration}</p>
+          <p><span className="">Pickup Location:</span> {data.carHire.pickupLocation}</p>
+          <p><span className="">Airport:</span> {data.carHire.airport}</p>
+          <p><span className="">Travel:</span> {data.carHire.travel ? "Yes" : "No"}</p>
         </div>
       </div>
     )}
     {data.cleaning && (
       <div className="text-sm">
         <div className="space-y-1">
-          <p><span className="font-medium">Property Type:</span> {data.cleaning.propertyType}</p>
-          <p><span className="font-medium">Property Location:</span> {data.cleaning.propertyLocation}</p>
-          <p><span className="font-medium">Rooms:</span> {data.cleaning.roomNumber}</p>
-          <p><span className="font-medium">Cleaning Type:</span> {data.cleaning.cleaningType}</p>
+          <p><span className="">Property Type:</span> {data.cleaning.propertyType}</p>
+          <p><span className="">Property Location:</span> {data.cleaning.propertyLocation}</p>
+          <p><span className="">Rooms:</span> {data.cleaning.roomNumber}</p>
+          <p><span className="">Cleaning Type:</span> {data.cleaning.cleaningType}</p>
         </div>
       </div>
     )}
     {data.realEstate && (
       <div className="text-sm">
         <div className="space-y-1">
-          <p><span className="font-medium">Rent Type:</span> {data.realEstate.rentType}</p>
-          <p><span className="font-medium">Property Type:</span> {data.realEstate.propertyType}</p>
-          <p><span className="font-medium">Rooms:</span> {data.realEstate.roomNumber}</p>
-          <p><span className="font-medium">Condition:</span> {data.realEstate.propertyCondition}</p>
+          <p><span className="">Rent or Purchase:</span> {data.realEstate.rentType}</p>
+          <p><span className="">Property Type:</span> {data.realEstate.propertyType}</p>
+          <p><span className="">Room Number:</span> {data.realEstate.roomNumber}</p>
+          <p><span className="">Condition:</span> {data.realEstate.propertyCondition}</p>
+          <p><span className="">Price Range:</span> {getBudgetText(data)}</p>
         </div>
       </div>
     )}
     {data.carPart && (
       <div className="text-sm">
         <div className="space-y-1">
-          <p><span className="font-medium">Current Location:</span> {data.carPart.currentLocation}</p>
-          <p><span className="font-medium">Sourcing Location:</span> {data.carPart.sourcingLocation}</p>
-          <p><span className="font-medium">Car Make:</span> {data.carPart.carMake}</p>
-          <p><span className="font-medium">Car Model:</span> {data.carPart.carModel}</p>
-          <p><span className="font-medium">Car Year:</span> {data.carPart.carYear}</p>
+          <p><span className="">Current Location:</span> {data.carPart.currentLocation}</p>
+          <p><span className="">Sourcing Location:</span> {data.carPart.sourcingLocation}</p>
+          <p><span className="">Car Make:</span> {data.carPart.carMake}</p>
+          <p><span className="">Car Model:</span> {data.carPart.carModel}</p>
+          <p><span className="">Car Year:</span> {data.carPart.carYear}</p>
           {data.carPart.image && (
             <div>
-              <span className="font-medium">Image:</span>
+              <span className="">Image:</span>
               <Image src={data.carPart.image} alt="Car Part" width={50} height={50} className="mt-2 max-w-xs rounded" />
             </div>
           )}
@@ -98,14 +96,13 @@ const RequestDetailsSections = ({ data }) => (
     {data.automobile && (
       <div className="text-sm">
         <div className="space-y-1">
-          <p><span className="font-medium">Location:</span> {data.automobile.location}</p>
-          <p><span className="font-medium">Car Make:</span> {data.automobile.carMake}</p>
-          <p><span className="font-medium">Car Model:</span> {data.automobile.carModel}</p>
-          <p><span className="font-medium">Car Year From:</span> {data.automobile.carYearFrom}</p>
-          <p><span className="font-medium">Car Year To:</span> {data.automobile.carYearTo}</p>
-          <p><span className="font-medium">Transmission:</span> {data.automobile.transmission}</p>
-          <p><span className="font-medium">Lower Price Limit:</span> {data.automobile.lowerPriceLimit}</p>
-          <p><span className="font-medium">Upper Price Limit:</span> {data.automobile.upperPriceLimit}</p>
+          <p><span className="">Location:</span> {data.automobile.location}</p>
+          <p><span className="">Car Make:</span> {data.automobile.carMake}</p>
+          <p><span className="">Car Model:</span> {data.automobile.carModel}</p>
+          <p><span className="">Car Year From:</span> {data.automobile.carYearFrom}</p>
+          <p><span className="">Car Year To:</span> {data.automobile.carYearTo}</p>
+          <p><span className="">Transmission:</span> {data.automobile.transmission}</p>
+          <p><span className="">Price Range:</span> {getBudgetText(data)}</p>
         </div>
       </div>
     )}
