@@ -30,7 +30,7 @@ const carModels = {
   BMW: ['3 Series', '5 Series', 'X3'],
   Lexus: ['RX', 'ES', 'GX'],
 };
-const carYears = Array.from({ length: 25 }, (_, i) => `${2000 + i}`);
+const carYears = Array.from({ length: 56 }, (_, i) => `${1970 + i}`);
 
 const tabs = [
   { label: 'Properties', category: 'real-estate' },
