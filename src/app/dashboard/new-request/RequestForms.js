@@ -189,7 +189,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         <textarea
           value={formData.details || ''}
           onChange={(e) => onChange('details', e.target.value)}
-          placeholder="Enter any additional details"
+          placeholder="Additional Description (Let the agent know preferred location and other information to help streamline)"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
@@ -281,7 +281,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
             type="number"
             value={carHireData.hireDuration || ''}
             onChange={(e) => onChange('hireDuration', e.target.value)}
-            placeholder="e.g. 3 days"
+            placeholder="Duration (in hrs)"
             className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
           />
         </div>
@@ -398,12 +398,12 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
         </select>
       </div>
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">Property Location</label>
+        <label className="block text-[#171214] mb-3 text-sm">Property Address</label>
         <input
           type="text"
           value={cleaningData.propertyLocation}
           onChange={(e) => onChange('propertyLocation', e.target.value)}
-          placeholder="Enter property location"
+          placeholder="Enter property address"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
@@ -489,26 +489,6 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
         </article>
       </div>
       <div className="mt-12 md:mt-20">
-        <label className="block text-[#171214] mb-3 text-sm">Attachment (Image/Video)</label>
-        <input
-          type="file"
-          accept="image/*,video/*"
-          onChange={(e) => onChange('attachment', e.target.files[0])}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        />
-        {imagePreview && (
-          <div className="mt-2">
-            <Image
-              src={imagePreview}
-              height={50}
-              width={50}
-              alt="Preview"
-              className="w-32 h-32 object-cover rounded border"
-            />
-          </div>
-        )}
-      </div>
-      <div>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -516,7 +496,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           onChange={(e) => onChange('title', e.target.value)}
           min={1}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-          placeholder="Enter Title"
+          placeholder="Common name of part needed"
         />
       </div>
       <div>
@@ -540,24 +520,19 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           type="text"
           value={carPartsData.currentLocation}
           onChange={(e) => onChange('currentLocation', e.target.value)}
-          placeholder="Enter current location"
+          placeholder="E.g Ikorodu Lagos"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Sourcing Location</label>
-        <select
+        <input
+          type="text"
           value={carPartsData.sourcingLocation}
           onChange={(e) => onChange('sourcingLocation', e.target.value)}
+          placeholder="E.g Ladipo Market"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        >
-          <option value="">Select State</option>
-          {Object.keys(nigerianStates).map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
+        />
       </div>
       <div className="flex gap-3">
         <div className="flex-1">
@@ -612,9 +587,29 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
         <textarea
           value={carPartsData.details}
           onChange={(e) => onChange('details', e.target.value)}
-          placeholder="Describe the car part"
+          placeholder="Describe part needed (e.g ABS sensor, front left)"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Attachment (Image/Video)</label>
+        <input
+          type="file"
+          accept="image/*,video/*"
+          onChange={(e) => onChange('attachment', e.target.files[0])}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+        {imagePreview && (
+          <div className="mt-2">
+            <Image
+              src={imagePreview}
+              height={50}
+              width={50}
+              alt="Preview"
+              className="w-32 h-32 object-cover rounded border"
+            />
+          </div>
+        )}
       </div>
       <div className="mt-4">
         <label className="flex items-center text-sm text-[#171214]">

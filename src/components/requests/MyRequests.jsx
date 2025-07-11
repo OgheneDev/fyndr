@@ -1,7 +1,8 @@
-'use client'
+'use client';
+
 import Link from 'next/link';
-import { getRequests } from '@/api/requests/users/requests';
 import { useEffect, useState } from 'react';
+import { getRequests } from '@/api/requests/users/requests';
 import { ToggleButtons } from './ToggleButtons';
 import { RequestSection } from './RequestSection';
 
@@ -9,7 +10,7 @@ export default function ServiceRequests() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('completed');
-  
+
   // Touch/swipe state
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
@@ -18,15 +19,21 @@ export default function ServiceRequests() {
     async function fetchRequests() {
       setLoading(true);
       const data = await getRequests();
-      const sortedData = (data || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const sortedData = (data || []).sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       setRequests(sortedData);
       setLoading(false);
     }
     fetchRequests();
   }, []);
 
-  const liveRequests = requests.filter(request => request.transaction_status === "completed");
-  const awaitingRequests = requests.filter(request => request.transaction_status === "pending");
+  const liveRequests = requests.filter(
+    (request) => request.transaction_status === 'completed'
+  );
+  const awaitingRequests = requests.filter(
+    (request) => request.transaction_status === 'pending'
+  );
 
   const minSwipeDistance = 50;
 
@@ -41,7 +48,7 @@ export default function ServiceRequests() {
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -55,7 +62,12 @@ export default function ServiceRequests() {
   };
 
   return (
-    <div className="min-h-screen md:max-w-4xl md:mx-auto">
+    <div 
+      className="min-h-screen md:max-w-4xl md:mx-auto"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="mb-8">
           <h1 className="text-2xl text-center sm:text-3xl font-bold text-[#121417]">
@@ -63,35 +75,30 @@ export default function ServiceRequests() {
           </h1>
         </div>
 
-        <Link href={'/dashboard'}>
-          <button className='text-white w-full md:w-full px-10 mb-5 text-sm cursor-pointer bg-[#57132A] text-center py-3 rounded-lg'>
+        <Link href="/dashboard">
+          <button className="text-white w-full md:w-full px-10 mb-5 text-sm cursor-pointer bg-[#57132A] text-center py-3 rounded-lg">
             Create New Request
           </button>
         </Link>
 
         <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Sliding content container */}
-        <div 
-          className="relative overflow-hidden"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
-          {/* Live Requests */}
-          <div 
+        {/* Content container with strict width control */}
+        <div className="relative w-full overflow-hidden" style={{ minHeight: '60vh' }}>
+          {/* Live Requests - always takes full width */}
+          <div
             className={`w-full transition-transform duration-300 ease-in-out ${
               activeTab === 'completed' ? 'translate-x-0' : '-translate-x-full'
             }`}
           >
             <RequestSection loading={loading} requests={liveRequests} />
           </div>
-          
-          {/* Awaiting Requests */}
-          <div 
-            className={`w-full transition-transform duration-300 ease-in-out ${
+
+          {/* Awaiting Requests - absolutely positioned */}
+          <div
+            className={`absolute top-0 left-0 w-full transition-transform duration-300 ease-in-out ${
               activeTab === 'pending' ? 'translate-x-0' : 'translate-x-full'
-            } ${activeTab === 'pending' ? 'relative' : 'absolute top-0 left-0'}`}
+            }`}
           >
             <RequestSection requests={awaitingRequests} />
           </div>
