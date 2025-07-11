@@ -4,11 +4,11 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
   <div>
     <div className="space-y-4">
       {merchants.map((merchant) => (
-        <div key={merchant._id} className="bg-white p-4 rounded-lg border border-gray-200">
+        <div key={merchant._id} className="bg-gray-100 shadow-md p-4 rounded-xl">
           <p className="text-gray-700 mb-2">
-            <span className="font-medium">Merchant:</span>{" "}
-            {merchant.merchant?.businessName ||
-              merchant.merchant?.name ||
+            <span className="font-medium">Name:</span>{" "}
+            {merchant.merchant?.name ||
+              merchant.merchant?.businessName ||
               merchant.merchant?.email ||
               "Unknown"}
           </p>
@@ -16,7 +16,7 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
             <span className="font-medium">Message:</span>{" "}
             {merchant.message?.content || merchant.message || ""}
           </p>
-          <p className="text-gray-700 mb-2">
+          {/*<p className="text-gray-700 mb-2">
             <span className="font-medium">Status:</span>{" "}
             {merchant.isAccepted ? (
               <span className="text-green-700 font-semibold">Accepted</span>
@@ -32,7 +32,7 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
             >
               {actionLoading ? "Accepting..." : "Accept"}
             </button>
-          )}
+          )} */}
         </div>
       ))}
     </div>

@@ -230,7 +230,7 @@ function UserRequestDetailPageInner() {
         <div className="min-h-screen pb-[60px]">
             <RequestDetailsHeader onBack={handleBack} />
             <div className="px-4 sm:px-6 lg:px-8">
-                <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
+                <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} merchants={data.interestedMerchants} />
                 <div 
                     className="relative overflow-hidden"
                     onTouchStart={onTouchStart}

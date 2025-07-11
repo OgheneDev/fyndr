@@ -1,4 +1,4 @@
-export function ToggleButtons({ activeTab, setActiveTab }) {
+export function ToggleButtons({ activeTab, setActiveTab, merchants }) {
     return (
         <div className="relative flex justify-between border-b border-b-gray-400 mb-6">
             <div className="relative flex w-full">
@@ -16,8 +16,13 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
                         activeTab === 'merchants' ? 'text-[#121417]' : 'text-gray-400'
                     }`}
                 >
-                    Merchants
-                </button>
+                    <span className="inline-flex items-center gap-2">
+                        Merchants 
+                        <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full min-w-[24px]">
+                            {merchants.length}
+                        </span>
+                    </span>
+                </button> 
                 <button
                     onClick={() => setActiveTab('payment')}
                     className={`relative flex-1 py-3 text-sm font-medium transition-colors duration-300 ${
