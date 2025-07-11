@@ -227,7 +227,7 @@ function UserRequestDetailPageInner() {
     const data = request?.data || request;
 
     return (
-        <div className="min-h-screen pb-[60px]">
+        <div className="min-h-screen pb-[60px] md:max-w-4xl md:mx-auto md:pt-5">
             <RequestDetailsHeader onBack={handleBack} />
             <div className="px-4 sm:px-6 lg:px-8">
                 <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} merchants={data.interestedMerchants} />

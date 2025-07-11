@@ -1,49 +1,41 @@
-import React from 'react'
+"use client"
+
+import React, {useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
 
 // Properties Form
 export function PropertiesForm({ formData, onChange, nigerianStates, propertyTypes }) {
-  const priceRanges = [
-    { label: "Below ₦500k", lower: 0, upper: 500000 },
-    { label: "₦500k - ₦1m", lower: 500000, upper: 1000000 },
-    { label: "₦1m - ₦5m", lower: 1000000, upper: 5000000 },
-    { label: "Above ₦5m", lower: 5000000, upper: 1000000000 }
-  ]
-
-  // Helper for multi-select axis
   const handleAxisChange = (e) => {
     const options = Array.from(e.target.options)
       .filter(opt => opt.selected)
       .map(opt => opt.value)
-      .slice(0, 3)
-    onChange('axis', options)
-  }
+      .slice(0, 3);
+    onChange('axis', options);
+  };
 
-  // Handle price range selection
-  const handlePriceRangeChange = (e) => {
-    const selected = priceRanges.find(r => r.label === e.target.value)
-    if (selected) {
-      onChange('lowerPriceLimit', selected.lower)
-      onChange('upperPriceLimit', selected.upper)
-    } else {
-      onChange('lowerPriceLimit', '')
-      onChange('upperPriceLimit', '')
+  const handleSliderChange = (value) => {
+    onChange('lowerPriceLimit', value[0]);
+    onChange('upperPriceLimit', value[1]);
+  };
+
+  const handleInputChange = (field, value) => {
+    const numValue = value === '' ? '' : Number(value);
+    if (field === 'lowerPriceLimit' && numValue >= Number(formData.upperPriceLimit) && formData.upperPriceLimit !== '') {
+      return; // Prevent lowerPriceLimit >= upperPriceLimit
     }
-  }
+    if (field === 'upperPriceLimit' && numValue <= Number(formData.lowerPriceLimit) && formData.lowerPriceLimit !== '') {
+      return; // Prevent upperPriceLimit <= lowerPriceLimit
+    }
+    onChange(field, numValue);
+  };
 
-  // fallback to empty object if nigerianStates is not provided
   const safeStates = nigerianStates || {};
-  const selectedState = formData.state
-  const axisOptions = selectedState && safeStates[selectedState] ? safeStates[selectedState] : []
-
-  // Find which price range is currently selected
-  const selectedPriceRange = priceRanges.find(
-    r => Number(formData.lowerPriceLimit) === r.lower && Number(formData.upperPriceLimit) === r.upper
-  )?.label || ''
-
-  // Default propertyTypes to empty array if not provided
+  const axisOptions = formData.state && safeStates[formData.state] ? safeStates[formData.state] : [];
   const safePropertyTypes = propertyTypes || [];
 
   return (
@@ -54,24 +46,21 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
             <ArrowLeft className="w-6 h-6 text-gray-600" />
           </button>
         </Link>
-        <article className=' text-center'>
-        <h2 className='text-lg font-bold mb-1'>Post a Properties Request</h2>
-        <p className='text-[12px]'>Find lands, homes or rentals</p>
+        <article className='text-center'>
+          <h2 className='text-lg font-bold mb-1'>Post a Properties Request</h2>
+          <p className='text-[12px]'>Find lands, homes or rentals</p>
         </article>
       </div>
-      {/* Title */}
       <div className='mt-10 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
           value={formData.title || ''}
           onChange={e => onChange('title', e.target.value)}
-          min={1}
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
           placeholder="Enter Title"
         />
       </div>
-      {/* Rent or Buy */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Rent or Buy</label>
         <select
@@ -84,13 +73,12 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           <option value="buy">Buy</option>
         </select>
       </div>
-      {/* Property Type */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Property Type</label>
         <select
           value={formData.propertyType}
           onChange={e => onChange('propertyType', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm "
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         >
           <option value="">Select Type</option>
           {safePropertyTypes.map(type => (
@@ -98,7 +86,6 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           ))}
         </select>
       </div>
-      {/* Target State */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Target State</label>
         <select
@@ -112,7 +99,6 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           ))}
         </select>
       </div>
-      {/* Target Axis (multi-select, up to 3) */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Target Axis (up to 3)</label>
         <select
@@ -128,7 +114,6 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         </select>
         <div className="text-xs text-gray-500 mt-1">Hold Ctrl (Windows) or Cmd (Mac) to select multiple</div>
       </div>
-      {/* Property Condition */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Property Condition</label>
         <select
@@ -142,7 +127,6 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           <option value="any">Any</option>
         </select>
       </div>
-      {/* Room Number */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Room Number</label>
         <input
@@ -154,21 +138,46 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           placeholder="Enter number of rooms"
         />
       </div>
-      {/* Price Range */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Price Range</label>
-        <select
-          value={selectedPriceRange}
-          onChange={handlePriceRangeChange}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        >
-          <option value="">Select Price Range</option>
-          {priceRanges.map(range => (
-            <option key={range.label} value={range.label}>{range.label}</option>
-          ))}
-        </select>
+        <div className="space-y-4">
+          <Slider
+            range
+            min={0}
+            max={1000000000}
+            step={10000}
+            value={[Number(formData.lowerPriceLimit) || 0, Number(formData.upperPriceLimit) || 1000000000]}
+            onChange={handleSliderChange}
+            trackStyle={{ backgroundColor: '#541229' }}
+            handleStyle={{ borderColor: '#541229', backgroundColor: '#fff' }}
+            railStyle={{ backgroundColor: '#E5E8EB' }}
+          />
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <label className="block text-[#171214] mb-2 text-sm">Min Price (₦)</label>
+              <input
+                type="number"
+                value={formData.lowerPriceLimit || ''}
+                onChange={e => handleInputChange('lowerPriceLimit', e.target.value)}
+                min={0}
+                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                placeholder="Enter min price"
+              />
+            </div>
+            <div>
+              <label className="block text-[#171214] mb-2 text-sm">Max Price (₦)</label>
+              <input
+                type="number"
+                value={formData.upperPriceLimit || ''}
+                onChange={e => handleInputChange('upperPriceLimit', e.target.value)}
+                min={0}
+                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                placeholder="Enter max price"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      {/* Additional Details */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
@@ -179,7 +188,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         />
       </div>
     </div>
-  )
+  );
 }
 
 // Car Hire Form
@@ -581,29 +590,20 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
 
 // Automobile Form
 export function AutomobileForm({ automobileData, onChange, nigerianStates, carMakes, carModels, carYears }) {
-  // Define price ranges (same as PropertiesForm)
-  const priceRanges = [
-    { label: "Below ₦500k", lower: 0, upper: 500000 },
-    { label: "₦500k - ₦1m", lower: 500000, upper: 1000000 },
-    { label: "₦1m - ₦5m", lower: 1000000, upper: 5000000 },
-    { label: "Above ₦5m", lower: 5000000, upper: 1000000000 }
-  ];
+  const handleSliderChange = (value) => {
+    onChange('lowerPriceLimit', value[0]);
+    onChange('upperPriceLimit', value[1]);
+  };
 
-  // Find which price range is currently selected
-  const selectedPriceRange = priceRanges.find(
-    r => Number(automobileData.lowerPriceLimit) === r.lower && Number(automobileData.upperPriceLimit) === r.upper
-  )?.label || '';
-
-  // Handle price range selection
-  const handlePriceRangeChange = (e) => {
-    const selected = priceRanges.find(r => r.label === e.target.value);
-    if (selected) {
-      onChange('lowerPriceLimit', selected.lower);
-      onChange('upperPriceLimit', selected.upper);
-    } else {
-      onChange('lowerPriceLimit', '');
-      onChange('upperPriceLimit', '');
+  const handleInputChange = (field, value) => {
+    const numValue = value === '' ? '' : Number(value);
+    if (field === 'lowerPriceLimit' && numValue >= Number(automobileData.upperPriceLimit) && automobileData.upperPriceLimit !== '') {
+      return; // Prevent lowerPriceLimit >= upperPriceLimit
     }
+    if (field === 'upperPriceLimit' && numValue <= Number(automobileData.lowerPriceLimit) && automobileData.lowerPriceLimit !== '') {
+      return; // Prevent upperPriceLimit <= lowerPriceLimit
+    }
+    onChange(field, numValue);
   };
 
   return (
@@ -614,12 +614,11 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
             <ArrowLeft className="w-6 h-6 text-gray-600" />
           </button>
         </Link>
-        <article className=' text-center'>
-        <h2 className='text-lg font-bold mb-1'>Post an Automobile Request</h2>
-        <p className='text-[12px]'>Get vehicles for sale around you.</p>
+        <article className='text-center'>
+          <h2 className='text-lg font-bold mb-1'>Post an Automobile Request</h2>
+          <p className='text-[12px]'>Get vehicles for sale around you.</p>
         </article>
       </div>
-      {/* Title */}
       <div className='mt-10 md:mt-20'>
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
@@ -630,7 +629,6 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
-      {/* State */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
@@ -643,18 +641,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
             <option key={state} value={state}>{state}</option>
           ))}
         </select>
-      </div> 
-      {/* Details */}
-      <div>
-        <label className="block text-[#171214] mb-3 text-sm">Details</label>
-        <textarea
-          value={automobileData.details}
-          onChange={e => onChange('details', e.target.value)}
-          placeholder="Enter details"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        />
       </div>
-      {/* Location */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Location</label>
         <input
@@ -665,7 +652,6 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
-      {/* Car Make */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Car Make</label>
         <select
@@ -679,7 +665,6 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           ))}
         </select>
       </div>
-      {/* Car Model */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Car Model</label>
         <select
@@ -694,7 +679,6 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           ))}
         </select>
       </div>
-      {/* Car Year From */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Car Year From</label>
         <select
@@ -708,7 +692,6 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           ))}
         </select>
       </div>
-      {/* Car Year To */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Car Year To</label>
         <select
@@ -722,7 +705,6 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           ))}
         </select>
       </div>
-      {/* Transmission */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Transmission</label>
         <select
@@ -735,21 +717,55 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <option value="automatic">Automatic</option>
         </select>
       </div>
-      {/* Price Range */}
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Price Range</label>
-        <select
-          value={selectedPriceRange}
-          onChange={handlePriceRangeChange}
+        <div className="space-y-4">
+          <Slider
+            range
+            min={0}
+            max={1000000000}
+            step={10000}
+            value={[Number(automobileData.lowerPriceLimit) || 0, Number(automobileData.upperPriceLimit) || 1000000000]}
+            onChange={handleSliderChange}
+            trackStyle={{ backgroundColor: '#541229' }}
+            handleStyle={{ borderColor: '#541229', backgroundColor: '#fff' }}
+            railStyle={{ backgroundColor: '#E5E8EB' }}
+          />
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <label className="block text-[#171214] mb-2 text-sm">Min Price (₦)</label>
+              <input
+                type="number"
+                value={automobileData.lowerPriceLimit || ''}
+                onChange={e => handleInputChange('lowerPriceLimit', e.target.value)}
+                min={0}
+                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                placeholder="Enter min price"
+              />
+            </div>
+            <div>
+              <label className="block text-[#171214] mb-2 text-sm">Max Price (₦)</label>
+              <input
+                type="number"
+                value={automobileData.upperPriceLimit || ''}
+                onChange={e => handleInputChange('upperPriceLimit', e.target.value)}
+                min={0}
+                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                placeholder="Enter max price"
+              />
+            </div>
+          </div>
+          <div>
+        <label className="block text-[#171214] mb-3 text-sm">Details</label>
+        <textarea
+          value={automobileData.details}
+          onChange={e => onChange('details', e.target.value)}
+          placeholder="Enter details"
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        >
-          <option value="">Select Price Range</option>
-          {priceRanges.map(range => (
-            <option key={range.label} value={range.label}>{range.label}</option>
-          ))}
-        </select>
+        />
       </div>
-      {/* Remove Upper Price Limit and Lower Price Limit fields */}
+        </div>
+      </div>
     </div>
-  )
+  );
 }
