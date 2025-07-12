@@ -10,13 +10,13 @@ import { getUserProfile } from '@/api/profile/users/request'
 
 // Common menu items (for both user and merchant)
 const commonMenuItems = [
-    { icon: MessageCircle, name: 'Messages', path: '/dashboard/messages' },
-    { icon: User, name: 'Profile', path: '/dashboard/profile' }
+    { icon: MessageCircle, name: 'My Messages', path: '/dashboard/messages' },
+    { icon: User, name: 'My Profile', path: '/dashboard/profile' }
 ]
 
 // User-specific additional items
 const userAdditionalItems = [
-    { icon: Home, name: 'Home', path: '/dashboard' },
+    { icon: Home, name: 'My Dashboard', path: '/dashboard' },
     { icon: List, name: 'My requests', path: '/dashboard/my-requests' },
 ]
 
@@ -99,8 +99,8 @@ const Sidebar = () => {
     };
 
     return (
-        <div className={`bg-white w-[280px] flex-col h-full hidden md:flex fixed top-0 left-0 border-r border-gray-100`}>
-            {/* Header */}
+        <div className={`bg-white w-[280px] flex-col h-full hidden md:flex pt-[100px] fixed top-0 left-0 border-r border-gray-100`}>
+            {/* Header 
             <div className='px-6 py-6 border-b border-gray-100'>
                 <div className='flex items-center gap-3'>
                     <div className='w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center'>
@@ -111,9 +111,9 @@ const Sidebar = () => {
                         <Link href={'/profile'} className='text-sm text-gray-500 hover:text-gray-700'>
                             View profile
                         </Link>
-                    </div>
+                    </div> 
                 </div>
-            </div>
+            </div>*/}
             
             {/* Menu Items */}
             <div className="px-4 py-4 flex-1">

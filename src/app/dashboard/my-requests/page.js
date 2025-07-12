@@ -3,7 +3,7 @@ import ServiceRequests from '@/components/requests/MyRequests'
 
 const RequestsPage = () => {
   return (
-    <div>
+    <div className='md:pt-[80px] pt-[72px]'>
         <ServiceRequests />
     </div>
   )

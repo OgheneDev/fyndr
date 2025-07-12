@@ -120,10 +120,10 @@ const MessagesPage = () => {
   }
 
   return (
-    <div className="min-h-screen pb-16 md:pb-0">
+    <div className="min-h-screen pb-16 md:pb-0 md:pt-[80px] pt-[72px]">
       {/* Header */}
       <div className="bg-white px-4 py-4 pt-6 md:max-w-4xl mx-auto">
-        <h1 className="text-2xl font-semibold text-center md:text-start text-gray-900">Messages</h1>
+        <h1 className="text-2xl font-semibold text-center text-gray-900">Messages</h1>
       </div>
       <ConversationsList
         conversations={conversations}

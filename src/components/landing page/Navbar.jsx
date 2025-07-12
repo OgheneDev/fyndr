@@ -1,17 +1,71 @@
-"use client"
-
-import React, { useState } from 'react'
+'use client'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, LogOut, User, MessageSquare, LayoutDashboard } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useUserStore } from '@/store/userStore'
+import { getMerchantProfile } from '@/api/profile/merchants/requests'
+import { getUserProfile } from '@/api/profile/users/request'
+import { logout } from '@/api/auth/merchants/requests'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { userType, profile, setProfile } = useUserStore();
+    const [profileLoading, setProfileLoading] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
     }
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen)
+    }
+
+    const handleLogout = async () => {
+        const success = logout();
+        if (success) {
+            console.log("Successfully logged out");
+            setIsLoggedIn(false); // Update state on logout
+        } else {
+            console.log("Logout failed");
+        }
+    };
+
+    useEffect(() => {
+        // Check if running on client-side before accessing localStorage
+        if (typeof window !== 'undefined') {
+            const authToken = localStorage.getItem('authToken');
+            setIsLoggedIn(!!authToken);
+        }
+    }, []);
+
+    useEffect(() => {
+        let isMounted = true;
+        const fetchProfile = async () => {
+            if (!isLoggedIn) return;
+            setProfileLoading(true);
+            try {
+                let data = null;
+                if (userType === 'merchant') {
+                    data = await getMerchantProfile();
+                } else if (userType === 'user') {
+                    data = await getUserProfile();
+                }
+                if (isMounted) setProfile(data);
+            } catch {
+                if (isMounted) setProfile(null);
+            } finally {
+                if (isMounted) setProfileLoading(false);
+            }
+        };
+        if (userType === 'merchant' || userType === 'user') {
+            fetchProfile();
+        }
+        return () => { isMounted = false; };
+    }, [userType, isLoggedIn, setProfile]);
 
     const navItems = [
         {name: "Home", path: '/'},
@@ -19,6 +73,16 @@ const Navbar = () => {
         {name: "How it works", path: '#how-it-works'},
         {name: "Testimonials", path: '#testimonials'},
         {name: "Become a merchant", path: '#become-a-merchant'}
+    ]
+
+    const dropdownItems = [
+        ...(userType === 'user' ? [
+            { name: 'My Dashboard', path: '/dashboard', icon: LayoutDashboard }
+        ] : userType === 'merchant' ? [
+            { name: 'My Dashboard', path: '/dashboard/open-requests', icon: LayoutDashboard }
+        ] : []),
+        { name: 'Profile', path: '/dashboard/profile', icon: User },
+        { name: 'Messages', path: '/dashboard/messages', icon: MessageSquare },
     ]
 
     // Animation variants
@@ -120,9 +184,51 @@ const Navbar = () => {
         }
     }
 
+    const dropdownVariants = {
+        hidden: { opacity: 0, y: -10 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.2,
+                ease: "easeOut",
+                staggerChildren: 0.05
+            }
+        },
+        exit: { opacity: 0, y: -10, transition: { duration: 0.2 } }
+    }
+
+    const dropdownItemVariants = {
+        hidden: { opacity: 0, x: -10 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.2 } }
+    }
+
+    const renderAvatar = () => {
+        if (profileLoading) {
+            return <div className="animate-pulse w-10 h-10 rounded-full bg-gray-200" />;
+        }
+        const avatarUrl = profile?.avatar;
+        if (avatarUrl) {
+            return (
+                <Image
+                    src={avatarUrl}
+                    alt="avatar"
+                    width={50}
+                    height={50}
+                    className="object-cover rounded-full"
+                />
+            );
+        }
+        return (
+            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                <User size={24} className="text-gray-500" />
+            </div>
+        );
+    };
+
     return (
         <motion.header 
-            className='p-5 md:py-8 md:px-12 flex justify-between w-full bg-white items-center fixed top-0 z-50'
+            className='p-5  md:px-12 flex justify-between w-full border-b border-gray-100 bg-white items-center fixed top-0 z-100'
             variants={navbarVariants}
             initial="hidden"
             animate="visible"
@@ -208,75 +314,166 @@ const Navbar = () => {
                                             <Link
                                                 href={item.path}
                                                 onClick={toggleMenu}
-                                                className="flex items-center px-6 py-4 text-gray-700 border-b border-gray-100 transition-colors hover:bg-gray-50"
+                                                className="flex items-center px-6 py-4 text-gray-700 border-b border-gray-100 transition-colors"
                                             >
                                                 <span className='text-[15px] font-medium'>{item.name}</span>
                                             </Link>
                                         </motion.li>
-                                    ))} 
+                                    ))}
+                                    {isLoggedIn && dropdownItems.map((item, index) => (
+                                        <motion.li 
+                                            key={`dropdown-${index}`}
+                                            variants={mobileNavItemVariants}
+                                        >
+                                            <Link
+                                                href={item.path}
+                                                onClick={toggleMenu}
+                                                className="flex items-center px-6 py-4 text-gray-700 border-b border-gray-100 transition-colors gap-2"
+                                            >
+                                                <item.icon size={18} />
+                                                <span className='text-[15px] font-medium'>{item.name}</span>
+                                            </Link>
+                                        </motion.li>
+                                    ))}
                                 </ul>
                             </nav>
 
-                            {/* Login & Signup buttons */}
+                            {/* Login/Logout & Signup buttons */}
                             <motion.div 
                                 className="p-6 border-t flex flex-col gap-3"
                                 variants={mobileNavItemVariants}
                             >
-                                <Link href={'/login'}>
-                                 <motion.button 
-                                    className='bg-[#57132A] text-white py-3 cursor-pointer rounded-full text-sm w-full'
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                >
-                                    Login
-                                </motion.button>
-                                </Link>
-                                <Link href={'register'}>
+                                {isLoggedIn ? (
                                     <motion.button 
-                                    className='text-[#57132A] border border-[#57132A] py-3 rounded-full text-sm w-full'
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                >
-                                    Sign up
-                                </motion.button>
-                                </Link>
+                                        onClick={handleLogout}
+                                        className='bg-[#57132A] text-white py-3 cursor-pointer rounded-full text-sm w-full'
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                    >
+                                        Logout
+                                    </motion.button>
+                                ) : (
+                                    <>
+                                        <Link href={'/login'}>
+                                            <motion.button 
+                                                className='bg-[#57132A] text-white py-3 cursor-pointer rounded-full text-sm w-full'
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                Login
+                                            </motion.button>
+                                        </Link>
+                                        <Link href={'register'}>
+                                            <motion.button 
+                                                className='text-[#57132A] border border-[#57132A] py-3 rounded-full text-sm w-full'
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                Sign up
+                                            </motion.button>
+                                        </Link>
+                                    </>
+                                )}
                             </motion.div>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* Desktop Login & Sign up buttons */}
+            {/* Desktop Auth Section */}
             <motion.div 
                 className='hidden md:flex gap-5 items-center cursor-pointer ml-auto'
                 variants={navbarVariants}
             >
-                <Link href={'/login'}>
-                  <motion.button 
-                    className='py-2 px-5 text-sm cursor-pointer'
-                    variants={buttonVariants}
-                    whileHover={{ 
-                        y: -1,
-                        transition: { duration: 0.2 }
-                    }}
-                >
-                    Login
-                </motion.button>
-                </Link>
-                <Link href={'register'}>
-                  <motion.button 
-                    className='bg-[#57132A] text-white text-sm cursor-pointer py-2 px-5 rounded-md'
-                    variants={buttonVariants}
-                    whileHover={{ 
-                        scale: 1.02,
-                        y: -1,
-                        transition: { duration: 0.2 }
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                >
-                    Sign up
-                </motion.button>
-                </Link>
+                {isLoggedIn ? (
+                    <div className="relative">
+                        <div onClick={toggleDropdown}>
+                            {renderAvatar()}
+                        </div>
+                        <AnimatePresence>
+                            {isDropdownOpen && (
+                                <motion.div
+                                    className="absolute right-0 mt-2 w-64 bg-gray-100 rounded-lg z-50"
+                                    variants={dropdownVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                >
+                                    <div className="p-4 border-b">
+                                        <p className="text-sm text-gray-900">
+                                            {profileLoading ? (
+                                                <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />
+                                            ) : (
+                                                profile?.name || 'User'
+                                            )}
+                                        </p>
+                                        <p className="text-sm text-gray-500">
+                                            {profileLoading ? (
+                                                <div className="h-3 w-32 bg-gray-200 rounded animate-pulse" />
+                                            ) : (
+                                                profile?.email || 'user@example.com'
+                                            )}
+                                        </p>
+                                    </div>
+                                    <ul className="pt-2 pb-12">
+                                        {dropdownItems.map((item, index) => (
+                                            <motion.li
+                                                key={index}
+                                                variants={dropdownItemVariants}
+                                            >
+                                                <Link
+                                                    href={item.path}
+                                                    className="px-4 py-2 text-sm text-gray-700 flex items-center gap-2"
+                                                >
+                                                    <item.icon size={18} />
+                                                    {item.name}
+                                                </Link>
+                                            </motion.li>
+                                        ))}
+                                    </ul>
+                                    <div className="p-4 border-t">
+                                        <motion.button
+                                            onClick={handleLogout}
+                                            className="w-full text-center px-4 py-2 cursor-pointer text-sm text-gray-700 flex items-center justify-center gap-2"
+                                        >
+                                            <LogOut size={18} />
+                                            Logout
+                                        </motion.button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                ) : (
+                    <>
+                        <Link href={'/login'}>
+                            <motion.button 
+                                className='py-2 px-5 text-sm cursor-pointer'
+                                variants={buttonVariants}
+                                whileHover={{ 
+                                    y: -1,
+                                    transition: { duration: 0.2 }
+                                }}
+                            >
+                                Login
+                            </motion.button>
+                        </Link>
+                        <Link href={'register'}>
+                            <motion.button 
+                                className='bg-[#57132A] text-white text-sm cursor-pointer py-2 px-5 rounded-md'
+                                variants={buttonVariants}
+                                whileHover={{ 
+                                    scale: 1.02,
+                                    y: -1,
+                                    transition: { duration: 0.2 }
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                Sign up
+                            </motion.button>
+                        </Link>
+                    </>
+                )}
             </motion.div>
 
             <motion.div

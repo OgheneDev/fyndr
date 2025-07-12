@@ -62,7 +62,7 @@ export default function ServiceRequests() {
 
   return (
     <div className="min-h-screen md:max-w-4xl md:mx-auto">
-      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-full overflow-x-hidden">
         <div className="mb-8">
           <h1 className="text-2xl text-center sm:text-3xl font-bold text-[#121417]">
             My requests
@@ -79,16 +79,18 @@ export default function ServiceRequests() {
 
         {/* Sliding content container - Fixed overflow handling */}
         <div
-          className="relative overflow-hidden"
+          className="relative overflow-hidden touch-pan-x"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
+          style={{ width: '100%', maxWidth: '100%' }}
         >
           {/* Completed Requests - main container */}
           <div
             className={`w-full transition-transform duration-300 ease-in-out ${
               activeTab === 'completed' ? 'translate-x-0' : '-translate-x-full'
             }`}
+            style={{ width: '100%', maxWidth: '100%' }}
           >
             <div className="space-y-6">
               <RequestSection loading={loading} requests={liveRequests} />
@@ -100,6 +102,7 @@ export default function ServiceRequests() {
             className={`absolute top-0 left-0 w-full transition-transform duration-300 ease-in-out ${
               activeTab === 'pending' ? 'translate-x-0' : 'translate-x-full'
             }`}
+            style={{ width: '100%', maxWidth: '100%' }}
           >
             <div className="space-y-6">
               <RequestSection loading={loading} requests={awaitingRequests} />

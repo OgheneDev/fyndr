@@ -372,7 +372,7 @@ const NewRequestPage = () => {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="min-h-screen bg-white  flex items-center justify-center">
           <div className="animate-pulse">
             <Image
               src="/images/logo.png"
@@ -385,7 +385,7 @@ const NewRequestPage = () => {
         </div>
       }
     >
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen  bg-white">
         <Suspense
           fallback={
             <div className="min-h-screen bg-white flex items-center justify-center">

@@ -174,7 +174,7 @@ const ProfilePage = () => {
 };
 
   return (
-    <div className="min-h-screen p-6 pb-12 md:pb-0 md:max-w-4xl md:mx-auto">
+    <div className="min-h-screen p-6 md:pt-[80px] pt-[72px] pb-12 md:pb-0 md:max-w-4xl md:mx-auto">
       <div>
         <ProfileHeader />
         <ProfileSection
