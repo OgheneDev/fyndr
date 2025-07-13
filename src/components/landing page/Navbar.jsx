@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, LogOut, User, MessageSquare, LayoutDashboard } from 'lucide-react'
+import { Menu, X, User, MessageSquare, LayoutDashboard } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useUserStore } from '@/store/userStore'
@@ -213,8 +213,8 @@ const Navbar = () => {
                 <Image
                     src={avatarUrl}
                     alt="avatar"
-                    width={50}
-                    height={50}
+                    width={40}
+                    height={40}
                     className="object-cover rounded-full"
                 />
             );
@@ -273,7 +273,7 @@ const Navbar = () => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div 
-                        className="fixed top-0 right-0 h-full w-[320px] bg-white z-50 shadow-2xl"
+                        className="fixed top-0 right-0 h-full w-[280px] bg-white z-50 shadow-2xl"
                         variants={mobileMenuVariants}
                         initial="hidden"
                         animate="visible"
@@ -436,7 +436,6 @@ const Navbar = () => {
                                             onClick={handleLogout}
                                             className="w-full text-center px-4 py-2 cursor-pointer text-sm text-gray-700 flex items-center justify-center gap-2"
                                         >
-                                            <LogOut size={18} />
                                             Logout
                                         </motion.button>
                                     </div>

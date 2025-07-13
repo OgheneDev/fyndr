@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useUserStore } from '@/store/userStore'
 import { getMerchantProfile } from '@/api/profile/merchants/requests'
 import { getUserProfile } from '@/api/profile/users/request'
+import { logout } from '@/api/auth/merchants/requests'
 
 // Common menu items (for both user and merchant)
 const commonMenuItems = [
@@ -31,6 +32,16 @@ const Sidebar = () => {
     // State for profile (user or merchant)
     const [profileLoading, setProfileLoading] = useState(false);
 
+    const handleLogout = async () => {
+        const success = await logout(); // Ensure logout is awaited since it's likely async
+        if (success) {
+            console.log("Successfully logged out");
+            setProfile(null); // Clear profile on logout
+        } else {
+            console.log("Logout failed");
+        }
+    };
+
     useEffect(() => {
         let isMounted = true;
         const fetchProfile = async () => {
@@ -53,14 +64,14 @@ const Sidebar = () => {
             fetchProfile();
         }
         return () => { isMounted = false; };
-    }, [userType]);
+    }, [userType, setProfile]);
 
     // Combine menu items based on user type
     const menuItems = userType === 'user' 
         ? [...userAdditionalItems, ...commonMenuItems] 
         : userType === 'merchant'
             ? [...merchantAdditionalItems, ...commonMenuItems]
-            : [...commonMenuItems]; // Merchant gets only common items
+            : [...commonMenuItems];
 
     // Helper for avatar rendering
     const renderAvatar = () => {
@@ -75,7 +86,7 @@ const Sidebar = () => {
                     alt="avatar"
                     width={40}
                     height={40}
-                    className="w-full h-full object-cover"
+                    className="object-cover rounded-full"
                 />
             );
         }
@@ -87,42 +98,16 @@ const Sidebar = () => {
         );
     };
 
-    // Helper for name rendering
-    const renderName = () => {
-        if (profileLoading) {
-            return <div className="h-4 w-24 bg-gray-200 rounded animate-pulse mb-2" />;
-        }
-        if (profile?.name) {
-            return <p className='font-medium text-gray-900 text-base'>{profile.name}</p>;
-        }
-        return <p className='font-medium text-gray-900 text-base'>User</p>;
-    };
-
     return (
-        <div className={`bg-white w-[280px] flex-col h-full hidden md:flex pt-[100px] fixed top-0 left-0 border-r border-gray-100`}>
-            {/* Header 
-            <div className='px-6 py-6 border-b border-gray-100'>
-                <div className='flex items-center gap-3'>
-                    <div className='w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center'>
-                        {renderAvatar()}
-                    </div>
-                    <div>
-                        {renderName()}
-                        <Link href={'/profile'} className='text-sm text-gray-500 hover:text-gray-700'>
-                            View profile
-                        </Link>
-                    </div> 
-                </div>
-            </div>*/}
-            
+        <div className="bg-white w-[280px] flex-col h-full hidden md:flex fixed top-0 left-0 border-r border-gray-100">
             {/* Menu Items */}
-            <div className="px-4 py-4 flex-1">
-                <ul className='flex flex-col space-y-1'>
+            <div className="px-4 py-4 flex-1 pt-[100px]">
+                <ul className="flex flex-col space-y-1">
                     {menuItems.map((item, index) => {
-                        const Icon = item.icon
-                        const isActive = pathname === item.path
+                        const Icon = item.icon;
+                        const isActive = pathname === item.path;
                         
-                        return(
+                        return (
                             <li key={index}>
                                 <Link
                                     href={item.path}
@@ -130,19 +115,29 @@ const Sidebar = () => {
                                         ${isActive
                                             ? 'bg-gray-100 text-gray-900'
                                             : 'text-gray-600 hover:text-gray-900'
-                                        }
-                                    `}
+                                        }`}
                                 >
                                     <Icon size={20} className={isActive ? 'text-gray-900' : 'text-gray-500'} />
                                     <span>{item.name}</span>
                                 </Link>
                             </li>
-                        )
+                        );
                     })}
                 </ul>
             </div>
+
+            {/* Footer with Avatar and Sign Out Button */}
+            <div className="px-4 py-4 border-t border-gray-100 flex items-center gap-3">
+                {renderAvatar()}
+                <button
+                    onClick={handleLogout}
+                    className="text-sm text-gray-600 cursor-pointer hover:text-gray-900 font-medium"
+                >
+                    Sign Out
+                </button>
+            </div>
         </div>
-    )
+    );
 }
 
-export default Sidebar
+export default Sidebar;
