@@ -73,12 +73,12 @@ const RequestsList = ({ loading, filteredRequests, getServiceLabel }) => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <article className="mb-1">
-                      <h4 className="font-semibold mb-1">{request.title}</h4>
-                      <p className="text-sm text-gray-500">{request.targetState} {request.targetAxis}</p>
+                      <h4 className="font-semibold mb-1 text-sm">{request.title}</h4>
+                      <p className="text-[12px] text-gray-500">{request.targetState} {request.targetAxis}</p>
                     </article>
-                    <p className="text-sm text-gray-500 mb-4 sm:mb-6 break-words">{truncatedDetails}</p>
+                    <p className="text-[12px] text-gray-500 mb-4 sm:mb-6 break-words">{truncatedDetails}</p>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">{formatRelativeTime(request.createdAt)}</span>
+                      <span className="text-[12px] text-gray-500">{formatRelativeTime(request.createdAt)}</span>
                       <Link href={`/dashboard/request?id=${request._id}`}>
                         <button className="bg-[#57132A] cursor-pointer text-white px-4 sm:px-5 py-2 rounded-full text-sm">
                           More Details
