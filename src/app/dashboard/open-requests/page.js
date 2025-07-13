@@ -80,13 +80,13 @@ const OpenRequestsPage = () => {
         </div>
 
         {/* Filter Dropdowns */}
-        <div className="flex flex-wrap gap-3 mb-8">
+        <div className="flex flex-wrap gap-2 mb-8">
           <ServiceOptions value={service} onChange={setService} />
           <div className="relative">
             <select
               value={targetState}
               onChange={e => setTargetState(e.target.value)}
-              className="inline-flex cursor-pointer items-center px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="inline-flex cursor-pointer items-center px-2 py-2 border border-gray-300 rounded-full bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               <option value="">All States</option>
               {states.map(state => (

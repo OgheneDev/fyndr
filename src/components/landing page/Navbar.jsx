@@ -273,7 +273,7 @@ const Navbar = () => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div 
-                        className="fixed top-0 right-0 h-full w-[280px] bg-white z-50 shadow-2xl"
+                        className="fixed top-0 right-0 h-full w-[320px] bg-white z-50 shadow-2xl"
                         variants={mobileMenuVariants}
                         initial="hidden"
                         animate="visible"

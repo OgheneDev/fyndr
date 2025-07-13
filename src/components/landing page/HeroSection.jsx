@@ -56,7 +56,7 @@ const HeroSection = () => {
 
   return (
     <motion.section 
-      className='flex flex-col md:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[72px] md:py-10 md:pt-[160px] md:px-12 overflow-hidden'
+      className='flex flex-col md:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[80px] md:py-10 md:pt-[160px] md:px-12 overflow-hidden'
       variants={containerVariants}
       initial="hidden"
       animate="visible" 

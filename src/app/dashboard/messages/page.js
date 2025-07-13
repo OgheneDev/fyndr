@@ -91,7 +91,7 @@ const MessagesPage = () => {
 
   if (selectedChat) {
     return (
-      <div className="flex flex-col h-screen ">
+      <div className="flex flex-col h-screen md:pt-[80px] pt-[72px]">
         <ChatHeader
           chatInfo={chatInfo}
           userType={userType}
