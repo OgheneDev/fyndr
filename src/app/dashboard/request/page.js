@@ -106,23 +106,22 @@ function RequestDetailPageInner() {
         router.back();
     };
 
-    const handleContactUser = async () => {
-        if (userType !== "merchant") return;
-        try {
-            const res = await startNewChat({ requestId: id });
-            if (res && res.data) {
-                // Store chat data in localStorage for the messages page to pick up
-                localStorage.setItem('fynder_selected_chat', JSON.stringify(res.data));
-                router.push('/dashboard/messages');
-            }
-        } catch (err) {
-            // Optionally show error to user
-            alert(
-                (err && err.message) ||
-                (typeof err === "string" ? err : "Failed to start chat.")
-            );
-        }
-    };
+    const handleContactUser = async (proposal) => {
+  if (userType !== "merchant") return;
+  try {
+    const res = await startNewChat({ requestId: id, proposal });
+    if (res && res.data) {
+      // Optionally store chat data if needed for future reference
+      localStorage.setItem("fynder_selected_chat", JSON.stringify(res.data));
+      // Return success to trigger success state in PaymentChatSection
+      return res.data;
+    }
+  } catch (err) {
+    throw new Error(
+      err?.message || (typeof err === "string" ? err : "Failed to start chat.")
+    );
+  }
+};
 
     const handleMakePayment = async () => {
         setPaymentLoading(true);
@@ -354,7 +353,7 @@ function RequestDetailPageInner() {
             {/* Header */}
             <RequestDetailsHeader onBack={handleBack} />
 
-            {/* Content */}
+            {/* Content */} 
             <div className="px-6 space-y-8">
                 <RequestDetailsSections data={data} />
 

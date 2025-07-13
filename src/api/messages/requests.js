@@ -71,11 +71,11 @@ export const sendMessage = async ({ chatId, senderType, content }) => {
     }
 }
 
-export const startNewChat = async ({ requestId }) => {
+export const startNewChat = async ({ requestId, proposal }) => {
     try {
         const response = await axiosInstance.post(
             '/v1/chat',
-            { requestId }
+            { requestId, proposal }
         );
         return response.data
     } catch (error) {
