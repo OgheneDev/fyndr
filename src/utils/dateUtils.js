@@ -22,3 +22,16 @@ export const formatRelativeTime = (dateString) => {
     return `${days}d ago`;
   }
 };
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  }).replace(/,/, ''); // Remove comma after weekday
+};

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/data/data";
+import { formatDate } from "@/utils/dateUtils";
 
 const formatBudget = (lower, upper) => {
   if (lower && upper) {
@@ -57,7 +58,7 @@ const RequestDetailsSections = ({ data }) => (
         </article>
         <article>
           <span className="font-semibold mb-1 text-sm">Created At</span>
-          <p className="text-gray-700 text-[12px]">{data.createdAt}</p>
+          <p className="text-gray-700 text-[12px]">{formatDate(data.createdAt)}</p>
         </article>
         <article>
           <span className="font-semibold mb-1 text-sm">Target State</span>
