@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const SERVICE_OPTIONS = [
-  { value: '', label: 'All Services' },
+  { value: '', label: 'Services' },
   { value: 'car-hire', label: 'Car Hire' },
   { value: 'cleaning', label: 'Cleaning' },
   { value: 'real-estate', label: 'Real Estate' },

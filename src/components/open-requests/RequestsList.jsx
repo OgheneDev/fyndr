@@ -40,13 +40,13 @@ const RequestsList = ({ loading, filteredRequests, getServiceLabel }) => (
         {filteredRequests.map((request) => {
           // Truncate additionalDetails to 100 characters, handle undefined case
           const truncatedDetails = request.additionalDetails && typeof request.additionalDetails === 'string' 
-            ? request.additionalDetails.length > 100 
-              ? request.additionalDetails.slice(0, 100) + '...' 
+            ? request.additionalDetails.length > 50 
+              ? request.additionalDetails.slice(0, 50) + '...' 
               : request.additionalDetails
             : '';
 
           return (
-            <div key={request._id} className="p-3 w-full">
+            <div key={request._id} className="p-2 w-full">
               <div className='flex items-start gap-5'>
                 <div className="flex-shrink-0">
                   <div className="w-13 h-13 bg-gray-100 rounded-md flex items-center justify-center">

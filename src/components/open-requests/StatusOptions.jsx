@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const STATUS_OPTIONS = [
-  { value: '', label: 'All Statuses' },
+  { value: '', label: 'Statuses' },
   { value: 'submitted', label: 'Submitted' },
   { value: 'closed', label: 'Closed' },
   { value: 'cancelled', label: 'Cancelled' }
