@@ -89,7 +89,7 @@ const RequestDetailsSections = ({ data }) => (
           </article>
         </div>
       </div>
-      <div>
+      <div className="border-t border-gray-300 pt-7">
         {data.carHire && (
           <div>
             <h4 className="text-sm font-semibold mb-2">Car Hire Details</h4>
