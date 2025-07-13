@@ -33,7 +33,7 @@ const RequestDetailsSections = ({ data }) => (
     <div>
         <article className="mb-3">
             <h4 className="font-semibold text-md mb-1">{data.title}</h4>
-            <span className="uppercase text-[#57132A]">{CATEGORY_LABELS[data.category] || data.category || "Unknown"}</span>
+            <span className="uppercase font-semibold text-sm text-[#57132A]">{CATEGORY_LABELS[data.category] || data.category || "Unknown"}</span>
         </article>
         <div className="space-y-4 mb-4">
             <article>

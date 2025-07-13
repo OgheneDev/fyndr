@@ -72,9 +72,9 @@ const RequestsList = ({ loading, filteredRequests, getServiceLabel }) => {
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <article className="mb-2">
-                      <h4 className="font-semibold text-base sm:text-lg mb-1">{request.title}</h4>
-                      <p className="text-sm text-gray-500">{request.targetState}</p>
+                    <article className="mb-1">
+                      <h4 className="font-semibold mb-1">{request.title}</h4>
+                      <p className="text-sm text-gray-500">{request.targetState} {request.targetAxis}</p>
                     </article>
                     <p className="text-sm text-gray-500 mb-4 sm:mb-6 break-words">{truncatedDetails}</p>
                     <div className="flex justify-between items-center">
