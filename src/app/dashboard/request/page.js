@@ -15,25 +15,17 @@ import {
     chooseMerchantForRequest
 } from "@/api/requests/users/requests";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 
 // Modularized components
 import RequestDetailsHeader from "@/components/request/RequestDetailsHeader";
-import RequestDetailsSections from "@/components/request/RequestDetailsSections";
+import RequestDetailsSections from "@/components/merchant request/RequestDetailsSection";
 import InterestedMerchants from "@/components/request/InterestedMerchants";
 import ChooseMerchant from "@/components/request/ChooseMerchant";
 import RequestActions from "@/components/request/RequestActions";
 import PaymentChatSection from "@/components/request/PaymentChatSection";
 import RatingModal from "@/components/request/RatingModal";
-
-// Add this mapping before the component
-const CATEGORY_LABELS = {
-    "real-estate": "Real Estate",
-    "car-hire": "Car Hire",
-    "car-parts": "Car Parts",
-    "cleaning": "Cleaning",
-    "automobile": "Automobile"
-};
 
 // Move the main logic to an inner component
 function RequestDetailPageInner() {
@@ -285,8 +277,16 @@ function RequestDetailPageInner() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <Loader2 className="animate-spin w-10 h-10 text-gray-500" />
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <div className="animate-pulse">
+                    <Image
+                        src="/images/logo.png"
+                        alt="Company Logo"
+                        width={100}
+                        height={100}
+                        className="transition-all duration-1000 hover:scale-110"
+                    />
+                </div>
             </div>
         );
     } 
@@ -350,12 +350,12 @@ function RequestDetailPageInner() {
     const showMerchantActions = isPaid;
 
     return (
-        <div className="min-h-screen pb-[60px] pt-[72px]">
+        <div className="min-h-screen pb-[60px] pt-[72px] md:pt-[80px]">
             {/* Header */}
             <RequestDetailsHeader onBack={handleBack} />
 
             {/* Content */}
-            <div className="px-6 py-6 space-y-8">
+            <div className="px-6 space-y-8">
                 <RequestDetailsSections data={data} />
 
                 {/* Interested Merchants */}
@@ -424,7 +424,17 @@ function RequestDetailPageInner() {
 
 export default function RequestDetailPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
+                    <div className="animate-pulse">
+                        <Image
+                            src="/images/logo.png"
+                            alt="Company Logo"
+                            width={100}
+                            height={100}
+                            className="transition-all duration-1000 hover:scale-110"
+                        />
+                    </div>
+                </div>}>
             <RequestDetailPageInner />
         </Suspense>
     );
