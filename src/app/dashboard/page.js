@@ -82,7 +82,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="min-h-screen relative bg-[url('/images/bg.jpg')] bg-blend-overlay bg-no-repeat bg-cover bg-black/30 pt-[72px] md:pt-[100px] pb-15 md:pb-0">
+    <div className="min-h-screen relative bg-[url('/images/bg.jpg')]  bg-no-repeat bg-cover pt-[72px] md:pt-[100px] pb-15 md:pb-0">
       {/* Content */}
       <div className="relative px-6 py-8">
         {/* Header */}
