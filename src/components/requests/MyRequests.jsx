@@ -61,42 +61,42 @@ export default function ServiceRequests() {
   };
 
   return (
-    <div className="min-h-screen md:max-w-4xl md:mx-auto">
-      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl text-center sm:text-3xl font-bold text-[#121417]">
-            My requests
+    <div className="min-h-screen w-full max-w-[100vw] md:max-w-4xl mx-auto box-border">
+      <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="mb-6">
+          <h1 className="text-xl sm:text-2xl text-center font-bold text-[#121417]">
+            My Requests
           </h1>
         </div>
 
         <Link href="/dashboard">
-          <button className="text-white w-full md:w-full px-10 mb-5 text-sm cursor-pointer bg-[#57132A] text-center py-3 rounded-lg">
+          <button className="text-white w-full max-w-md mx-auto block px-6 mb-4 text-sm cursor-pointer bg-[#57132A] text-center py-2 rounded-lg">
             Create New Request
           </button>
         </Link>
 
         <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Sliding content container - Fixed overflow handling */}
+        {/* Sliding content container */}
         <div
-          className="relative overflow-hidden"
+          className="relative w-full max-w-[100vw] overflow-x-hidden box-border"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {/* Completed Requests - main container */}
+          {/* Completed Requests */}
           <div
-            className={`w-full transition-transform duration-300 ease-in-out ${
-              activeTab === 'completed' ? 'translate-x-0' : '-translate-x-full'
+            className={`w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
+              activeTab === 'completed' ? 'translate-x-0' : '-translate-x-[100vw]'
             }`}
           >
             <RequestSection loading={loading} requests={liveRequests} />
           </div>
 
-          {/* Pending Requests - absolutely positioned */}
+          {/* Pending Requests */}
           <div
-            className={`absolute top-0 left-0 w-full transition-transform duration-300 ease-in-out ${
-              activeTab === 'pending' ? 'translate-x-0' : 'translate-x-full'
+            className={`absolute top-0 left-0 w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
+              activeTab === 'pending' ? 'translate-x-0' : 'translate-x-[100vw]'
             }`}
           >
             <RequestSection loading={loading} requests={awaitingRequests} />
