@@ -36,17 +36,17 @@ const EditServicesLocationForm = ({
           value={businessAddress}
           onChange={e => setBusinessAddress(e.target.value)}
           placeholder="Enter your business address"
-          className="bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 placeholder:text-sm"
+          className="bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 text-sm"
         />
       </div>
       <div className='space-y-2 flex flex-col'>
-        <label className='text-sm'>Business Location (e.g., Ikeja Axis)</label>
+        <label className='text-sm'>Business Location</label>
         <input
           type="text"
           value={businessLocation}
           onChange={e => setBusinessLocation(e.target.value)}
           placeholder="Specify your business location"
-          className=" bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 placeholder:text-sm"
+          className=" bg-[#DBD0C833] px-2 py-4 rounded-md outline-0 text-sm"
         />
       </div>
     </div>

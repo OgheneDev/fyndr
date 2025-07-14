@@ -11,11 +11,11 @@ const AccountSettings = ({
   onShowDeleteAccount
 }) => (
   <>
-    <h3 className="text-lg font-semibold text-gray-900 mb-6">Account Settings</h3>
+    <h3 className="text-sm font-semibold text-gray-900 mb-6">Account Settings</h3>
     <div className="space-y-4">
       {userType === 'merchant' && (
         <div className="w-full flex items-center justify-between py-4 px-3">
-          <span className="text-gray- безпеки7 font-medium">Availability</span>
+          <span className="text-gray-900 text-sm">Availability</span>
           <button
             onClick={onToggleAvailability}
             className={`relative inline-flex h-6 cursor-pointer w-11 items-center rounded-full transition-colors focus:outline-none ${isAvailable ? 'bg-green-500' : 'bg-gray-300'}`}
@@ -33,7 +33,7 @@ const AccountSettings = ({
           className="w-full flex items-center cursor-pointer justify-between py-4 px-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
           onClick={onEditServices}
         >
-          <span className="text-gray-700 font-medium">Edit Services & Location</span>
+          <span className="text-sm text-gray-700">Edit Services & Location</span>
           <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
         </button>
       )}
@@ -41,14 +41,14 @@ const AccountSettings = ({
         className="w-full flex items-center cursor-pointer justify-between py-4 px-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
         onClick={onShowPrivacy}
       >
-        <span className="text-gray-700 font-medium">Privacy Policy</span>
+        <span className="text-sm text-gray-700">Privacy Policy</span>
         <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
       </button>
       <button
         className="w-full flex items-center cursor-pointer justify-between py-4 px-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
         onClick={onShowTerms}
       >
-        <span className="text-gray-700 font-medium">Terms and conditions</span>
+        <span className="text-sm text-gray-700">Terms and conditions</span>
         <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
       </button>
       <button
@@ -56,7 +56,7 @@ const AccountSettings = ({
         onClick={onShowDeleteAccount}
         type="button"
       >
-        <span className="text-gray-700 font-medium">Delete Account</span>
+        <span className="text-sm text-gray-700">Delete Account</span>
         <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
       </button>
     </div>

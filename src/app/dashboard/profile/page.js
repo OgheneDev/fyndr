@@ -217,20 +217,20 @@ const ProfilePage = () => {
           )}
 {activeSetting === 'privacy' && (
   <PolicyModal title="Privacy Policy" onBack={handleBack}>
-    <p>
+    <p className='text-sm'>
       Your privacy is important to us. We do not share your personal information with third parties except as necessary to provide our services or as required by law.
     </p>
-    <p className="mt-2">
+    <p className="mt-2 text-sm">
       Please review our full privacy policy for more details about how your data is collected, used, and protected.
     </p>
   </PolicyModal>
 )}
 {activeSetting === 'terms' && (
   <PolicyModal title="Terms and Conditions" onBack={handleBack}>
-    <p>
+    <p className="mt-2 text-sm">
       By using our platform, you agree to abide by all applicable rules and regulations.
     </p>
-    <p className="mt-2">
+    <p className="mt-2 text-sm">
       Please review our full terms and conditions for more information about your rights and responsibilities.
     </p>
   </PolicyModal>

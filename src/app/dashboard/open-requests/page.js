@@ -88,7 +88,7 @@ const OpenRequestsPage = () => {
               onChange={e => setTargetState(e.target.value)}
               className="inline-flex cursor-pointer items-center px-2 py-2 border border-gray-300 rounded-full bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              <option value="">States</option>
+              <option value="">Location</option>
               {states.map(state => (
                 <option key={state} value={state}>{state}</option>
               ))}
