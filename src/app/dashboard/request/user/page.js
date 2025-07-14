@@ -238,21 +238,21 @@ function UserRequestDetailPageInner() {
                     onTouchEnd={onTouchEnd}
                 >
                     <div 
-                        className={`w-full transition-transform duration-300 ease-in-out ${
-                            activeTab === 'details' ? 'translate-x-0' : activeTab === 'merchants' ? '-translate-x-full' : '-translate-x-[200%]'
-                        }`}
-                    >
-                        <div className="space-y-6">
-                            <RequestDetailsSections data={data} />
-                            <RequestActions
-                                onCancel={handleCancelRequest}
-                                onClose={handleCloseRequest}
-                                cancelLoading={cancelLoading}
-                                closeLoading={closeLoading}
-                                actionError={actionError}
-                            />
-                        </div>
-                    </div>
+    className={`w-full transition-transform duration-300 ease-in-out ${
+        activeTab === 'details' ? 'translate-x-0' : activeTab === 'merchants' ? '-translate-x-full' : '-translate-x-[200%]'
+    }`}
+>
+    <div className="space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+        <RequestDetailsSections data={data} />
+        <RequestActions
+            onCancel={handleCancelRequest}
+            onClose={handleCloseRequest}
+            cancelLoading={cancelLoading}
+            closeLoading={closeLoading}
+            actionError={actionError}
+        />
+    </div>
+</div>
                     <div 
                         className={`absolute top-0 left-0 w-full transition-transform duration-300 ease-in-out ${
                             activeTab === 'details' ? 'translate-x-full' : activeTab === 'merchants' ? 'translate-x-0' : '-translate-x-full'

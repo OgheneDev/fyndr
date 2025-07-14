@@ -15,7 +15,7 @@ const ProfileSection = ({ profile, profileLoading, avatarUploading, onAvatarChan
         <Star
           key={i}
           size={16}
-          className={i <= roundedAverage ? 'fill-yellow-400 stroke-yellow-400' : 'stroke-gray-400'}
+          className={i <= roundedAverage ? 'fill-yellow-400 stroke-yellow-400' : 'stroke-yellow-400'}
         />
       );
     }

@@ -70,7 +70,12 @@ const RequestDetailsSections = ({ data }) => (
         </article>
         <article>
           <span className="font-semibold mb-1 text-sm">Details</span>
-          <p className="text-gray-700 text-[12px]">{data.additionalDetails}</p>
+          <p
+  className="text-gray-700 text-[12px]"
+  style={{ wordBreak: 'break-word' }}
+>
+  {data.additionalDetails}
+</p>
         </article>
       </div>
       <div className="mb-5">
