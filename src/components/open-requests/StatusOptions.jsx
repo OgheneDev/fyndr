@@ -12,7 +12,7 @@ const StatusOptions = ({ value, onChange }) => (
     <select
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="inline-flex items-center cursor-pointer px-2 py-2 border border-gray-300 rounded-full bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+      className="inline-flex items-center cursor-pointer w-[100px] px-2 py-2 border border-gray-300 rounded-full bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
     >
       {STATUS_OPTIONS.map(opt => (
         <option key={opt.value} value={opt.value}>{opt.label}</option>

@@ -67,7 +67,7 @@ const RequestsList = ({ loading, filteredRequests, getServiceLabel }) => {
                         alt={`${CATEGORY_LABELS[request.category]} icon`}
                         width={30}
                         height={30}
-                        className="object-contain filter invert opacity-70"
+                        className="object-contain filter invert"
                       />
                     </div>
                   </div>
