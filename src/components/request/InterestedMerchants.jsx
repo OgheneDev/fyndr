@@ -5,7 +5,7 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading }) => (
   <div>
     <div className="">
       {merchants.map((merchant) => (
-        <div key={merchant._id} className="bg-gray-100 shadow-md p-4 rounded-xl">
+        <div key={merchant._id} className="bg-gray-100 md:w-[400px] md:mx-auto shadow-md p-4 rounded-xl">
          <div className="flex items-start gap-5">
           <div>
             <Image
