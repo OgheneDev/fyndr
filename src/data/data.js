@@ -38,7 +38,7 @@ export const services = [
         description: 'Find reliable contractors for home repairs and renovations.'
     },
     {
-        image: 'images/hire.jpg',
+        image: 'images/hire.JPG',
         title: 'Car Hire',
         description: 'Rent a car for your next trip or daily commute.'
     },
