@@ -43,19 +43,43 @@ const ProfileSection = ({ profile, profileLoading, avatarUploading, onAvatarChan
           profile?.name || 'User'
         )}
       </h2>
-      {userType === 'merchant' && !profileLoading && profile && (
+      {userType === 'merchant' && (
         <div className="flex items-center justify-center gap-1 mt-1">
-          <div className="flex">{renderStars(profile?.rating?.average)}</div>
-          <span className="text-sm text-gray-700">
-            ({profile?.rating?.average})
-          </span>
+          {profileLoading ? (
+            <div className="flex items-center gap-1">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="h-4 w-4 bg-gray-200 rounded-full animate-pulse"
+                  />
+                ))}
+              </div>
+              <div className="h-4 w-12 bg-gray-200 rounded animate-pulse" />
+            </div>
+          ) : (
+            profile && (
+              <>
+                <div className="flex">{renderStars(profile?.rating?.average)}</div>
+                <span className="text-sm text-gray-700">
+                  ({profile?.rating?.average})
+                </span>
+              </>
+            )
+          )}
         </div>
       )}
-      {!profileLoading && profile && (
-        <div className="text-sm text-gray-700 mt-1">
-          {userType === 'merchant' ? 'Merchant' : 'User'} since {getYearFromDate(profile?.createdAt)}
-        </div>
-      )}
+      <div className="text-sm text-gray-700 mt-1">
+        {profileLoading ? (
+          <div className="h-4 w-32 bg-gray-200 mx-auto rounded animate-pulse" />
+        ) : (
+          profile && (
+            <>
+              {userType === 'merchant' ? 'Merchant' : 'User'} since {getYearFromDate(profile?.createdAt)}
+            </>
+          )
+        )}
+      </div>
     </div>
   );
 };
