@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { nigerianStates } from '@/data/nigerianStates';
 import { PropertiesForm, CarHireForm, CarPartsForm, CleaningForm, AutomobileForm } from './RequestForms';
@@ -121,6 +121,7 @@ const NewRequestPage = () => {
   const [success, setSuccess] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [authToken, setAuthToken] = useState(null);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -219,10 +220,19 @@ const NewRequestPage = () => {
     return false;
   };
 
+  // Retrieve token from localStorage on the client side
+    useEffect(() => {
+          if (typeof window !== 'undefined') {
+              const token = localStorage.getItem('authToken');
+              setAuthToken(token);
+          }
+    }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowDisclaimer(true);
   };
+  
 
 const handleDisclaimerAgree = async () => {
   setShowDisclaimer(false);
@@ -400,7 +410,7 @@ const handleDisclaimerAgree = async () => {
     setIsChecked(false);
 
     // Navigate to the request detail page with payment tab active
-    router.push(`/dashboard/request/user?id=${requestId}&tab=payment`);
+    router.push(`/payment?id=${requestId}&token=${encodeURIComponent(authToken || '')}`);
   } catch (err) {
     console.error('Error in handleDisclaimerAgree:', err);
     setError('Failed to submit request: ' + (err.message || 'Unknown error'));
