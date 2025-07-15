@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { nigerianStates } from '@/data/nigerianStates';
 import { PropertiesForm, CarHireForm, CarPartsForm, CleaningForm, AutomobileForm } from './RequestForms';
 import {
@@ -56,6 +56,7 @@ const SearchParamsTab = ({ setActiveTab, initialTab }) => {
 };
 
 const NewRequestPage = () => {
+  const router = useRouter();
   const initialTab = 'Properties';
   const [activeTab, setActiveTab] = useState(initialTab);
   const [formData, setFormData] = useState({
@@ -223,153 +224,196 @@ const NewRequestPage = () => {
     setShowDisclaimer(true);
   };
 
-  const handleDisclaimerAgree = async () => {
-    setShowDisclaimer(false);
-    setError('');
-    setSuccess('');
-    setLoading(true);
-    try {
-      const category = getCategory();
-      let label = tabs.find((t) => t.category === category)?.label || 'Request';
-      if (category === 'real-estate') {
-        await realEstateRequest({
-          title: formData.title,
-          state: formData.state,
-          axis: formData.axis,
-          details: formData.details,
-          rentType: formData.rentType,
-          propertyType: formData.propertyType,
-          roomNumber: formData.roomNumber,
-          propertyCondition: formData.propertyCondition,
-          upperPriceLimit: Number(formData.upperPriceLimit) || 0,
-          lowerPriceLimit: Number(formData.lowerPriceLimit) || 0,
-        });
-        setFormData({
-          title: '',
-          state: '',
-          axis: [],
-          details: '',
-          rentType: '',
-          propertyType: '',
-          roomNumber: '',
-          propertyCondition: '',
-          upperPriceLimit: '',
-          lowerPriceLimit: '',
-        });
-      } else if (category === 'car-hire') {
-        await carHireRequest({
-          title: carHireData.title,
-          state: carHireData.state,
-          details: carHireData.details,
-          carType: carHireData.carType,
-          hireDuration: Number(carHireData.hireDuration) || 0,
-          pickupLocation: carHireData.pickupLocation,
-          airport: carHireData.airport,
-          travel: carHireData.travel === 'Yes',
-        });
-        setCarHireData({
-          title: '',
-          state: '',
-          details: '',
-          carType: '',
-          hireDuration: '',
-          pickupLocation: '',
-          airport: '',
-          travel: '',
-        });
-      } else if (category === 'cleaning') {
-        await cleaningRequest({
-          title: cleaningData.title,
-          state: cleaningData.state,
-          lga: cleaningData.lga,
-          details: cleaningData.details,
-          propertyType: cleaningData.propertyType,
-          cleaningType: cleaningData.cleaningType,
-          propertyLocation: cleaningData.propertyLocation,
-          roomNumber: cleaningData.roomNumber,
-        });
-        setCleaningData({
-          title: '',
-          state: '',
-          lga: '',
-          details: '',
-          propertyType: '',
-          cleaningType: '',
-          propertyLocation: '',
-          roomNumber: '',
-        });
-      } else if (category === 'car-parts') {
-        const fd = new FormData();
-        fd.append('title', carPartsData.title);
-        fd.append('state', carPartsData.state);
-        fd.append('details', carPartsData.details);
-        fd.append('currentLocation', carPartsData.currentLocation);
-        fd.append('sourcingLocation', carPartsData.sourcingLocation);
-        fd.append('carMake', carPartsData.carMake);
-        fd.append('carModel', carPartsData.carModel);
-        fd.append('carYear', Number(carPartsData.carYear) || 0);
-        if (carPartsData.attachment) {
-          fd.append('car_part_image', carPartsData.attachment);
-        }
-        await carPartsRequest(fd);
-        setCarPartsData({
-          title: '',
-          state: '',
-          details: '',
-          currentLocation: '',
-          sourcingLocation: '',
-          carMake: '',
-          carModel: '',
-          carYear: '',
-          attachment: null,
-        });
-      } else if (category === 'automobile') {
-        await automobileRequest({
-          title: automobileData.title,
-          state: automobileData.state,
-          details: automobileData.details,
-          location: automobileData.location,
-          carMake: automobileData.carMake,
-          carModel: automobileData.carModel,
-          carYearFrom: Number(automobileData.carYearFrom) || 0,
-          carYearTo: Number(automobileData.carYearTo) || 0,
-          transmission: automobileData.transmission,
-          upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
-          lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0,
-        });
-        setAutomobileData({
-          title: '',
-          state: '',
-          details: '',
-          location: '',
-          carMake: '',
-          carModel: '',
-          carYearFrom: '',
-          carYearTo: '',
-          transmission: '',
-          upperPriceLimit: '',
-          lowerPriceLimit: '',
-        });
-      }
-      setSuccess('Request submitted successfully!');
-      Swal.fire({
-        icon: 'success',
-        title: `${label} request posted successfully`,
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      setIsChecked(false);
-    } catch (err) {
-      setError('Failed to submit request.');
+const handleDisclaimerAgree = async () => {
+  setShowDisclaimer(false);
+  setError('');
+  setSuccess('');
+  setLoading(true);
+  try {
+    const category = getCategory();
+    if (!category) {
+      throw new Error('Invalid request category');
     }
+    let label = tabs.find((t) => t.category === category)?.label || 'Request';
+    let requestId;
+
+    if (category === 'real-estate') {
+      const response = await realEstateRequest({
+        title: formData.title,
+        state: formData.state,
+        axis: formData.axis,
+        details: formData.details,
+        rentType: formData.rentType,
+        propertyType: formData.propertyType,
+        roomNumber: formData.roomNumber,
+        propertyCondition: formData.propertyCondition,
+        upperPriceLimit: Number(formData.upperPriceLimit) || 0,
+        lowerPriceLimit: Number(formData.lowerPriceLimit) || 0,
+      });
+      console.log('Real Estate Response:', response); // Debug log
+      requestId = response.data._id; // Fix: Use response.data._id
+      if (!requestId) {
+        console.error('Real Estate Request ID missing in response:', response);
+        throw new Error('Request ID not found in API response');
+      }
+      setFormData({
+        title: '',
+        state: '',
+        axis: [],
+        details: '',
+        rentType: '',
+        propertyType: '',
+        roomNumber: '',
+        propertyCondition: '',
+        upperPriceLimit: '',
+        lowerPriceLimit: '',
+      });
+    } else if (category === 'car-hire') {
+      const response = await carHireRequest({
+        title: carHireData.title,
+        state: carHireData.state,
+        details: carHireData.details,
+        carType: carHireData.carType,
+        hireDuration: Number(carHireData.hireDuration) || 0,
+        pickupLocation: carHireData.pickupLocation,
+        airport: carHireData.airport,
+        travel: carHireData.travel === 'Yes',
+      });
+      console.log('Car Hire Response:', response); // Debug log
+      requestId = response.data._id; // Fix: Use response.data._id
+      if (!requestId) {
+        console.error('Car Hire Request ID missing in response:', response);
+        throw new Error('Request ID not found in API response');
+      }
+      setCarHireData({
+        title: '',
+        state: '',
+        details: '',
+        carType: '',
+        hireDuration: '',
+        pickupLocation: '',
+        airport: '',
+        travel: '',
+      });
+    } else if (category === 'cleaning') {
+      const response = await cleaningRequest({
+        title: cleaningData.title,
+        state: cleaningData.state,
+        lga: cleaningData.lga,
+        details: cleaningData.details,
+        propertyType: cleaningData.propertyType,
+        cleaningType: cleaningData.cleaningType,
+        propertyLocation: cleaningData.propertyLocation,
+        roomNumber: cleaningData.roomNumber,
+      });
+      console.log('Cleaning Response:', response); // Debug log
+      requestId = response.data._id; // Fix: Use response.data._id
+      if (!requestId) {
+        console.error('Cleaning Request ID missing in response:', response);
+        throw new Error('Request ID not found in API response');
+      }
+      setCleaningData({
+        title: '',
+        state: '',
+        lga: '',
+        details: '',
+        propertyType: '',
+        cleaningType: '',
+        propertyLocation: '',
+        roomNumber: '',
+      });
+    } else if (category === 'car-parts') {
+      const fd = new FormData();
+      fd.append('title', carPartsData.title);
+      fd.append('state', carPartsData.state);
+      fd.append('details', carPartsData.details);
+      fd.append('currentLocation', carPartsData.currentLocation);
+      fd.append('sourcingLocation', carPartsData.sourcingLocation);
+      fd.append('carMake', carPartsData.carMake);
+      fd.append('carModel', carPartsData.carModel);
+      fd.append('carYear', Number(carPartsData.carYear) || 0);
+      if (carPartsData.attachment) {
+        fd.append('car_part_image', carPartsData.attachment);
+      }
+      const response = await carPartsRequest(fd);
+      console.log('Car Parts Response:', response); // Debug log
+      requestId = response.data._id; // Fix: Use response.data._id
+      if (!requestId) {
+        console.error('Car Parts Request ID missing in response:', response);
+        throw new Error('Request ID not found in API response');
+      }
+      setCarPartsData({
+        title: '',
+        state: '',
+        details: '',
+        currentLocation: '',
+        sourcingLocation: '',
+        carMake: '',
+        carModel: '',
+        carYear: '',
+        attachment: null,
+      });
+    } else if (category === 'automobile') {
+      const response = await automobileRequest({
+        title: automobileData.title,
+        state: automobileData.state,
+        details: automobileData.details,
+        location: automobileData.location,
+        carMake: automobileData.carMake,
+        carModel: automobileData.carModel,
+        carYearFrom: Number(automobileData.carYearFrom) || 0,
+        carYearTo: Number(automobileData.carYearTo) || 0,
+        transmission: automobileData.transmission,
+        upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
+        lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0,
+      });
+      console.log('Automobile Response:', response); // Debug log
+      requestId = response.data._id; // Fix: Use response.data._id
+      if (!requestId) {
+        console.error('Automobile Request ID missing in response:', response);
+        throw new Error('Request ID not found in API response');
+      }
+      setAutomobileData({
+        title: '',
+        state: '',
+        details: '',
+        location: '',
+        carMake: '',
+        carModel: '',
+        carYearFrom: '',
+        carYearTo: '',
+        transmission: '',
+        upperPriceLimit: '',
+        lowerPriceLimit: '',
+      });
+    } else {
+      throw new Error(`Unknown request category: ${category}`);
+    }
+
+    setSuccess('Request submitted successfully!');
+    Swal.fire({
+      icon: 'success',
+      title: `${label} request posted successfully`,
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    setIsChecked(false);
+
+    // Navigate to the request detail page with payment tab active
+    router.push(`/dashboard/request/user?id=${requestId}&tab=payment`);
+  } catch (err) {
+    console.error('Error in handleDisclaimerAgree:', err);
+    setError('Failed to submit request: ' + (err.message || 'Unknown error'));
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   const handleDisclaimerCancel = () => {
     setShowDisclaimer(false);
   };
 
-  return (
+  return ( 
     <Suspense
       fallback={
         <div className="min-h-screen bg-white  flex items-center justify-center">

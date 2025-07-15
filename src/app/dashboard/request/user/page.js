@@ -25,6 +25,7 @@ function UserRequestDetailPageInner() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
+    const initialTab = searchParams.get("tab") || "details";
     const [request, setRequest] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -43,6 +44,14 @@ function UserRequestDetailPageInner() {
     const [ratingLoading, setRatingLoading] = useState(false);
     const [ratingError, setRatingError] = useState(null);
     const [ratingSuccess, setRatingSuccess] = useState(false);
+
+    // Update activeTab when query param changes
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && ['details', 'merchants', 'payment'].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
 
     // Touch/swipe state
     const [touchStart, setTouchStart] = useState(null);
@@ -247,7 +256,7 @@ function UserRequestDetailPageInner() {
         <RequestActions
             onCancel={handleCancelRequest}
             onClose={handleCloseRequest}
-            cancelLoading={cancelLoading}
+            cancelLoading={cancelLoading} 
             closeLoading={closeLoading}
             actionError={actionError}
         />

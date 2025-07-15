@@ -13,13 +13,6 @@ export function PaymentDetails({ data }) {
         }
     }, []);
 
-    const formatBudget = (lower, upper) => {
-        if (lower && upper) {
-            return `₦${lower} - ₦${upper}`;
-        }
-        return 'Not specified';
-    };
-
     return (
         <div className="space-y-1 text-sm mb-10">
             <div className="mb-15">
@@ -39,11 +32,13 @@ export function PaymentDetails({ data }) {
                     <h3 className="">Attempts: {data.payment_attempts || '0'}</h3>
                 </div>
             </div>
-            <Link href={`/payment?id=${data._id}&token=${encodeURIComponent(authToken || '')}`}>
-                <button className="w-full py-3 px-4 bg-[#57132A] text-white rounded-lg text-sm ">
-                    Initiate Payment
-                </button>
-            </Link>
+            {data.transaction_status?.toLowerCase() === 'pending' && (
+                <Link href={`/payment?id=${data._id}&token=${encodeURIComponent(authToken || '')}`}>
+                    <button className="w-full py-3 px-4 cursor-pointer bg-[#57132A] text-white rounded-lg text-sm">
+                        Initiate Payment
+                    </button>
+                </Link>
+            )}
         </div>
     );
 }
