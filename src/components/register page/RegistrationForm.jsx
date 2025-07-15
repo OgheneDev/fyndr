@@ -64,7 +64,7 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
     }
     setIsLoading(false);
   };
-
+ 
   // ...existing code...
 const handleDetailsSubmit = async () => {
   setIsLoading(true);
