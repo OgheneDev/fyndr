@@ -48,12 +48,12 @@ export const services = [
         description: 'Book professional cleaning services for your home or office.'
     },
     {
-        image: 'images/auto.png',
+        image: 'images/auto.PNG',
         title: 'Automobile Purchase',
         description: 'Buy new or used vehicles at competitive prices, locally or through international sourcing.'
     },
     {
-        image: 'images/other.png',
+        image: 'images/other.PNG',
         title: 'Other Home Services',
         description: 'Find reliable contractors for home repairs and renovations.'
     }
