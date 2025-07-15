@@ -35,7 +35,7 @@ export const services = [
     {
         image: 'images/house.png',
         title: 'Real Estate',
-        description: 'Find reliable contractors for home repairs and renovations.'
+        description: 'Explore property listings and make smart investments in residential or commercial real estate.'
     },
     {
         image: 'images/hire.JPG',
@@ -46,8 +46,19 @@ export const services = [
         image: 'images/clean.png',
         title: 'Cleaning Services',
         description: 'Book professional cleaning services for your home or office.'
+    },
+    {
+        image: 'images/auto.png',
+        title: 'Automobile Purchase',
+        description: 'Buy new or used vehicles at competitive prices, locally or through international sourcing.'
+    },
+    {
+        image: 'images/other.png',
+        title: 'Other Home Services',
+        description: 'Find reliable contractors for home repairs and renovations.'
     }
 ];
+
 
 export const info = [
     {

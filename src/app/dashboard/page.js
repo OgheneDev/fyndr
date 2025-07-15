@@ -10,7 +10,7 @@ const DashboardPage = () => {
   const categories = [
     {
       id: 'real-estate',
-      title: 'Real Estate',
+      title: 'Real Estate', 
       icon: 'images/real-estate.png',
       hasContent: true
     },
