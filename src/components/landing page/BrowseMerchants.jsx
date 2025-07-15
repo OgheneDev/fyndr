@@ -5,9 +5,11 @@ import { motion } from 'framer-motion'
 import { services } from '@/data/data'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useUserStore } from '@/store/userStore'
 
 const BrowseMerchants = () => {
   const router = useRouter()
+  const { userType } = useUserStore()
 
   // Animation variants
   const containerVariants = {
@@ -97,6 +99,10 @@ const BrowseMerchants = () => {
   }
 
   const handleServiceClick = (serviceTitle) => {
+    if (userType !== 'user') {
+      return // Prevent navigation if not a user
+    }
+    
     const mappedCategory = categoryMap[serviceTitle]
     if (mappedCategory) {
       router.push(`/dashboard/new-request?category=${mappedCategory}`)
@@ -137,12 +143,12 @@ const BrowseMerchants = () => {
         {services.map((service, index) => (
           <motion.div
             key={index}
-            className='md:w-[294px] cursor-pointer'
+            className={`md:w-[294px] ${userType === 'user' ? 'cursor-pointer' : 'cursor-default'}`}
             variants={serviceCardVariants}
-            whileHover={{ 
+            whileHover={userType === 'user' ? { 
               y: -5,
               transition: { duration: 0.2 }
-            }}
+            } : {}}
             onClick={() => handleServiceClick(service.title)}
           >
             <motion.div variants={imageVariants}>

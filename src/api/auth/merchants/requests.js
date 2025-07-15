@@ -32,7 +32,7 @@ export const logout = () => {
     try {
         localStorage.removeItem("authToken");
         sessionStorage.removeItem("authToken");
-        window.location.href = "/login";
+        window.location.href = "/";
         return true;
     } catch (error) {
         console.error("Logout error:", error);
