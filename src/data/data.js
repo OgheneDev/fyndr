@@ -147,4 +147,12 @@ export const CATEGORY_LABELS = {
     "cleaning": "Cleaning",
     "automobile": "Automobile Purchase"
 };
+
+export const SERVICE_OPTIONS = [
+  { value: 'car-hire', label: 'Car Hire' },
+  { value: 'cleaning', label: 'Cleaning' },
+  { value: 'real-estate', label: 'Real Estate' },
+  { value: 'car-parts', label: 'Car Parts' },
+  { value: 'automobile', label: 'Automobile' }
+]
  

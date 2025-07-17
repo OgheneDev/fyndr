@@ -9,7 +9,7 @@ import ProfileSection from '@/components/profile/ProfileSection'
 import AccountSettings from '@/components/profile/AccountSettings'
 import EditServicesLocationForm from '@/components/profile/EditServicesLocationForm'
 import PolicyModal from '@/components/profile/PolicyModal'
-import { SERVICE_OPTIONS } from '@/components/open-requests/ServiceOptions'
+import { SERVICE_OPTIONS } from '@/data/data'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'
 

@@ -21,18 +21,32 @@ export default function DashboardLayout({ children }) {
   const hideLayoutRoutes = ["/dashboard/new-request"];
   const shouldHideLayout = hideLayoutRoutes.includes(pathname);
 
+  // Define allowed routes for each user type
+  const merchantAllowedRoutes = [
+    "/dashboard/open-requests",
+    "/dashboard/messages",
+    "/dashboard/profile",
+    "/dashboard/request",
+  ];
+  const userAllowedRoutes = [
+    "/dashboard",
+    "/dashboard/my-requests",
+    "/dashboard/messages",
+    "/dashboard/profile",
+    "/dashboard/request/user",
+    "/dashboard/new-request"
+  ];
+
   useEffect(() => {
-    // Add a slight delay to allow intentional logout navigation
     const timeout = setTimeout(() => {
       if (!isAuthenticated) {
         router.replace("/login");
-      } else if (userType === "merchant" && !pathname.startsWith("/dashboard/open-requests")) {
-        router.push("/dashboard/open-requests");
-      } else if (userType === "user" && !pathname.startsWith("/dashboard")) {
-        router.push("/dashboard");
+      } else if (userType === "merchant" && !merchantAllowedRoutes.includes(pathname)) {
+        router.push("/dashboard/open-requests"); // Default merchant route
+      } else if (userType === "user" && !userAllowedRoutes.includes(pathname)) {
+        router.push("/dashboard"); // Default user route
       }
-    }, 2000);
-
+    }, 2000); // Keep 2-second delay for logout
     return () => clearTimeout(timeout);
   }, [isAuthenticated, userType, pathname, router]);
 
