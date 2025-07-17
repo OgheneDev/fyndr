@@ -11,12 +11,13 @@ import EditServicesLocationForm from '@/components/profile/EditServicesLocationF
 import PolicyModal from '@/components/profile/PolicyModal'
 import { SERVICE_OPTIONS } from '@/components/open-requests/ServiceOptions'
 import { useRouter } from 'next/navigation'
-import { logout } from '@/api/auth/merchants/requests'
+import { useAuthStore } from '@/store/authStore'
 
 const ProfilePage = () => {
   const [activeSetting, setActiveSetting] = useState(null);
   const [isAvailable, setIsAvailable] = useState(true);
-  const { userType, profile, setProfile } = useUserStore();
+  const { userType, profile, setProfile, setUserData, setUserType } = useUserStore();
+  const { logout } = useAuthStore();
   const [profileLoading, setProfileLoading] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [servicesOffered, setServicesOffered] = useState([]);
@@ -162,16 +163,12 @@ const ProfilePage = () => {
     }
   };
 
-  const handleLogout = async () => {
-    const success = logout();
-    if (success) {
-        // Optional: Add any additional client-side cleanup
-        console.log("Successfully logged out");
-    } else {
-        // Handle logout failure
-        console.log("Logout failed");
-    }
-};
+  const handleLogout = () => {
+    logout(); // Clear auth state
+    setUserData(null);
+    setProfile(null);
+    router.replace("/"); // Navigate to home
+  };
 
   return (
     <div className="min-h-screen p-6 md:pt-[80px] pt-[72px] pb-12 md:pb-0 md:max-w-4xl md:mx-auto">

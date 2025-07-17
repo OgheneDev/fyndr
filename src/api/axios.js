@@ -1,29 +1,32 @@
+// lib/axiosInstance.js
 import axios from "axios";
+import { useAuthStore } from "@/store/authStore";
+import { useUserStore } from "@/store/userStore";
 
 const axiosInstance = axios.create({
-    baseURL: "https://rheel-compare.onrender.com/api/", // API base URL
-    timeout: 1000000000, // 1 hour timeout
-    headers: {
-        "Content-Type": "application/json",
-    },
+  baseURL: "https://rheel-compare.onrender.com/api/",
+  timeout: 1000000000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// Request Interceptor: Attach Token to Every Request
+// Request Interceptor: Attach Token from useAuthStore
 axiosInstance.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken"); // Check both storages
+  (config) => {
+    const token = useAuthStore.getState().token;
+    console.log("Attaching Token:", token); // Debugging
 
-        console.log("Attaching Token:", token); // Debugging
-
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`; // No "Bearer"
-        }
-
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
-export default axiosInstance
+
+export default axiosInstance;

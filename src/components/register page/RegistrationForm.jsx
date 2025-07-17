@@ -5,6 +5,7 @@ import { UserDetailsForm } from "./UserDetailsForm";
 import { MerchantDetailsForm } from "./MerchantDetailsForm";
 import { User, Store, CheckCircle } from "lucide-react";
 import { useUserStore } from "@/store/userStore";
+import { useAuthStore } from "@/store/authStore";
 import { 
   requestMerchantOtp, 
   verifyOtp, 
@@ -21,6 +22,8 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
   const [formData, setFormData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const { setAuth } = useAuthStore();
 
   // Always send phone number with +234 prefix
   const getFullPhoneNumber = () => {
@@ -45,27 +48,30 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
     setIsLoading(false);
   };
 
-  const handleOTPSubmit = async () => {
-    if (otp.length !== 4) return;
-    setIsLoading(true);
-    setError(null);
-    try {
-      console.log({ number: getFullPhoneNumber(), otp, userType: userType });
-      const res = await verifyOtp({  number: getFullPhoneNumber(), otp, userType: userType });
-      // Save token to localStorage if present
-      console.log("OTP verify response:", res);
-      if (res && res.data.token) {
-        localStorage.setItem("authToken", res.data.token);
-      }
-      setStep(3);
-    } catch (err) {
-      setError("Invalid OTP. Please try again.");
-      console.error("OTP verification error:", err);
+
+const handleOTPSubmit = async () => {
+  if (otp.length !== 4) return;
+  setIsLoading(true);
+  setError(null);
+  try {
+    console.log({ number: getFullPhoneNumber(), otp, userType });
+    const res = await verifyOtp({ number: getFullPhoneNumber(), otp, userType });
+    console.log("OTP verify response:", res);
+    if (res && res.data && res.data.token) {
+      setAuth(res.data.token); // Store token in useAuthStore
+      setUserType(userType); // Ensure userType is set in useUserStore
+    } else {
+      throw new Error("No token received");
     }
-    setIsLoading(false);
-  };
+    setStep(3);
+  } catch (err) {
+    setError("Invalid OTP. Please try again.");
+    console.error("OTP verification error:", err);
+  }
+  setIsLoading(false);
+};
  
-  // ...existing code...
+
 const handleDetailsSubmit = async () => {
   setIsLoading(true);
   setError(null);
@@ -95,7 +101,7 @@ const handleDetailsSubmit = async () => {
   }
   setIsLoading(false);
 };
-// ...existing code...
+
 
   const canProceedPhone = phoneNumber.trim().length >= 10;
   const canProceedOTP = otp.length === 4;

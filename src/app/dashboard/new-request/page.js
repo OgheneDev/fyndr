@@ -14,6 +14,7 @@ import {
 import Swal from 'sweetalert2';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
+import { useAuthStore } from '@/store/authStore';
 
 
 const carTypes = ['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Van', 'Truck'];
@@ -57,6 +58,7 @@ const SearchParamsTab = ({ setActiveTab, initialTab }) => {
 
 const NewRequestPage = () => {
   const router = useRouter();
+  const { token } = useAuthStore();
   const initialTab = 'Properties';
   const [activeTab, setActiveTab] = useState(initialTab);
   const [formData, setFormData] = useState({
@@ -219,14 +221,6 @@ const NewRequestPage = () => {
     }
     return false;
   };
-
-  // Retrieve token from localStorage on the client side
-    useEffect(() => {
-          if (typeof window !== 'undefined') {
-              const token = localStorage.getItem('authToken');
-              setAuthToken(token);
-          }
-    }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -410,7 +404,7 @@ const handleDisclaimerAgree = async () => {
     setIsChecked(false);
 
     // Navigate to the request detail page with payment tab active
-    router.push(`/payment?id=${requestId}&token=${encodeURIComponent(authToken || '')}`);
+    router.push(`/payment?id=${requestId}&token=${encodeURIComponent(token || '')}`);
   } catch (err) {
     console.error('Error in handleDisclaimerAgree:', err);
     setError('Failed to submit request: ' + (err.message || 'Unknown error'));

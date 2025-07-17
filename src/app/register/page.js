@@ -4,6 +4,7 @@ import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation"; // Add this import
 import Image from "next/image";
+import Link from "next/link";
 
 const RegistrationPage = () => {
   const [selectedType, setSelectedType] = useState(null);
@@ -62,6 +63,10 @@ const RegistrationPage = () => {
         {/* Description */}
         <p className=" text-base mb-12 leading-relaxed">
           We keep communication secure — no spam, just real solutions.
+        </p>
+
+        <p className='mb-12 text-sm'>
+          Already have an account? <Link href={'/login'}><span className='text-[#57132A] cursor-pointer  underline'>Sign in</span></Link>
         </p>
         
         {/* Buttons */}

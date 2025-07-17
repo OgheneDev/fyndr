@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, User, MessageSquare, LayoutDashboard } from 'lucide-react'
 import Image from 'next/image'
@@ -7,14 +8,16 @@ import Link from 'next/link'
 import { useUserStore } from '@/store/userStore'
 import { getMerchantProfile } from '@/api/profile/merchants/requests'
 import { getUserProfile } from '@/api/profile/users/request'
-import { logout } from '@/api/auth/merchants/requests'
+import { useAuthStore } from '@/store/authStore'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const { userType, profile, setProfile } = useUserStore();
+    const { isAuthenticated, logout } = useAuthStore();
+    const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated);
+    const { userType, profile, setProfile, setUserType, setUserData } = useUserStore();
     const [profileLoading, setProfileLoading] = useState(false);
+    const router = useRouter();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -24,23 +27,16 @@ const Navbar = () => {
         setIsDropdownOpen(!isDropdownOpen)
     }
 
-    const handleLogout = async () => {
-        const success = logout();
-        if (success) {
-            console.log("Successfully logged out");
-            setIsLoggedIn(false); // Update state on logout
-        } else {
-            console.log("Logout failed");
-        }
-    };
+    const handleLogout = () => {
+    logout(); // Clear auth state
+    setUserData(null);
+    setProfile(null);
+    router.replace("/"); // Navigate to home
+  };
 
     useEffect(() => {
-        // Check if running on client-side before accessing localStorage
-        if (typeof window !== 'undefined') {
-            const authToken = localStorage.getItem('authToken');
-            setIsLoggedIn(!!authToken);
-        }
-    }, []);
+    setIsLoggedIn(isAuthenticated);
+  }, [isAuthenticated]);
 
     useEffect(() => {
         let isMounted = true;

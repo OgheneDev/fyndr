@@ -3,10 +3,12 @@ import React, { useState } from 'react'
 import { PhoneInput } from "@/components/general/PhoneInput";
 import { OTPInput } from "@/components/general/OTPInput";
 import { useUserStore } from "@/store/userStore";
+import { useAuthStore } from '@/store/authStore';
 import { useRouter } from "next/navigation";
 import { requestMerchantOtp, verifyOtp } from '@/api/auth/merchants/requests';
 import { requestUserOtp } from '@/api/auth/users/requests';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const LoginPage = () => {
   const [step, setStep] = useState(0); // 0: select type, 1: phone, 2: otp
@@ -17,6 +19,7 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const setUserType = useUserStore((state) => state.setUserType);
+  const { setAuth } = useAuthStore();
   const router = useRouter();
 
   const canProceedPhone = phoneNumber.trim().length >= 10;
@@ -52,27 +55,28 @@ const LoginPage = () => {
     setIsLoading(false);
   };
 
-  const handleOTPSubmit = async () => {
-    if (!canProceedOTP) return;
-    setIsLoading(true); 
-    setError(null);
-    try {
-      const res = await verifyOtp({ number: getFullPhoneNumber(), otp, userType: localUserType });
-      // Save token to localStorage if present
-      if (res && res.data && res.data.token) {
-        localStorage.setItem("authToken", res.data.token);
-      }
-      // Redirect or show success (simulate login)
+const handleOTPSubmit = async () => {
+  if (!canProceedOTP) return;
+  setIsLoading(true);
+  setError(null);
+  try {
+    const res = await verifyOtp({ number: getFullPhoneNumber(), otp, userType: localUserType });
+    if (res && res.data && res.data.token) {
+      setAuth(res.data.token); // Store token in useAuthStore
+      setUserType(localUserType); // Ensure userType is set in useUserStore
       if (localUserType === "merchant") {
         router.push("/dashboard/open-requests");
       } else {
         router.push("/dashboard");
       }
-    } catch (err) {
-      setError("Invalid OTP. Please try again.");
+    } else {
+      throw new Error("No token received");
     }
-    setIsLoading(false);
-  };
+  } catch (err) {
+    setError("Invalid OTP. Please try again.");
+  }
+  setIsLoading(false);
+};
 
   // Initial selection screen
   if (step === 0) {
@@ -91,8 +95,11 @@ const LoginPage = () => {
           <h1 className="text-2xl font-bold mb-4">
             Welcome Back to Fyndr
           </h1>
-          <p className="text-base mb-12 leading-relaxed">
+          <p className="text-base  leading-relaxed">
             Sign in to continue chatting safely and securely.
+          </p>
+          <p className='mb-12 text-sm'>
+            Don't have an account? <Link href={'/register'}><span className='text-[#57132A] cursor-pointer  underline'>Sign up</span></Link>
           </p>
           <div className="space-y-4">
             <button

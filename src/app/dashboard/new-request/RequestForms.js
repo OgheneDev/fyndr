@@ -194,7 +194,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         />
       </div>
       <div className="mt-4">
-        <label className="flex items-center text-sm text-[#171214]">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
           <input
             type="checkbox"
             checked={isChecked}
@@ -322,7 +322,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
         />
       </div>
       <div className="mt-4">
-        <label className="flex items-center text-sm text-[#171214]">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
           <input
             type="checkbox"
             checked={isChecked}
@@ -457,7 +457,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
         />
       </div>
       <div className="mt-4">
-        <label className="flex items-center text-sm text-[#171214]">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
           <input
             type="checkbox"
             checked={isChecked}
@@ -612,7 +612,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
         )}
       </div>
       <div className="mt-4">
-        <label className="flex items-center text-sm text-[#171214]">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
           <input
             type="checkbox"
             checked={isChecked}
@@ -819,7 +819,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
         />
       </div>
       <div className="mt-4">
-        <label className="flex items-center text-sm text-[#171214]">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
           <input
             type="checkbox"
             checked={isChecked}

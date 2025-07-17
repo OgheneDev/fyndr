@@ -5,7 +5,19 @@ import { formatDate } from "@/utils/dateUtils";
 
 const formatBudget = (lower, upper) => {
   if (lower && upper) {
-    return `₦${lower} - ₦${upper}`;
+    const formattedLower = Number(lower).toLocaleString('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+    const formattedUpper = Number(upper).toLocaleString('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+    return `${formattedLower} - ${formattedUpper}`;
   }
   return "Not specified";
 };
