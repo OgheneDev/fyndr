@@ -98,8 +98,8 @@ const handleOTPSubmit = async () => {
           <p className="text-base  leading-relaxed">
             Sign in to continue chatting safely and securely.
           </p>
-          <p className='mb-12 text-sm'>
-            Don't have an account? <Link href={'/register'}><span className='text-[#57132A] cursor-pointer  underline'>Sign up</span></Link>
+          <p className="mb-12 text-sm">
+            Don&apos;t have an account? <Link href="/register"><span className="text-[#57132A] cursor-pointer underline">Sign up</span></Link>
           </p>
           <div className="space-y-4">
             <button
