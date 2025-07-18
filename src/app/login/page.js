@@ -93,7 +93,7 @@ const handleOTPSubmit = async () => {
             />
           </div>
           <h1 className="text-2xl font-bold mb-4">
-            Welcome Back to Fyndr
+            Welcome Back to Fyndr 
           </h1>
           <p className="text-base  leading-relaxed">
             Sign in to continue chatting safely and securely.

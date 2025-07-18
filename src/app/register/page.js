@@ -61,7 +61,7 @@ const RegistrationPage = () => {
         </h1>
         
         {/* Description */}
-        <p className=" text-base mb-12 leading-relaxed">
+        <p className=" text-base leading-relaxed">
           We keep communication secure — no spam, just real solutions.
         </p>
 
