@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, {useState} from 'react';
 import { nigerianStates } from '@/data/nigerianStates';
-
-export const MerchantDetailsForm = ({ formData, onChange }) => {
+import { PhoneInput } from '../general/PhoneInput';
+export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) => {
   // Add preview URL state
   const [imagePreview, setImagePreview] = React.useState(null);
 
@@ -17,6 +17,7 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
   { label: 'Car Parts', value: 'car-parts' },
   { label: 'Automobile', value: 'automobile' },
 ];
+
   return (
     <div className="space-y-4">
       <div>
@@ -32,26 +33,37 @@ export const MerchantDetailsForm = ({ formData, onChange }) => {
       
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">WhatsApp Phone Number</label>
-        <input
-          type="tel"
+        <PhoneInput
           value={formData.whatsappNumber || ''}
-          onChange={(e) => onChange({ ...formData, whatsappNumber: e.target.value })}
+          onChange={(value) => onChange({ ...formData, whatsappNumber: value })}
           placeholder="Enter your WhatsApp number"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
         />
       </div>
       
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-        <input
-          type="email"
-          value={formData.email || ''}
-          onChange={(e) => onChange({ ...formData, email: e.target.value })}
-          placeholder="Enter your email"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
-        />
-      </div>
-      
+      {verificationMethod === 'email' && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+          <PhoneInput
+            value={formData.number || ''}
+            onChange={(value) => onChange({ ...formData, number: value })}
+            placeholder="Enter your phone number"
+          />
+        </div>
+      )}
+
+      {verificationMethod === 'phone' && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <input
+            type="email"
+            value={formData.email || ''}
+            onChange={(e) => onChange({ ...formData, email: e.target.value })}
+            placeholder="Enter your email"
+            className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          />
+        </div>
+      )}
+
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Business Name</label>
         <input

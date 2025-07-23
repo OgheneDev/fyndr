@@ -9,6 +9,7 @@ import { requestMerchantOtp, verifyOtp, resendMerchantOtp } from '@/api/auth/mer
 import { requestUserOtp, resendUserOtp } from '@/api/auth/users/requests';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 const LoginPage = () => {
   const [step, setStep] = useState(0); // 0: select type, 1: method, 2: input, 3: otp
@@ -132,6 +133,14 @@ const LoginPage = () => {
     setIsResending(false);
   };
 
+  const handleBack = () => {
+    setStep(0);
+    setError(null);
+    setPhoneNumber('');
+    setEmail('');
+    setOtp('');
+  };
+
   // Initial selection screen
   if (step === 0) {
     return (
@@ -179,6 +188,13 @@ const LoginPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          <button
+              onClick={handleBack}
+              className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
+            >
+              <ArrowLeft className='w-4 h-4' />
+              Back to selection screen
+            </button>
           <div>
             <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
             <p className="text-gray-600 text-sm mb-4">How would you like to receive your verification code?</p>
@@ -207,6 +223,13 @@ const LoginPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          <button
+              onClick={handleBack}
+              className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
+            >
+              <ArrowLeft className='w-4 h-4' />
+              Back to selection screen
+            </button>
           {error && (
             <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
           )}
@@ -227,7 +250,7 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:border-[#57132A]"
+                className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
               />
             )}
           </div>
@@ -248,6 +271,13 @@ const LoginPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          <button
+              onClick={handleBack}
+              className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
+            >
+              <ArrowLeft className='w-4 h-4' />
+              Back to selection screen
+            </button>
           {error && (
             <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
           )}

@@ -14,7 +14,7 @@ const RegistrationPage = () => {
   const handleTypeSelect = (type) => {
     setSelectedType(type); 
     setUserType(type); 
-  };
+  }; 
 
   // Add this handler to redirect after registration
   const handleRegistrationSuccess = () => {

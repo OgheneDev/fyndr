@@ -1,6 +1,7 @@
 import { nigerianStates } from '@/data/nigerianStates'
+import { PhoneInput } from '../general/PhoneInput'
 
-export const UserDetailsForm = ({ formData, onChange }) => {
+export const UserDetailsForm = ({ formData, onChange, verificationMethod }) => {
   // Get array of state names
   const states = Object.keys(nigerianStates).sort()
   
@@ -19,16 +20,31 @@ export const UserDetailsForm = ({ formData, onChange }) => {
           className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
         />
       </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-        <input
-          type="email"
-          value={formData.email || ''}
-          onChange={(e) => onChange({ ...formData, email: e.target.value })}
-          placeholder="Enter your email"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
-        />
-      </div>
+
+      {verificationMethod === 'email' && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+          <PhoneInput
+            value={formData.number || ''}
+            onChange={(value) => onChange({ ...formData, number: value })}
+            placeholder="Enter your phone number"
+          />
+        </div>
+      )}
+
+      {verificationMethod === 'phone' && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <input
+            type="email"
+            value={formData.email || ''}
+            onChange={(e) => onChange({ ...formData, email: e.target.value })}
+            placeholder="Enter your email"
+            className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          />
+        </div>
+      )}
+
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
         <select

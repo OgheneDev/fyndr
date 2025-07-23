@@ -6,16 +6,26 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import Select from 'react-select'
 
 
 // Properties Form
 export function PropertiesForm({ formData, onChange, nigerianStates, propertyTypes, isChecked, setIsChecked }) {
-  const handleAxisChange = (e) => {
-    const options = Array.from(e.target.options)
-      .filter((opt) => opt.selected)
-      .map((opt) => opt.value)
-      .slice(0, 3);
-    onChange('axis', options);
+  // Transform LGA array into options format for react-select
+  const getAxisOptions = () => {
+    if (!formData.state || !nigerianStates[formData.state]) return [];
+    return nigerianStates[formData.state].map(lga => ({
+      value: lga,
+      label: lga
+    }));
+  };
+
+  const handleAxisChange = (selectedOptions) => {
+    // Limit to 3 selections and extract just the values
+    const values = (selectedOptions || [])
+      .slice(0, 3)
+      .map(option => option.value);
+    onChange('axis', values);
   };
 
   const handleSliderChange = (value) => {
@@ -105,19 +115,40 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Target Axis (up to 3)</label>
-        <select
-          multiple
-          value={formData.axis || []}
+        <Select
+          isMulti
+          value={getAxisOptions().filter(option => 
+            formData.axis?.includes(option.value)
+          )}
           onChange={handleAxisChange}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-          size={Math.min(4, axisOptions.length)}
-        >
-          {axisOptions.map((axis) => (
-            <option key={axis} value={axis}>
-              {axis}
-            </option>
-          ))}
-        </select>
+          options={getAxisOptions()}
+          isDisabled={!formData.state}
+          placeholder="Select up to 3 areas"
+          noOptionsMessage={() => "Select a state first"}
+          className="text-sm"
+          styles={{
+            control: (base) => ({
+              ...base,
+              backgroundColor: '#F5F2F2',
+              border: 'none',
+              boxShadow: 'none',
+              '&:hover': {
+                border: 'none'
+              }
+            }),
+            placeholder: (base) => ({
+              ...base,
+              color: '#6B7280'
+            }),
+            option: (base, state) => ({
+              ...base,
+              backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+              '&:hover': {
+                backgroundColor: state.isSelected ? '#541229' : '#F5F2F2'
+              }
+            })
+          }}
+        />
         <div className="text-xs text-gray-500 mt-1">Hold Ctrl (Windows) or Cmd (Mac) to select multiple</div>
       </div>
       <div>
