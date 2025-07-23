@@ -84,22 +84,23 @@ export default function ServiceRequests() {
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {/* Completed Requests */}
           <div
-            className={`w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
-              activeTab === 'completed' ? 'translate-x-0' : '-translate-x-[100vw]'
+            className={`w-full max-w-[100vw] transition-transform duration-300 ease-in-out h-auto min-h-0 ${
+              activeTab === 'completed' ? 'translate-x-0' : 'translate-x-[100vw]'
             }`}
           >
-            <RequestSection loading={loading} requests={liveRequests} />
+            {activeTab === 'completed' && (
+              <RequestSection loading={loading} requests={liveRequests} />
+            )}
           </div>
-
-          {/* Pending Requests */}
           <div
-            className={`absolute top-0 left-0 w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
-              activeTab === 'pending' ? 'translate-x-0' : 'translate-x-[100vw]'
+            className={`w-full max-w-[100vw] transition-transform duration-300 ease-in-out h-auto min-h-0 ${
+              activeTab === 'pending' ? 'translate-x-0' : '-translate-x-[100vw]'
             }`}
           >
-            <RequestSection loading={loading} requests={awaitingRequests} />
+            {activeTab === 'pending' && (
+              <RequestSection loading={loading} requests={awaitingRequests} />
+            )}
           </div>
         </div>
       </div>
