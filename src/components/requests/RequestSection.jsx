@@ -6,7 +6,7 @@ import { Bell } from "lucide-react";
 export const RequestSection = ({ requests, loading }) => (
   <div className="mb-8">
     {loading ? (
-      Array.from({ length: 5 }).map((_, i) => <SkeletonItem key={i} />)
+      Array.from({ length: 8 }).map((_, i) => <SkeletonItem key={i} />)
     ) : requests.length > 0 ? (
       requests.map((request) => (
         <Link

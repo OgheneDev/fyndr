@@ -545,7 +545,7 @@ const handleDisclaimerAgree = async () => {
               </form>
               {showDisclaimer && (
                 <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center z-50">
-                  <div className="bg-white p-6 rounded-lg max-w-md w-full">
+                  <div className="bg-white p-6 rounded-lg w-[90%] mx-auto md:mx-0 md:max-w-md md:w-full">
                     <h2 className="text-lg font-bold mb-4">Disclaimer</h2>
                     <p className="text-sm mb-6">
                       Fyndr acts solely as a platform to ensure your request is delivered to your selected service providers. We are not affiliated with, nor do we endorse or partner with, any of the service providers listed on the platform. Our involvement ends once communication begins between you and the service provider. The fee paid is strictly for facilitating the delivery of your request and does not guarantee the outcome or success of any transaction. 

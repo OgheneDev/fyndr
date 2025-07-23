@@ -149,7 +149,6 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
             })
           }}
         />
-        <div className="text-xs text-gray-500 mt-1">Hold Ctrl (Windows) or Cmd (Mac) to select multiple</div>
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Property Condition</label>
@@ -460,6 +459,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
           value={cleaningData.roomNumber || ''}
           onChange={(e) => onChange('roomNumber', e.target.value)}
           min={1}
+          placeholder='e.g 1'
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
