@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import Swal from "sweetalert2";
 
 const DashboardPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -71,6 +72,17 @@ const DashboardPage = () => {
   const handleCategorySelect = (categoryId) => {
     // Don't navigate for empty buttons
     if (!categories.find(cat => cat.id === categoryId)?.hasContent) {
+      return;
+    }
+    
+    // Show "Coming Soon" for other-services
+    if (categoryId === 'other-services') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Coming Soon',
+        text: 'Other Home Services Coming Soon.',
+        confirmButtonColor: '#541229'
+      });
       return;
     }
     

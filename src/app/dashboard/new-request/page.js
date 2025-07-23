@@ -398,7 +398,8 @@ const handleDisclaimerAgree = async () => {
     Swal.fire({
       icon: 'success',
       title: `${label} request posted successfully`,
-      showConfirmButton: false,
+      text: `Please make Payment.`,
+      confirmButtonColor: '#541229',
       timer: 2000,
     });
     setIsChecked(false);
