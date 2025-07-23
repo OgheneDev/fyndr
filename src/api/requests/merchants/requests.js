@@ -5,7 +5,7 @@ export const getRequests = async () => {
         const response = await axiosInstance.get(
             '/v1/request/merchant'
         );
-        console.log('API response:', response);
+        console.log('Merchanrt Requests:', response);
         const { data, status } = response;
         if (response.status !== 200) {
             throw new Error('failed to fetch requests')
@@ -22,7 +22,7 @@ export const getMerchantRequestById = async (requestId) => {
         const response = await axiosInstance.get(
             `/v1/request/merchant/${requestId}`
         );
-        console.log('API response:', response);
+        console.log('Merchant Request:', response);
         const { data, status } = response;
         if (response.status !== 200) {
             throw new Error(`Failed to fetch requests: status ${response.status}`)

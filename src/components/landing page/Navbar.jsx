@@ -396,20 +396,20 @@ const Navbar = () => {
                                     exit="exit"
                                 >
                                     <div className="p-4 border-b">
-                                        <p className="text-sm text-gray-900">
+                                        <div className="text-sm text-gray-900">
                                             {profileLoading ? (
                                                 <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />
                                             ) : (
                                                 profile?.name || 'User'
                                             )}
-                                        </p>
-                                        <p className="text-sm text-gray-500">
+                                        </div>
+                                        <div className="text-sm text-gray-500">
                                             {profileLoading ? (
                                                 <div className="h-3 w-32 bg-gray-200 rounded animate-pulse" />
                                             ) : (
                                                 profile?.email || 'user@example.com'
                                             )}
-                                        </p>
+                                        </div>
                                     </div>
                                     <ul className="pt-2 pb-12">
                                         {dropdownItems.map((item, index) => (

@@ -1,4 +1,5 @@
 'use client';
+import Swal from 'sweetalert2';
 import { useEffect, useState, Suspense } from "react";
 import { Bell } from "lucide-react";
 import { getUserRequestById } from "@/api/requests/users/requests";
@@ -44,6 +45,7 @@ function UserRequestDetailPageInner() {
     const [ratingLoading, setRatingLoading] = useState(false);
     const [ratingError, setRatingError] = useState(null);
     const [ratingSuccess, setRatingSuccess] = useState(false);
+    const [chosenMerchantId, setChosenMerchantId] = useState(null);
 
     // Update activeTab when query param changes
   useEffect(() => {
@@ -121,6 +123,12 @@ function UserRequestDetailPageInner() {
         setActionError(null);
         try {
             await cancelUserRequest(id);
+            Swal.fire({
+                title: 'Request Cancelled!',
+                text: 'Your request has been successfully cancelled',
+                icon: 'success',
+                confirmButtonColor: '#6B7280',
+            });
             setReloadFlag(f => f + 1);
         } catch (err) {
             setActionError(
@@ -136,6 +144,12 @@ function UserRequestDetailPageInner() {
         setActionError(null);
         try {
             await closeUserRequest(id);
+            Swal.fire({
+                title: 'Request Closed!',
+                text: 'Your request has been successfully closed',
+                icon: 'success',
+                confirmButtonColor: '#6B7280',
+            });
             setShowRatingModal(true);
             setRating(0);
             setHoverRating(0);
@@ -150,13 +164,32 @@ function UserRequestDetailPageInner() {
     };
 
     const handleChooseMerchant = async () => {
-        if (!chooseMerchantId) return;
+        if (!chooseMerchantId || !id) {
+            setActionError("Missing required information");
+            return;
+        }
         setChooseMerchantLoading(true);
         setActionError(null);
         try {
+            console.log('Attempting to choose merchant with:', {
+                requestId: id,
+                merchantId: chooseMerchantId
+            });
+            
             await chooseMerchantForRequest(id, chooseMerchantId);
+            const selectedMerchant = data.interestedMerchants.find(
+                m => m.merchant?._id === chooseMerchantId
+            );
+            setChosenMerchantId(chooseMerchantId);
+            Swal.fire({
+                title: 'Success!',
+                text: `You have chosen ${selectedMerchant?.merchant?.businessName} as your merchant`,
+                icon: 'success',
+                confirmButtonColor: '#6B7280',
+            });
             setReloadFlag(f => f + 1);
         } catch (err) {
+            console.error('Choose merchant error:', err);
             setActionError(
                 (err && err.message) || (typeof err === "string" ? err : "Failed to choose merchant.")
             );
@@ -166,20 +199,24 @@ function UserRequestDetailPageInner() {
     };
 
     const handleSubmitRating = async () => {
-        const acceptedMerchant = request?.interestedMerchants?.find(m => m.isAccepted);
+        const chosenMerchant = data.interestedMerchants.find(
+            m => m.merchant?._id === chosenMerchantId
+        );
         const payload = {
-            merchantId: acceptedMerchant?.merchant?._id,
+            merchantId: chosenMerchantId,
             rating,
             review
         };
-        if (!acceptedMerchant?.merchant?._id) {
-            setRatingError("No accepted merchant found to rate.");
+        
+        if (!chosenMerchantId) {
+            setRatingError("No chosen merchant found to rate.");
             return;
         }
         if (rating < 1 || rating > 5) {
             setRatingError("Please select a rating between 1 and 5.");
             return;
         }
+
         setRatingLoading(true);
         setRatingError(null);
         try {
@@ -232,7 +269,7 @@ function UserRequestDetailPageInner() {
         </div>
         );
     }
-
+ 
     const data = request?.data || request;
 
     return (
@@ -273,6 +310,10 @@ function UserRequestDetailPageInner() {
                                     merchants={data.interestedMerchants}
                                     onAccept={handleAcceptMerchant}
                                     actionLoading={actionLoading}
+                                    chooseMerchantId={chooseMerchantId}
+                                    setChooseMerchantId={setChooseMerchantId}
+                                    onChoose={handleChooseMerchant}
+                                    chooseMerchantLoading={chooseMerchantLoading}
                                 />
                                 {/*<ChooseMerchant
                                     merchants={data.interestedMerchants}

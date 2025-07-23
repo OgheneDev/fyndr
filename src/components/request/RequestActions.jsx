@@ -18,7 +18,8 @@ const RequestActions = ({
   }
 
   return (
-    <div className="flex justify-between md:gap-5 mt-6">
+    <div>
+      <div className="flex justify-between md:gap-5 mt-6">
       <button
         className="bg-[#57132A] text-[13px] text-white px-5 py-3 cursor-pointer rounded-md disabled:opacity-60"
         onClick={onCancel}
@@ -33,7 +34,8 @@ const RequestActions = ({
       >
         {closeLoading ? 'Closing...' : 'Mark as Completed'}
       </button>
-      {actionError && (
+    </div>
+    {actionError && (
         <div className="text-red-600 mt-2 text-sm">{actionError}</div>
       )}
     </div>

@@ -9,7 +9,7 @@ export const getMerchantProfile = async () => {
         if (response.status !== 200) {
             throw new Error('failed to fetch merchant profile')
         }
-        console.log('API response:', response)
+        console.log('Merchant Profile:', response)
         return data.data
     } catch (error) {
         console.error('Error fetching merchant', error);

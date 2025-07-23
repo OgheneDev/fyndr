@@ -9,7 +9,7 @@ export const getUserProfile = async () => {
         if (response.status !== 200) {
             throw new Error('failed to fetch user profile')
         }
-        console.log('API response:', response)
+        console.log('User Profile:', response)
         return data.data
     } catch (error) {
         console.error('Error fetching user profile', error);

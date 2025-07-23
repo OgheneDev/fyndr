@@ -5,7 +5,7 @@ export const getRequests = async () => {
         const response = await axiosInstance.get(
             '/v1/request/user'
         );
-        console.log('API response:', response);
+        console.log('User Requests:', response);
         const { data, status } = response;
         if (response.status !== 200) {
             throw new Error(`Failed to fetch requests: status ${response.status}`)
@@ -30,7 +30,7 @@ export const getUserRequestById = async (requestId) => {
         const response = await axiosInstance.get(
             `/v1/request/user/${requestId}`
         );
-        console.log('API response:', response);
+        console.log('User Request:', response);
         const { data, status } = response;
         if (response.status !== 200) {
             throw new Error(`Failed to fetch requests: status ${response.status}`)
@@ -215,23 +215,31 @@ export const closeUserRequest = async (requestId) => {
 }
 
 export const chooseMerchantForRequest = async (requestId, merchantId) => {
+    if (!requestId || !merchantId) {
+        throw new Error('RequestId and merchantId are required');
+    }
+
     try {
+        console.log('Choosing merchant with details:', {
+            requestId,
+            merchantId,
+        });
+        
         const response = await axiosInstance.put(
-            `/v1/request/user/${requestId}/choose`,
+            `/v1/request/user/${requestId}/chose`,
             { merchantId }
         );
-        console.log(response);
+        
+        console.log('Choose merchant response:', response.data);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            console.error("Error response:", error.response.data);
-            throw error.response.data;
-        } else if (error.request) {
-            console.error("No response received:", error.request);
-            throw error.request;
-        } else {
-            console.error("Error:", error.message);
-            throw error.message;
-        }
+        console.error('Choose merchant error details:', {
+            requestId,
+            merchantId,
+            error: error.response?.data || error.message,
+            status: error.response?.status
+        });
+        
+        throw error.response?.data || error;
     }
 }

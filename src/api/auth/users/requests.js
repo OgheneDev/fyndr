@@ -1,14 +1,27 @@
 import axiosInstance from "@/api/axios";
 
 // Request OTP for users
-export const requestUserOtp = async ({ number }) => {
+export const requestUserOtp = async ({ number, email }) => {
     try {
         const response = await axiosInstance.post(
             '/v1/auth/otp/user',
-            { number }
+            { number, email }
         );
-        console.log(response);
+        console.log('User OTP:', response);
         return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Resend OTP for Users
+export const resendUserOtp = async ({ number, email }) => {
+    try {
+        const response = await axiosInstance.post(
+            '/v1/auth/otp/user/resend',
+            { number, email }
+        );
+        console.log('Resend User OTP:', response)
     } catch (error) {
         throw error;
     }

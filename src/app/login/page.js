@@ -5,16 +5,19 @@ import { OTPInput } from "@/components/general/OTPInput";
 import { useUserStore } from "@/store/userStore";
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from "next/navigation";
-import { requestMerchantOtp, verifyOtp } from '@/api/auth/merchants/requests';
-import { requestUserOtp } from '@/api/auth/users/requests';
+import { requestMerchantOtp, verifyOtp, resendMerchantOtp } from '@/api/auth/merchants/requests';
+import { requestUserOtp, resendUserOtp } from '@/api/auth/users/requests';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const LoginPage = () => {
-  const [step, setStep] = useState(0); // 0: select type, 1: phone, 2: otp
+  const [step, setStep] = useState(0); // 0: select type, 1: method, 2: input, 3: otp
+  const [method, setMethod] = useState(''); // 'phone' or 'email'
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [localUserType, setLocalUserType] = useState(null);
   const [error, setError] = useState(null);
 
@@ -23,6 +26,7 @@ const LoginPage = () => {
   const router = useRouter();
 
   const canProceedPhone = phoneNumber.trim().length >= 10;
+  const canProceedEmail = email.includes('@') && email.includes('.');
   const canProceedOTP = otp.length === 4;
 
   // Always send phone number with +234 prefix
@@ -34,7 +38,13 @@ const LoginPage = () => {
   const handleTypeSelect = (type) => { 
     setUserType(type); // Save to store
     setLocalUserType(type); // For local rendering
-    setStep(1);
+    setStep(1); // Go to method selection
+    setError(null);
+  };
+
+  const handleMethodSelect = (selectedMethod) => {
+    setMethod(selectedMethod);
+    setStep(2);
     setError(null);
   };
 
@@ -48,35 +58,79 @@ const LoginPage = () => {
       } else {
         await requestUserOtp({ number: getFullPhoneNumber() });
       }
-      setStep(2);
+      setStep(3);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
     }
     setIsLoading(false);
   };
 
-const handleOTPSubmit = async () => {
-  if (!canProceedOTP) return;
-  setIsLoading(true);
-  setError(null);
-  try {
-    const res = await verifyOtp({ number: getFullPhoneNumber(), otp, userType: localUserType });
-    if (res && res.data && res.data.token) {
-      setAuth(res.data.token); // Store token in useAuthStore
-      setUserType(localUserType); // Ensure userType is set in useUserStore
+  const handleEmailSubmit = async () => {
+    if (!canProceedEmail) return;
+    setIsLoading(true);
+    setError(null);
+    try {
       if (localUserType === "merchant") {
-        router.push("/dashboard/open-requests");
+        await requestMerchantOtp({ email });
       } else {
-        router.push("/dashboard");
+        await requestUserOtp({ email });
       }
-    } else {
-      throw new Error("No token received");
+      setStep(3);
+    } catch (err) {
+      setError("Failed to send OTP. Please try again.");
     }
-  } catch (err) {
-    setError("Invalid OTP. Please try again.");
-  }
-  setIsLoading(false);
-};
+    setIsLoading(false);
+  };
+
+  const handleOTPSubmit = async () => {
+    if (!canProceedOTP) return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const verifyData = {
+        userType: localUserType,
+        otp
+      };
+
+      // Add either email or phone number based on selected method
+      if (method === 'phone') {
+        verifyData.number = getFullPhoneNumber();
+      } else {
+        verifyData.email = email;
+      }
+
+      const res = await verifyOtp(verifyData);
+      if (res && res.data && res.data.token) {
+        setAuth(res.data.token);
+        setUserType(localUserType);
+        if (localUserType === "merchant") {
+          router.push("/dashboard/open-requests");
+        } else {
+          router.push("/dashboard");
+        }
+      } else {
+        throw new Error("No token received");
+      }
+    } catch (err) {
+      setError("Invalid OTP. Please try again.");
+    }
+    setIsLoading(false);
+  };
+
+  const handleResendOTP = async () => {
+    setIsResending(true);
+    setError(null);
+    try {
+      if (localUserType === "merchant") {
+        await resendMerchantOtp(method === 'phone' ? { number: getFullPhoneNumber() } : { email });
+      } else {
+        await resendUserOtp(method === 'phone' ? { number: getFullPhoneNumber() } : { email });
+      }
+    } catch (err) {
+      setError("Failed to resend OTP. Please try again.");
+    }
+    setIsResending(false);
+  };
 
   // Initial selection screen
   if (step === 0) {
@@ -120,36 +174,35 @@ const handleOTPSubmit = async () => {
     );
   }
 
-  // Phone input step
+  // Method selection screen
   if (step === 1) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
-          {error && (
-            <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
-          )}
           <div>
             <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
-            <p className="text-gray-600 text-sm mb-4">Enter your phone number to receive a verification code.</p>
-            <PhoneInput
-              value={phoneNumber}
-              onChange={setPhoneNumber}
-              placeholder="Enter your phone number"
-            />
+            <p className="text-gray-600 text-sm mb-4">How would you like to receive your verification code?</p>
+            <div className="space-y-4">
+              <button
+                onClick={() => handleMethodSelect('phone')}
+                className="w-full py-4 px-6 bg-white border-2 border-[#57132A] text-[#57132A] cursor-pointer rounded-lg"
+              >
+                Via Phone Number
+              </button>
+              <button
+                onClick={() => handleMethodSelect('email')}
+                className="w-full py-4 px-6 bg-[#57132A] text-white cursor-pointer rounded-lg"
+              >
+                Via Email
+              </button>
+            </div>
           </div>
-          <button
-            onClick={handlePhoneSubmit}
-            disabled={!canProceedPhone || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {isLoading ? 'Sending...' : 'Send Code'}
-          </button>
         </div>
       </div>
     );
   }
 
-  // OTP input step
+  // Input step (phone or email)
   if (step === 2) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
@@ -160,14 +213,65 @@ const handleOTPSubmit = async () => {
           <div>
             <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
             <p className="text-gray-600 text-sm mb-4">
-              Enter the 4-digit code sent to {phoneNumber}
+              Enter your {method === 'phone' ? 'phone number' : 'email address'} to receive a verification code.
+            </p>
+            {method === 'phone' ? (
+              <PhoneInput
+                value={phoneNumber}
+                onChange={setPhoneNumber}
+                placeholder="Enter your phone number"
+              />
+            ) : (
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:border-[#57132A]"
+              />
+            )}
+          </div>
+          <button
+            onClick={method === 'phone' ? handlePhoneSubmit : handleEmailSubmit}
+            disabled={method === 'phone' ? !canProceedPhone : !canProceedEmail || isLoading}
+            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? 'Sending...' : 'Send Code'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // OTP step (now step 3)
+  if (step === 3) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="w-full max-w-md mx-auto space-y-8">
+          {error && (
+            <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
+          )}
+          <div>
+            <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
+            <p className="text-gray-600 text-sm mb-4">
+              Enter the 4-digit code sent to {method === 'phone' ? phoneNumber : email}
             </p>
             <OTPInput value={otp} onChange={setOtp} />
+            <div className="text-sm mt-4 text-center">
+              Didn&apos;t receive the code?{" "}
+              <button 
+                onClick={handleResendOTP}
+                disabled={isResending || isLoading}
+                className="text-[#57132A] cursor-pointer underline disabled:opacity-50"
+              >
+                {isResending ? 'Resending...' : 'Resend OTP'}
+              </button>
+            </div>
           </div>
           <button
             onClick={handleOTPSubmit}
-            disabled={!canProceedOTP || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            disabled={!canProceedOTP || isLoading || isResending}
+            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Verifying...' : 'Verify Code'}
           </button>
