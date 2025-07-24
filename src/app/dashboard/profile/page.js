@@ -154,8 +154,10 @@ const ProfilePage = () => {
       } else {
         await deleteUser({ name: profile?.name || '' });
       }
+      logout();
+      setUserData(null);
       setProfile(null); // Clear store on deletion
-      router.push('/');
+      router.replace('/');
     } catch (err) {
       setDeleteError(err?.message || (typeof err === 'string' ? err : 'Failed to delete account.'));
     } finally {

@@ -195,9 +195,7 @@ const handleDetailsSubmit = async () => {
       );
 
   const handleBack = () => {
-    if (onSuccess) {
-      onSuccess(); // This will trigger redirect to initial selection
-    }
+    setUserType(null); // Reset user type in the store
   };
 
   return (

@@ -9,10 +9,10 @@ import { requestMerchantOtp, verifyOtp, resendMerchantOtp } from '@/api/auth/mer
 import { requestUserOtp, resendUserOtp } from '@/api/auth/users/requests';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 const LoginPage = () => {
-  const [step, setStep] = useState(0); // 0: select type, 1: method, 2: input, 3: otp
+  const [step, setStep] = useState(1); // Changed from 0 to 1
   const [method, setMethod] = useState(''); // 'phone' or 'email'
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
@@ -37,15 +37,15 @@ const LoginPage = () => {
   };
 
   const handleTypeSelect = (type) => { 
-    setUserType(type); // Save to store
-    setLocalUserType(type); // For local rendering
-    setStep(1); // Go to method selection
+    setUserType(type);
+    setLocalUserType(type);
+    setStep(2); // Changed from 1 to 2
     setError(null);
   };
 
   const handleMethodSelect = (selectedMethod) => {
     setMethod(selectedMethod);
-    setStep(2);
+    setStep(3); // Changed from 2 to 3
     setError(null);
   };
 
@@ -59,7 +59,7 @@ const LoginPage = () => {
       } else {
         await requestUserOtp({ number: getFullPhoneNumber() });
       }
-      setStep(3);
+      setStep(4);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
     }
@@ -76,7 +76,7 @@ const LoginPage = () => {
       } else {
         await requestUserOtp({ email });
       }
-      setStep(3);
+      setStep(4);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
     }
@@ -134,15 +134,37 @@ const LoginPage = () => {
   };
 
   const handleBack = () => {
-    setStep(0);
+    setStep(1); // Changed from 0 to 1
     setError(null);
     setPhoneNumber('');
     setEmail('');
     setOtp('');
   };
 
+  // Progress bar component
+  const ProgressBar = () => (
+    <div className="flex justify-between mb-8">
+      {[1, 2, 3].map((stepNum) => (
+        <div key={stepNum} className="flex items-center">
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+            step >= stepNum + 1 
+              ? 'bg-[#541229] text-white' 
+              : 'bg-gray-200 text-gray-600'
+          }`}>
+            {step > stepNum + 1 ? <CheckCircle className="w-5 h-5" /> : stepNum}
+          </div>
+          {stepNum < 3 && (
+            <div className={`h-1 w-16 mx-2 ${
+              step > stepNum + 1 ? 'bg-[#541229]' : 'bg-gray-200'
+            }`} />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
   // Initial selection screen
-  if (step === 0) {
+  if (step === 1) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center px-4">
         <div className="max-w-md w-full text-center">
@@ -184,10 +206,11 @@ const LoginPage = () => {
   }
 
   // Method selection screen
-  if (step === 1) {
+  if (step === 2) { // Changed from 1 to 2
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          <ProgressBar />
           <button
               onClick={handleBack}
               className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
@@ -219,10 +242,11 @@ const LoginPage = () => {
   }
 
   // Input step (phone or email)
-  if (step === 2) {
+  if (step === 3) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          <ProgressBar />
           <button
               onClick={handleBack}
               className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
@@ -266,11 +290,12 @@ const LoginPage = () => {
     );
   }
 
-  // OTP step (now step 3)
-  if (step === 3) {
+  // OTP step (now step 4)
+  if (step === 4) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">
+          <ProgressBar />
           <button
               onClick={handleBack}
               className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
