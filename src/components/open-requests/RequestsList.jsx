@@ -49,8 +49,8 @@ const RequestsList = ({ loading, filteredRequests, getServiceLabel }) => {
           {sortedRequests.map((request) => {
             // Truncate additionalDetails to 50 characters, handle undefined case
             const truncatedDetails = request.additionalDetails && typeof request.additionalDetails === 'string'
-              ? request.additionalDetails.length > 30
-                ? request.additionalDetails.slice(0, 30) + '...'
+              ? request.additionalDetails.length > 20
+                ? request.additionalDetails.slice(0, 20) + '...'
                 : request.additionalDetails
               : '';
 
