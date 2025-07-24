@@ -92,7 +92,7 @@ const PaymentChatSection = ({
       {userType === "merchant" && (
         <>
           <button
-            className="bg-[#57132A] py-3 px-5 rounded-md text-center gap-3 w-full cursor-pointer text-white"
+            className="bg-[#57132A] py-3 px-5 rounded-md text-sm text-center gap-3 w-full cursor-pointer text-white"
             onClick={() => setShowProposalModal(true)}
           >
             Send a Proposal
