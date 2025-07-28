@@ -9,7 +9,7 @@ import { requestMerchantOtp, verifyOtp, resendMerchantOtp } from '@/api/auth/mer
 import { requestUserOtp, resendUserOtp } from '@/api/auth/users/requests';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, User, Store } from 'lucide-react';
 
 const LoginPage = () => {
   const [step, setStep] = useState(1); // Changed from 0 to 1
@@ -45,7 +45,6 @@ const LoginPage = () => {
 
   const handleMethodSelect = (selectedMethod) => {
     setMethod(selectedMethod);
-    setStep(3); // Changed from 2 to 3
     setError(null);
   };
 
@@ -59,7 +58,7 @@ const LoginPage = () => {
       } else {
         await requestUserOtp({ number: getFullPhoneNumber() });
       }
-      setStep(4);
+      setStep(3);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
     }
@@ -76,7 +75,7 @@ const LoginPage = () => {
       } else {
         await requestUserOtp({ email });
       }
-      setStep(4);
+      setStep(3);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
     }
@@ -147,15 +146,15 @@ const LoginPage = () => {
       {[1, 2, 3].map((stepNum) => (
         <div key={stepNum} className="flex items-center">
           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-            step >= stepNum + 1 
+            step >= stepNum 
               ? 'bg-[#541229] text-white' 
               : 'bg-gray-200 text-gray-600'
           }`}>
-            {step > stepNum + 1 ? <CheckCircle className="w-5 h-5" /> : stepNum}
+            {step > stepNum ? <CheckCircle className="w-5 h-5" /> : stepNum}
           </div>
           {stepNum < 3 && (
             <div className={`h-1 w-16 mx-2 ${
-              step > stepNum + 1 ? 'bg-[#541229]' : 'bg-gray-200'
+              step > stepNum ? 'bg-[#541229]' : 'bg-gray-200'
             }`} />
           )}
         </div>
@@ -205,93 +204,95 @@ const LoginPage = () => {
     );
   }
 
-  // Method selection screen
-  if (step === 2) { // Changed from 1 to 2
+  // Combined method selection and input screen
+  if (step === 2) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="w-full max-w-md mx-auto space-y-8">
-          <ProgressBar />
+        <div className="w-full max-w-md mx-auto">
           <button
-              onClick={handleBack}
-              className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
-            >
-              <ArrowLeft className='w-4 h-4' />
-              Back to selection screen
-            </button>
-          <div>
-            <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
-            <p className="text-gray-600 text-sm mb-4">How would you like to receive your verification code?</p>
-            <div className="space-y-4">
-              <button
-                onClick={() => handleMethodSelect('phone')}
-                className="w-full py-4 px-6 bg-white border-2 border-[#57132A] text-[#57132A] cursor-pointer rounded-lg"
-              >
-                Via Phone Number
-              </button>
-              <button
-                onClick={() => handleMethodSelect('email')}
-                className="w-full py-4 px-6 bg-[#57132A] text-white cursor-pointer rounded-lg"
-              >
-                Via Email
-              </button>
+            onClick={handleBack}
+            className="cursor-pointer flex gap-3 items-center text-gray-600 text-sm hover:text-[#57132A] transition-colors mb-4"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to selection screen
+          </button>
+          
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center">
+              {localUserType === 'user' ? (
+                <User className="w-6 h-6 text-[#541229] mr-2" />
+              ) : (
+                <Store className="w-6 h-6 text-[#541229] mr-2" />
+              )}
+              <h2 className="text-xl font-semibold capitalize">{localUserType} Login</h2>
             </div>
+            <div className="w-[52px]"></div>
           </div>
-        </div>
-      </div>
-    );
-  }
 
-  // Input step (phone or email)
-  if (step === 3) {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="w-full max-w-md mx-auto space-y-8">
           <ProgressBar />
-          <button
-              onClick={handleBack}
-              className="text-sm cursor-pointer flex gap-3 items-center text-gray-600 hover:text-[#57132A] transition-colors"
-            >
-              <ArrowLeft className='w-4 h-4' />
-              Back to selection screen
-            </button>
+
           {error && (
             <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
           )}
-          <div>
-            <h2 className="text-xl font-semibold capitalize mb-2">{localUserType} Login</h2>
-            <p className="text-gray-600 text-sm mb-4">
-              Enter your {method === 'phone' ? 'phone number' : 'email address'} to receive a verification code.
-            </p>
-            {method === 'phone' ? (
-              <PhoneInput
-                value={phoneNumber}
-                onChange={setPhoneNumber}
-                placeholder="Enter your phone number"
-              />
-            ) : (
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
-              />
-            )}
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-medium mb-2">How would you like to receive your verification code?</h3>
+              <div className="space-y-4 mb-6">
+                <button
+                  onClick={() => handleMethodSelect('phone')}
+                  className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${
+                    method === 'phone' 
+                      ? 'border-[#57132A] text-[#57132A]' 
+                      : 'border-gray-200 text-gray-600'
+                  }`}
+                >
+                  Via Phone Number
+                </button>
+                <button
+                  onClick={() => handleMethodSelect('email')}
+                  className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${
+                    method === 'email'
+                      ? 'border-[#57132A] text-[#57132A]'
+                      : 'border-gray-200 text-gray-600'
+                  }`}
+                >
+                  Via Email
+                </button>
+              </div>
+
+              {method === 'phone' ? (
+                <PhoneInput
+                  value={phoneNumber}
+                  onChange={setPhoneNumber}
+                  placeholder="Enter your phone number"
+                />
+              ) : (
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                  className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+                />
+              )}
+            </div>
+            <button
+              onClick={method === 'phone' ? handlePhoneSubmit : handleEmailSubmit}
+              disabled={method === 'phone' ? !canProceedPhone : !canProceedEmail || isLoading}
+              className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {isLoading ? 'Sending...' : 'Send Code'}
+            </button>
           </div>
-          <button
-            onClick={method === 'phone' ? handlePhoneSubmit : handleEmailSubmit}
-            disabled={method === 'phone' ? !canProceedPhone : !canProceedEmail || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? 'Sending...' : 'Send Code'}
-          </button>
         </div>
       </div>
     );
   }
 
-  // OTP step (now step 4)
-  if (step === 4) {
+  // Update step numbers for OTP verification (now step 3)
+  if (step === 3) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto space-y-8">

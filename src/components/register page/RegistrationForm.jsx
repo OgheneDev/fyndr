@@ -248,7 +248,7 @@ const handleDetailsSubmit = async () => {
       {step === 1 && (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium mb-2">How would you like to receive your verification code?</h3>
+            <h3 className="font-medium mb-2">How would you like to receive your verification code?</h3>
             <div className="space-y-4 mb-6">
               <button
                 onClick={() => handleMethodSelect('phone')}
