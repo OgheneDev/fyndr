@@ -28,5 +28,22 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// Response Interceptor: Handle 401 Unauthorized
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      useAuthStore.getState().logout();
+      useUserStore.getState().setUserType(null);
+      useUserStore.getState().setUserData(null);
+      useUserStore.getState().setProfile(null);
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 
 export default axiosInstance;
