@@ -99,27 +99,27 @@ export const statistics = [
 
 export const testimonials = [
   {
-    quote: 'Fynder has been a blessing to me, it makes life much easier and more productive for me.',
+    quote: 'Fyndr has been a blessing to me, it makes life much easier and more productive for me.',
     customer: 'John Okafor',
     location: 'Abuja'
   },
   {
-    quote: 'I found a reliable electrician in less than 10 minutes. Fynder is a game changer!',
+    quote: 'I found a reliable electrician in less than 10 minutes. Fyndr is a game changer!',
     customer: 'Amina Yusuf',
     location: 'Kano'
   },
   {
-    quote: 'As a small business owner, Fynder has helped me reach new customers I never knew existed.',
+    quote: 'As a small business owner, Fyndr has helped me reach new customers I never knew existed.',
     customer: 'Chidi Nwosu',
     location: 'Enugu'
   },
   {
-    quote: 'Fast, simple, and very useful. I use Fynder anytime I need a quick home repair.',
+    quote: 'Fast, simple, and very useful. I use Fyndr anytime I need a quick home repair.',
     customer: 'Fatima Bello',
     location: 'Kaduna'
   },
   {
-    quote: 'No more asking around or waiting endlessly—Fynder connects me with service providers instantly.',
+    quote: 'No more asking around or waiting endlessly—Fyndr connects me with service providers instantly.',
     customer: 'Tolu Adebayo',
     location: 'Lagos'
   },
@@ -129,12 +129,12 @@ export const testimonials = [
     location: 'Ibadan'
   },
   {
-    quote: 'Whether it’s plumbing or laundry, Fynder always has someone nearby who can help.',
+    quote: 'Whether it’s plumbing or laundry, Fyndr always has someone nearby who can help.',
     customer: 'Kingsley Obiora',
     location: 'Port Harcourt'
   },
   {
-    quote: 'Great interface, smooth experience, and I always find what I need. Kudos to the Fynder team!',
+    quote: 'Great interface, smooth experience, and I always find what I need. Kudos to the Fyndr team!',
     customer: 'Grace Eze',
     location: 'Asaba'
   }

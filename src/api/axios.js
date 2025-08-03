@@ -4,7 +4,7 @@ import { useAuthStore } from "@/store/authStore";
 import { useUserStore } from "@/store/userStore";
 
 const axiosInstance = axios.create({
-  baseURL: "http://fyndr.ng:5002/api",
+  baseURL: "https://rheel-compare.onrender.com/api",
   timeout: 1000000000,
   headers: {
     "Content-Type": "application/json",
