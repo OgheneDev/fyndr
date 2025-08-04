@@ -133,11 +133,6 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
               </button>
             )}
           </div>
-          {filteredServices.length > 0 && (
-            <p className="text-sm text-gray-500 mt-3">
-              {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
-            </p>
-          )}
         </div>
 
         {/* Services List */}
