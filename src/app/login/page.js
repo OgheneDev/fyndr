@@ -9,7 +9,7 @@ import { requestMerchantOtp, verifyOtp, resendMerchantOtp } from '@/api/auth/mer
 import { requestUserOtp, resendUserOtp } from '@/api/auth/users/requests';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, User, Store } from 'lucide-react';
+import { ArrowLeft, CheckCircle, User, Store, Loader2 } from 'lucide-react';
 
 const LoginPage = () => {
   const [step, setStep] = useState(1); // Changed from 0 to 1
@@ -281,8 +281,9 @@ const LoginPage = () => {
             <button
               onClick={method === 'phone' ? handlePhoneSubmit : handleEmailSubmit}
               disabled={method === 'phone' ? !canProceedPhone : !canProceedEmail || isLoading}
-              className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
             >
+              {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
               {isLoading ? 'Sending...' : 'Send Code'}
             </button>
           </div>
@@ -318,8 +319,9 @@ const LoginPage = () => {
               <button 
                 onClick={handleResendOTP}
                 disabled={isResending || isLoading}
-                className="text-[#57132A] cursor-pointer underline disabled:opacity-50"
+                className="text-[#57132A] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
               >
+                {isResending && <Loader2 className="w-3 h-3 animate-spin" />}
                 {isResending ? 'Resending...' : 'Resend OTP'}
               </button>
             </div>
@@ -327,8 +329,9 @@ const LoginPage = () => {
           <button
             onClick={handleOTPSubmit}
             disabled={!canProceedOTP || isLoading || isResending}
-            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
+            {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
             {isLoading ? 'Verifying...' : 'Verify Code'}
           </button>
         </div>
