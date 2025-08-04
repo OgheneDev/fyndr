@@ -1,5 +1,5 @@
 "use client"
-import { ArrowLeft, CircleArrowRight, Search, X } from "lucide-react"
+import { ArrowLeft, CircleArrowRight, Search} from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
 const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
@@ -30,13 +30,12 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
     service.description.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  // Focus management and keyboard navigation
+  // Reset search and focus when modal opens
   useEffect(() => {
-    if (isOpen && searchInputRef.current) {
-      setTimeout(() => searchInputRef.current?.focus(), 100)
+    if (isOpen) {
+      setSearchQuery("")
+      setFocusedIndex(-1)
     }
-    setSearchQuery("")
-    setFocusedIndex(-1)
   }, [isOpen])
 
   // Handle keyboard navigation
@@ -103,13 +102,6 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
             </button>
             <h2 className="text-xl font-semibold text-gray-900">More Services</h2>
           </div>
-          <button 
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 md:hidden"
-            aria-label="Close modal"
-          >
-            <X className="h-5 w-5 text-gray-600" />
-          </button>
         </div>
 
         {/* Search Section */}

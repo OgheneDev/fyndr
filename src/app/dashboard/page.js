@@ -96,19 +96,19 @@ const DashboardPage = () => {
         </div>
 
         {/* Categories Container */}
-        <div className="max-w-sm md:max-w-2xl mx-auto">
-          <div className="grid grid-cols-3 gap-6 md:gap-8">
+        <div className="flex justify-center">
+          <div className="grid grid-cols-3 gap-6 md:gap-8 max-w-2xl">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className={` w-28 h-25 md:w-28 md:h-26 ${
+                className={`w-28 h-25 md:w-28 md:h-26 ${
                   category.hasContent 
                     ? 'cursor-pointer hover:bg-white/10 transition-colors' 
                     : 'cursor-default opacity-50'
                 }`}
               >
-                <div className="flex flex-col items-center justify-center space-y-1 h-full mx-auto">
+                <div className="flex flex-col items-center justify-center space-y-1 h-full">
                   {category.hasContent && (
                     <>
                       <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-xl overflow-hidden">
@@ -132,7 +132,7 @@ const DashboardPage = () => {
               onClick={() => setIsModalOpen(true)}
               className="w-28 h-25 md:w-28 md:h-26 cursor-pointer hover:bg-white/10 transition-colors"
             >
-              <div className="flex flex-col items-center justify-center space-y-1 h-full mx-auto">
+              <div className="flex flex-col items-center justify-center space-y-1 h-full">
                 <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-xl flex items-center border border-gray-300 justify-center">
                   <Grid2X2PlusIcon className="w-10 h-10 md:w-12 md:h-12 text-gray-900" />
                 </div>
