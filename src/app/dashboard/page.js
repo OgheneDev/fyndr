@@ -85,63 +85,62 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen relative pt-[72px] md:pt-[100px] pb-15 md:pb-0">
-      {/* Content */}
-      <div className="relative px-6 py-8">
-        {/* Header */}
-        <div className="mb-12">
-          <div className="flex-1"></div>
-          <h1 className="text-center text-lg">
-            Create Request
-          </h1>
-        </div>
+    {/* Content */}
+    <div className="relative px-4 py-8"> {/* Reduced padding for mobile */}
+      {/* Header */}
+      <div className="mb-12">
+        <div className="flex-1"></div>
+        <h1 className="text-center text-lg">
+          Create Request
+        </h1>
+      </div>
 
-        {/* Categories Container */}
-        <div className="flex justify-center">
-          <div className="grid grid-cols-3 gap-6 md:gap-8 max-w-2xl">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => handleCategorySelect(category.id)}
-                className={`w-28 h-25 md:w-28 md:h-26 ${
-                  category.hasContent 
-                    ? 'cursor-pointer hover:bg-white/10 transition-colors' 
-                    : 'cursor-default opacity-50'
-                }`}
-              >
-                <div className="flex flex-col items-center justify-center space-y-1 h-full">
-                  {category.hasContent && (
-                    <>
-                      <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-xl overflow-hidden">
-                        <Image
-                          src={category.icon}
-                          alt={`${category.title} icon`}
-                          width={96}
-                          height={96}
-                          className="w-full h-full object-cover rounded-xl"
-                        />
-                      </div> 
-                      <span className="text-[10px] text-center font-medium">
-                        {category.title}
-                      </span>
-                    </>
-                  )}
-                </div>
-              </button>
-            ))}
+      {/* Categories Container */}
+      <div className="flex justify-center">
+        <div className="grid grid-cols-3 gap-6 md:gap-8 w-full max-w-md mx-auto"> {/* Adjusted max-width and added mx-auto */}
+          {categories.map((category) => (
             <button
-              onClick={() => setIsModalOpen(true)}
-              className="w-28 h-25 md:w-28 md:h-26 cursor-pointer hover:bg-white/10 transition-colors"
+              key={category.id}
+              onClick={() => handleCategorySelect(category.id)}
+              className={`w-24 h-24 md:w-28 md:h-26 ${
+                category.hasContent 
+                  ? 'cursor-pointer hover:bg-white/10 transition-colors' 
+                  : 'cursor-default opacity-50'
+              }`}
             >
               <div className="flex flex-col items-center justify-center space-y-1 h-full">
-                <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-xl flex items-center border border-gray-300 justify-center">
-                  <Grid2X2PlusIcon className="w-10 h-10 md:w-12 md:h-12 text-gray-900" />
-                </div>
-                <span className="text-[10px] text-center font-medium">
-                  More Services
-                </span>
+                {category.hasContent && (
+                  <>
+                    <div className="w-16 h-16 md:w-24 md:h-24 flex-shrink-0 rounded-xl overflow-hidden"> {/* Adjusted size for mobile */}
+                      <Image
+                        src={category.icon}
+                        alt={`${category.title} icon`}
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    </div> 
+                    <span className="text-[10px] text-center font-medium">
+                      {category.title}
+                    </span>
+                  </>
+                )}
               </div>
             </button>
-          </div>
+          ))}
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="w-24 h-24 md:w-28 md:h-26 cursor-pointer hover:bg-white/10 transition-colors"
+          >
+            <div className="flex flex-col items-center justify-center space-y-1 h-full">
+              <div className="w-16 h-16 md:w-24 md:h-24 flex-shrink-0 rounded-xl flex items-center border border-gray-300 justify-center">
+                <Grid2X2PlusIcon className="w-8 h-8 md:w-12 md:h-12 text-gray-900" /> {/* Adjusted icon size */}
+              </div>
+              <span className="text-[10px] text-center font-medium">
+                More Services
+              </span>
+            </div>
+          </button>
         </div>
       </div>
       <ServicesModal 
@@ -152,6 +151,7 @@ const DashboardPage = () => {
         }}
       />
     </div>
+  </div>
   );
 };
 
