@@ -159,7 +159,6 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                   key={service.id}
                   onClick={() => {
                     onSelectService(service.category)
-                    onClose()
                   }}
                   className={`w-full text-left p-4 rounded-xl cursor-pointer mb-2 transition-all duration-200 group hover:bg-blue-50 hover:shadow-sm ${
                     focusedIndex === index ? 'bg-blue-50 shadow-sm ring-2 ring-blue-200' : ''

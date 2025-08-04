@@ -88,7 +88,7 @@ const DashboardPage = () => {
     {/* Content */}
     <div className="relative px-4 py-8"> {/* Reduced padding for mobile */}
       {/* Header */}
-      <div className="mb-12">
+      <div className="md:mb-12 mb-5">
         <div className="flex-1"></div>
         <h1 className="text-center text-lg">
           Create Request
