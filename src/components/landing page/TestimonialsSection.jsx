@@ -74,7 +74,7 @@ const TestimonialsSection = () => {
   }
 
   return (
-    <motion.section 
+    <motion.section  
       id='testimonials' 
       className='py-8 md:py-12 px-5 md:px-10'
       variants={containerVariants}

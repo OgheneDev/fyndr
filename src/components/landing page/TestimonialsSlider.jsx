@@ -2,7 +2,6 @@
 
 import React, {useState, useEffect, useRef} from 'react'
 import { testimonials } from '@/data/data'
-import Image from 'next/image'
 import { RiDoubleQuotesL } from 'react-icons/ri';
 
 const createSlidingTestimonials = (items, itemsPerView) => {
@@ -14,11 +13,11 @@ const createSlidingTestimonials = (items, itemsPerView) => {
     result = [...result, ...items.slice(0, itemsToAdd)];
   }
   
-  return result;
+  return result; 
 };
 
 const TestimonialsSlider = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+      const [currentIndex, setCurrentIndex] = useState(0);
       const [isMobile, setIsMobile] = useState(true);
       const [isTransitioning, setIsTransitioning] = useState(false);
       const [touchStart, setTouchStart] = useState(0);

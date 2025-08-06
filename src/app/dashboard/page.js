@@ -5,6 +5,7 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { Grid2X2PlusIcon } from "lucide-react";
 import ServicesModal from "@/components/ui/ServicesModal";
+import FeaturedProviders from "@/components/general/FeaturedProviders";
 
 const DashboardPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -92,7 +93,7 @@ const DashboardPage = () => {
       {/* Content */}
       <div className="relative px-0 py-8"> {/* Removed px-4 to eliminate side padding */}
         {/* Header */}
-        <div className="mb-12">
+        <div className="mb-5 md:mb-12">
           <div className="flex-1"></div>
           <h1 className="text-center text-lg">
             Create Request
@@ -106,7 +107,7 @@ const DashboardPage = () => {
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className={`w-28 h-28 md:w-32 md:h-32 ${
+                className={`w-30 h-30 md:w-32 md:h-32 ${
                   category.hasContent 
                     ? 'cursor-pointer hover:bg-white/10 transition-colors' 
                     : 'cursor-default opacity-50'
@@ -115,7 +116,7 @@ const DashboardPage = () => {
                 <div className="flex flex-col items-center justify-center space-y-1 h-full">
                   {category.hasContent && (
                     <>
-                      <div className="w-20 h-20 md:w-28 md:h-28 flex-shrink-0 rounded-xl overflow-hidden">
+                      <div className="w-22 h-22 md:w-28 md:h-28 flex-shrink-0 rounded-xl overflow-hidden">
                         <Image
                           src={category.icon}
                           alt={`${category.title} icon`}
@@ -134,10 +135,10 @@ const DashboardPage = () => {
             ))}
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-28 h-28 md:w-32 md:h-32 cursor-pointer hover:bg-white/10 transition-colors"
+              className="w-30 h-30 md:w-32 md:h-32 cursor-pointer hover:bg-white/10 transition-colors"
             >
               <div className="flex flex-col items-center justify-center space-y-1 h-full">
-                <div className="w-20 h-20 md:w-28 md:h-28 flex-shrink-0 rounded-xl flex items-center border border-gray-300 justify-center">
+                <div className="w-22 h-22 md:w-28 md:h-28 flex-shrink-0 rounded-xl flex items-center border border-gray-300 justify-center">
                   <Grid2X2PlusIcon className="w-10 h-10 md:w-14 md:h-14 text-gray-900" />
                 </div>
                 <span className="text-[10px] md:text-xs text-center font-medium">
@@ -148,6 +149,7 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
+      <FeaturedProviders />
       <ServicesModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
