@@ -864,3 +864,709 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
   );
 };
 
+export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  const beautyServices = [
+    'Make up artist',
+    'Lash tech',
+    'Nail tech',
+    'Hair stylist',
+    'Spa',
+    'Massage'
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a Beauty Service Request</h2>
+          <p className="text-[12px]">Find professional beauty services in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={beautyData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Target Location</label>
+        <input
+          type="text"
+          value={beautyData.targetLocation || ''}
+          onChange={(e) => onChange('targetLocation', e.target.value)}
+          placeholder="Enter target location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Service</label>
+        <select
+          value={beautyData.service || ''}
+          onChange={(e) => onChange('service', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Service</option>
+          {beautyServices.map((service) => (
+            <option key={service} value={service}>
+              {service}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Date</label>
+        <input
+          type="date"
+          value={beautyData.date || ''}
+          onChange={(e) => onChange('date', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Time</label>
+        <input
+          type="time"
+          value={beautyData.time || ''}
+          onChange={(e) => onChange('time', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={beautyData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function CateringForm({ cateringData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a Catering Service Request</h2>
+          <p className="text-[12px]">Find professional catering services for your event</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={cateringData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Location</label>
+        <input
+          type="text"
+          value={cateringData.location || ''}
+          onChange={(e) => onChange('location', e.target.value)}
+          placeholder="Enter your location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Event Location</label>
+        <input
+          type="text"
+          value={cateringData.eventLocation || ''}
+          onChange={(e) => onChange('eventLocation', e.target.value)}
+          placeholder="Enter event location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Event Date</label>
+        <input
+          type="date"
+          value={cateringData.eventDate || ''}
+          onChange={(e) => onChange('eventDate', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={cateringData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function CarpenterForm({ carpentryData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a carpentry Request</h2>
+          <p className="text-[12px]">Find skilled carpenters in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={carpentryData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Location</label>
+        <input
+          type="text"
+          value={carpentryData.location || ''}
+          onChange={(e) => onChange('location', e.target.value)}
+          placeholder="Enter your location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Date Needed</label>
+        <input
+          type="date"
+          value={carpentryData.dateNeeded || ''}
+          onChange={(e) => onChange('dateNeeded', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={carpentryData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function ElectricianForm({ electricianData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post an Electrician Request</h2>
+          <p className="text-[12px]">Find skilled electricians in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={electricianData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Location</label>
+        <input
+          type="text"
+          value={electricianData.location || ''}
+          onChange={(e) => onChange('location', e.target.value)}
+          placeholder="Enter your location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Date Needed</label>
+        <input
+          type="date"
+          value={electricianData.dateNeeded || ''}
+          onChange={(e) => onChange('dateNeeded', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={electricianData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function ITForm({ itData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  const itServices = [
+    'UI/UX Designer',
+    'Mobile app developer',
+    'Web developer',
+    'Database developer',
+    'Product design'
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post an IT Service Request</h2>
+          <p className="text-[12px]">Find professional IT services in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={itData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Target Location</label>
+        <input
+          type="text"
+          value={itData.targetLocation || ''}
+          onChange={(e) => onChange('targetLocation', e.target.value)}
+          placeholder="Enter target location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Service</label>
+        <select
+          value={itData.service || ''}
+          onChange={(e) => onChange('service', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Service</option>
+          {itServices.map((service) => (
+            <option key={service} value={service}>
+              {service}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={itData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes, carModels, isChecked, setIsChecked }) {
+  const years = Array.from({length: new Date().getFullYear() - 1990 + 1}, (_, i) => 1990 + i);
+  const transmissions = ['Manual', 'Automatic'];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a Mechanic Request</h2>
+          <p className="text-[12px]">Find skilled mechanics in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={mechanicData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Current Location</label>
+        <input
+          type="text"
+          value={mechanicData.currentLocation || ''}
+          onChange={(e) => onChange('currentLocation', e.target.value)}
+          placeholder="Enter your current location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="flex gap-3">
+        <div className="flex-1">
+          <label className="block text-[#171214] mb-3 text-sm">Car Make</label>
+          <select
+            value={mechanicData.carMake || ''}
+            onChange={(e) => onChange('carMake', e.target.value)}
+            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          >
+            <option value="">Select Make</option>
+            {carMakes.map((make) => (
+              <option key={make} value={make}>
+                {make}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex-1">
+          <label className="block text-[#171214] mb-3 text-sm">Model</label>
+          <select
+            value={mechanicData.carModel || ''}
+            onChange={(e) => onChange('carModel', e.target.value)}
+            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            disabled={!mechanicData.carMake}
+          >
+            <option value="">Select Model</option>
+            {(carModels[mechanicData.carMake] || []).map((model) => (
+              <option key={model} value={model}>
+                {model}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="flex gap-3">
+        <div className="flex-1">
+          <label className="block text-[#171214] mb-3 text-sm">Year</label>
+          <select
+            value={mechanicData.year || ''}
+            onChange={(e) => onChange('year', e.target.value)}
+            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          >
+            <option value="">Select Year</option>
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex-1">
+          <label className="block text-[#171214] mb-3 text-sm">Transmission</label>
+          <select
+            value={mechanicData.transmission || ''}
+            onChange={(e) => onChange('transmission', e.target.value)}
+            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          >
+            <option value="">Select Transmission</option>
+            {transmissions.map((transmission) => (
+              <option key={transmission} value={transmission.toLowerCase()}>
+                {transmission}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={mechanicData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function MediaForm({ mediaData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  const mediaServices = [
+    'Photographer',
+    'Videographer',
+    'Drone pilot',
+    'Graphics artist',
+    'Social media manager'
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a Media Service Request</h2>
+          <p className="text-[12px]">Find professional media services in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={mediaData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Target Location</label>
+        <input
+          type="text"
+          value={mediaData.targetLocation || ''}
+          onChange={(e) => onChange('targetLocation', e.target.value)}
+          placeholder="Enter target location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Service</label>
+        <select
+          value={mediaData.service || ''}
+          onChange={(e) => onChange('service', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Service</option>
+          {mediaServices.map((service) => (
+            <option key={service} value={service}>
+              {service}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={mediaData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function PlumberForm({ plumberData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a Plumber Request</h2>
+          <p className="text-[12px]">Find skilled plumbers in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <select
+          value={plumberData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Location</label>
+        <input
+          type="text"
+          value={plumberData.location || ''}
+          onChange={(e) => onChange('location', e.target.value)}
+          placeholder="Enter your location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Date Needed</label>
+        <input
+          type="date"
+          value={plumberData.dateNeeded || ''}
+          onChange={(e) => onChange('dateNeeded', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
+        <textarea
+          value={plumberData.comment || ''}
+          onChange={(e) => onChange('comment', e.target.value)}
+          placeholder="Enter any additional comments"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+

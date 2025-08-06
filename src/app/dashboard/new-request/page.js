@@ -3,7 +3,7 @@
 import React, { useState, Suspense, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { nigerianStates } from '@/data/nigerianStates';
-import { PropertiesForm, CarHireForm, CarPartsForm, CleaningForm, AutomobileForm } from './RequestForms';
+import { PropertiesForm, CarHireForm, CarPartsForm, CleaningForm, AutomobileForm, BeautyForm, CateringForm, CarpenterForm, ElectricianForm, ITForm, MechanicForm, MediaForm, PlumberForm } from './RequestForms';
 import {
   realEstateRequest,
   carHireRequest,
@@ -15,7 +15,6 @@ import Swal from 'sweetalert2';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useAuthStore } from '@/store/authStore';
-
 
 const carTypes = ['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Van', 'Truck'];
 const propertyTypes = ['Apartment', 'Detached', 'Semi-Detached', 'Terrace', 'Bungalow', 'Duplex', 'Mansion'];
@@ -40,6 +39,14 @@ const tabs = [
   { label: 'Cleaning', category: 'cleaning' },
   { label: 'Car Parts', category: 'car-parts' },
   { label: 'Automobiles', category: 'automobile' },
+  { label: 'Beauty', category: 'beauty' },
+  { label: 'Catering', category: 'catering' },
+  { label: 'Carpentry', category: 'carpentry' },
+  { label: 'Electrician', category: 'electrical' },
+  { label: 'IT', category: 'it' },
+  { label: 'Mechanic', category: 'mechanic' },
+  { label: 'Media', category: 'media' },
+  { label: 'Plumbing', category: 'plumbing' },
 ];
 
 const SearchParamsTab = ({ setActiveTab, initialTab }) => {
@@ -118,6 +125,60 @@ const NewRequestPage = () => {
     upperPriceLimit: '',
     lowerPriceLimit: '',
   });
+  const [beautyData, setBeautyData] = useState({
+    state: '',
+    targetLocation: '',
+    service: '',
+    date: '',
+    time: '',
+    comment: '',
+  });
+  const [cateringData, setCateringData] = useState({
+    state: '',
+    location: '',
+    eventLocation: '',
+    eventDate: '',
+    comment: '',
+  });
+  const [carpentryData, setcarpentryData] = useState({
+    state: '',
+    location: '',
+    dateNeeded: '',
+    comment: '',
+  });
+  const [electricianData, setElectricianData] = useState({
+    state: '',
+    location: '',
+    dateNeeded: '',
+    comment: '',
+  });
+  const [itData, setITData] = useState({
+    state: '',
+    targetLocation: '',
+    service: '',
+    comment: '',
+  });
+  const [mechanicData, setMechanicData] = useState({
+    state: '',
+    currentLocation: '',
+    carMake: '',
+    carModel: '',
+    year: '',
+    transmission: '',
+    comment: '',
+  });
+  const [mediaData, setMediaData] = useState({
+    state: '',
+    targetLocation: '',
+    service: '',
+    comment: '',
+  });
+  const [plumberData, setPlumberData] = useState({
+    state: '',
+    location: '',
+    dateNeeded: '',
+    comment: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -151,6 +212,54 @@ const NewRequestPage = () => {
   };
   const handleAutomobileChange = (field, value) => {
     setAutomobileData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleBeautyChange = (field, value) => {
+    setBeautyData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleCateringChange = (field, value) => {
+    setCateringData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleCarpenterChange = (field, value) => {
+    setcarpentryData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleElectricianChange = (field, value) => {
+    setElectricianData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleITChange = (field, value) => {
+    setITData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleMechanicChange = (field, value) => {
+    setMechanicData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleMediaChange = (field, value) => {
+    setMediaData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handlePlumberChange = (field, value) => {
+    setPlumberData((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -218,6 +327,60 @@ const NewRequestPage = () => {
         automobileData.lowerPriceLimit &&
         automobileData.upperPriceLimit
       );
+    } else if (category === 'beauty') {
+      return (
+        beautyData.state &&
+        beautyData.targetLocation &&
+        beautyData.service &&
+        beautyData.date &&
+        beautyData.time
+      );
+    } else if (category === 'catering') {
+      return (
+        cateringData.state &&
+        cateringData.location &&
+        cateringData.eventLocation &&
+        cateringData.eventDate
+      );
+    } else if (category === 'carpentry') {
+      return (
+        carpentryData.state &&
+        carpentryData.location &&
+        carpentryData.dateNeeded
+      );
+    } else if (category === 'electrical') {
+      return (
+        electricianData.state &&
+        electricianData.location &&
+        electricianData.dateNeeded
+      );
+    } else if (category === 'it') {
+      return (
+        itData.state &&
+        itData.targetLocation &&
+        itData.service
+      );
+    } else if (category === 'mechanic') {
+      return (
+        mechanicData.state &&
+        mechanicData.currentLocation &&
+        mechanicData.carMake &&
+        mechanicData.carModel &&
+        mechanicData.year &&
+        mechanicData.transmission
+      );
+    } else if (category === 'media') {
+      return (
+        mediaData.state &&
+        mediaData.targetLocation &&
+        mediaData.service
+      );
+    } else if (category === 'plumbing') {
+      return (
+        plumberData.state &&
+        plumberData.location &&
+        plumberData.dateNeeded
+      );
     }
     return false;
   };
@@ -226,202 +389,338 @@ const NewRequestPage = () => {
     e.preventDefault();
     setShowDisclaimer(true);
   };
-  
 
-const handleDisclaimerAgree = async () => {
-  setShowDisclaimer(false);
-  setError('');
-  setSuccess('');
-  setLoading(true);
-  try {
-    const category = getCategory();
-    if (!category) {
-      throw new Error('Invalid request category');
+  const handleDisclaimerAgree = async () => {
+    setShowDisclaimer(false);
+    setError('');
+    setSuccess('');
+    setLoading(true);
+    try {
+      const category = getCategory();
+      if (!category) {
+        throw new Error('Invalid request category');
+      }
+      let label = tabs.find((t) => t.category === category)?.label || 'Request';
+      let requestId;
+
+      if (category === 'real-estate') {
+        const response = await realEstateRequest({
+          title: formData.title,
+          state: formData.state,
+          axis: formData.axis,
+          details: formData.details,
+          rentType: formData.rentType,
+          propertyType: formData.propertyType,
+          roomNumber: formData.roomNumber,
+          propertyCondition: formData.propertyCondition,
+          upperPriceLimit: Number(formData.upperPriceLimit) || 0,
+          lowerPriceLimit: Number(formData.lowerPriceLimit) || 0,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setFormData({
+          title: '',
+          state: '',
+          axis: [],
+          details: '',
+          rentType: '',
+          propertyType: '',
+          roomNumber: '',
+          propertyCondition: '',
+          upperPriceLimit: '',
+          lowerPriceLimit: '',
+        });
+      } else if (category === 'car-hire') {
+        const response = await carHireRequest({
+          title: carHireData.title,
+          state: carHireData.state,
+          details: carHireData.details,
+          carType: carHireData.carType,
+          hireDuration: Number(carHireData.hireDuration) || 0,
+          pickupLocation: carHireData.pickupLocation,
+          airport: carHireData.airport,
+          travel: carHireData.travel === 'Yes',
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setCarHireData({
+          title: '',
+          state: '',
+          details: '',
+          carType: '',
+          hireDuration: '',
+          pickupLocation: '',
+          airport: '',
+          travel: '',
+        });
+      } else if (category === 'cleaning') {
+        const response = await cleaningRequest({
+          title: cleaningData.title,
+          state: cleaningData.state,
+          lga: cleaningData.lga,
+          details: cleaningData.details,
+          propertyType: cleaningData.propertyType,
+          cleaningType: cleaningData.cleaningType,
+          propertyLocation: cleaningData.propertyLocation,
+          roomNumber: cleaningData.roomNumber,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setCleaningData({
+          title: '',
+          state: '',
+          lga: '',
+          details: '',
+          propertyType: '',
+          cleaningType: '',
+          propertyLocation: '',
+          roomNumber: '',
+        });
+      } else if (category === 'car-parts') {
+        const fd = new FormData();
+        fd.append('title', carPartsData.title);
+        fd.append('state', carPartsData.state);
+        fd.append('details', carPartsData.details);
+        fd.append('currentLocation', carPartsData.currentLocation);
+        fd.append('sourcingLocation', carPartsData.sourcingLocation);
+        fd.append('carMake', carPartsData.carMake);
+        fd.append('carModel', carPartsData.carModel);
+        fd.append('carYear', Number(carPartsData.carYear) || 0);
+        if (carPartsData.attachment) {
+          fd.append('car_part_image', carPartsData.attachment);
+        }
+        const response = await carPartsRequest(fd);
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setCarPartsData({
+          title: '',
+          state: '',
+          details: '',
+          currentLocation: '',
+          sourcingLocation: '',
+          carMake: '',
+          carModel: '',
+          carYear: '',
+          attachment: null,
+        });
+      } else if (category === 'automobile') {
+        const response = await automobileRequest({
+          title: automobileData.title,
+          state: automobileData.state,
+          details: automobileData.details,
+          location: automobileData.location,
+          carMake: automobileData.carMake,
+          carModel: automobileData.carModel,
+          carYearFrom: Number(automobileData.carYearFrom) || 0,
+          carYearTo: Number(automobileData.carYearTo) || 0,
+          transmission: automobileData.transmission,
+          upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
+          lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setAutomobileData({
+          title: '',
+          state: '',
+          details: '',
+          location: '',
+          carMake: '',
+          carModel: '',
+          carYearFrom: '',
+          carYearTo: '',
+          transmission: '',
+          upperPriceLimit: '',
+          lowerPriceLimit: '',
+        });
+      } else if (category === 'beauty') {
+        const response = await beautyRequest({
+          state: beautyData.state,
+          targetLocation: beautyData.targetLocation,
+          service: beautyData.service,
+          date: beautyData.date,
+          time: beautyData.time,
+          comment: beautyData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setBeautyData({
+          state: '',
+          targetLocation: '',
+          service: '',
+          date: '',
+          time: '',
+          comment: '',
+        });
+      } else if (category === 'catering') {
+        const response = await cateringRequest({
+          state: cateringData.state,
+          location: cateringData.location,
+          eventLocation: cateringData.eventLocation,
+          eventDate: cateringData.eventDate,
+          comment: cateringData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setCateringData({
+          state: '',
+          location: '',
+          eventLocation: '',
+          eventDate: '',
+          comment: '',
+        });
+      } else if (category === 'carpentry') {
+        const response = await carpenterRequest({
+          state: carpentryData.state,
+          location: carpentryData.location,
+          dateNeeded: carpentryData.dateNeeded,
+          comment: carpentryData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setcarpentryData({
+          state: '',
+          location: '',
+          dateNeeded: '',
+          comment: '',
+        });
+      } else if (category === 'electrician') {
+        const response = await electricianRequest({
+          state: electricianData.state,
+          location: electricianData.location,
+          dateNeeded: electricianData.dateNeeded,
+          comment: electricianData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setElectricianData({
+          state: '',
+          location: '',
+          dateNeeded: '',
+          comment: '',
+        });
+      } else if (category === 'it') {
+        const response = await itRequest({
+          state: itData.state,
+          targetLocation: itData.targetLocation,
+          service: itData.service,
+          comment: itData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setITData({
+          state: '',
+          targetLocation: '',
+          service: '',
+          comment: '',
+        });
+      } else if (category === 'mechanic') {
+        const response = await mechanicRequest({
+          state: mechanicData.state,
+          currentLocation: mechanicData.currentLocation,
+          carMake: mechanicData.carMake,
+          carModel: mechanicData.carModel,
+          year: Number(mechanicData.year) || 0,
+          transmission: mechanicData.transmission,
+          comment: mechanicData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setMechanicData({
+          state: '',
+          currentLocation: '',
+          carMake: '',
+          carModel: '',
+          year: '',
+          transmission: '',
+          comment: '',
+        });
+      } else if (category === 'media') {
+        const response = await mediaRequest({
+          state: mediaData.state,
+          targetLocation: mediaData.targetLocation,
+          service: mediaData.service,
+          comment: mediaData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setMediaData({
+          state: '',
+          targetLocation: '',
+          service: '',
+          comment: '',
+        });
+      } else if (category === 'plumbing') {
+        const response = await plumberRequest({
+          state: plumberData.state,
+          location: plumberData.location,
+          dateNeeded: plumberData.dateNeeded,
+          comment: plumberData.comment,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setPlumberData({
+          state: '',
+          location: '',
+          dateNeeded: '',
+          comment: '',
+        });
+      } else {
+        throw new Error(`Unknown request category: ${category}`);
+      }
+
+      setSuccess('Request submitted successfully!');
+      Swal.fire({
+        icon: 'success',
+        title: `${label} request posted successfully`,
+        text: `Please make Payment.`,
+        confirmButtonColor: '#541229',
+        timer: 2000,
+      });
+      setIsChecked(false);
+
+      router.push(`/payment?id=${requestId}&token=${encodeURIComponent(token || '')}`);
+    } catch (err) {
+      console.error('Error in handleDisclaimerAgree:', err);
+      setError('Failed to submit request: ' + (err.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
     }
-    let label = tabs.find((t) => t.category === category)?.label || 'Request';
-    let requestId;
-
-    if (category === 'real-estate') {
-      const response = await realEstateRequest({
-        title: formData.title,
-        state: formData.state,
-        axis: formData.axis,
-        details: formData.details,
-        rentType: formData.rentType,
-        propertyType: formData.propertyType,
-        roomNumber: formData.roomNumber,
-        propertyCondition: formData.propertyCondition,
-        upperPriceLimit: Number(formData.upperPriceLimit) || 0,
-        lowerPriceLimit: Number(formData.lowerPriceLimit) || 0,
-      });
-      console.log('Real Estate Response:', response); // Debug log
-      requestId = response.data._id; // Fix: Use response.data._id
-      if (!requestId) {
-        console.error('Real Estate Request ID missing in response:', response);
-        throw new Error('Request ID not found in API response');
-      }
-      setFormData({
-        title: '',
-        state: '',
-        axis: [],
-        details: '',
-        rentType: '',
-        propertyType: '',
-        roomNumber: '',
-        propertyCondition: '',
-        upperPriceLimit: '',
-        lowerPriceLimit: '',
-      });
-    } else if (category === 'car-hire') {
-      const response = await carHireRequest({
-        title: carHireData.title,
-        state: carHireData.state,
-        details: carHireData.details,
-        carType: carHireData.carType,
-        hireDuration: Number(carHireData.hireDuration) || 0,
-        pickupLocation: carHireData.pickupLocation,
-        airport: carHireData.airport,
-        travel: carHireData.travel === 'Yes',
-      });
-      console.log('Car Hire Response:', response); // Debug log
-      requestId = response.data._id; // Fix: Use response.data._id
-      if (!requestId) {
-        console.error('Car Hire Request ID missing in response:', response);
-        throw new Error('Request ID not found in API response');
-      }
-      setCarHireData({
-        title: '',
-        state: '',
-        details: '',
-        carType: '',
-        hireDuration: '',
-        pickupLocation: '',
-        airport: '',
-        travel: '',
-      });
-    } else if (category === 'cleaning') {
-      const response = await cleaningRequest({
-        title: cleaningData.title,
-        state: cleaningData.state,
-        lga: cleaningData.lga,
-        details: cleaningData.details,
-        propertyType: cleaningData.propertyType,
-        cleaningType: cleaningData.cleaningType,
-        propertyLocation: cleaningData.propertyLocation,
-        roomNumber: cleaningData.roomNumber,
-      });
-      console.log('Cleaning Response:', response); // Debug log
-      requestId = response.data._id; // Fix: Use response.data._id
-      if (!requestId) {
-        console.error('Cleaning Request ID missing in response:', response);
-        throw new Error('Request ID not found in API response');
-      }
-      setCleaningData({
-        title: '',
-        state: '',
-        lga: '',
-        details: '',
-        propertyType: '',
-        cleaningType: '',
-        propertyLocation: '',
-        roomNumber: '',
-      });
-    } else if (category === 'car-parts') {
-      const fd = new FormData();
-      fd.append('title', carPartsData.title);
-      fd.append('state', carPartsData.state);
-      fd.append('details', carPartsData.details);
-      fd.append('currentLocation', carPartsData.currentLocation);
-      fd.append('sourcingLocation', carPartsData.sourcingLocation);
-      fd.append('carMake', carPartsData.carMake);
-      fd.append('carModel', carPartsData.carModel);
-      fd.append('carYear', Number(carPartsData.carYear) || 0);
-      if (carPartsData.attachment) {
-        fd.append('car_part_image', carPartsData.attachment);
-      }
-      const response = await carPartsRequest(fd);
-      console.log('Car Parts Response:', response); // Debug log
-      requestId = response.data._id; // Fix: Use response.data._id
-      if (!requestId) {
-        console.error('Car Parts Request ID missing in response:', response);
-        throw new Error('Request ID not found in API response');
-      }
-      setCarPartsData({
-        title: '',
-        state: '',
-        details: '',
-        currentLocation: '',
-        sourcingLocation: '',
-        carMake: '',
-        carModel: '',
-        carYear: '',
-        attachment: null,
-      });
-    } else if (category === 'automobile') {
-      const response = await automobileRequest({
-        title: automobileData.title,
-        state: automobileData.state,
-        details: automobileData.details,
-        location: automobileData.location,
-        carMake: automobileData.carMake,
-        carModel: automobileData.carModel,
-        carYearFrom: Number(automobileData.carYearFrom) || 0,
-        carYearTo: Number(automobileData.carYearTo) || 0,
-        transmission: automobileData.transmission,
-        upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
-        lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0,
-      });
-      console.log('Automobile Response:', response); // Debug log
-      requestId = response.data._id; // Fix: Use response.data._id
-      if (!requestId) {
-        console.error('Automobile Request ID missing in response:', response);
-        throw new Error('Request ID not found in API response');
-      }
-      setAutomobileData({
-        title: '',
-        state: '',
-        details: '',
-        location: '',
-        carMake: '',
-        carModel: '',
-        carYearFrom: '',
-        carYearTo: '',
-        transmission: '',
-        upperPriceLimit: '',
-        lowerPriceLimit: '',
-      });
-    } else {
-      throw new Error(`Unknown request category: ${category}`);
-    }
-
-    setSuccess('Request submitted successfully!');
-    Swal.fire({
-      icon: 'success',
-      title: `${label} request posted successfully`,
-      text: `Please make Payment.`,
-      confirmButtonColor: '#541229',
-      timer: 2000,
-    });
-    setIsChecked(false);
-
-    // Navigate to the request detail page with payment tab active
-    router.push(`/payment?id=${requestId}&token=${encodeURIComponent(token || '')}`);
-  } catch (err) {
-    console.error('Error in handleDisclaimerAgree:', err);
-    setError('Failed to submit request: ' + (err.message || 'Unknown error'));
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const handleDisclaimerCancel = () => {
     setShowDisclaimer(false);
   };
 
-  return ( 
+  return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-white  flex items-center justify-center">
+        <div className="min-h-screen bg-white flex items-center justify-center">
           <div className="animate-pulse">
             <Image
               src="/images/logo.png"
@@ -434,7 +733,7 @@ const handleDisclaimerAgree = async () => {
         </div>
       }
     >
-      <div className="min-h-screen  bg-white">
+      <div className="min-h-screen bg-white">
         <Suspense
           fallback={
             <div className="min-h-screen bg-white flex items-center justify-center">
@@ -524,6 +823,80 @@ const handleDisclaimerAgree = async () => {
                     setIsChecked={setIsChecked}
                   />
                 )}
+                {activeTab === 'Beauty' && (
+                  <BeautyForm
+                    beautyData={beautyData}
+                    onChange={handleBeautyChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Catering' && (
+                  <CateringForm
+                    cateringData={cateringData}
+                    onChange={handleCateringChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Carpentry' && (
+                  <CarpenterForm
+                    carpentryData={carpentryData}
+                    onChange={handleCarpenterChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Electrician' && (
+                  <ElectricianForm
+                    electricianData={electricianData}
+                    onChange={handleElectricianChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'IT' && (
+                  <ITForm
+                    itData={itData}
+                    onChange={handleITChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Mechanic' && (
+                  <MechanicForm
+                    mechanicData={mechanicData}
+                    onChange={handleMechanicChange}
+                    nigerianStates={nigerianStates}
+                    carMakes={carMakes}
+                    carModels={carModels}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Media' && (
+                  <MediaForm
+                    mediaData={mediaData}
+                    onChange={handleMediaChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Plumbing' && (
+                  <PlumberForm
+                    plumberData={plumberData}
+                    onChange={handlePlumberChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
                 <div className="mt-8 flex flex-col items-end">
                   {error && <div className="text-red-500 mb-2">{error}</div>}
                   <button
@@ -549,7 +922,7 @@ const handleDisclaimerAgree = async () => {
                   <div className="bg-white p-6 rounded-lg w-[90%] mx-auto md:mx-0 md:max-w-md md:w-full">
                     <h2 className="text-lg font-bold mb-4">Disclaimer</h2>
                     <p className="text-sm mb-6">
-                      Fyndr acts solely as a platform to ensure your request is delivered to your selected service providers. We are not affiliated with, nor do we endorse or partner with, any of the service providers listed on the platform. Our involvement ends once communication begins between you and the service provider. The fee paid is strictly for facilitating the delivery of your request and does not guarantee the outcome or success of any transaction. 
+                      Fyndr acts solely as a platform to ensure your request is delivered to your selected service providers. We are not affiliated with, nor do we endorse or partner with, any of the service providers listed on the platform. Our involvement ends once communication begins between you and the service provider. The fee paid is strictly for facilitating the delivery of your request and does not guarantee the outcome or success of any transaction.
                     </p>
                     <div className="flex justify-end gap-4">
                       <button

@@ -14,15 +14,16 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
     { id: 'car-hire', title: 'Car Hire', category: 'car-hire', description: 'Short Hire, Long Hire, Airport Pickup, Travel Hire', icon: '🚙' },
     { id: 'car-parts', title: 'Car Parts', category: 'car-parts', description: 'Find all car parts', icon: '🔧' },
     { id: 'carpentry', title: 'Carpentry', category: 'carpentry', description: 'Carpentry Services', icon: '🪚' },
+    { id: 'cleaning', title: 'Cleaning', category: 'cleaning', description: 'Cleaning Services', icon: '🧹' },
     { id: 'electrical', title: 'Electrician', category: 'electrical', description: 'Electrical Services', icon: '⚡' },
-    { id: 'employment', title: 'Employment', category: 'employment', description: 'Get and post job availability requests', icon: '💼' },
-    { id: 'event-management', title: 'Event Management Services', category: 'event-management', description: 'Catering Services, Event Planner, Bakers and Hiring Services', icon: '🎉' },
-    { id: 'hospitality', title: 'Hospitality', category: 'hospitality', description: 'Apartment, Hotel, Gym and Spa services', icon: '🏨' },
+    //{ id: 'employment', title: 'Employment', category: 'employment', description: 'Get and post job availability requests', icon: '💼' },
+    //{ id: 'event-management', title: 'Event Management Services', category: 'event-management', description: 'Catering Services, Event Planner, Bakers and Hiring Services', icon: '🎉' },
+    //{ id: 'hospitality', title: 'Hospitality', category: 'hospitality', description: 'Apartment, Hotel, Gym and Spa services', icon: '🏨' },
     { id: 'mechanic', title: 'Mechanic', category: 'mechanic', description: 'Automobile Repairs', icon: '🔩' },
     { id: 'media', title: 'Media', category: 'media', description: 'Photography, Videography, Drone pilot, Cinematography', icon: '📸' },
     { id: 'plumbing', title: 'Plumbing', category: 'plumbing', description: 'Plumbing Services', icon: '🪠' },
     { id: 'real-estate', title: 'Real Estate', category: 'real-estate', description: 'Sales, Rentals, Shortlet', icon: '🏠' },
-    { id: 'software-development', title: 'Software Development', category: 'software-development', description: 'Product Design, Development, Frontend & Backend Services', icon: '💻' },
+    { id: 'it', title: 'IT', category: 'it', description: 'Product Design, Development, Frontend & Backend Services', icon: '💻' },
   ]
 
   const filteredServices = additionalServices.filter(service => 

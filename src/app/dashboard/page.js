@@ -46,17 +46,21 @@ const DashboardPage = () => {
 
   // Map dashboard category id to new-request category
   const categoryMap = {
-    'real-estate': 'real-estate',
+    'automobile-purchase': 'automobile',
+    'beauty': 'beauty',
     'car-parts': 'car-parts',
     'car-hire': 'car-hire',
-    'cleaning': 'cleaning',
-    'automobile-purchase': 'automobile',
-    'other-services': 'other-services',
-    'plumbing': 'plumbing',
-    'electrical': 'electrical',
-    'painting': 'painting',
     'carpentry': 'carpentry',
-    'gardening': 'gardening'
+    'cleaning': 'cleaning',
+    'electrical': 'electrical',
+    'employment': 'employment',
+    'event-management': 'event-management',
+    'hospitality': 'hospitality',
+    'mechanic': 'mechanic',
+    'media': 'media',
+    'plumbing': 'plumbing',
+    'real-estate': 'real-estate',
+    'it': 'it'
   };
 
   const handleCategorySelect = (categoryId) => {
