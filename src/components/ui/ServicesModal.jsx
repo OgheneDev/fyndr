@@ -118,7 +118,7 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                 setSearchQuery(e.target.value)
                 setFocusedIndex(-1)
               }}
-              className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
+              className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-500 outline-0"
             />
             {searchQuery && (
               <button
@@ -156,8 +156,8 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                   onClick={() => {
                     onSelectService(service.category)
                   }}
-                  className={`w-full text-left p-4 rounded-xl cursor-pointer mb-2 transition-all duration-200 group hover:bg-blue-50 hover:shadow-sm ${
-                    focusedIndex === index ? 'bg-blue-50 shadow-sm ring-2 ring-blue-200' : ''
+                  className={`w-full text-left p-4 cursor-pointer mb-2 border-b border-gray-300 ${
+                    focusedIndex === index ? '' : ''
                   }`}
                   onMouseEnter={() => setFocusedIndex(index)}
                 >
@@ -167,16 +167,16 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                         {service.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-700 transition-colors">
+                        <h3 className="font-semibold text-sm md:text-[16px] text-gray-900 mb-1">
                           {service.title}
                         </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                        <p className="text-[12px] md:text-sm text-gray-600 line-clamp-2 leading-relaxed">
                           {service.description}
                         </p>
                       </div>
                     </div>
                     <CircleArrowRight 
-                      className="h-6 w-6 text-gray-400 group-hover:text-blue-600 transition-colors flex-shrink-0 ml-4" 
+                      className="h-6 w-6 text-gray-400 flex-shrink-0 ml-4" 
                     />
                   </div>
                 </button>
