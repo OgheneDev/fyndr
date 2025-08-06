@@ -1546,7 +1546,7 @@ export function PlumberForm({ plumberData, onChange, nigerianStates, isChecked, 
           className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
         />
       </div>
-      <div>
+      <div> 
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
           value={plumberData.comment || ''}
@@ -1564,6 +1564,214 @@ export function PlumberForm({ plumberData, onChange, nigerianStates, isChecked, 
             className="mr-2"
           />
           As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  const hospitalityServices = [
+    'Hotel',
+    'Shortlet Apartment',
+    'Travel Agency',
+    'Fitness Center',
+    'Spa'
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a Hospitality Request</h2>
+          <p className="text-[12px]">Find professional hospitality services in your area</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">Your State</label>
+        <select
+          value={hospitalityData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Location</label>
+        <input
+          type="text"
+          value={hospitalityData.location || ''}
+          onChange={(e) => onChange('location', e.target.value)}
+          placeholder="Enter your location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Service Required</label>
+        <select
+          value={hospitalityData.service || ''}
+          onChange={(e) => onChange('service', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Service</option>
+          {hospitalityServices.map((service) => (
+            <option key={service} value={service}>
+              {service}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Date Needed</label>
+        <input
+          type="date"
+          value={hospitalityData.dateNeeded || ''}
+          onChange={(e) => onChange('dateNeeded', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Time Needed</label>
+        <input
+          type="time"
+          value={hospitalityData.timeNeeded || ''}
+          onChange={(e) => onChange('timeNeeded', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
+        <textarea
+          value={hospitalityData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
+          placeholder="Enter any additional details"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export function EventManagementForm({ eventManagementData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  const eventServices = [
+    'Catering Service',
+    'Event Planner',
+    'Bakers',
+    'Hiring Service'
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-2 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1 truncate">Post an Event Service Request</h2>
+          <p className="text-[12px] truncate">Find professional event management services for your event</p>
+        </article>
+      </div>
+      <div className="mt-10 md:mt-20">
+        <label className="block text-[#171214] mb-3 text-sm">Your State</label>
+        <select
+          value={eventManagementData.state || ''}
+          onChange={(e) => onChange('state', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select State</option>
+          {Object.keys(nigerianStates).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Location</label>
+        <input
+          type="text"
+          value={eventManagementData.location || ''}
+          onChange={(e) => onChange('location', e.target.value)}
+          placeholder="Enter your location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Service Required</label>
+        <select
+          value={eventManagementData.service || ''}
+          onChange={(e) => onChange('service', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        >
+          <option value="">Select Service</option>
+          {eventServices.map((service) => (
+            <option key={service} value={service}>
+              {service}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Event Location</label>
+        <input
+          type="text"
+          value={eventManagementData.eventLocation || ''}
+          onChange={(e) => onChange('eventLocation', e.target.value)}
+          placeholder="Enter event location"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Date Needed</label>
+        <input
+          type="date"
+          value={eventManagementData.dateNeeded || ''}
+          onChange={(e) => onChange('dateNeeded', e.target.value)}
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div>
+        <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
+        <textarea
+          value={eventManagementData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
+          placeholder="Enter any additional details"
+          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>

@@ -1,15 +1,41 @@
-"use client"
+"use client";
 
 import React, { useState, Suspense, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { nigerianStates } from '@/data/nigerianStates';
-import { PropertiesForm, CarHireForm, CarPartsForm, CleaningForm, AutomobileForm, BeautyForm, CateringForm, CarpenterForm, ElectricianForm, ITForm, MechanicForm, MediaForm, PlumberForm } from './RequestForms';
+import { 
+  PropertiesForm, 
+  CarHireForm, 
+  CarPartsForm, 
+  CleaningForm, 
+  AutomobileForm, 
+  BeautyForm, 
+  CateringForm, 
+  CarpenterForm, 
+  ElectricianForm, 
+  ITForm, 
+  MechanicForm, 
+  MediaForm, 
+  PlumberForm,
+  HospitalityForm,
+  EventManagementForm 
+} from './RequestForms';
 import {
   realEstateRequest,
   carHireRequest,
   cleaningRequest,
   carPartsRequest,
   automobileRequest,
+  beautyRequest,
+  cateringRequest,
+  carpenterRequest,
+  electricianRequest,
+  itRequest,
+  mechanicRequest,
+  mediaRequest,
+  plumberRequest,
+  hospitalityRequest,
+  eventManagementRequest,
 } from '@/api/requests/users/requests';
 import Swal from 'sweetalert2';
 import { Loader2 } from 'lucide-react';
@@ -47,6 +73,8 @@ const tabs = [
   { label: 'Mechanic', category: 'mechanic' },
   { label: 'Media', category: 'media' },
   { label: 'Plumbing', category: 'plumbing' },
+  { label: 'Hospitality', category: 'hospitality' },
+  { label: 'Event Management', category: 'event-management' },
 ];
 
 const SearchParamsTab = ({ setActiveTab, initialTab }) => {
@@ -179,6 +207,22 @@ const NewRequestPage = () => {
     dateNeeded: '',
     comment: '',
   });
+  const [hospitalityData, setHospitalityData] = useState({
+    state: '',
+    location: '',
+    service: '',
+    dateNeeded: '',
+    timeNeeded: '',
+    details: '',
+  });
+  const [eventManagementData, setEventManagementData] = useState({
+    state: '',
+    location: '',
+    service: '',
+    eventLocation: '',
+    dateNeeded: '',
+    details: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -260,6 +304,18 @@ const NewRequestPage = () => {
   };
   const handlePlumberChange = (field, value) => {
     setPlumberData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleHospitalityChange = (field, value) => {
+    setHospitalityData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const handleEventManagementChange = (field, value) => {
+    setEventManagementData((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -380,6 +436,22 @@ const NewRequestPage = () => {
         plumberData.state &&
         plumberData.location &&
         plumberData.dateNeeded
+      );
+    } else if (category === 'hospitality') {
+      return (
+        hospitalityData.state &&
+        hospitalityData.location &&
+        hospitalityData.service &&
+        hospitalityData.dateNeeded &&
+        hospitalityData.timeNeeded
+      );
+    } else if (category === 'event-management') {
+      return (
+        eventManagementData.state &&
+        eventManagementData.location &&
+        eventManagementData.service &&
+        eventManagementData.eventLocation &&
+        eventManagementData.dateNeeded
       );
     }
     return false;
@@ -599,7 +671,7 @@ const NewRequestPage = () => {
           dateNeeded: '',
           comment: '',
         });
-      } else if (category === 'electrician') {
+      } else if (category === 'electrical') {
         const response = await electricianRequest({
           state: electricianData.state,
           location: electricianData.location,
@@ -689,6 +761,48 @@ const NewRequestPage = () => {
           location: '',
           dateNeeded: '',
           comment: '',
+        });
+      } else if (category === 'hospitality') {
+        const response = await hospitalityRequest({
+          state: hospitalityData.state,
+          location: hospitalityData.location,
+          service: hospitalityData.service,
+          dateNeeded: hospitalityData.dateNeeded,
+          timeNeeded: hospitalityData.timeNeeded,
+          details: hospitalityData.details,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setHospitalityData({
+          state: '',
+          location: '',
+          service: '',
+          dateNeeded: '',
+          timeNeeded: '',
+          details: '',
+        });
+      } else if (category === 'event-management') {
+        const response = await eventManagementRequest({
+          state: eventManagementData.state,
+          location: eventManagementData.location,
+          service: eventManagementData.service,
+          eventLocation: eventManagementData.eventLocation,
+          dateNeeded: eventManagementData.dateNeeded,
+          details: eventManagementData.details,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setEventManagementData({
+          state: '',
+          location: '',
+          service: '',
+          eventLocation: '',
+          dateNeeded: '',
+          details: '',
         });
       } else {
         throw new Error(`Unknown request category: ${category}`);
@@ -892,6 +1006,24 @@ const NewRequestPage = () => {
                   <PlumberForm
                     plumberData={plumberData}
                     onChange={handlePlumberChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Hospitality' && (
+                  <HospitalityForm
+                    hospitalityData={hospitalityData}
+                    onChange={handleHospitalityChange}
+                    nigerianStates={nigerianStates}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                  />
+                )}
+                {activeTab === 'Event Management' && (
+                  <EventManagementForm
+                    eventManagementData={eventManagementData}
+                    onChange={handleEventManagementChange}
                     nigerianStates={nigerianStates}
                     isChecked={isChecked}
                     setIsChecked={setIsChecked}

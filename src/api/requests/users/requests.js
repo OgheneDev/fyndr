@@ -152,6 +152,50 @@ export const automobileRequest = async (formData) => {
     }
 }
 
+export const beautyRequest = async (formData) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+export const cateringRequest = async (formData) => {
+
+}
+
+export const carpenterRequest = async (formData) => {
+
+}
+
+export const electricianRequest = async (formData) => {
+
+}
+
+export const itRequest = async (formData) => {
+
+}
+
+export const mechanicRequest = async (formData) => {
+
+}
+
+export const mediaRequest = async (formData) => {
+
+}
+
+export const plumberRequest = async (formData) => {
+
+}
+
+export const hospitalityRequest = async (formData) => {
+
+}
+
+export const eventManagementRequest = async (formData) => {
+    
+}
+
 export const acceptMerchantInterest = async (requestId, interestId) => {
     try {
         const response = await axiosInstance.put(
