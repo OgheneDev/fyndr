@@ -118,7 +118,7 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                 setSearchQuery(e.target.value)
                 setFocusedIndex(-1)
               }}
-              className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-500 outline-0"
+              className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 text-gray-900 placeholder-gray-500 outline-0"
             />
             {searchQuery && (
               <button
@@ -163,20 +163,17 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4 flex-1 min-w-0">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center text-xl flex-shrink-0">
-                        {service.icon}
-                      </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-sm md:text-[16px] text-gray-900 mb-1">
                           {service.title}
                         </h3>
-                        <p className="text-[12px] md:text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                        <p className="text-[12px] md:text-sm  line-clamp-2 leading-relaxed">
                           {service.description}
                         </p>
                       </div>
                     </div>
                     <CircleArrowRight 
-                      className="h-6 w-6 text-gray-400 flex-shrink-0 ml-4" 
+                      className="h-6 w-6  flex-shrink-0 ml-4" 
                     />
                   </div>
                 </button>
