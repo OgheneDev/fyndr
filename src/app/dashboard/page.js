@@ -102,7 +102,7 @@ const DashboardPage = () => {
 
         {/* Categories Container */}
         <div className="flex justify-center pr-1.5 md:pr-0">
-          <div className="grid grid-cols-3 gap-6 md:gap-8 w-full max-w-sm mx-auto"> {/* Changed max-w-md to max-w-sm for tighter mobile fit */}
+          <div className="grid grid-cols-3 gap-3 md:gap-8 w-full max-w-sm mx-auto"> {/* Changed max-w-md to max-w-sm for tighter mobile fit */}
             {categories.map((category) => (
               <button
                 key={category.id}
