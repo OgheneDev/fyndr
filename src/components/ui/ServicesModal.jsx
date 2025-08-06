@@ -1,5 +1,5 @@
 "use client"
-import { ArrowLeft, CircleArrowRight, Search} from "lucide-react"
+import { ArrowLeft, CircleArrowRight, Search, X} from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
 const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
@@ -127,7 +127,7 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                   setFocusedIndex(-1)
                   searchInputRef.current?.focus()
                 }}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-200 rounded-full transition-colors"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4 text-gray-400" />
