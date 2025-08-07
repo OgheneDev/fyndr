@@ -265,8 +265,8 @@ const ProvidersSlider = () => {
                     <button
                       key={index}
                       onClick={() => handleSlideChange(index)}
-                      className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
-                        currentIndex === index ? 'bg-green-700 w-5' : 'border'
+                      className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                        currentIndex === index ? 'bg-green-700 w-5' : 'border border-green-700'
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
                       disabled={isTransitioning}
