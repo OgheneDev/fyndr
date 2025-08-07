@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Select from 'react-select'
+import ProvidersSlider from '@/components/general/ProvidersSlider'
 
 
 // Properties Form
@@ -61,7 +62,10 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           <p className="text-[12px]">Find lands, homes or rentals</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -253,7 +257,10 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
           <p className="text-[12px]">Hire vehicles for in-town or out-of-town use.</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -385,7 +392,10 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
           <p className="text-[12px]">Get professional cleaning in your area.</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -519,7 +529,10 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           <p className="text-[12px]">Find quality parts from verified sellers.</p>
         </article>
       </div>
-      <div className="mt-12 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -688,7 +701,10 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <p className="text-[12px]">Get vehicles for sale around you.</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">Title</label>
         <input
           type="text"
@@ -887,7 +903,10 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
           <p className="text-[12px]">Find professional beauty services in your area</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={beautyData.state || ''}
@@ -983,7 +1002,10 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
           <p className="text-[12px]">Find professional catering services for your event</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={cateringData.state || ''}
@@ -1065,7 +1087,10 @@ export function CarpenterForm({ carpentryData, onChange, nigerianStates, isCheck
           <p className="text-[12px]">Find skilled carpenters in your area</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={carpentryData.state || ''}
@@ -1137,7 +1162,10 @@ export function ElectricianForm({ electricianData, onChange, nigerianStates, isC
           <p className="text-[12px]">Find skilled electricians in your area</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={electricianData.state || ''}
@@ -1217,7 +1245,10 @@ export function ITForm({ itData, onChange, nigerianStates, isChecked, setIsCheck
           <p className="text-[12px]">Find professional IT services in your area</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={itData.state || ''}
@@ -1298,7 +1329,10 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
           <p className="text-[12px]">Find skilled mechanics in your area</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={mechanicData.state || ''}
@@ -1434,7 +1468,10 @@ export function MediaForm({ mediaData, onChange, nigerianStates, isChecked, setI
           <p className="text-[12px]">Find professional media services in your area</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={mediaData.state || ''}
@@ -1512,7 +1549,10 @@ export function PlumberForm({ plumberData, onChange, nigerianStates, isChecked, 
           <p className="text-[12px]">Find skilled plumbers in your area</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={plumberData.state || ''}
@@ -1589,10 +1629,13 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
         </Link>
         <article className="text-center">
           <h2 className="text-lg font-bold mb-1">Post a Hospitality Request</h2>
-          <p className="text-[12px]">Find professional hospitality services in your area</p>
+          <p className="text-[12px]">Hospitality Services</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">Your State</label>
         <select
           value={hospitalityData.state || ''}
@@ -1692,10 +1735,13 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
         </Link>
         <article className="text-center">
           <h2 className="text-lg font-bold mb-1 truncate">Post an Event Service Request</h2>
-          <p className="text-[12px] truncate">Find professional event management services for your event</p>
+          <p className="text-[12px] truncate">Event Management Services</p>
         </article>
       </div>
-      <div className="mt-10 md:mt-20">
+      <div className='mt-12'>
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-10">
         <label className="block text-[#171214] mb-3 text-sm">Your State</label>
         <select
           value={eventManagementData.state || ''}

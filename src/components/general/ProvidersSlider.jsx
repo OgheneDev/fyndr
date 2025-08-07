@@ -243,7 +243,7 @@ const ProvidersSlider = () => {
             </div>
 
             {/* Navigation arrows and indicators */}
-            <div className="flex justify-between mt-6 w-full">
+            <div className="flex justify-between mt-2 md:mt-6 w-full">
                 <button 
                   onClick={prevSlide}
                   className={`p-2 rounded-full transition-colors ${
@@ -251,7 +251,7 @@ const ProvidersSlider = () => {
                       ? 'opacity-50 cursor-not-allowed bg-gray-100' 
                       : 'bg-gray-200 hover:bg-gray-300 cursor-pointer'
                   }`}
-                  aria-label="Previous Testimonial"
+                  aria-label="Previous Provider"
                   disabled={isFirstSlide || isTransitioning}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,7 +281,7 @@ const ProvidersSlider = () => {
                       ? 'opacity-50 cursor-not-allowed bg-gray-100' 
                       : 'bg-gray-200 hover:bg-gray-300 cursor-pointer'
                   }`}
-                  aria-label="Next Testimonial"
+                  aria-label="Next Provider"
                   disabled={isLastSlide || isTransitioning}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
