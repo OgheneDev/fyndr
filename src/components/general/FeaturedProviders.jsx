@@ -9,10 +9,9 @@ const FeaturedProviders = () => {
             <button>See all</button>
         </article>
         <div>
-            <ProvidersSlider />
+          <ProvidersSlider />
         </div>
-
-    </div>
+    </div> 
   )
 }
 
