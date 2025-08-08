@@ -154,46 +154,212 @@ export const automobileRequest = async (formData) => {
 
 export const beautyRequest = async (formData) => {
     try {
-        
+        const response = await axiosInstance.post(
+            'v1/request/beauty',
+            formData
+        );
+        return response.data
     } catch (error) {
-        
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
     }
 }
 
 export const cateringRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/catering',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    } 
 }
 
 export const carpenterRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/carpenter',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const electricianRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/electrician',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const itRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/it',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const mechanicRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/mechanic',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const mediaRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/media',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const plumberRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/plumber',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const hospitalityRequest = async (formData) => {
-
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/hospitality',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const eventManagementRequest = async (formData) => {
-    
+    try {
+        const response = await axiosInstance.post(
+            'v1/request/event-management',
+            formData
+        );
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            console.error("Error response:", error.response.data);
+            throw error.response.data;
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+            throw error.request;
+        } else {
+            console.error("Error:", error.message);
+            throw error.message;
+        }
+    }
 }
 
 export const acceptMerchantInterest = async (requestId, interestId) => {

@@ -51,9 +51,9 @@ const DashboardPage = () => {
     'beauty': 'beauty',
     'car-parts': 'car-parts',
     'car-hire': 'car-hire',
-    'carpentry': 'carpentry',
+    'carpentry': 'carpenter',
     'cleaning': 'cleaning',
-    'electrical': 'electrical',
+    'electrical': 'electrician',
     'employment': 'employment',
     'event-management': 'event-management',
     'hospitality': 'hospitality',
@@ -102,12 +102,12 @@ const DashboardPage = () => {
 
         {/* Categories Container */}
         <div className="flex justify-center pr-2 md:pr-0">
-          <div className="grid grid-cols-3 gap-1 md:gap-8 w-full max-w-sm mx-auto"> {/* Changed max-w-md to max-w-sm for tighter mobile fit */}
+          <div className="grid grid-cols-3 gap-1 md:gap-8 w-full max-w-sm md:min-w-3xl mx-auto"> {/* Changed max-w-md to max-w-sm for tighter mobile fit */}
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
-                className={`w-30 h-30 md:w-32 md:h-32 ${
+                className={`w-30 h-30 md:w-36 md:h-36 ${
                   category.hasContent 
                     ? 'cursor-pointer hover:bg-white/10 transition-colors' 
                     : 'cursor-default opacity-50'
@@ -116,7 +116,7 @@ const DashboardPage = () => {
                 <div className="flex flex-col items-center justify-center space-y-1 h-full">
                   {category.hasContent && (
                     <>
-                      <div className="w-22 h-22 md:w-28 md:h-28 flex-shrink-0 rounded-xl overflow-hidden">
+                      <div className="w-22 h-22 md:w-32 md:h-32 flex-shrink-0 rounded-xl overflow-hidden">
                         <Image
                           src={category.icon}
                           alt={`${category.title} icon`}
@@ -135,10 +135,10 @@ const DashboardPage = () => {
             ))}
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-30 h-30 md:w-32 md:h-32 cursor-pointer hover:bg-white/10 transition-colors"
+              className="w-30 h-30 md:w-36 md:h-36 cursor-pointer hover:bg-white/10 transition-colors"
             >
               <div className="flex flex-col items-center justify-center space-y-1 h-full">
-                <div className="w-22 h-22 md:w-28 md:h-28 flex-shrink-0 rounded-xl flex items-center border border-gray-300 justify-center">
+                <div className="w-22 h-22 md:w-32 md:h-32 flex-shrink-0 rounded-xl flex items-center border border-gray-300 justify-center">
                   <Grid2X2PlusIcon className="w-10 h-10 md:w-14 md:h-14 text-gray-900" />
                 </div>
                 <span className="text-[10px] md:text-xs text-center font-medium">

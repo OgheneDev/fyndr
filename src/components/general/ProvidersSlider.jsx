@@ -175,7 +175,7 @@ const ProvidersSlider = () => {
       const groupedProviders = getGroupedProviders();
 
   return (
-    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-5 md:px-0 lg:px-0 gap-4 md:max-w-xl'>
+    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-5 md:px-0 lg:px-0 gap-4 md:max-w-3xl'>
         {/* Slider Container - Fixed width and overflow hidden */}
         <div
           ref={sliderRef}
@@ -205,7 +205,7 @@ const ProvidersSlider = () => {
                         {group.map((provider, index) => (
                             <div
                              key={`${groupedIndex}-${index}`}
-                             className='relative min-h-[300px] flex-shrink-0 rounded-xl border'
+                             className='relative min-h-[300px] md:min-h-[400px] flex-shrink-0 rounded-xl border'
                              style={{ 
                                 width: `${100 / itemsPerView}%`,
                                 backgroundImage: `url(${provider.coverPhoto})`,
@@ -215,7 +215,7 @@ const ProvidersSlider = () => {
                              }}
                             >
                                 {/* Content overlay with proper text handling */}
-                                <div className='absolute top-5 left-1/2 transform -translate-x-1/2 flex p-3 items-center bg-gray-100/90 backdrop-blur-sm rounded-full w-[90%] max-w-[320px]'>
+                                <div className='absolute top-5 left-1/2 transform -translate-x-1/2 flex p-3 items-center bg-gray-100/90 backdrop-blur-sm rounded-full w-[90%] md:w-full md:max-w-[450px] max-w-[320px]'>
                                     <Image
                                       src={provider.avatar}
                                       alt="Service icon"

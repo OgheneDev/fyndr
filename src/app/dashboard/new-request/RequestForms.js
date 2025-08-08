@@ -62,25 +62,15 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           <p className="text-[12px]">Find lands, homes or rentals</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
-        <label className="block text-[#171214] mb-3 text-sm">Title</label>
-        <input
-          type="text"
-          value={formData.title || ''}
-          onChange={(e) => onChange('title', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-          placeholder="Enter Title"
-        />
-      </div>
-      <div>
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">Rent or Buy</label>
         <select
           value={formData.rentType || ''}
           onChange={(e) => onChange('rentType', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select</option>
           <option value="rent">Rent</option>
@@ -92,7 +82,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         <select
           value={formData.propertyType}
           onChange={(e) => onChange('propertyType', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Type</option>
           {safePropertyTypes.map((type) => (
@@ -107,7 +97,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         <select
           value={formData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(safeStates).map((state) => (
@@ -133,7 +123,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           styles={{
             control: (base) => ({
               ...base,
-              backgroundColor: '#F5F2F2',
+              backgroundColor: '#f3f4f6',
               border: 'none',
               boxShadow: 'none',
               '&:hover': {
@@ -148,7 +138,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
               ...base,
               backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
               '&:hover': {
-                backgroundColor: state.isSelected ? '#541229' : '#F5F2F2'
+                backgroundColor: state.isSelected ? '#541229' : '#f3f4f6'
               }
             })
           }}
@@ -159,7 +149,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         <select
           value={formData.propertyCondition || ''}
           onChange={(e) => onChange('propertyCondition', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Condition</option>
           <option value="new">New</option>
@@ -168,16 +158,19 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
         </select>
       </div>
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">Room Number</label>
-        <input
-          type="number"
-          value={formData.roomNumber || ''}
-          onChange={(e) => onChange('roomNumber', e.target.value)}
-          min={1}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-          placeholder="Enter number of rooms"
-        />
-      </div>
+  <label className="block text-[#171214] mb-3 text-sm">Room Number</label>
+  <select
+    value={formData.roomNumber || ''}
+    onChange={(e) => onChange('roomNumber', e.target.value)}
+    className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+  >
+    <option value="" disabled>Select number of rooms</option>
+    {[...Array(9)].map((_, i) => (
+      <option key={i + 1} value={i + 1}>{i + 1}</option>
+    ))}
+    <option value="10+">10+</option>
+  </select>
+</div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Price Range</label>
         <div className="space-y-4">
@@ -200,7 +193,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
                 value={formData.lowerPriceLimit || ''}
                 onChange={(e) => handleInputChange('lowerPriceLimit', e.target.value)}
                 min={0}
-                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                className="w-full px-4 py-3 border  rounded-lg text-sm"
                 placeholder="Enter min price"
               />
             </div>
@@ -211,7 +204,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
                 value={formData.upperPriceLimit || ''}
                 onChange={(e) => handleInputChange('upperPriceLimit', e.target.value)}
                 min={0}
-                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                className="w-full px-4 py-3  border  rounded-lg text-sm"
                 placeholder="Enter max price"
               />
             </div>
@@ -224,7 +217,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
           value={formData.details || ''}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Additional Description (Let the agent know preferred location and other information to help streamline)"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="w-full px-4 py-5 min-h-[150px]  border  rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -257,26 +250,15 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
           <p className="text-[12px]">Hire vehicles for in-town or out-of-town use.</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
-        <label className="block text-[#171214] mb-3 text-sm">Title</label>
-        <input
-          type="text"
-          value={carHireData.title || ''}
-          onChange={(e) => onChange('title', e.target.value)}
-          min={1}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-          placeholder="Enter Title"
-        />
-      </div>
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <label className="block text-[#171214] mt-5 md:mt-16 text-sm">State</label>
         <select
           value={carHireData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded LG text-sm"
+          className="w-full px-4 py-3 bg-gray-100 border-none rounded LG text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -291,7 +273,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
         <select
           value={carHireData.carType || ''}
           onChange={(e) => onChange('carType', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Type</option>
           {carTypes.map((type) => (
@@ -309,7 +291,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
             value={carHireData.pickupLocation || ''}
             onChange={(e) => onChange('pickupLocation', e.target.value)}
             placeholder="Pickup location"
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           />
         </div>
         <div className="flex-1">
@@ -319,7 +301,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
             value={carHireData.hireDuration || ''}
             onChange={(e) => onChange('hireDuration', e.target.value)}
             placeholder="Duration (in hrs)"
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           />
         </div>
       </div>
@@ -329,7 +311,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
           <select
             value={carHireData.airport || ''}
             onChange={(e) => onChange('airport', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select</option>
             <option value="Yes">Yes</option>
@@ -341,7 +323,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
           <select
             value={carHireData.travel || ''}
             onChange={(e) => onChange('travel', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select</option>
             <option value="Yes">Yes</option>
@@ -355,7 +337,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
           value={carHireData.details || ''}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="w-full px-4 py-3 bg-gray-100 min-h-[150px] border-none rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -392,26 +374,15 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
           <p className="text-[12px]">Get professional cleaning in your area.</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
-        <label className="block text-[#171214] mb-3 text-sm">Title</label>
-        <input
-          type="text"
-          value={cleaningData.title || ''}
-          onChange={(e) => onChange('title', e.target.value)}
-          min={1}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-          placeholder="Enter Title"
-        />
-      </div>
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <label className="block text-[#171214] mb-3 mt-5 md:mt-16 text-sm">State</label>
         <select
           value={cleaningData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -426,7 +397,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
         <select
           value={cleaningData.lga || ''}
           onChange={(e) => onChange('lga', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           disabled={!cleaningData.state}
         >
           <option value="">Select LGA</option>
@@ -444,7 +415,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
           value={cleaningData.propertyLocation}
           onChange={(e) => onChange('propertyLocation', e.target.value)}
           placeholder="Enter property address"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -452,7 +423,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
         <select
           value={cleaningData.propertyType}
           onChange={(e) => onChange('propertyType', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Type</option>
           {propertyTypes.map((type) => (
@@ -462,23 +433,26 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
           ))}
         </select>
       </div>
-      <div>
-        <label className="block text-[#171214] mb-3 text-sm">Number of Rooms</label>
-        <input
-          type="number"
-          value={cleaningData.roomNumber || ''}
-          onChange={(e) => onChange('roomNumber', e.target.value)}
-          min={1}
-          placeholder='e.g 1'
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        />
-      </div>
+<div>
+  <label className="block text-[#171214] mb-3 text-sm">Room Number</label>
+  <select
+    value={cleaningData.roomNumber || ''}
+    onChange={(e) => onChange('roomNumber', e.target.value)}
+    className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+  >
+    <option value="" disabled>Select number of rooms</option>
+    {[...Array(5)].map((_, i) => (
+      <option key={i + 1} value={i + 1}>{i + 1}</option>
+    ))}
+    <option value="6+">6+</option>
+  </select>
+</div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Cleaning Type</label>
         <select
           value={cleaningData.cleaningType}
           onChange={(e) => onChange('cleaningType', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select</option>
           {cleaningTypes.map((type) => (
@@ -494,7 +468,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
           value={cleaningData.details}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div className="mt-4">
@@ -529,26 +503,15 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           <p className="text-[12px]">Find quality parts from verified sellers.</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
-        <label className="block text-[#171214] mb-3 text-sm">Title</label>
-        <input
-          type="text"
-          value={carPartsData.title || ''}
-          onChange={(e) => onChange('title', e.target.value)}
-          min={1}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-          placeholder="Common name of part needed"
-        />
-      </div>
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">Current State</label>
+        <label className="block text-[#171214] mb-3 mt-5 md:mt-16 text-sm">Current State</label>
         <select
           value={carPartsData.state}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -565,7 +528,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           value={carPartsData.currentLocation}
           onChange={(e) => onChange('currentLocation', e.target.value)}
           placeholder="E.g Ikorodu Lagos"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -575,7 +538,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           value={carPartsData.sourcingLocation}
           onChange={(e) => onChange('sourcingLocation', e.target.value)}
           placeholder="E.g Ladipo Market"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div className="flex gap-3">
@@ -584,7 +547,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           <select
             value={carPartsData.carMake}
             onChange={(e) => onChange('carMake', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Make</option>
             {carMakes.map((make) => (
@@ -599,7 +562,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           <select
             value={carPartsData.carModel}
             onChange={(e) => onChange('carModel', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
             disabled={!carPartsData.carMake}
           >
             <option value="">Select Model</option>
@@ -615,7 +578,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           <select
             value={carPartsData.carYear}
             onChange={(e) => onChange('carYear', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Year</option>
             {carYears.map((year) => (
@@ -632,7 +595,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           value={carPartsData.details}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Describe part needed (e.g ABS sensor, front left)"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div>
@@ -641,7 +604,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           type="file"
           accept="image/*,video/*"
           onChange={(e) => onChange('attachment', e.target.files[0])}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
         {imagePreview && (
           <div className="mt-2">
@@ -701,25 +664,15 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <p className="text-[12px]">Get vehicles for sale around you.</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
-        <label className="block text-[#171214] mb-3 text-sm">Title</label>
-        <input
-          type="text"
-          value={automobileData.title}
-          onChange={(e) => onChange('title', e.target.value)}
-          placeholder="Request title"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
-        />
-      </div>
       <div>
-        <label className="block text-[#171214] mb-3 text-sm">State</label>
+        <label className="block text-[#171214] mb-3 mt-5 md:mt-16 text-sm">State</label>
         <select
           value={automobileData.state}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -736,7 +689,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           value={automobileData.location}
           onChange={(e) => onChange('location', e.target.value)}
           placeholder="Input Search Location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div className="flex gap-3">
@@ -745,7 +698,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <select
             value={automobileData.carMake}
             onChange={(e) => onChange('carMake', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Make</option>
             {carMakes.map((make) => (
@@ -760,7 +713,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <select
             value={automobileData.carModel}
             onChange={(e) => onChange('carModel', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
             disabled={!automobileData.carMake}
           >
             <option value="">Select Model</option>
@@ -778,7 +731,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <select
             value={automobileData.carYearFrom}
             onChange={(e) => onChange('carYearFrom', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Year</option>
             {carYears.map((year) => (
@@ -793,7 +746,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           <select
             value={automobileData.carYearTo}
             onChange={(e) => onChange('carYearTo', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Year</option>
             {carYears.map((year) => (
@@ -809,7 +762,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
         <select
           value={automobileData.transmission}
           onChange={(e) => onChange('transmission', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select</option>
           <option value="manual">Manual</option>
@@ -838,7 +791,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
                 value={automobileData.lowerPriceLimit || ''}
                 onChange={(e) => handleInputChange('lowerPriceLimit', e.target.value)}
                 min={0}
-                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
                 placeholder="Enter min price"
               />
             </div>
@@ -849,7 +802,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
                 value={automobileData.upperPriceLimit || ''}
                 onChange={(e) => handleInputChange('upperPriceLimit', e.target.value)}
                 min={0}
-                className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
                 placeholder="Enter max price"
               />
             </div>
@@ -862,7 +815,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
           value={automobileData.details}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter details"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -882,12 +835,12 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
 
 export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, setIsChecked }) {
   const beautyServices = [
-    'Make up artist',
-    'Lash tech',
-    'Nail tech',
-    'Hair stylist',
-    'Spa',
-    'Massage'
+    { display: 'Make up artist', value: 'make up artist' },
+    { display: 'Lash tech', value: 'lash tech' },
+    { display: 'Nail tech', value: 'nail tech' },
+    { display: 'Hair stylist', value: 'hair stylist' },
+    { display: 'Spa', value: 'spa' },
+    { display: 'Massage', value: 'massage' }
   ];
 
   return (
@@ -903,7 +856,7 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
           <p className="text-[12px]">Find professional beauty services in your area</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
       <div className="mt-5 md:mt-10">
@@ -911,7 +864,7 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
         <select
           value={beautyData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -928,7 +881,7 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
           value={beautyData.targetLocation || ''}
           onChange={(e) => onChange('targetLocation', e.target.value)}
           placeholder="Enter target location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -936,12 +889,12 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
         <select
           value={beautyData.service || ''}
           onChange={(e) => onChange('service', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Service</option>
           {beautyServices.map((service) => (
-            <option key={service} value={service}>
-              {service}
+            <option key={service.value} value={service.value}>
+              {service.display}
             </option>
           ))}
         </select>
@@ -952,7 +905,7 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
           type="date"
           value={beautyData.date || ''}
           onChange={(e) => onChange('date', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -961,16 +914,16 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
           type="time"
           value={beautyData.time || ''}
           onChange={(e) => onChange('time', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={beautyData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={beautyData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -1002,7 +955,7 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
           <p className="text-[12px]">Find professional catering services for your event</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
       <div className="mt-5 md:mt-10">
@@ -1010,7 +963,7 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
         <select
           value={cateringData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1027,7 +980,7 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
           value={cateringData.location || ''}
           onChange={(e) => onChange('location', e.target.value)}
           placeholder="Enter your location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1037,7 +990,7 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
           value={cateringData.eventLocation || ''}
           onChange={(e) => onChange('eventLocation', e.target.value)}
           placeholder="Enter event location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1046,16 +999,16 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
           type="date"
           value={cateringData.eventDate || ''}
           onChange={(e) => onChange('eventDate', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={cateringData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={cateringData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -1083,19 +1036,19 @@ export function CarpenterForm({ carpentryData, onChange, nigerianStates, isCheck
           </button>
         </Link>
         <article className="text-center">
-          <h2 className="text-lg font-bold mb-1">Post a carpentry Request</h2>
+          <h2 className="text-lg font-bold mb-1">Post a Carpentry Request</h2>
           <p className="text-[12px]">Find skilled carpenters in your area</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={carpentryData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1112,7 +1065,7 @@ export function CarpenterForm({ carpentryData, onChange, nigerianStates, isCheck
           value={carpentryData.location || ''}
           onChange={(e) => onChange('location', e.target.value)}
           placeholder="Enter your location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1121,16 +1074,16 @@ export function CarpenterForm({ carpentryData, onChange, nigerianStates, isCheck
           type="date"
           value={carpentryData.dateNeeded || ''}
           onChange={(e) => onChange('dateNeeded', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={carpentryData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={carpentryData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none min-h-[150px] rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -1162,15 +1115,15 @@ export function ElectricianForm({ electricianData, onChange, nigerianStates, isC
           <p className="text-[12px]">Find skilled electricians in your area</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={electricianData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1187,7 +1140,7 @@ export function ElectricianForm({ electricianData, onChange, nigerianStates, isC
           value={electricianData.location || ''}
           onChange={(e) => onChange('location', e.target.value)}
           placeholder="Enter your location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1196,16 +1149,16 @@ export function ElectricianForm({ electricianData, onChange, nigerianStates, isC
           type="date"
           value={electricianData.dateNeeded || ''}
           onChange={(e) => onChange('dateNeeded', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={electricianData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={electricianData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none min-h-[150px] rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -1245,15 +1198,15 @@ export function ITForm({ itData, onChange, nigerianStates, isChecked, setIsCheck
           <p className="text-[12px]">Find professional IT services in your area</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={itData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1270,7 +1223,7 @@ export function ITForm({ itData, onChange, nigerianStates, isChecked, setIsCheck
           value={itData.targetLocation || ''}
           onChange={(e) => onChange('targetLocation', e.target.value)}
           placeholder="Enter target location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1278,7 +1231,7 @@ export function ITForm({ itData, onChange, nigerianStates, isChecked, setIsCheck
         <select
           value={itData.service || ''}
           onChange={(e) => onChange('service', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Service</option>
           {itServices.map((service) => (
@@ -1291,10 +1244,10 @@ export function ITForm({ itData, onChange, nigerianStates, isChecked, setIsCheck
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={itData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={itData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div className="mt-4">
@@ -1329,15 +1282,15 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
           <p className="text-[12px]">Find skilled mechanics in your area</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={mechanicData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1354,7 +1307,7 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
           value={mechanicData.currentLocation || ''}
           onChange={(e) => onChange('currentLocation', e.target.value)}
           placeholder="Enter your current location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div className="flex gap-3">
@@ -1363,7 +1316,7 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
           <select
             value={mechanicData.carMake || ''}
             onChange={(e) => onChange('carMake', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Make</option>
             {carMakes.map((make) => (
@@ -1378,7 +1331,7 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
           <select
             value={mechanicData.carModel || ''}
             onChange={(e) => onChange('carModel', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
             disabled={!mechanicData.carMake}
           >
             <option value="">Select Model</option>
@@ -1396,7 +1349,7 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
           <select
             value={mechanicData.year || ''}
             onChange={(e) => onChange('year', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Year</option>
             {years.map((year) => (
@@ -1411,7 +1364,7 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
           <select
             value={mechanicData.transmission || ''}
             onChange={(e) => onChange('transmission', e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
           >
             <option value="">Select Transmission</option>
             {transmissions.map((transmission) => (
@@ -1425,10 +1378,10 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={mechanicData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={mechanicData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div className="mt-4">
@@ -1468,15 +1421,15 @@ export function MediaForm({ mediaData, onChange, nigerianStates, isChecked, setI
           <p className="text-[12px]">Find professional media services in your area</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={mediaData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1493,7 +1446,7 @@ export function MediaForm({ mediaData, onChange, nigerianStates, isChecked, setI
           value={mediaData.targetLocation || ''}
           onChange={(e) => onChange('targetLocation', e.target.value)}
           placeholder="Enter target location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1501,7 +1454,7 @@ export function MediaForm({ mediaData, onChange, nigerianStates, isChecked, setI
         <select
           value={mediaData.service || ''}
           onChange={(e) => onChange('service', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Service</option>
           {mediaServices.map((service) => (
@@ -1514,10 +1467,10 @@ export function MediaForm({ mediaData, onChange, nigerianStates, isChecked, setI
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={mediaData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={mediaData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div className="mt-4">
@@ -1549,15 +1502,15 @@ export function PlumberForm({ plumberData, onChange, nigerianStates, isChecked, 
           <p className="text-[12px]">Find skilled plumbers in your area</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">State</label>
         <select
           value={plumberData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1574,7 +1527,7 @@ export function PlumberForm({ plumberData, onChange, nigerianStates, isChecked, 
           value={plumberData.location || ''}
           onChange={(e) => onChange('location', e.target.value)}
           placeholder="Enter your location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1583,16 +1536,16 @@ export function PlumberForm({ plumberData, onChange, nigerianStates, isChecked, 
           type="date"
           value={plumberData.dateNeeded || ''}
           onChange={(e) => onChange('dateNeeded', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div> 
         <label className="block text-[#171214] mb-3 text-sm">Additional Comment</label>
         <textarea
-          value={plumberData.comment || ''}
-          onChange={(e) => onChange('comment', e.target.value)}
+          value={plumberData.details || ''}
+          onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div className="mt-4">
@@ -1632,15 +1585,15 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
           <p className="text-[12px]">Hospitality Services</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">Your State</label>
         <select
           value={hospitalityData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1657,7 +1610,7 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
           value={hospitalityData.location || ''}
           onChange={(e) => onChange('location', e.target.value)}
           placeholder="Enter your location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1665,7 +1618,7 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
         <select
           value={hospitalityData.service || ''}
           onChange={(e) => onChange('service', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Service</option>
           {hospitalityServices.map((service) => (
@@ -1675,23 +1628,25 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
           ))}
         </select>
       </div>
-      <div>
+      <div className='flex gap-3'>
+        <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Date Needed</label>
         <input
           type="date"
           value={hospitalityData.dateNeeded || ''}
           onChange={(e) => onChange('dateNeeded', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
-      <div>
+      <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Time Needed</label>
         <input
           type="time"
           value={hospitalityData.timeNeeded || ''}
           onChange={(e) => onChange('timeNeeded', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
+      </div>
       </div>
       <div>
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
@@ -1699,7 +1654,7 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
           value={hospitalityData.details || ''}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div className="mt-4">
@@ -1720,7 +1675,7 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
 export function EventManagementForm({ eventManagementData, onChange, nigerianStates, isChecked, setIsChecked }) {
   const eventServices = [
     'Catering Service',
-    'Event Planner',
+    'Event planner',
     'Bakers',
     'Hiring Service'
   ];
@@ -1738,15 +1693,15 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
           <p className="text-[12px] truncate">Event Management Services</p>
         </article>
       </div>
-      <div className='mt-12'>
+      <div className='md:hidden mt-12'>
         <ProvidersSlider />
       </div>
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-16">
         <label className="block text-[#171214] mb-3 text-sm">Your State</label>
         <select
           value={eventManagementData.state || ''}
           onChange={(e) => onChange('state', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select State</option>
           {Object.keys(nigerianStates).map((state) => (
@@ -1763,7 +1718,7 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
           value={eventManagementData.location || ''}
           onChange={(e) => onChange('location', e.target.value)}
           placeholder="Enter your location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1771,7 +1726,7 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
         <select
           value={eventManagementData.service || ''}
           onChange={(e) => onChange('service', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         >
           <option value="">Select Service</option>
           {eventServices.map((service) => (
@@ -1788,7 +1743,7 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
           value={eventManagementData.eventLocation || ''}
           onChange={(e) => onChange('eventLocation', e.target.value)}
           placeholder="Enter event location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1797,7 +1752,7 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
           type="date"
           value={eventManagementData.dateNeeded || ''}
           onChange={(e) => onChange('dateNeeded', e.target.value)}
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div>
@@ -1806,7 +1761,7 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
           value={eventManagementData.details || ''}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional details"
-          className="w-full px-4 py-3 bg-[#F5F2F2] border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 min-h-[150px] border-none rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">

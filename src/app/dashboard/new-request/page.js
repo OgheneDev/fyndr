@@ -67,8 +67,8 @@ const tabs = [
   { label: 'Automobiles', category: 'automobile' },
   { label: 'Beauty', category: 'beauty' },
   { label: 'Catering', category: 'catering' },
-  { label: 'Carpentry', category: 'carpentry' },
-  { label: 'Electrician', category: 'electrical' },
+  { label: 'Carpentry', category: 'carpenter' },
+  { label: 'Electrician', category: 'electrician' },
   { label: 'IT', category: 'it' },
   { label: 'Mechanic', category: 'mechanic' },
   { label: 'Media', category: 'media' },
@@ -97,7 +97,6 @@ const NewRequestPage = () => {
   const initialTab = 'Properties';
   const [activeTab, setActiveTab] = useState(initialTab);
   const [formData, setFormData] = useState({
-    title: '',
     state: '',
     axis: [],
     details: '',
@@ -109,7 +108,6 @@ const NewRequestPage = () => {
     lowerPriceLimit: '',
   });
   const [carHireData, setCarHireData] = useState({
-    title: '',
     state: '',
     details: '',
     carType: '',
@@ -119,7 +117,7 @@ const NewRequestPage = () => {
     travel: '',
   });
   const [cleaningData, setCleaningData] = useState({
-    title: '',
+    
     state: '',
     lga: '',
     details: '',
@@ -130,7 +128,6 @@ const NewRequestPage = () => {
   });
   const [carPartsData, setCarPartsData] = useState({
     car_part_image: '',
-    title: '',
     state: '',
     details: '',
     currentLocation: '',
@@ -141,7 +138,6 @@ const NewRequestPage = () => {
     attachment: null,
   });
   const [automobileData, setAutomobileData] = useState({
-    title: '',
     state: '',
     details: '',
     location: '',
@@ -159,32 +155,33 @@ const NewRequestPage = () => {
     service: '',
     date: '',
     time: '',
-    comment: '',
+    details: '',
   });
   const [cateringData, setCateringData] = useState({
     state: '',
     location: '',
     eventLocation: '',
     eventDate: '',
-    comment: '',
+    details: '',
   });
   const [carpentryData, setcarpentryData] = useState({
     state: '',
     location: '',
     dateNeeded: '',
-    comment: '',
+    details: '',
   });
   const [electricianData, setElectricianData] = useState({
+    
     state: '',
     location: '',
     dateNeeded: '',
-    comment: '',
+    details: '',
   });
   const [itData, setITData] = useState({
     state: '',
     targetLocation: '',
     service: '',
-    comment: '',
+    details: '',
   });
   const [mechanicData, setMechanicData] = useState({
     state: '',
@@ -193,19 +190,19 @@ const NewRequestPage = () => {
     carModel: '',
     year: '',
     transmission: '',
-    comment: '',
+    details: '',
   });
   const [mediaData, setMediaData] = useState({
     state: '',
     targetLocation: '',
     service: '',
-    comment: '',
+    details: '',
   });
   const [plumberData, setPlumberData] = useState({
     state: '',
     location: '',
     dateNeeded: '',
-    comment: '',
+    details: '',
   });
   const [hospitalityData, setHospitalityData] = useState({
     state: '',
@@ -330,7 +327,6 @@ const NewRequestPage = () => {
     const category = getCategory();
     if (category === 'real-estate') {
       return (
-        formData.title &&
         formData.state &&
         formData.axis.length > 0 &&
         formData.rentType &&
@@ -342,7 +338,6 @@ const NewRequestPage = () => {
       );
     } else if (category === 'car-hire') {
       return (
-        carHireData.title &&
         carHireData.state &&
         carHireData.carType &&
         carHireData.hireDuration &&
@@ -352,7 +347,6 @@ const NewRequestPage = () => {
       );
     } else if (category === 'cleaning') {
       return (
-        cleaningData.title &&
         cleaningData.state &&
         cleaningData.lga &&
         cleaningData.propertyType &&
@@ -362,7 +356,6 @@ const NewRequestPage = () => {
       );
     } else if (category === 'car-parts') {
       return (
-        carPartsData.title &&
         carPartsData.state &&
         carPartsData.currentLocation &&
         carPartsData.sourcingLocation &&
@@ -372,7 +365,6 @@ const NewRequestPage = () => {
       );
     } else if (category === 'automobile') {
       return (
-        automobileData.title &&
         automobileData.state &&
         automobileData.location &&
         automobileData.carMake &&
@@ -398,13 +390,13 @@ const NewRequestPage = () => {
         cateringData.eventLocation &&
         cateringData.eventDate
       );
-    } else if (category === 'carpentry') {
+    } else if (category === 'carpenter') {
       return (
         carpentryData.state &&
         carpentryData.location &&
         carpentryData.dateNeeded
       );
-    } else if (category === 'electrical') {
+    } else if (category === 'electrician') {
       return (
         electricianData.state &&
         electricianData.location &&
@@ -477,7 +469,7 @@ const NewRequestPage = () => {
 
       if (category === 'real-estate') {
         const response = await realEstateRequest({
-          title: formData.title,
+          title: 'Real Estate Request',
           state: formData.state,
           axis: formData.axis,
           details: formData.details,
@@ -493,7 +485,6 @@ const NewRequestPage = () => {
           throw new Error('Request ID not found in API response');
         }
         setFormData({
-          title: '',
           state: '',
           axis: [],
           details: '',
@@ -506,7 +497,7 @@ const NewRequestPage = () => {
         });
       } else if (category === 'car-hire') {
         const response = await carHireRequest({
-          title: carHireData.title,
+          title: 'Car Hire Request',
           state: carHireData.state,
           details: carHireData.details,
           carType: carHireData.carType,
@@ -520,7 +511,6 @@ const NewRequestPage = () => {
           throw new Error('Request ID not found in API response');
         }
         setCarHireData({
-          title: '',
           state: '',
           details: '',
           carType: '',
@@ -531,7 +521,7 @@ const NewRequestPage = () => {
         });
       } else if (category === 'cleaning') {
         const response = await cleaningRequest({
-          title: cleaningData.title,
+          title: 'Cleaning Request',
           state: cleaningData.state,
           lga: cleaningData.lga,
           details: cleaningData.details,
@@ -545,7 +535,6 @@ const NewRequestPage = () => {
           throw new Error('Request ID not found in API response');
         }
         setCleaningData({
-          title: '',
           state: '',
           lga: '',
           details: '',
@@ -556,7 +545,7 @@ const NewRequestPage = () => {
         });
       } else if (category === 'car-parts') {
         const fd = new FormData();
-        fd.append('title', carPartsData.title);
+        fd.append('title', 'Car Parts Request');
         fd.append('state', carPartsData.state);
         fd.append('details', carPartsData.details);
         fd.append('currentLocation', carPartsData.currentLocation);
@@ -573,7 +562,6 @@ const NewRequestPage = () => {
           throw new Error('Request ID not found in API response');
         }
         setCarPartsData({
-          title: '',
           state: '',
           details: '',
           currentLocation: '',
@@ -585,7 +573,7 @@ const NewRequestPage = () => {
         });
       } else if (category === 'automobile') {
         const response = await automobileRequest({
-          title: automobileData.title,
+          title: 'Automobile Request',
           state: automobileData.state,
           details: automobileData.details,
           location: automobileData.location,
@@ -602,7 +590,6 @@ const NewRequestPage = () => {
           throw new Error('Request ID not found in API response');
         }
         setAutomobileData({
-          title: '',
           state: '',
           details: '',
           location: '',
@@ -616,12 +603,13 @@ const NewRequestPage = () => {
         });
       } else if (category === 'beauty') {
         const response = await beautyRequest({
+          title: 'Beauty Request',
           state: beautyData.state,
           targetLocation: beautyData.targetLocation,
           service: beautyData.service,
           date: beautyData.date,
           time: beautyData.time,
-          comment: beautyData.comment,
+          details: beautyData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -633,15 +621,16 @@ const NewRequestPage = () => {
           service: '',
           date: '',
           time: '',
-          comment: '',
+          details: '',
         });
       } else if (category === 'catering') {
         const response = await cateringRequest({
+          title: 'Catering Request',
           state: cateringData.state,
           location: cateringData.location,
           eventLocation: cateringData.eventLocation,
           eventDate: cateringData.eventDate,
-          comment: cateringData.comment,
+          details: cateringData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -652,14 +641,15 @@ const NewRequestPage = () => {
           location: '',
           eventLocation: '',
           eventDate: '',
-          comment: '',
+          details: '',
         });
-      } else if (category === 'carpentry') {
+      } else if (category === 'carpenter') {
         const response = await carpenterRequest({
+          title: 'Carpenter Request',
           state: carpentryData.state,
           location: carpentryData.location,
           dateNeeded: carpentryData.dateNeeded,
-          comment: carpentryData.comment,
+          details: carpentryData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -669,14 +659,15 @@ const NewRequestPage = () => {
           state: '',
           location: '',
           dateNeeded: '',
-          comment: '',
+          details: '',
         });
-      } else if (category === 'electrical') {
+      } else if (category === 'electrician') {
         const response = await electricianRequest({
+          title: 'Electrician Request',
           state: electricianData.state,
           location: electricianData.location,
           dateNeeded: electricianData.dateNeeded,
-          comment: electricianData.comment,
+          details: electricianData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -686,14 +677,15 @@ const NewRequestPage = () => {
           state: '',
           location: '',
           dateNeeded: '',
-          comment: '',
+          details: '',
         });
       } else if (category === 'it') {
         const response = await itRequest({
+          title: 'IT Request',
           state: itData.state,
           targetLocation: itData.targetLocation,
           service: itData.service,
-          comment: itData.comment,
+          details: itData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -703,17 +695,18 @@ const NewRequestPage = () => {
           state: '',
           targetLocation: '',
           service: '',
-          comment: '',
+          details: '',
         });
       } else if (category === 'mechanic') {
         const response = await mechanicRequest({
+          title: 'Mechanic Request',
           state: mechanicData.state,
           currentLocation: mechanicData.currentLocation,
           carMake: mechanicData.carMake,
           carModel: mechanicData.carModel,
           year: Number(mechanicData.year) || 0,
           transmission: mechanicData.transmission,
-          comment: mechanicData.comment,
+          details: mechanicData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -726,14 +719,15 @@ const NewRequestPage = () => {
           carModel: '',
           year: '',
           transmission: '',
-          comment: '',
+          details: '',
         });
       } else if (category === 'media') {
         const response = await mediaRequest({
+          title: 'Media Request',
           state: mediaData.state,
           targetLocation: mediaData.targetLocation,
           service: mediaData.service,
-          comment: mediaData.comment,
+          details: mediaData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -743,14 +737,15 @@ const NewRequestPage = () => {
           state: '',
           targetLocation: '',
           service: '',
-          comment: '',
+          details: '',
         });
       } else if (category === 'plumbing') {
         const response = await plumberRequest({
+          title: 'Plumber Request',
           state: plumberData.state,
           location: plumberData.location,
           dateNeeded: plumberData.dateNeeded,
-          comment: plumberData.comment,
+          details: plumberData.details,
         });
         requestId = response.data._id;
         if (!requestId) {
@@ -760,10 +755,11 @@ const NewRequestPage = () => {
           state: '',
           location: '',
           dateNeeded: '',
-          comment: '',
+          details: '',
         });
       } else if (category === 'hospitality') {
         const response = await hospitalityRequest({
+          title: 'Hospitality Request',
           state: hospitalityData.state,
           location: hospitalityData.location,
           service: hospitalityData.service,
@@ -785,6 +781,7 @@ const NewRequestPage = () => {
         });
       } else if (category === 'event-management') {
         const response = await eventManagementRequest({
+          title: 'Event Management Request',
           state: eventManagementData.state,
           location: eventManagementData.location,
           service: eventManagementData.service,
