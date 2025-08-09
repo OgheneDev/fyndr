@@ -6,7 +6,7 @@ const EditServicesLocationForm = ({
   businessAddress,
   setBusinessAddress,
   businessLocation,
-  setBusinessLocation,
+  setBusinessLocation, 
   servicesLoading,
   onServiceChange,
   onSubmit,

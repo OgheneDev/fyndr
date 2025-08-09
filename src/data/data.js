@@ -163,6 +163,16 @@ export const SERVICE_OPTIONS = [
   { value: 'cleaning', label: 'Cleaning' },
   { value: 'real-estate', label: 'Real Estate' },
   { value: 'car-parts', label: 'Car Parts' },
-  { value: 'automobile', label: 'Automobile' }
+  { value: 'automobile', label: 'Automobile' },
+  { value: 'beauty', label: 'Beauty' },
+  { value: 'catering', label: 'Catering' },
+  { value: 'carpenter', label: 'Carpenter' },
+  { value: 'electrician', label: 'Electrician' },
+  { value: 'it', label: 'IT' },
+  { value: 'mechanic', label: 'Mechanic' },
+  { value: 'media', label: 'Media' },
+  { value: 'plumber', label: 'Plumber' },
+  { value: 'hospitality', label: 'Hospitality' },
+  { value: 'event-management', label: 'Event Management' },
 ]
  

@@ -2,6 +2,8 @@ import Image from 'next/image';
 import React, {useState} from 'react';
 import { nigerianStates } from '@/data/nigerianStates';
 import { PhoneInput } from '../general/PhoneInput';
+import { SERVICE_OPTIONS } from '@/data/data';
+
 export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) => {
   // Add preview URL state
   const [imagePreview, setImagePreview] = React.useState(null);
@@ -9,14 +11,6 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
   // Get list of states and LGAs for the selected state
   const stateOptions = Object.keys(nigerianStates);
   const lgaOptions = formData.state ? nigerianStates[formData.state] : [];
-
-  const SERVICE_OPTIONS = [
-  { label: 'Car Hire', value: 'car-hire' },
-  { label: 'Cleaning', value: 'cleaning' },
-  { label: 'Real Estate', value: 'real-estate' },
-  { label: 'Car Parts', value: 'car-parts' },
-  { label: 'Automobile', value: 'automobile' },
-];
 
   return (
     <div className="space-y-4">
