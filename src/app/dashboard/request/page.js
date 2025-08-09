@@ -279,7 +279,7 @@ function RequestDetailPageInner() {
             <div className="min-h-screen bg-white flex items-center justify-center">
                 <div className="animate-pulse">
                     <Image
-                        src="/images/logo.png"
+                        src="/images/logo-removebg-preview.png"
                         alt="Company Logo"
                         width={100}
                         height={100}
@@ -426,7 +426,7 @@ export default function RequestDetailPage() {
         <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
                     <div className="animate-pulse">
                         <Image
-                            src="/images/logo.png"
+                            src="/images/logo-removebg-preview.png"
                             alt="Company Logo"
                             width={100}
                             height={100}

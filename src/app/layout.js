@@ -30,7 +30,7 @@ export const metadata = {
     description: "Connect with verified local service providers and merchants in your area. Find the help you need, when you need it.",
     siteName: "Fyndr",
     images: [{
-      url: "/images/logo.png",
+      url: "/images/logo-removebg-preview.png",
       width: 1200,
       height: 630,
       alt: "Fyndr - Local Service Marketplace"
@@ -40,7 +40,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Fyndr - Find Local Services Near You",
     description: "Connect with trusted local service providers and merchants in your neighborhood",
-    images: ["/images/logo.png"],
+    images: ["/images/logo-removebg-preview.png"],
     creator: "@fyndr"
   },
   robots: {

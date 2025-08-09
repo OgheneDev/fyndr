@@ -233,10 +233,10 @@ const Navbar = () => {
                 <motion.div variants={logoVariants}>
                     <Link href='/'>
                         <Image
-                            src={'/images/logo.png'}
+                            src={'/images/logo-removebg-preview.png'}
                             alt="Logo"
-                            width={55}
-                            height={40}
+                            width={60}
+                            height={45}
                         />
                     </Link>
                 </motion.div>
@@ -283,7 +283,7 @@ const Navbar = () => {
                             >
                                 <Link href='/'>
                                     <Image
-                                        src={'/images/logo.png'}
+                                        src={'/images/logo-removebg-preview.png'}
                                         alt="Logo"
                                         width={50}
                                         height={35}
