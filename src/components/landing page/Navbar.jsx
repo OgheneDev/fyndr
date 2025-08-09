@@ -285,8 +285,8 @@ const Navbar = () => {
                                     <Image
                                         src={'/images/logo-removebg-preview.png'}
                                         alt="Logo"
-                                        width={50}
-                                        height={35}
+                                        width={55}
+                                        height={40}
                                     />
                                 </Link>
                                 <motion.button 
