@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { Grid2X2PlusIcon } from "lucide-react";
@@ -10,77 +10,113 @@ import FeaturedProviders from "@/components/general/FeaturedProviders";
 const DashboardPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
+    };
+
+    // Set initial value
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const categories = [
     {
-      id: 'real-estate',
-      title: 'Real Estate', 
-      icon: 'images/house.png',
-      hasContent: true
+      id: "real-estate",
+      title: "Real Estate",
+      icon: "images/house.png",
+      hasContent: true,
     },
     {
-      id: 'car-parts',
-      title: 'Car Parts',
-      icon: 'images/car.png',
-      hasContent: true
+      id: "car-parts",
+      title: "Car Parts",
+      icon: "images/car.png",
+      hasContent: true,
     },
     {
-      id: 'car-hire',
-      title: 'Car Hire',
-      icon: 'images/hire.JPG',
-      hasContent: true
+      id: "car-hire",
+      title: "Car Hire",
+      icon: "images/hire.JPG",
+      hasContent: true,
     },
     {
-      id: 'cleaning',
-      title: 'Cleaning',
-      icon: 'images/clean.png',
-      hasContent: true
+      id: "cleaning",
+      title: "Cleaning",
+      icon: "images/clean.png",
+      hasContent: true,
     },
     {
-      id: 'automobile-purchase',
-      title: 'Automobiles',
-      icon: 'images/auto.PNG',
-      hasContent: true
+      id: "automobile-purchase",
+      title: "Automobiles",
+      icon: "images/auto.PNG",
+      hasContent: true,
+    },
+    {
+      id: "beauty",
+      title: "Beauty",
+      icon: "images/auto.PNG",
+      hasContent: true,
+    },
+    {
+      id: "carpenter",
+      title: "Carpenter",
+      icon: "images/auto.PNG",
+      hasContent: true,
     },
   ];
 
+  // Filter categories for mobile: exclude Beauty and Carpenter
+  const filteredCategories = isMobile
+    ? categories.filter(
+        (category) => category.id !== "beauty" && category.id !== "carpenter"
+      )
+    : categories;
+
   // Map dashboard category id to new-request category
   const categoryMap = {
-    'automobile-purchase': 'automobile',
-    'beauty': 'beauty',
-    'car-parts': 'car-parts',
-    'car-hire': 'car-hire',
-    'carpentry': 'carpenter',
-    'cleaning': 'cleaning',
-    'electrical': 'electrician',
-    'employment': 'employment',
-    'event-management': 'event-management',
-    'hospitality': 'hospitality',
-    'mechanic': 'mechanic',
-    'media': 'media',
-    'plumbing': 'plumbing',
-    'real-estate': 'real-estate',
-    'it': 'it'
+    "automobile-purchase": "automobile",
+    beauty: "beauty",
+    "car-parts": "car-parts",
+    "car-hire": "car-hire",
+    carpentry: "carpenter",
+    cleaning: "cleaning",
+    electrical: "electrician",
+    employment: "employment",
+    "event-management": "event-management",
+    hospitality: "hospitality",
+    mechanic: "mechanic",
+    media: "media",
+    plumbing: "plumbing",
+    "real-estate": "real-estate",
+    it: "it",
   };
 
   const handleCategorySelect = (categoryId) => {
     // Don't navigate for empty buttons
-    if (!categories.find(cat => cat.id === categoryId)?.hasContent) {
+    if (!categories.find((cat) => cat.id === categoryId)?.hasContent) {
       return;
     }
-    
+
     // Show "Coming Soon" for other-services
-    if (categoryId === 'other-services') {
+    if (categoryId === "other-services") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Coming Soon',
-        text: 'Other Home Services Coming Soon.',
-        confirmButtonColor: '#541229'
+        icon: "warning",
+        title: "Coming Soon",
+        text: "Other Home Services Coming Soon.",
+        confirmButtonColor: "#541229",
       });
       return;
     }
-    
+
     setSelectedCategory(categoryId);
     const mapped = categoryMap[categoryId];
     if (mapped) {
@@ -91,26 +127,24 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen relative pt-[72px] md:pt-[100px] pb-15 md:pb-0">
       {/* Content */}
-      <div className="relative px-0 py-8"> {/* Removed px-4 to eliminate side padding */}
+      <div className="relative px-0 py-8">
         {/* Header */}
         <div className="mb-5 md:mb-12">
           <div className="flex-1"></div>
-          <h1 className="text-center text-lg">
-            Create Request
-          </h1>
+          <h1 className="text-center text-lg">Create Request</h1>
         </div>
 
         {/* Categories Container */}
         <div className="flex justify-center pr-2 md:pr-0">
-          <div className="grid grid-cols-3 gap-1 md:gap-8 w-full max-w-sm md:min-w-3xl mx-auto"> {/* Changed max-w-md to max-w-sm for tighter mobile fit */}
-            {categories.map((category) => (
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-1 md:gap-8 w-full md:max-w-[700px] mx-auto">
+            {filteredCategories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategorySelect(category.id)}
                 className={`w-30 h-30 md:w-36 md:h-36 ${
-                  category.hasContent 
-                    ? 'cursor-pointer hover:bg-white/10 transition-colors' 
-                    : 'cursor-default opacity-50'
+                  category.hasContent
+                    ? "cursor-pointer hover:bg-white/10 transition-colors"
+                    : "cursor-default opacity-50"
                 }`}
               >
                 <div className="flex flex-col items-center justify-center space-y-1 h-full">
@@ -124,7 +158,7 @@ const DashboardPage = () => {
                           height={112}
                           className="w-full h-full object-cover rounded-xl"
                         />
-                      </div> 
+                      </div>
                       <span className="text-[10px] md:text-xs text-center font-medium">
                         {category.title}
                       </span>
@@ -150,7 +184,7 @@ const DashboardPage = () => {
         </div>
       </div>
       <FeaturedProviders />
-      <ServicesModal 
+      <ServicesModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSelectService={(category) => {

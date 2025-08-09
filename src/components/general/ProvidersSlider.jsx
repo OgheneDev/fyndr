@@ -175,7 +175,7 @@ const ProvidersSlider = () => {
       const groupedProviders = getGroupedProviders();
 
   return (
-    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-5 md:px-0 lg:px-0 gap-4 md:max-w-3xl'>
+    <div className='flex flex-col md:flex-row flex-wrap mx-auto mt-5 md:px-0 lg:px-0 gap-4 md:max-w-[700px]'>
         {/* Slider Container - Fixed width and overflow hidden */}
         <div
           ref={sliderRef}

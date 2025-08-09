@@ -398,7 +398,7 @@ const Navbar = () => {
                                     <div className="p-4 border-b">
                                         <div className="text-sm text-gray-900">
                                             {profileLoading ? (
-                                                <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />
+                                                <div className="h-4 w-24 bg-gray-200 mb-2 rounded animate-pulse" />
                                             ) : (
                                                 profile?.name || 'User'
                                             )}
