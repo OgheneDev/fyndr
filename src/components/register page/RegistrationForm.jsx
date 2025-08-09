@@ -3,7 +3,7 @@ import { PhoneInput } from "../general/PhoneInput";
 import { OTPInput } from "../general/OTPInput";
 import { UserDetailsForm } from "./UserDetailsForm";
 import { MerchantDetailsForm } from "./MerchantDetailsForm";
-import { User, Store, CheckCircle, ArrowLeft } from "lucide-react";
+import { User, Store, CheckCircle, ArrowLeft, Loader2 } from "lucide-react";
 import { useUserStore } from "@/store/userStore";
 import { useAuthStore } from "@/store/authStore";
 import { 
@@ -291,8 +291,9 @@ const handleDetailsSubmit = async () => {
           <button
             onClick={method === 'phone' ? handlePhoneSubmit : handleEmailSubmit}
             disabled={method === 'phone' ? !canProceedPhone : !canProceedEmail || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
+            {isLoading && <Loader2 className="w-4 h-4 animate-spin" /> }
             {isLoading ? 'Sending...' : 'Send Code'}
           </button>
         </div>
@@ -311,8 +312,9 @@ const handleDetailsSubmit = async () => {
               <button 
                 onClick={handleResendOTP}
                 disabled={isResending || isLoading}
-                className="text-[#57132A] cursor-pointer underline disabled:opacity-50"
+                className="text-[#57132A] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
               >
+                {isResending && <Loader2 className="w-3 h-3 animate-spin" />}
                 {isResending ? 'Resending...' : 'Resend OTP'}
               </button>
             </div>
@@ -354,8 +356,9 @@ const handleDetailsSubmit = async () => {
           <button
             onClick={handleDetailsSubmit}
             disabled={!canProceedDetails || isLoading}
-            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg text-sm  disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg text-sm  disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
+            {isLoading && <Loader2 className="w-4 h-4 animate-spin" /> }
             {isLoading ? 'Creating Account...' : 'Complete Registration'}
           </button>
         </div>
