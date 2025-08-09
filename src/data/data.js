@@ -145,7 +145,17 @@ export const CATEGORY_LABELS = {
     "car-hire": "Car Hire",
     "car-parts": "Car Parts",
     "cleaning": "Cleaning",
-    "automobile": "Automobile Purchase"
+    "automobile": "Automobile Purchase",
+    "beauty": "Beauty",
+    "catering": "Catering",
+    "carpenter": "Carpenter",
+    "electrician": "Electrician",
+    "it": "IT",
+    "mechanic": "Mechanic",
+    "media": "Media",
+    "plumber": "Plumber",
+    "hospitality": "Hospitality",
+    "event-management": "Event Management"
 };
 
 export const SERVICE_OPTIONS = [

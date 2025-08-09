@@ -1,18 +1,34 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/data/data";
 
+const formatDate = (dateString) => {
+  if (!dateString) return "Not specified";
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch (error) {
+    return "Invalid date";
+  }
+};
+
 const formatBudget = (lower, upper) => {
   if (lower && upper) {
-    const formattedLower = Number(lower).toLocaleString('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    const formattedLower = Number(lower).toLocaleString("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     });
-    const formattedUpper = Number(upper).toLocaleString('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    const formattedUpper = Number(upper).toLocaleString("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     });
@@ -24,10 +40,19 @@ const formatBudget = (lower, upper) => {
 const getLocationText = (data) => {
   if (data.carHire?.pickupLocation) return data.carHire.pickupLocation;
   if (data.cleaning?.propertyLocation) return data.cleaning.propertyLocation;
-  if (data.targetState) return data.targetState;
   if (data.carPart?.currentLocation) return data.carPart.currentLocation;
   if (data.automobile?.location) return data.automobile.location;
-  return "Location not specified";
+  if (data.beauty?.targetLocation) return data.beauty.targetLocation;
+  if (data.catering?.location) return data.catering.location;
+  if (data.carpentry?.location) return data.carpentry.location;
+  if (data.electrician?.location) return data.electrician.location;
+  if (data.it?.targetLocation) return data.it.targetLocation;
+  if (data.mechanic?.currentLocation) return data.mechanic.currentLocation;
+  if (data.media?.targetLocation) return data.media.targetLocation;
+  if (data.plumber?.location) return data.plumber.location;
+  if (data.hospitality?.location) return data.hospitality.location;
+  if (data.eventManagement?.location) return data.eventManagement.location;
+  return data.targetState || "Location not specified";
 };
 
 const getBudgetText = (data) => {
@@ -85,6 +110,7 @@ const RequestDetailsSections = ({ data }) => (
           <p><span className="">Room Number:</span> {data.realEstate.roomNumber}</p>
           <p><span className="">Condition:</span> {data.realEstate.propertyCondition}</p>
           <p><span className="">Price Range:</span> {getBudgetText(data)}</p>
+          <p><span className="">Target Axis:</span> {data.realEstate.axis?.join(", ") || "Not specified"}</p>
         </div>
       </div>
     )}
@@ -115,6 +141,96 @@ const RequestDetailsSections = ({ data }) => (
           <p><span className="">Car Year To:</span> {data.automobile.carYearTo}</p>
           <p><span className="">Transmission:</span> {data.automobile.transmission}</p>
           <p><span className="">Price Range:</span> {getBudgetText(data)}</p>
+        </div>
+      </div>
+    )}
+    {data.beauty && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Target Location:</span> {data.beauty.targetLocation}</p>
+          <p><span className="">Service:</span> {data.beauty.service}</p>
+          <p><span className="">Date:</span> {formatDate(data.beauty.date)}</p>
+          <p><span className="">Time:</span> {data.beauty.time}</p>
+        </div>
+      </div>
+    )}
+    {data.catering && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Location:</span> {data.catering.location}</p>
+          <p><span className="">Event Location:</span> {data.catering.eventLocation}</p>
+          <p><span className="">Event Date:</span> {formatDate(data.catering.eventDate)}</p>
+        </div>
+      </div>
+    )}
+    {data.carpentry && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Location:</span> {data.carpentry.location}</p>
+          <p><span className="">Date Needed:</span> {formatDate(data.carpentry.dateNeeded)}</p>
+        </div>
+      </div>
+    )}
+    {data.electrician && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Location:</span> {data.electrician.location}</p>
+          <p><span className="">Date Needed:</span> {formatDate(data.electrician.dateNeeded)}</p>
+        </div>
+      </div>
+    )}
+    {data.it && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Target Location:</span> {data.it.targetLocation}</p>
+          <p><span className="">Service:</span> {data.it.service}</p>
+        </div>
+      </div>
+    )}
+    {data.mechanic && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Current Location:</span> {data.mechanic.currentLocation}</p>
+          <p><span className="">Car Make:</span> {data.mechanic.carMake}</p>
+          <p><span className="">Car Model:</span> {data.mechanic.carModel}</p>
+          <p><span className="">Year:</span> {data.mechanic.year}</p>
+          <p><span className="">Transmission:</span> {data.mechanic.transmission}</p>
+        </div>
+      </div>
+    )}
+    {data.media && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Target Location:</span> {data.media.targetLocation}</p>
+          <p><span className="">Service:</span> {data.media.service}</p>
+        </div>
+      </div>
+    )}
+    {data.plumber && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Location:</span> {data.plumber.location}</p>
+          <p><span className="">Date Needed:</span> {formatDate(data.plumber.dateNeeded)}</p>
+        </div>
+      </div>
+    )}
+    {data.hospitality && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Location:</span> {data.hospitality.location}</p>
+          <p><span className="">Service:</span> {data.hospitality.service}</p>
+          <p><span className="">Date Needed:</span> {formatDate(data.hospitality.dateNeeded)}</p>
+          <p><span className="">Time Needed:</span> {data.hospitality.timeNeeded}</p>
+        </div>
+      </div>
+    )}
+    {data.eventManagement && (
+      <div className="text-sm">
+        <div className="space-y-1">
+          <p><span className="">Location:</span> {data.eventManagement.location}</p>
+          <p><span className="">Service:</span> {data.eventManagement.service}</p>
+          <p><span className="">Event Location:</span> {data.eventManagement.eventLocation}</p>
+          <p><span className="">Date Needed:</span> {formatDate(data.eventManagement.dateNeeded)}</p>
         </div>
       </div>
     )}
