@@ -39,6 +39,7 @@ import {
   plumberRequest,
   hospitalityRequest,
   eventManagementRequest,
+  employmentRequest
 } from '@/api/requests/users/requests';
 import Swal from 'sweetalert2';
 import { Loader2 } from 'lucide-react';
@@ -78,6 +79,7 @@ const tabs = [
   { label: 'Plumbing', category: 'plumbing' },
   { label: 'Hospitality', category: 'hospitality' },
   { label: 'Event Management', category: 'event-management' },
+  { label: 'Employment', category: 'employment' },
 ];
 
 const SearchParamsTab = ({ setActiveTab, initialTab }) => {
@@ -120,7 +122,6 @@ const NewRequestPage = () => {
     travel: '',
   });
   const [cleaningData, setCleaningData] = useState({
-    
     state: '',
     lga: '',
     details: '',
@@ -223,6 +224,39 @@ const NewRequestPage = () => {
     dateNeeded: '',
     details: '',
   });
+  const [employmentData, setEmploymentData] = useState({
+  role: '',
+  companyName: '',
+  firstName: '',
+  lastName: '',
+  phoneNumber: '',
+  emailAddress: '',
+  howDidYouHear: '',
+  jobTitle: '',
+  jobLocation: '',
+  state: '',
+  lga: '',
+  area: '',
+  graduate: '',
+  jobType: '',
+  startDate: '',
+  salary: '',
+  benefits: [],
+  availableVacancy: '',
+  additionalCertificate: '',
+  jobDescription: '',
+  levelOfEducation: '',
+  whatDidYouStudy: '',
+  schoolName: '',
+  studyYears: '',
+  workExperience: '',
+  yearsOfExperience: '',
+  company: '',
+  duration: '',
+  additionalSkills: [],
+  languages: '',
+  preferredJobTitle: '',
+});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -320,6 +354,12 @@ const NewRequestPage = () => {
       [field]: value,
     }));
   };
+  const handleEmploymentChange = (field, value) => {
+  setEmploymentData((prev) => ({
+    ...prev,
+    [field]: value,
+  }));
+};
 
   const getCategory = () => {
     const tab = tabs.find((t) => t.label === activeTab);
@@ -447,6 +487,44 @@ const NewRequestPage = () => {
         eventManagementData.service &&
         eventManagementData.eventLocation &&
         eventManagementData.dateNeeded
+      );
+    }
+    else if (category === 'employment') {
+    if (employmentData.role === 'employer') {
+      return (
+        employmentData.companyName &&
+        employmentData.firstName &&
+        employmentData.lastName &&
+        employmentData.phoneNumber &&
+        employmentData.emailAddress &&
+        employmentData.jobTitle &&
+        employmentData.jobLocation &&
+        employmentData.state &&
+        employmentData.lga &&
+        employmentData.area &&
+        employmentData.graduate &&
+        employmentData.jobType &&
+        employmentData.startDate &&
+        employmentData.salary &&
+        employmentData.availableVacancy &&
+        employmentData.jobDescription
+      );
+    } else if (employmentData.role === 'jobSeeker') {
+      return (
+        employmentData.firstName &&
+        employmentData.lastName &&
+        employmentData.phoneNumber &&
+        employmentData.emailAddress &&
+        employmentData.state &&
+        employmentData.lga &&
+        employmentData.area &&
+        employmentData.graduate &&
+        employmentData.levelOfEducation &&
+        employmentData.preferredJobTitle &&
+        employmentData.jobLocation &&
+        employmentData.jobType &&
+        employmentData.startDate &&
+        employmentData.salary
       );
     }
     return false;
@@ -806,7 +884,145 @@ const NewRequestPage = () => {
         });
       } else {
         throw new Error(`Unknown request category: ${category}`);
+      } 
+      if (category === 'employment') {
+      if (employmentData.role === 'employer') {
+        const response = await employmentRequest({
+          title: 'Employer Request',
+          role: employmentData.role,
+          companyName: employmentData.companyName,
+          firstName: employmentData.firstName,
+          lastName: employmentData.lastName,
+          phoneNumber: employmentData.phoneNumber,
+          emailAddress: employmentData.emailAddress,
+          howDidYouHear: employmentData.howDidYouHear,
+          jobTitle: employmentData.jobTitle,
+          jobLocation: employmentData.jobLocation,
+          state: employmentData.state,
+          lga: employmentData.lga,
+          area: employmentData.area,
+          graduate: employmentData.graduate,
+          jobType: employmentData.jobType,
+          startDate: employmentData.startDate,
+          salary: employmentData.salary,
+          benefits: employmentData.benefits,
+          availableVacancy: employmentData.availableVacancy,
+          additionalCertificate: employmentData.additionalCertificate,
+          jobDescription: employmentData.jobDescription,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setEmploymentData({
+          role: '',
+          companyName: '',
+          firstName: '',
+          lastName: '',
+          phoneNumber: '',
+          emailAddress: '',
+          howDidYouHear: '',
+          jobTitle: '',
+          jobLocation: '',
+          state: '',
+          lga: '',
+          area: '',
+          graduate: '',
+          jobType: '',
+          startDate: '',
+          salary: '',
+          benefits: [],
+          availableVacancy: '',
+          additionalCertificate: '',
+          jobDescription: '',
+          levelOfEducation: '',
+          whatDidYouStudy: '',
+          schoolName: '',
+          studyYears: '',
+          workExperience: '',
+          yearsOfExperience: '',
+          company: '',
+          duration: '',
+          additionalSkills: [],
+          languages: '',
+          preferredJobTitle: '',
+        });
+      } else if (employmentData.role === 'jobSeeker') {
+        const response = await employmentRequest({
+          title: 'Job Seeker Request',
+          role: employmentData.role,
+          firstName: employmentData.firstName,
+          lastName: employmentData.lastName,
+          phoneNumber: employmentData.phoneNumber,
+          emailAddress: employmentData.emailAddress,
+          howDidYouHear: employmentData.howDidYouHear,
+          state: employmentData.state,
+          lga: employmentData.lga,
+          area: employmentData.area,
+          graduate: employmentData.graduate,
+          levelOfEducation: employmentData.levelOfEducation,
+          whatDidYouStudy: employmentData.whatDidYouStudy,
+          schoolName: employmentData.schoolName,
+          studyYears: employmentData.studyYears,
+          workExperience: employmentData.workExperience,
+          yearsOfExperience: Number(employmentData.yearsOfExperience) || 0,
+          company: employmentData.company,
+          jobTitle: employmentData.jobTitle,
+          duration: employmentData.duration,
+          jobDescription: employmentData.jobDescription,
+          additionalSkills: employmentData.additionalSkills,
+          additionalCertificate: employmentData.additionalCertificate,
+          languages: employmentData.languages,
+          preferredJobTitle: employmentData.preferredJobTitle,
+          jobLocation: employmentData.jobLocation,
+          jobType: employmentData.jobType,
+          startDate: employmentData.startDate,
+          salary: employmentData.salary,
+          benefits: employmentData.benefits,
+        });
+        requestId = response.data._id;
+        if (!requestId) {
+          throw new Error('Request ID not found in API response');
+        }
+        setEmploymentData({
+          role: '',
+          companyName: '',
+          firstName: '',
+          lastName: '',
+          phoneNumber: '',
+          emailAddress: '',
+          howDidYouHear: '',
+          jobTitle: '',
+          jobLocation: '',
+          state: '',
+          lga: '',
+          area: '',
+          graduate: '',
+          jobType: '',
+          startDate: '',
+          salary: '',
+          benefits: [],
+          availableVacancy: '',
+          additionalCertificate: '',
+          jobDescription: '',
+          levelOfEducation: '',
+          whatDidYouStudy: '',
+          schoolName: '',
+          studyYears: '',
+          workExperience: '',
+          yearsOfExperience: '',
+          company: '',
+          duration: '',
+          additionalSkills: [],
+          languages: '',
+          preferredJobTitle: '',
+        });
+      } else {
+        throw new Error('No role selected for employment request');
       }
+    } else {
+      throw new Error(`Unknown request category: ${category}`);
+    }
 
       setSuccess('Request submitted successfully!');
       Swal.fire({
@@ -830,6 +1046,12 @@ const NewRequestPage = () => {
   const handleDisclaimerCancel = () => {
     setShowDisclaimer(false);
   };
+
+  useEffect(() => {
+  if (activeTab !== 'Employment') {
+    setEmploymentData((prev) => ({ ...prev, role: '' }));
+  }
+}, [activeTab]);
 
   return ( 
     <Suspense
@@ -1029,6 +1251,29 @@ const NewRequestPage = () => {
                     setIsChecked={setIsChecked}
                   />
                 )}
+                {activeTab === 'Employment' && !employmentData.role && (
+  <EmploymentSelectionForm
+    onSelectRole={(role) => handleEmploymentChange('role', role)}
+  />
+)}
+{activeTab === 'Employment' && employmentData.role === 'employer' && (
+  <EmployerForm
+    employmentData={employmentData}
+    onChange={handleEmploymentChange}
+    nigerianStates={nigerianStates}
+    isChecked={isChecked}
+    setIsChecked={setIsChecked}
+  />
+)}
+{activeTab === 'Employment' && employmentData.role === 'jobSeeker' && (
+  <JobSeekerForm
+    employmentData={employmentData}
+    onChange={handleEmploymentChange}
+    nigerianStates={nigerianStates}
+    isChecked={isChecked}
+    setIsChecked={setIsChecked}
+  />
+)}
                 <div className="mt-8 flex flex-col items-end">
                   {error && <div className="text-red-500 mb-2">{error}</div>}
                   <button
@@ -1080,5 +1325,6 @@ const NewRequestPage = () => {
     </Suspense>
   );
 };
+}
 
 export default NewRequestPage;
