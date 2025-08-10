@@ -98,6 +98,7 @@ const DashboardPage = () => {
     plumbing: "plumbing",
     "real-estate": "real-estate",
     it: "it",
+    employment: 'employment'
   };
 
   const handleCategorySelect = (categoryId) => {
