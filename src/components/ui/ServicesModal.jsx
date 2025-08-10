@@ -16,7 +16,7 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
     { id: 'carpentry', title: 'Carpentry', category: 'carpenter', description: 'Carpentry Services', icon: '🪚' },
     { id: 'cleaning', title: 'Cleaning', category: 'cleaning', description: 'Cleaning Services', icon: '🧹' },
     { id: 'electrical', title: 'Electrician', category: 'electrician', description: 'Electrical Services', icon: '⚡' },
-    //{ id: 'employment', title: 'Employment', category: 'employment', description: 'Get and post job availability requests', icon: '💼' },
+    { id: 'employment', title: 'Employment', category: 'employment', description: 'Get and post job availability requests', icon: '💼' },
     { id: 'event-management', title: 'Event Management Services', category: 'event-management', description: 'Catering Services, Event Planner, Bakers and Hiring Services', icon: '🎉' },
     { id: 'hospitality', title: 'Hospitality', category: 'hospitality', description: 'Apartment, Hotel, Gym and Spa services', icon: '🏨' },
     { id: 'mechanic', title: 'Mechanic', category: 'mechanic', description: 'Automobile Repairs', icon: '🔩' },

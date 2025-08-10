@@ -18,7 +18,10 @@ import {
   MediaForm, 
   PlumberForm,
   HospitalityForm,
-  EventManagementForm 
+  EventManagementForm,
+  EmploymentSelectionForm,
+  EmployerForm,
+  JobSeekerForm
 } from './RequestForms';
 import {
   realEstateRequest,
@@ -828,7 +831,7 @@ const NewRequestPage = () => {
     setShowDisclaimer(false);
   };
 
-  return (
+  return ( 
     <Suspense
       fallback={
         <div className="min-h-screen bg-white flex items-center justify-center">

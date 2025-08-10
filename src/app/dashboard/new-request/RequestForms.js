@@ -1779,3 +1779,767 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
   );
 }
 
+export function EmploymentSelectionForm({ onSelectRole }) {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Employment Request</h2>
+          <p className="text-[12px]">Select your role to proceed</p>
+        </article>
+      </div>
+      <div className="md:hidden mt-12">
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-16 text-center">
+        <h3 className="text-[#171214] mb-4 text-sm">Are you an Employer or a Job Seeker?</h3>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onClick={() => onSelectRole('employer')}
+            className="px-6 py-3 bg-[#541229] text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
+          >
+            Employer
+          </button>
+          <button
+            onClick={() => onSelectRole('jobSeeker')}
+            className="px-6 py-3 bg-[#541229] text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
+          >
+            Job Seeker
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export function EmployerForm({ employmentData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  const jobTypes = [
+    'Full time', 'Part time', 'Remote', 'Hybrid', 'Temporary', 
+    'Permanent', 'Fixed term contract', 'Freelance', 'Volunteer', 'Internship'
+  ];
+  const benefits = [
+    'Work from home', 'Flexitime', 'Company pension', 'Referral programme', 
+    'Employee discount', 'Store discount', 'On-site parking', 'Free parking', 
+    'Life insurance', 'Private medical insurance', 'Private dental insurance', 
+    'Health & well-being programme', 'Sick pay', 'Paid holidays', 'Sabbatical', 
+    'Bereavement leave', 'Paternity leave', 'Maternity leave', 'Childcare', 
+    'Gym membership', 'On-site gym', 'Free fitness classes', 'Canteen', 
+    'Company events', 'Company car', 'Shuttle service provided', 
+    'Relocation assistance', 'Housing allowance', 'Profit sharing', 
+    'Employee stock purchase plan', 'Employee stock ownership plan', 
+    'Visa sponsorship', 'Language training provided', 
+    'Employee mentoring programme', 'Financial planning services'
+  ];
+  const vacancyOptions = Array.from({ length: 10 }, (_, i) => (i + 1).toString()).concat('10+');
+
+  const lgaOptions = employmentData.state && nigerianStates[employmentData.state]
+    ? nigerianStates[employmentData.state].map(lga => ({ value: lga, label: lga }))
+    : [];
+
+  const handleMultiSelectChange = (field, selectedOptions) => {
+    onChange(field, selectedOptions ? selectedOptions.map(option => option.value) : []);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post an Employer Job Request</h2>
+          <p className="text-[12px]">Create a job posting for your company</p>
+        </article>
+      </div>
+      <div className="md:hidden mt-12">
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-16">
+        <h3 className="text-[#171214] mb-3 text-sm font-bold">Create Profile</h3>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Company Name</label>
+            <input
+              type="text"
+              value={employmentData.companyName || ''}
+              onChange={(e) => onChange('companyName', e.target.value)}
+              placeholder="Enter company name"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">First Name</label>
+              <input
+                type="text"
+                value={employmentData.firstName || ''}
+                onChange={(e) => onChange('firstName', e.target.value)}
+                placeholder="First name"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">Last Name</label>
+              <input
+                type="text"
+                value={employmentData.lastName || ''}
+                onChange={(e) => onChange('lastName', e.target.value)}
+                placeholder="Last name"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">Phone Number</label>
+              <input
+                type="tel"
+                value={employmentData.phoneNumber || ''}
+                onChange={(e) => onChange('phoneNumber', e.target.value)}
+                placeholder="Phone number"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">Email Address</label>
+              <input
+                type="email"
+                value={employmentData.emailAddress || ''}
+                onChange={(e) => onChange('emailAddress', e.target.value)}
+                placeholder="Email address"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">How did you hear about us?</label>
+            <input
+              type="text"
+              value={employmentData.howDidYouHear || ''}
+              onChange={(e) => onChange('howDidYouHear', e.target.value)}
+              placeholder="E.g., Social media, friend, etc."
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 className="text-[#171214] mb-3 text-sm font-bold">Job Post Form</h3>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Job Title</label>
+            <input
+              type="text"
+              value={employmentData.jobTitle || ''}
+              onChange={(e) => onChange('jobTitle', e.target.value)}
+              placeholder="Enter job title"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Job Location</label>
+            <input
+              type="text"
+              value={employmentData.jobLocation || ''}
+              onChange={(e) => onChange('jobLocation', e.target.value)}
+              placeholder="Enter job location"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">State</label>
+            <select
+              value={employmentData.state || ''}
+              onChange={(e) => onChange('state', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select State</option>
+              {Object.keys(nigerianStates).map((state) => (
+                <option key={state} value={state}>{state}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">LGA</label>
+            <Select
+              value={lgaOptions.find(option => option.value === employmentData.lga) || null}
+              onChange={(selected) => onChange('lga', selected ? selected.value : '')}
+              options={lgaOptions}
+              isDisabled={!employmentData.state}
+              placeholder="Select LGA"
+              className="text-sm"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: '#f3f4f6',
+                  border: 'none',
+                  boxShadow: 'none',
+                  '&:hover': { border: 'none' }
+                }),
+                placeholder: (base) => ({ ...base, color: '#6B7280' }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                })
+              }}
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Area</label>
+            <input
+              type="text"
+              value={employmentData.area || ''}
+              onChange={(e) => onChange('area', e.target.value)}
+              placeholder="Enter area"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Graduate</label>
+            <select
+              value={employmentData.graduate || ''}
+              onChange={(e) => onChange('graduate', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Job Type</label>
+            <select
+              value={employmentData.jobType || ''}
+              onChange={(e) => onChange('jobType', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select Job Type</option>
+              {jobTypes.map((type) => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Start Date</label>
+            <input
+              type="date"
+              value={employmentData.startDate || ''}
+              onChange={(e) => onChange('startDate', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Salary</label>
+            <input
+              type="text"
+              value={employmentData.salary || ''}
+              onChange={(e) => onChange('salary', e.target.value)}
+              placeholder="Enter salary (e.g., ₦100,000/month)"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Benefits</label>
+            <Select
+              isMulti
+              value={benefits.filter(b => employmentData.benefits?.includes(b)).map(b => ({ value: b, label: b }))}
+              onChange={(selected) => handleMultiSelectChange('benefits', selected)}
+              options={benefits.map(b => ({ value: b, label: b }))}
+              placeholder="Select benefits"
+              className="text-sm"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: '#f3f4f6',
+                  border: 'none',
+                  boxShadow: 'none',
+                  '&:hover': { border: 'none' }
+                }),
+                placeholder: (base) => ({ ...base, color: '#6B7280' }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                })
+              }}
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Available Vacancies</label>
+            <select
+              value={employmentData.availableVacancy || ''}
+              onChange={(e) => onChange('availableVacancy', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select Number</option>
+              {vacancyOptions.map((num) => (
+                <option key={num} value={num}>{num}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Additional Certificate or License</label>
+            <input
+              type="text"
+              value={employmentData.additionalCertificate || ''}
+              onChange={(e) => onChange('additionalCertificate', e.target.value)}
+              placeholder="Enter any certificates or licenses"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Job Description</label>
+            <textarea
+              value={employmentData.jobDescription || ''}
+              onChange={(e) => onChange('jobDescription', e.target.value)}
+              placeholder="Enter job description"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+};
+
+export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChecked, setIsChecked }) {
+  const jobTypes = [
+    'Full time', 'Part time', 'Remote', 'Hybrid', 'Temporary', 
+    'Permanent', 'Fixed term contract', 'Freelance', 'Volunteer', 'Internship'
+  ];
+  const benefits = [
+    'Work from home', 'Flexitime', 'Company pension', 'Referral programme', 
+    'Employee discount', 'Store discount', 'On-site parking', 'Free parking', 
+    'Life insurance', 'Private medical insurance', 'Private dental insurance', 
+    'Health & well-being programme', 'Sick pay', 'Paid holidays', 'Sabbatical', 
+    'Bereavement leave', 'Paternity leave', 'Maternity leave', 'Childcare', 
+    'Gym membership', 'On-site gym', 'Free fitness classes', 'Canteen', 
+    'Company events', 'Company car', 'Shuttle service provided', 
+    'Relocation assistance', 'Housing allowance', 'Profit sharing', 
+    'Employee stock purchase plan', 'Employee stock ownership plan', 
+    'Visa sponsorship', 'Language training provided', 
+    'Employee mentoring programme', 'Financial planning services'
+  ];
+  const educationLevels = ['None', 'Primary', 'Secondary', 'University'];
+  const skills = [
+    'Customer service', 'Organizational skills', 'Microsoft office', 
+    'Maintenance', 'Communication', 'Leadership', 'Accounting', 'Cash handling'
+  ];
+
+  const lgaOptions = employmentData.state && nigerianStates[employmentData.state]
+    ? nigerianStates[employmentData.state].map(lga => ({ value: lga, label: lga }))
+    : [];
+
+  const handleMultiSelectChange = (field, selectedOptions) => {
+    onChange(field, selectedOptions ? selectedOptions.map(option => option.value) : []);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
+        <Link href={'/dashboard'}>
+          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+            <ArrowLeft className="w-6 h-6 text-gray-600" />
+          </button>
+        </Link>
+        <article className="text-center">
+          <h2 className="text-lg font-bold mb-1">Post a Job Seeker Request</h2>
+          <p className="text-[12px]">Find job opportunities that match your skills</p>
+        </article>
+      </div>
+      <div className="md:hidden mt-12">
+        <ProvidersSlider />
+      </div>
+      <div className="mt-5 md:mt-16">
+        <h3 className="text-[#171214] mb-3 text-sm font-bold">Create Profile</h3>
+        <div className="space-y-4">
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">First Name</label>
+              <input
+                type="text"
+                value={employmentData.firstName || ''}
+                onChange={(e) => onChange('firstName', e.target.value)}
+                placeholder="First name"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">Last Name</label>
+              <input
+                type="text"
+                value={employmentData.lastName || ''}
+                onChange={(e) => onChange('lastName', e.target.value)}
+                placeholder="Last name"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">Phone Number</label>
+              <input
+                type="tel"
+                value={employmentData.phoneNumber || ''}
+                onChange={(e) => onChange('phoneNumber', e.target.value)}
+                placeholder="Phone number"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">Email Address</label>
+              <input
+                type="email"
+                value={employmentData.emailAddress || ''}
+                onChange={(e) => onChange('emailAddress', e.target.value)}
+                placeholder="Email address"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">How did you hear about us?</label>
+            <input
+              type="text"
+              value={employmentData.howDidYouHear || ''}
+              onChange={(e) => onChange('howDidYouHear', e.target.value)}
+              placeholder="E.g., Social media, friend, etc."
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">State</label>
+            <select
+              value={employmentData.state || ''}
+              onChange={(e) => onChange('state', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select State</option>
+              {Object.keys(nigerianStates).map((state) => (
+                <option key={state} value={state}>{state}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">LGA</label>
+            <Select
+              value={lgaOptions.find(option => option.value === employmentData.lga) || null}
+              onChange={(selected) => onChange('lga', selected ? selected.value : '')}
+              options={lgaOptions}
+              isDisabled={!employmentData.state}
+              placeholder="Select LGA"
+              className="text-sm"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: '#f3f4f6',
+                  border: 'none',
+                  boxShadow: 'none',
+                  '&:hover': { border: 'none' }
+                }),
+                placeholder: (base) => ({ ...base, color: '#6B7280' }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                })
+              }}
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Area</label>
+            <input
+              type="text"
+              value={employmentData.area || ''}
+              onChange={(e) => onChange('area', e.target.value)}
+              placeholder="Enter area"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Graduate</label>
+            <select
+              value={employmentData.graduate || ''}
+              onChange={(e) => onChange('graduate', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Level of Education</label>
+            <select
+              value={employmentData.levelOfEducation || ''}
+              onChange={(e) => onChange('levelOfEducation', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select Level</option>
+              {educationLevels.map((level) => (
+                <option key={level} value={level}>{level}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">What did you study?</label>
+            <input
+              type="text"
+              value={employmentData.whatDidYouStudy || ''}
+              onChange={(e) => onChange('whatDidYouStudy', e.target.value)}
+              placeholder="Enter field of study"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">School Name</label>
+            <input
+              type="text"
+              value={employmentData.schoolName || ''}
+              onChange={(e) => onChange('schoolName', e.target.value)}
+              placeholder="Enter school name"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Start Year to End Year</label>
+            <input
+              type="text"
+              value={employmentData.studyYears || ''}
+              onChange={(e) => onChange('studyYears', e.target.value)}
+              placeholder="E.g., 2015 - 2019"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Work Experience</label>
+            <select
+              value={employmentData.workExperience || ''}
+              onChange={(e) => onChange('workExperience', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          {employmentData.workExperience === 'Yes' && (
+            <>
+              <div>
+                <label className="block text-[#171214] mb-2 text-sm">How many years?</label>
+                <input
+                  type="number"
+                  value={employmentData.yearsOfExperience || ''}
+                  onChange={(e) => onChange('yearsOfExperience', e.target.value)}
+                  placeholder="Enter years of experience"
+                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-[#171214] mb-2 text-sm">Company</label>
+                <input
+                  type="text"
+                  value={employmentData.company || ''}
+                  onChange={(e) => onChange('company', e.target.value)}
+                  placeholder="Enter company name"
+                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-[#171214] mb-2 text-sm">Job Title</label>
+                <input
+                  type="text"
+                  value={employmentData.jobTitle || ''}
+                  onChange={(e) => onChange('jobTitle', e.target.value)}
+                  placeholder="Enter job title"
+                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-[#171214] mb-2 text-sm">Duration</label>
+                <input
+                  type="text"
+                  value={employmentData.duration || ''}
+                  onChange={(e) => onChange('duration', e
+
+.target.value)}
+                  placeholder="E.g., 2018 - 2020"
+                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-[#171214] mb-2 text-sm">Job Description</label>
+                <textarea
+                  value={employmentData.jobDescription || ''}
+                  onChange={(e) => onChange('jobDescription', e.target.value)}
+                  placeholder="Enter job description"
+                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
+                />
+              </div>
+            </>
+          )}
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Additional Skills</label>
+            <Select
+              isMulti
+              value={skills.filter(s => employmentData.additionalSkills?.includes(s)).map(s => ({ value: s, label: s }))}
+              onChange={(selected) => handleMultiSelectChange('additionalSkills', selected)}
+              options={skills.map(s => ({ value: s, label: s }))}
+              placeholder="Select skills"
+              className="text-sm"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: '#f3f4f6',
+                  border: 'none',
+                  boxShadow: 'none',
+                  '&:hover': { border: 'none' }
+                }),
+                placeholder: (base) => ({ ...base, color: '#6B7280' }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                })
+              }}
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Additional Certificate or License</label>
+            <input
+              type="text"
+              value={employmentData.additionalCertificate || ''}
+              onChange={(e) => onChange('additionalCertificate', e.target.value)}
+              placeholder="Enter any certificates or licenses"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Languages</label>
+            <input
+              type="text"
+              value={employmentData.languages || ''}
+              onChange={(e) => onChange('languages', e.target.value)}
+              placeholder="Enter languages (e.g., English, Yoruba)"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 className="text-[#171214] mb-3 text-sm font-bold">Job Preferences</h3>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Preferred Job Title</label>
+            <input
+              type="text"
+              value={employmentData.preferredJobTitle || ''}
+              onChange={(e) => onChange('preferredJobTitle', e.target.value)}
+              placeholder="Enter preferred job title"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Preferred Job Location</label>
+            <input
+              type="text"
+              value={employmentData.jobLocation || ''}
+              onChange={(e) => onChange('jobLocation', e.target.value)}
+              placeholder="Enter preferred job location"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Preferred Job Type</label>
+            <select
+              value={employmentData.jobType || ''}
+              onChange={(e) => onChange('jobType', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select Job Type</option>
+              {jobTypes.map((type) => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Preferred Start Date</label>
+            <input
+              type="date"
+              value={employmentData.startDate || ''}
+              onChange={(e) => onChange('startDate', e.target.value)}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Expected Salary</label>
+            <input
+              type="text"
+              value={employmentData.salary || ''}
+              onChange={(e) => onChange('salary', e.target.value)}
+              placeholder="Enter expected salary (e.g., ₦100,000/month)"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Preferred Benefits</label>
+            <Select
+              isMulti
+              value={benefits.filter(b => employmentData.benefits?.includes(b)).map(b => ({ value: b, label: b }))}
+              onChange={(selected) => handleMultiSelectChange('benefits', selected)}
+              options={benefits.map(b => ({ value: b, label: b }))}
+              placeholder="Select preferred benefits"
+              className="text-sm"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: '#f3f4f6',
+                  border: 'none',
+                  boxShadow: 'none',
+                  '&:hover': { border: 'none' }
+                }),
+                placeholder: (base) => ({ ...base, color: '#6B7280' }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                })
+              }}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="mt-4">
+        <label className="flex items-start md:items-center text-sm text-[#171214]">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="mr-2"
+          />
+          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+        </label>
+      </div>
+    </div>
+  );
+};
+
