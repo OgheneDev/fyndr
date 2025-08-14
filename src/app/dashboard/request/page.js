@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState, Suspense } from "react";
-import { Loader2 } from "lucide-react";
 import { getUserRequestById } from "@/api/requests/users/requests";
 import { getMerchantRequestById } from "@/api/requests/merchants/requests";
 import { initiatePayment, verifyPayment } from "@/api/payments/requests";
@@ -22,7 +21,6 @@ import Image from "next/image";
 import RequestDetailsHeader from "@/components/request/RequestDetailsHeader";
 import RequestDetailsSections from "@/components/merchant request/RequestDetailsSection";
 import InterestedMerchants from "@/components/request/InterestedMerchants";
-import ChooseMerchant from "@/components/request/ChooseMerchant";
 import RequestActions from "@/components/request/RequestActions";
 import PaymentChatSection from "@/components/request/PaymentChatSection";
 import RatingModal from "@/components/request/RatingModal";
@@ -363,17 +361,6 @@ function RequestDetailPageInner() {
                         merchants={data.interestedMerchants}
                         onAccept={handleAcceptMerchant}
                         actionLoading={actionLoading}
-                    />
-                )}
-
-                {/* Choose Merchant */}
-                {showMerchantActions && data.interestedMerchants && data.interestedMerchants.length > 0 && (
-                    <ChooseMerchant
-                        merchants={data.interestedMerchants}
-                        chooseMerchantId={chooseMerchantId}
-                        setChooseMerchantId={setChooseMerchantId}
-                        onChoose={handleChooseMerchant}
-                        loading={chooseMerchantLoading}
                     />
                 )}
 

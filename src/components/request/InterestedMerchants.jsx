@@ -37,36 +37,6 @@ const InterestedMerchants = ({ merchants, onAccept, actionLoading, chooseMerchan
             </div>
           </div>
         </div>
-    <div className="mt-8 bg-gray-100 p-6 rounded-xl md:w-[400px] md:mx-auto shadow-md">
-      <h4 className="text-md text-gray-900 uppercase font-medium mb-4">Choose a Merchant</h4>
-      <select 
-        id="merchantSelect"
-        value={chooseMerchantId} 
-        onChange={(e) => {
-          console.log('Selected merchant ID:', e.target.value);
-          setChooseMerchantId(e.target.value);
-        }}
-        className="w-full p-3 mb-4 border-gray-800 rounded-md bg-white outline-none text-sm"
-      >
-        <option value="">Select a merchant</option>
-        {merchants.map((merchant) => {
-          return (
-            <option key={merchant._id} value={merchant.merchant?._id}>
-              {merchant.merchant?.businessName}
-            </option>
-          );
-        })}
-      </select>
-      <button
-        onClick={() => {
-          onChoose();
-        }}
-        disabled={!chooseMerchantId || chooseMerchantLoading}
-        className="w-full bg-gray-500 text-sm text-white px-4 cursor-pointer py-3 rounded-md disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:bg-gray-600"
-      >
-        {chooseMerchantLoading ? "Choosing..." : "Choose Merchant"}
-      </button>
-    </div>
        </div>
       ))}
     </div>

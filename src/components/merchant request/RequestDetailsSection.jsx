@@ -22,15 +22,6 @@ const formatBudget = (lower, upper) => {
   return "Not specified";
 };
 
-const getLocationText = (data) => {
-  if (data.carHire?.pickupLocation) return data.carHire.pickupLocation;
-  if (data.cleaning?.propertyLocation) return data.cleaning.propertyLocation;
-  if (data.realEstate?.targetState) return data.realEstate.targetState;
-  if (data.carPart?.currentLocation) return data.carPart.currentLocation;
-  if (data.automobile?.location) return data.automobile.location;
-  return "Location not specified";
-};
-
 const getBudgetText = (data) => {
   if (data.realEstate?.lowerPriceLimit && data.realEstate?.upperPriceLimit) {
     return formatBudget(data.realEstate.lowerPriceLimit, data.realEstate.upperPriceLimit);
@@ -46,6 +37,36 @@ const getBudgetText = (data) => {
   }
   if (data.automobile?.lowerPriceLimit && data.automobile?.upperPriceLimit) {
     return formatBudget(data.automobile.lowerPriceLimit, data.automobile.upperPriceLimit);
+  }
+  if (data.beauty?.lowerPriceLimit && data.beauty?.upperPriceLimit) {
+    return formatBudget(data.beauty.lowerPriceLimit, data.beauty.upperPriceLimit);
+  }
+  if (data.catering?.lowerPriceLimit && data.catering?.upperPriceLimit) {
+    return formatBudget(data.catering.lowerPriceLimit, data.catering.upperPriceLimit);
+  }
+  if (data.carpentry?.lowerPriceLimit && data.carpentry?.upperPriceLimit) {
+    return formatBudget(data.carpentry.lowerPriceLimit, data.carpentry.upperPriceLimit);
+  }
+  if (data.electrician?.lowerPriceLimit && data.electrician?.upperPriceLimit) {
+    return formatBudget(data.electrician.lowerPriceLimit, data.electrician.upperPriceLimit);
+  }
+  if (data.it?.lowerPriceLimit && data.it?.upperPriceLimit) {
+    return formatBudget(data.it.lowerPriceLimit, data.it.upperPriceLimit);
+  }
+  if (data.mechanic?.lowerPriceLimit && data.mechanic?.upperPriceLimit) {
+    return formatBudget(data.mechanic.lowerPriceLimit, data.mechanic.upperPriceLimit);
+  }
+  if (data.media?.lowerPriceLimit && data.media?.upperPriceLimit) {
+    return formatBudget(data.media.lowerPriceLimit, data.media.upperPriceLimit);
+  }
+  if (data.plumber?.lowerPriceLimit && data.plumber?.upperPriceLimit) {
+    return formatBudget(data.plumber.lowerPriceLimit, data.plumber.upperPriceLimit);
+  }
+  if (data.hospitality?.lowerPriceLimit && data.hospitality?.upperPriceLimit) {
+    return formatBudget(data.hospitality.lowerPriceLimit, data.hospitality.upperPriceLimit);
+  }
+  if (data.eventManagement?.lowerPriceLimit && data.eventManagement?.upperPriceLimit) {
+    return formatBudget(data.eventManagement.lowerPriceLimit, data.eventManagement.upperPriceLimit);
   }
   return "Not specified";
 };
@@ -83,11 +104,11 @@ const RequestDetailsSections = ({ data }) => (
         <article>
           <span className="font-semibold mb-1 text-sm">Details</span>
           <p
-  className="text-gray-700 text-[12px]"
-  style={{ wordBreak: 'break-word' }}
->
-  {data.additionalDetails}
-</p>
+            className="text-gray-700 text-[12px]"
+            style={{ wordBreak: 'break-word' }}
+          >
+            {data.additionalDetails}
+          </p>
         </article>
       </div>
       <div className="mb-5">
@@ -206,7 +227,7 @@ const RequestDetailsSections = ({ data }) => (
                 <p className="text-gray-700 text-[12px]">{data.carPart.sourcingLocation}</p>
               </article>
               <article>
-                <span className="font.regular mb-1 text-sm">Car Make</span>
+                <span className="font-semibold mb-1 text-sm">Car Make</span>
                 <p className="text-gray-700 text-[12px]">{data.carPart.carMake}</p>
               </article>
               <article>
@@ -257,6 +278,236 @@ const RequestDetailsSections = ({ data }) => (
               <article>
                 <span className="font-semibold mb-1 text-sm">Transmission</span>
                 <p className="text-gray-700 text-[12px]">{data.automobile.transmission}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.beauty && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Beauty Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Target Location</span>
+                <p className="text-gray-700 text-[12px]">{data.beauty.targetLocation}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Service</span>
+                <p className="text-gray-700 text-[12px]">{data.beauty.service}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Date</span>
+                <p className="text-gray-700 text-[12px]">{formatDate(data.beauty.date)}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Time</span>
+                <p className="text-gray-700 text-[12px]">{data.beauty.time}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.catering && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Catering Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Location</span>
+                <p className="text-gray-700 text-[12px]">{data.catering.location}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Event Location</span>
+                <p className="text-gray-700 text-[12px]">{data.catering.eventLocation}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Event Date</span>
+                <p className="text-gray-700 text-[12px]">{formatDate(data.catering.eventDate)}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.carpentry && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Carpentry Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Location</span>
+                <p className="text-gray-700 text-[12px]">{data.carpentry.location}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Date Needed</span>
+                <p className="text-gray-700 text-[12px]">{formatDate(data.carpentry.dateNeeded)}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.electrician && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Electrician Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Location</span>
+                <p className="text-gray-700 text-[12px]">{data.electrician.location}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Date Needed</span>
+                <p className="text-gray-700 text-[12px]">{formatDate(data.electrician.dateNeeded)}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.it && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">IT Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Target Location</span>
+                <p className="text-gray-700 text-[12px]">{data.it.targetLocation}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Service</span>
+                <p className="text-gray-700 text-[12px]">{data.it.service}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.mechanic && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Mechanic Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Current Location</span>
+                <p className="text-gray-700 text-[12px]">{data.mechanic.currentLocation}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Car Make</span>
+                <p className="text-gray-700 text-[12px]">{data.mechanic.carMake}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Car Model</span>
+                <p className="text-gray-700 text-[12px]">{data.mechanic.carModel}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Year</span>
+                <p className="text-gray-700 text-[12px]">{data.mechanic.year}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Transmission</span>
+                <p className="text-gray-700 text-[12px]">{data.mechanic.transmission}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.media && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Media Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Target Location</span>
+                <p className="text-gray-700 text-[12px]">{data.media.targetLocation}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Service</span>
+                <p className="text-gray-700 text-[12px]">{data.media.service}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.plumber && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Plumber Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Location</span>
+                <p className="text-gray-700 text-[12px]">{data.plumber.location}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Date Needed</span>
+                <p className="text-gray-700 text-[12px]">{formatDate(data.plumber.dateNeeded)}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.hospitality && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Hospitality Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Location</span>
+                <p className="text-gray-700 text-[12px]">{data.hospitality.location}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Service</span>
+                <p className="text-gray-700 text-[12px]">{data.hospitality.service}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Date Needed</span>
+                <p className="text-gray-700 text-[12px]">{formatDate(data.hospitality.dateNeeded)}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Time Needed</span>
+                <p className="text-gray-700 text-[12px]">{data.hospitality.timeNeeded}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Price Range</span>
+                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+              </article>
+            </div>
+          </div>
+        )}
+        {data.eventManagement && (
+          <div>
+            <h4 className="text-sm font-semibold mb-2">Event Management Details</h4>
+            <div className="space-y-4">
+              <article>
+                <span className="font-semibold mb-1 text-sm">Location</span>
+                <p className="text-gray-700 text-[12px]">{data.eventManagement.location}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Service</span>
+                <p className="text-gray-700 text-[12px]">{data.eventManagement.service}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Event Location</span>
+                <p className="text-gray-700 text-[12px]">{data.eventManagement.eventLocation}</p>
+              </article>
+              <article>
+                <span className="font-semibold mb-1 text-sm">Date Needed</span>
+                <p className="text-gray-700 text-[12px]">{formatDate(data.eventManagement.dateNeeded)}</p>
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Price Range</span>

@@ -20,7 +20,7 @@ const formatDate = (dateString) => {
 
 const formatBudget = (lower, upper) => {
   if (lower && upper) {
-    const formattedLower = Number(lower).toLocaleString("en-NG", {
+    const formattedLower = Number(lower).toLocaleString("en-NG", { 
       style: "currency",
       currency: "NGN",
       minimumFractionDigits: 0,
@@ -37,23 +37,6 @@ const formatBudget = (lower, upper) => {
   return "Not specified";
 };
 
-const getLocationText = (data) => {
-  if (data.carHire?.pickupLocation) return data.carHire.pickupLocation;
-  if (data.cleaning?.propertyLocation) return data.cleaning.propertyLocation;
-  if (data.carPart?.currentLocation) return data.carPart.currentLocation;
-  if (data.automobile?.location) return data.automobile.location;
-  if (data.beauty?.targetLocation) return data.beauty.targetLocation;
-  if (data.catering?.location) return data.catering.location;
-  if (data.carpentry?.location) return data.carpentry.location;
-  if (data.electrician?.location) return data.electrician.location;
-  if (data.it?.targetLocation) return data.it.targetLocation;
-  if (data.mechanic?.currentLocation) return data.mechanic.currentLocation;
-  if (data.media?.targetLocation) return data.media.targetLocation;
-  if (data.plumber?.location) return data.plumber.location;
-  if (data.hospitality?.location) return data.hospitality.location;
-  if (data.eventManagement?.location) return data.eventManagement.location;
-  return data.targetState || "Location not specified";
-};
 
 const getBudgetText = (data) => {
   if (data.realEstate?.lowerPriceLimit && data.realEstate?.upperPriceLimit) {
