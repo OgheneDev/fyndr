@@ -28,15 +28,15 @@ const Navbar = () => {
     }
 
     const handleLogout = () => {
-    logout(); // Clear auth state
-    setUserData(null);
-    setProfile(null);
-    router.replace("/"); // Navigate to home
-  };
+        logout();
+        setUserData(null);
+        setProfile(null);
+        router.replace("/");
+    };
 
     useEffect(() => {
-    setIsLoggedIn(isAuthenticated);
-  }, [isAuthenticated]);
+        setIsLoggedIn(isAuthenticated);
+    }, [isAuthenticated]);
 
     useEffect(() => {
         let isMounted = true;
@@ -81,7 +81,6 @@ const Navbar = () => {
         { name: 'Messages', path: '/dashboard/messages', icon: MessageSquare },
     ]
 
-    // Animation variants
     const navbarVariants = {
         hidden: { opacity: 0, y: -20 },
         visible: {
@@ -224,12 +223,12 @@ const Navbar = () => {
 
     return (
         <motion.header 
-            className='p-5  md:px-12 flex justify-between w-full border-b border-gray-100 bg-white items-center fixed top-0 z-100'
+            className='p-5 lg:px-16 flex justify-between w-full border-b border-gray-100 bg-white items-center fixed top-0 z-100'
             variants={navbarVariants}
             initial="hidden"
             animate="visible"
         >
-            <div className="flex gap-14 items-center">
+            <div className="flex gap-16 items-center">
                 <motion.div variants={logoVariants}>
                     <Link href='/'>
                         <Image
@@ -242,9 +241,9 @@ const Navbar = () => {
                 </motion.div>
 
                 {/* Desktop Menu */}
-                <nav className='hidden md:block'>
+                <nav className='hidden lg:block'>
                     <motion.ul 
-                        className='flex items-center gap-5 text-sm'
+                        className='flex items-center gap-8 text-sm'
                         variants={navbarVariants}
                     >
                         {navItems.map((item, index) => (
@@ -269,14 +268,13 @@ const Navbar = () => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div 
-                        className="fixed top-0 right-0 h-full w-[280px] bg-white z-50 shadow-2xl"
+                        className="fixed top-0 right-0 h-full md:w-[430px] w-[280px] bg-white z-50 shadow-2xl"
                         variants={mobileMenuVariants}
                         initial="hidden"
                         animate="visible"
                         exit="exit"
                     >
                         <div className='h-full flex flex-col'>
-                            {/* Header */}
                             <motion.div 
                                 className='p-6 flex justify-between items-center border-b'
                                 variants={mobileNavItemVariants}
@@ -299,7 +297,6 @@ const Navbar = () => {
                                 </motion.button>
                             </motion.div>
 
-                            {/* Navigation */}
                             <nav className='overflow-y-auto flex-grow'>
                                 <ul className='py-4'>
                                     {navItems.map((item, index) => (
@@ -334,7 +331,6 @@ const Navbar = () => {
                                 </ul>
                             </nav>
 
-                            {/* Login/Logout & Signup buttons */}
                             <motion.div 
                                 className="p-6 border-t flex flex-col gap-3"
                                 variants={mobileNavItemVariants}
@@ -378,7 +374,7 @@ const Navbar = () => {
 
             {/* Desktop Auth Section */}
             <motion.div 
-                className='hidden md:flex gap-5 items-center cursor-pointer ml-auto'
+                className='hidden lg:flex gap-8 items-center cursor-pointer ml-auto'
                 variants={navbarVariants}
             >
                 {isLoggedIn ? (
@@ -443,7 +439,7 @@ const Navbar = () => {
                     <>
                         <Link href={'/login'}>
                             <motion.button 
-                                className='py-2 px-5 text-sm cursor-pointer'
+                                className='py-2 px-6 text-sm cursor-pointer'
                                 variants={buttonVariants}
                                 whileHover={{ 
                                     y: -1,
@@ -455,7 +451,7 @@ const Navbar = () => {
                         </Link>
                         <Link href={'register'}>
                             <motion.button 
-                                className='bg-[#57132A] text-white text-sm cursor-pointer py-2 px-5 rounded-md'
+                                className='bg-[#57132A] text-white text-sm cursor-pointer py-2 px-6 rounded-md'
                                 variants={buttonVariants}
                                 whileHover={{ 
                                     scale: 1.02,
@@ -478,10 +474,9 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
             >
-                <Menu size={30} onClick={toggleMenu} className="text-[#0A2F1E] md:hidden cursor-pointer" />
+                <Menu size={30} onClick={toggleMenu} className="text-[#0A2F1E] lg:hidden cursor-pointer" />
             </motion.div>
 
-            {/* Overlay */}
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div

@@ -56,13 +56,13 @@ const HeroSection = () => {
 
   return (
     <motion.section 
-      className='flex flex-col md:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[80px] md:py-10 md:pt-[160px] md:px-12 overflow-hidden'
+      className='flex flex-col lg:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[80px] md:py-10 md:pt-[160px] md:px-12 overflow-hidden'
       variants={containerVariants}
       initial="hidden"
       animate="visible" 
     >
       <motion.div 
-        className="text-content md:w-1/2 overflow-hidden"
+        className="text-content lg:w-1/2 overflow-hidden"
         variants={textVariants}
       >
         <article className='space-y-5 mb-7 text-center md:text-start'>
@@ -70,18 +70,18 @@ const HeroSection = () => {
             className='text-2xl md:text-5xl font-bold'
             variants={textVariants}
           >
-            Connect with nearby <br className='hidden md:block' />
-            Merchants offering <br className='hidden md:block' />
+            Connect with nearby <br className='hidden lg:block' />
+            Merchants offering <br className='hidden lg:block' />
             services you need
           </motion.h1>
           <motion.p 
             className='text-sm'
             variants={textVariants}
           >
-            Connect with nearby Merchants offering services you<br className='hidden md:block' />
-            need Connect with nearby Merchants offering<br className='hidden md:block' />
-            services you need Connect with nearby Merchants<br className='hidden md:block' />
-            offering services you need Connect with nearby<br className='hidden md:block' />
+            Connect with nearby Merchants offering services you<br className='hidden lg:block' />
+            need Connect with nearby Merchants offering<br className='hidden lg:block' />
+            services you need Connect with nearby Merchants<br className='hidden lg:block' />
+            offering services you need Connect with nearby<br className='hidden lg:block' />
             Merchants offering services you need
           </motion.p>
         </article>
@@ -109,7 +109,7 @@ const HeroSection = () => {
       </motion.div>
 
       <motion.div 
-        className="image-content md:w-1/2 overflow-hidden"
+        className="image-content lg:w-1/2 overflow-hidden"
         variants={imageVariants}
       >
         <Image

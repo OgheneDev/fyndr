@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }) {
       {!shouldHideLayout && <Navbar />}
       <div className="flex flex-1">
         {!shouldHideLayout && <Sidebar />}
-        <main className={`flex-1 ${!shouldHideLayout ? "md:ml-[280px]" : ""}`}>
+        <main className={`flex-1 ${!shouldHideLayout ? "lg:ml-[280px]" : ""}`}>
           <div className="mb-7 md:mb-0">{children}</div>
           {!shouldHideLayout && <BottomNavbar />}
         </main>

@@ -31,7 +31,7 @@ const BottomNavbar = () => {
       : [...commonMenuItems];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black/40 bg-blend-overlay bg-opacity-90 backdrop-blur-md border-opacity-20 md:hidden z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-black/40 bg-blend-overlay bg-opacity-90 backdrop-blur-md border-opacity-20 lg:hidden z-50">
       <div className="flex items-center justify-around py-2">
         {menuItems.map((item, idx) => {
           const IconComponent = item.icon;

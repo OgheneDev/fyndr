@@ -96,7 +96,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-white w-[280px] flex-col h-full hidden md:flex fixed top-0 left-0 border-r border-gray-100">
+    <div className="bg-white w-[280px] flex-col h-full hidden lg:flex fixed top-0 left-0 border-r border-gray-100">
       <div className="px-4 py-4 flex-1 pt-[100px]">
         <ul className="flex flex-col space-y-1">
           {menuItems.map((item, index) => {
