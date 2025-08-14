@@ -17,7 +17,7 @@ export const ConversationsList = ({
     <div className="bg-white md:max-w-4xl mx-auto overflow-hidden">
       {conversationsLoading ? (
         <>
-          {[...Array(7)].map((_, i) => <ConversationSkeleton key={i} />)}
+          {[...Array(20)].map((_, i) => <ConversationSkeleton key={i} />)}
         </>
       ) : (
         sortedConversations.map((conversation) => {

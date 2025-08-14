@@ -347,7 +347,7 @@ function RequestDetailPageInner() {
     const showMerchantActions = isPaid;
 
     return (
-        <div className="min-h-screen md:max-w-4xl md:mx-auto pb-[60px] pt-[72px] md:pt-[80px]">
+        <div className="min-h-screen md:max-w-4xl md:mx-auto pb-[60px] lg:pb-[60px] md:pb-[100px] pt-[72px] md:pt-[80px]">
             {/* Header */}
             <RequestDetailsHeader onBack={handleBack} />
 

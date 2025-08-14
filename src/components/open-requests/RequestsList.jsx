@@ -21,7 +21,7 @@ const RequestsList = ({ loading, filteredRequests, getServiceLabel }) => {
   return (
     <div className="space-y-5">
       {loading ? (
-        Array.from({ length: 4 }).map((_, idx) => (
+        Array.from({ length: 20 }).map((_, idx) => (
           <div
             key={idx}
             className="bg-white rounded-2xl p-4 animate-pulse border border-gray-100"

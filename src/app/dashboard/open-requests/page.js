@@ -51,7 +51,7 @@ const OpenRequestsPage = () => {
   }
 
   return (
-    <div className="min-h-screen pb-12 pt-[72px] md:pt-[80px] md:pb-0">
+    <div className="min-h-screen pb-12 md:pb-20 pt-[72px] md:pt-[80px] lg:pb-0">
       {/* Header */}
       <div className="bg-white ">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
