@@ -156,7 +156,7 @@ const ServicesModal = ({ isOpen, onClose, onSelectService }) => {
                   onClick={() => {
                     onSelectService(service.category)
                   }}
-                  className={`w-full text-left p-4 cursor-pointer mb-2 border-b hover:bg-gray-100/50 transition-all border-gray-300 ${
+                  className={`w-full text-left p-4 cursor-pointer mb-2 border-b hover:rounded-md duration-300 hover:border-0 hover:bg-gray-100/50 transition-all border-gray-300 ${
                     focusedIndex === index ? '' : ''
                   }`}
                   onMouseEnter={() => setFocusedIndex(index)}

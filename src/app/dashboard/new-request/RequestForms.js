@@ -3,7 +3,7 @@
 import React, {useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Megaphone } from 'lucide-react'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Select from 'react-select'
@@ -1782,32 +1782,20 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
 export function EmploymentSelectionForm({ onSelectRole }) {
   return (
     <div className="space-y-6">
-      <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
-        <Link href={'/dashboard'}>
-          <button className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
-            <ArrowLeft className="w-6 h-6 text-gray-600" />
-          </button>
-        </Link>
-        <article className="text-center">
-          <h2 className="text-lg font-bold mb-1">Employment Request</h2>
-          <p className="text-[12px]">Select your role to proceed</p>
-        </article>
-      </div>
-      <div className="md:hidden mt-12">
-        <ProvidersSlider />
-      </div>
       <div className="mt-5 md:mt-16 text-center">
-        <h3 className="text-[#171214] mb-4 text-sm">Are you an Employer or a Job Seeker?</h3>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <p className='text-sm mb-20'>Post or view Job vacancies or register as a job seeker</p>
+        <h3 className="text-[#171214] mb-4 text-sm">Are you an</h3>
+        <div className="flex flex-col gap-4 justify-center">
           <button
             onClick={() => onSelectRole('employer')}
-            className="px-6 py-3 bg-[#541229] text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
+            className="px-6 py-3 w-full bg-[#541229] cursor-pointer text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
           >
             Employer
           </button>
+          <span className='text-sm uppercase'>Or</span>
           <button
             onClick={() => onSelectRole('jobSeeker')}
-            className="px-6 py-3 bg-[#541229] text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
+            className="px-6 py-3 w-full bg-[#541229] cursor-pointer text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
           >
             Job Seeker
           </button>

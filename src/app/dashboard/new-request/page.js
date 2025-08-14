@@ -96,7 +96,7 @@ const SearchParamsTab = ({ setActiveTab, initialTab }) => {
   return null;
 };
 
-const NewRequestPage = () => {
+const NewRequestPageContent = () => {
   const router = useRouter();
   const { token } = useAuthStore();
   const initialTab = 'Properties';
@@ -175,7 +175,6 @@ const NewRequestPage = () => {
     details: '',
   });
   const [electricianData, setElectricianData] = useState({
-    
     state: '',
     location: '',
     dateNeeded: '',
@@ -225,38 +224,38 @@ const NewRequestPage = () => {
     details: '',
   });
   const [employmentData, setEmploymentData] = useState({
-  role: '',
-  companyName: '',
-  firstName: '',
-  lastName: '',
-  phoneNumber: '',
-  emailAddress: '',
-  howDidYouHear: '',
-  jobTitle: '',
-  jobLocation: '',
-  state: '',
-  lga: '',
-  area: '',
-  graduate: '',
-  jobType: '',
-  startDate: '',
-  salary: '',
-  benefits: [],
-  availableVacancy: '',
-  additionalCertificate: '',
-  jobDescription: '',
-  levelOfEducation: '',
-  whatDidYouStudy: '',
-  schoolName: '',
-  studyYears: '',
-  workExperience: '',
-  yearsOfExperience: '',
-  company: '',
-  duration: '',
-  additionalSkills: [],
-  languages: '',
-  preferredJobTitle: '',
-});
+    role: '',
+    companyName: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    emailAddress: '',
+    howDidYouHear: '',
+    jobTitle: '',
+    jobLocation: '',
+    state: '',
+    lga: '',
+    area: '',
+    graduate: '',
+    jobType: '',
+    startDate: '',
+    salary: '',
+    benefits: [],
+    availableVacancy: '',
+    additionalCertificate: '',
+    jobDescription: '',
+    levelOfEducation: '',
+    whatDidYouStudy: '',
+    schoolName: '',
+    studyYears: '',
+    workExperience: '',
+    yearsOfExperience: '',
+    company: '',
+    duration: '',
+    additionalSkills: [],
+    languages: '',
+    preferredJobTitle: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -355,11 +354,11 @@ const NewRequestPage = () => {
     }));
   };
   const handleEmploymentChange = (field, value) => {
-  setEmploymentData((prev) => ({
-    ...prev,
-    [field]: value,
-  }));
-};
+    setEmploymentData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const getCategory = () => {
     const tab = tabs.find((t) => t.label === activeTab);
@@ -488,44 +487,45 @@ const NewRequestPage = () => {
         eventManagementData.eventLocation &&
         eventManagementData.dateNeeded
       );
-    }
-    else if (category === 'employment') {
-    if (employmentData.role === 'employer') {
-      return (
-        employmentData.companyName &&
-        employmentData.firstName &&
-        employmentData.lastName &&
-        employmentData.phoneNumber &&
-        employmentData.emailAddress &&
-        employmentData.jobTitle &&
-        employmentData.jobLocation &&
-        employmentData.state &&
-        employmentData.lga &&
-        employmentData.area &&
-        employmentData.graduate &&
-        employmentData.jobType &&
-        employmentData.startDate &&
-        employmentData.salary &&
-        employmentData.availableVacancy &&
-        employmentData.jobDescription
-      );
-    } else if (employmentData.role === 'jobSeeker') {
-      return (
-        employmentData.firstName &&
-        employmentData.lastName &&
-        employmentData.phoneNumber &&
-        employmentData.emailAddress &&
-        employmentData.state &&
-        employmentData.lga &&
-        employmentData.area &&
-        employmentData.graduate &&
-        employmentData.levelOfEducation &&
-        employmentData.preferredJobTitle &&
-        employmentData.jobLocation &&
-        employmentData.jobType &&
-        employmentData.startDate &&
-        employmentData.salary
-      );
+    } else if (category === 'employment') {
+      if (employmentData.role === 'employer') {
+        return (
+          employmentData.companyName &&
+          employmentData.firstName &&
+          employmentData.lastName &&
+          employmentData.phoneNumber &&
+          employmentData.emailAddress &&
+          employmentData.jobTitle &&
+          employmentData.jobLocation &&
+          employmentData.state &&
+          employmentData.lga &&
+          employmentData.area &&
+          employmentData.graduate &&
+          employmentData.jobType &&
+          employmentData.startDate &&
+          employmentData.salary &&
+          employmentData.availableVacancy &&
+          employmentData.jobDescription
+        );
+      } else if (employmentData.role === 'jobSeeker') {
+        return (
+          employmentData.firstName &&
+          employmentData.lastName &&
+          employmentData.phoneNumber &&
+          employmentData.emailAddress &&
+          employmentData.state &&
+          employmentData.lga &&
+          employmentData.area &&
+          employmentData.graduate &&
+          employmentData.levelOfEducation &&
+          employmentData.preferredJobTitle &&
+          employmentData.jobLocation &&
+          employmentData.jobType &&
+          employmentData.startDate &&
+          employmentData.salary
+        );
+      }
+      return false;
     }
     return false;
   };
@@ -882,147 +882,144 @@ const NewRequestPage = () => {
           dateNeeded: '',
           details: '',
         });
+      } else if (category === 'employment') {
+        if (employmentData.role === 'employer') {
+          const response = await employmentRequest({
+            title: 'Employer Request',
+            role: employmentData.role,
+            companyName: employmentData.companyName,
+            firstName: employmentData.firstName,
+            lastName: employmentData.lastName,
+            phoneNumber: employmentData.phoneNumber,
+            emailAddress: employmentData.emailAddress,
+            howDidYouHear: employmentData.howDidYouHear,
+            jobTitle: employmentData.jobTitle,
+            jobLocation: employmentData.jobLocation,
+            state: employmentData.state,
+            lga: employmentData.lga,
+            area: employmentData.area,
+            graduate: employmentData.graduate,
+            jobType: employmentData.jobType,
+            startDate: employmentData.startDate,
+            salary: employmentData.salary,
+            benefits: employmentData.benefits,
+            availableVacancy: employmentData.availableVacancy,
+            additionalCertificate: employmentData.additionalCertificate,
+            jobDescription: employmentData.jobDescription,
+          });
+          requestId = response.data._id;
+          if (!requestId) {
+            throw new Error('Request ID not found in API response');
+          }
+          setEmploymentData({
+            role: '',
+            companyName: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            emailAddress: '',
+            howDidYouHear: '',
+            jobTitle: '',
+            jobLocation: '',
+            state: '',
+            lga: '',
+            area: '',
+            graduate: '',
+            jobType: '',
+            startDate: '',
+            salary: '',
+            benefits: [],
+            availableVacancy: '',
+            additionalCertificate: '',
+            jobDescription: '',
+            levelOfEducation: '',
+            whatDidYouStudy: '',
+            schoolName: '',
+            studyYears: '',
+            workExperience: '',
+            yearsOfExperience: '',
+            company: '',
+            duration: '',
+            additionalSkills: [],
+            languages: '',
+            preferredJobTitle: '',
+          });
+        } else if (employmentData.role === 'jobSeeker') {
+          const response = await employmentRequest({
+            title: 'Job Seeker Request',
+            role: employmentData.role,
+            firstName: employmentData.firstName,
+            lastName: employmentData.lastName,
+            phoneNumber: employmentData.phoneNumber,
+            emailAddress: employmentData.emailAddress,
+            howDidYouHear: employmentData.howDidYouHear,
+            state: employmentData.state,
+            lga: employmentData.lga,
+            area: employmentData.area,
+            graduate: employmentData.graduate,
+            levelOfEducation: employmentData.levelOfEducation,
+            whatDidYouStudy: employmentData.whatDidYouStudy,
+            schoolName: employmentData.schoolName,
+            studyYears: employmentData.studyYears,
+            workExperience: employmentData.workExperience,
+            yearsOfExperience: Number(employmentData.yearsOfExperience) || 0,
+            company: employmentData.company,
+            jobTitle: employmentData.jobTitle,
+            duration: employmentData.duration,
+            jobDescription: employmentData.jobDescription,
+            additionalSkills: employmentData.additionalSkills,
+            additionalCertificate: employmentData.additionalCertificate,
+            languages: employmentData.languages,
+            preferredJobTitle: employmentData.preferredJobTitle,
+            jobLocation: employmentData.jobLocation,
+            jobType: employmentData.jobType,
+            startDate: employmentData.startDate,
+            salary: employmentData.salary,
+            benefits: employmentData.benefits,
+          });
+          requestId = response.data._id;
+          if (!requestId) {
+            throw new Error('Request ID not found in API response');
+          }
+          setEmploymentData({
+            role: '',
+            companyName: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            emailAddress: '',
+            howDidYouHear: '',
+            jobTitle: '',
+            jobLocation: '',
+            state: '',
+            lga: '',
+            area: '',
+            graduate: '',
+            jobType: '',
+            startDate: '',
+            salary: '',
+            benefits: [],
+            availableVacancy: '',
+            additionalCertificate: '',
+            jobDescription: '',
+            levelOfEducation: '',
+            whatDidYouStudy: '',
+            schoolName: '',
+            studyYears: '',
+            workExperience: '',
+            yearsOfExperience: '',
+            company: '',
+            duration: '',
+            additionalSkills: [],
+            languages: '',
+            preferredJobTitle: '',
+          });
+        } else {
+          throw new Error('No role selected for employment request');
+        }
       } else {
         throw new Error(`Unknown request category: ${category}`);
-      } 
-      if (category === 'employment') {
-      if (employmentData.role === 'employer') {
-        const response = await employmentRequest({
-          title: 'Employer Request',
-          role: employmentData.role,
-          companyName: employmentData.companyName,
-          firstName: employmentData.firstName,
-          lastName: employmentData.lastName,
-          phoneNumber: employmentData.phoneNumber,
-          emailAddress: employmentData.emailAddress,
-          howDidYouHear: employmentData.howDidYouHear,
-          jobTitle: employmentData.jobTitle,
-          jobLocation: employmentData.jobLocation,
-          state: employmentData.state,
-          lga: employmentData.lga,
-          area: employmentData.area,
-          graduate: employmentData.graduate,
-          jobType: employmentData.jobType,
-          startDate: employmentData.startDate,
-          salary: employmentData.salary,
-          benefits: employmentData.benefits,
-          availableVacancy: employmentData.availableVacancy,
-          additionalCertificate: employmentData.additionalCertificate,
-          jobDescription: employmentData.jobDescription,
-        });
-        requestId = response.data._id;
-        if (!requestId) {
-          throw new Error('Request ID not found in API response');
-        }
-        setEmploymentData({
-          role: '',
-          companyName: '',
-          firstName: '',
-          lastName: '',
-          phoneNumber: '',
-          emailAddress: '',
-          howDidYouHear: '',
-          jobTitle: '',
-          jobLocation: '',
-          state: '',
-          lga: '',
-          area: '',
-          graduate: '',
-          jobType: '',
-          startDate: '',
-          salary: '',
-          benefits: [],
-          availableVacancy: '',
-          additionalCertificate: '',
-          jobDescription: '',
-          levelOfEducation: '',
-          whatDidYouStudy: '',
-          schoolName: '',
-          studyYears: '',
-          workExperience: '',
-          yearsOfExperience: '',
-          company: '',
-          duration: '',
-          additionalSkills: [],
-          languages: '',
-          preferredJobTitle: '',
-        });
-      } else if (employmentData.role === 'jobSeeker') {
-        const response = await employmentRequest({
-          title: 'Job Seeker Request',
-          role: employmentData.role,
-          firstName: employmentData.firstName,
-          lastName: employmentData.lastName,
-          phoneNumber: employmentData.phoneNumber,
-          emailAddress: employmentData.emailAddress,
-          howDidYouHear: employmentData.howDidYouHear,
-          state: employmentData.state,
-          lga: employmentData.lga,
-          area: employmentData.area,
-          graduate: employmentData.graduate,
-          levelOfEducation: employmentData.levelOfEducation,
-          whatDidYouStudy: employmentData.whatDidYouStudy,
-          schoolName: employmentData.schoolName,
-          studyYears: employmentData.studyYears,
-          workExperience: employmentData.workExperience,
-          yearsOfExperience: Number(employmentData.yearsOfExperience) || 0,
-          company: employmentData.company,
-          jobTitle: employmentData.jobTitle,
-          duration: employmentData.duration,
-          jobDescription: employmentData.jobDescription,
-          additionalSkills: employmentData.additionalSkills,
-          additionalCertificate: employmentData.additionalCertificate,
-          languages: employmentData.languages,
-          preferredJobTitle: employmentData.preferredJobTitle,
-          jobLocation: employmentData.jobLocation,
-          jobType: employmentData.jobType,
-          startDate: employmentData.startDate,
-          salary: employmentData.salary,
-          benefits: employmentData.benefits,
-        });
-        requestId = response.data._id;
-        if (!requestId) {
-          throw new Error('Request ID not found in API response');
-        }
-        setEmploymentData({
-          role: '',
-          companyName: '',
-          firstName: '',
-          lastName: '',
-          phoneNumber: '',
-          emailAddress: '',
-          howDidYouHear: '',
-          jobTitle: '',
-          jobLocation: '',
-          state: '',
-          lga: '',
-          area: '',
-          graduate: '',
-          jobType: '',
-          startDate: '',
-          salary: '',
-          benefits: [],
-          availableVacancy: '',
-          additionalCertificate: '',
-          jobDescription: '',
-          levelOfEducation: '',
-          whatDidYouStudy: '',
-          schoolName: '',
-          studyYears: '',
-          workExperience: '',
-          yearsOfExperience: '',
-          company: '',
-          duration: '',
-          additionalSkills: [],
-          languages: '',
-          preferredJobTitle: '',
-        });
-      } else {
-        throw new Error('No role selected for employment request');
       }
-    } else {
-      throw new Error(`Unknown request category: ${category}`);
-    }
 
       setSuccess('Request submitted successfully!');
       Swal.fire({
@@ -1048,12 +1045,260 @@ const NewRequestPage = () => {
   };
 
   useEffect(() => {
-  if (activeTab !== 'Employment') {
-    setEmploymentData((prev) => ({ ...prev, role: '' }));
-  }
-}, [activeTab]);
+    // Only reset role when switching AWAY from Employment tab
+    if (activeTab !== 'Employment' && employmentData.role) {
+      setEmploymentData((prev) => ({ ...prev, role: '' }));
+    }
+  }, [activeTab, employmentData.role]);
 
-  return ( 
+  return (
+    <div className="min-h-screen bg-white">
+      <Suspense
+        fallback={
+          <div className="min-h-screen bg-white flex items-center justify-center">
+            <div className="animate-pulse">
+              <Image
+                src="/images/logo-removebg-preview.png"
+                alt="Company Logo"
+                width={100}
+                height={100}
+                className="transition-all duration-1000 hover:scale-110"
+              />
+            </div>
+          </div>
+        }
+      >
+        <SearchParamsTab setActiveTab={setActiveTab} initialTab={initialTab} />
+      </Suspense>
+      <div className="bg-white py-8 lg:px-8">
+        <div className="md:max-w-3xl md:mx-auto">
+          <div className="px-5">
+            <form className="bg-white" onSubmit={handleSubmit}>
+              {activeTab === 'Properties' && (
+                <PropertiesForm
+                  formData={formData}
+                  onChange={handleInputChange}
+                  nigerianStates={nigerianStates}
+                  propertyTypes={propertyTypes}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Car Hire' && (
+                <CarHireForm
+                  carHireData={carHireData}
+                  onChange={handleCarHireChange}
+                  nigerianStates={nigerianStates}
+                  carTypes={carTypes}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Cleaning' && (
+                <CleaningForm
+                  cleaningData={cleaningData}
+                  onChange={handleCleaningChange}
+                  nigerianStates={nigerianStates}
+                  propertyTypes={propertyTypes}
+                  cleaningTypes={cleaningTypes}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Car Parts' && (
+                <CarPartsForm
+                  carPartsData={carPartsData}
+                  onChange={handleCarPartsChange}
+                  nigerianStates={nigerianStates}
+                  carMakes={carMakes}
+                  carModels={carModels}
+                  carYears={carYears}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Automobiles' && (
+                <AutomobileForm
+                  automobileData={automobileData}
+                  onChange={handleAutomobileChange}
+                  nigerianStates={nigerianStates}
+                  carMakes={carMakes}
+                  carModels={carModels}
+                  carYears={carYears}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Beauty' && (
+                <BeautyForm
+                  beautyData={beautyData}
+                  onChange={handleBeautyChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Catering' && (
+                <CateringForm
+                  cateringData={cateringData}
+                  onChange={handleCateringChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Carpentry' && (
+                <CarpenterForm
+                  carpentryData={carpentryData}
+                  onChange={handleCarpenterChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Electrician' && (
+                <ElectricianForm
+                  electricianData={electricianData}
+                  onChange={handleElectricianChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'IT' && (
+                <ITForm
+                  itData={itData}
+                  onChange={handleITChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Mechanic' && (
+                <MechanicForm
+                  mechanicData={mechanicData}
+                  onChange={handleMechanicChange}
+                  nigerianStates={nigerianStates}
+                  carMakes={carMakes}
+                  carModels={carModels}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Media' && (
+                <MediaForm
+                  mediaData={mediaData}
+                  onChange={handleMediaChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Plumbing' && (
+                <PlumberForm
+                  plumberData={plumberData}
+                  onChange={handlePlumberChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Hospitality' && (
+                <HospitalityForm
+                  hospitalityData={hospitalityData}
+                  onChange={handleHospitalityChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Event Management' && (
+                <EventManagementForm
+                  eventManagementData={eventManagementData}
+                  onChange={handleEventManagementChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Employment' && !employmentData.role && (
+                <EmploymentSelectionForm
+                  onSelectRole={(role) => handleEmploymentChange('role', role)}
+                />
+              )}
+              {activeTab === 'Employment' && employmentData.role === 'employer' && (
+                <EmployerForm
+                  employmentData={employmentData}
+                  onChange={handleEmploymentChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {activeTab === 'Employment' && employmentData.role === 'jobSeeker' && (
+                <JobSeekerForm
+                  employmentData={employmentData}
+                  onChange={handleEmploymentChange}
+                  nigerianStates={nigerianStates}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                />
+              )}
+              {!(activeTab === 'Employment' && !employmentData.role) && (
+  <div className="mt-8 flex flex-col items-end">
+    {error && <div className="text-red-500 mb-2">{error}</div>}
+    <button
+      type="submit"
+      className={`w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg flex items-center justify-center gap-2 ${
+        !isFormValid() || !isChecked || loading ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
+      disabled={!isFormValid() || !isChecked || loading}
+    >
+      {loading ? (
+        <>
+          <Loader2 className="animate-spin w-4 h-4" />
+          Submitting...
+        </>
+      ) : (
+        'Submit Request'
+      )}
+    </button>
+  </div>
+)}
+            </form>
+            {showDisclaimer && (
+              <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white p-6 rounded-lg w-[90%] mx-auto md:mx-0 md:max-w-md md:w-full">
+                  <h2 className="text-lg font-bold mb-4">Disclaimer</h2>
+                  <p className="text-sm mb-6">
+                    Fyndr acts solely as a platform to ensure your request is delivered to your selected service providers. We are not affiliated with, nor do we endorse or partner with, any of the service providers listed on the platform. Our involvement ends once communication begins between you and the service provider. The fee paid is strictly for facilitating the delivery of your request and does not guarantee the outcome or success of any transaction.
+                  </p>
+                  <div className="flex justify-end gap-4">
+                    <button
+                      onClick={handleDisclaimerCancel}
+                      className="px-4 py-2 bg-gray-200 text-sm cursor-pointer text-gray-800 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleDisclaimerAgree}
+                      className="px-4 py-2 bg-[#541229] text-sm cursor-pointer text-white rounded-lg"
+                    >
+                      I Agree
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const NewRequestPage = () => {
+  return (
     <Suspense
       fallback={
         <div className="min-h-screen bg-white flex items-center justify-center">
@@ -1069,262 +1314,9 @@ const NewRequestPage = () => {
         </div>
       }
     >
-      <div className="min-h-screen bg-white">
-        <Suspense
-          fallback={
-            <div className="min-h-screen bg-white flex items-center justify-center">
-              <div className="animate-pulse">
-                <Image
-                  src="/images/logo-removebg-preview.png"
-                  alt="Company Logo"
-                  width={100}
-                  height={100}
-                  className="transition-all duration-1000 hover:scale-110"
-                />
-              </div>
-            </div>
-          }
-        >
-          <SearchParamsTab setActiveTab={setActiveTab} initialTab={initialTab} />
-        </Suspense>
-        <div className="bg-white py-8 lg:px-8">
-          <div className="md:max-w-3xl md:mx-auto">
-            <div className="hidden gap-1 md:gap-5 px-1 mb-8">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.label}
-                  onClick={() => setActiveTab(tab.label)}
-                  className={`px-2 md:px-0 py-2 text-[12px] cursor-pointer border-b-2 transition-all duration-200 ${
-                    activeTab === tab.label ? 'text-gray-900' : 'border-[#E5E8EB] text-[#637587]'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            <div className="px-5">
-              <form className="bg-white" onSubmit={handleSubmit}>
-                {activeTab === 'Properties' && (
-                  <PropertiesForm
-                    formData={formData}
-                    onChange={handleInputChange}
-                    nigerianStates={nigerianStates}
-                    propertyTypes={propertyTypes}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Car Hire' && (
-                  <CarHireForm
-                    carHireData={carHireData}
-                    onChange={handleCarHireChange}
-                    nigerianStates={nigerianStates}
-                    carTypes={carTypes}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Cleaning' && (
-                  <CleaningForm
-                    cleaningData={cleaningData}
-                    onChange={handleCleaningChange}
-                    nigerianStates={nigerianStates}
-                    propertyTypes={propertyTypes}
-                    cleaningTypes={cleaningTypes}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Car Parts' && (
-                  <CarPartsForm
-                    carPartsData={carPartsData}
-                    onChange={handleCarPartsChange}
-                    nigerianStates={nigerianStates}
-                    carMakes={carMakes}
-                    carModels={carModels}
-                    carYears={carYears}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Automobiles' && (
-                  <AutomobileForm
-                    automobileData={automobileData}
-                    onChange={handleAutomobileChange}
-                    nigerianStates={nigerianStates}
-                    carMakes={carMakes}
-                    carModels={carModels}
-                    carYears={carYears}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Beauty' && (
-                  <BeautyForm
-                    beautyData={beautyData}
-                    onChange={handleBeautyChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Catering' && (
-                  <CateringForm
-                    cateringData={cateringData}
-                    onChange={handleCateringChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Carpentry' && (
-                  <CarpenterForm
-                    carpentryData={carpentryData}
-                    onChange={handleCarpenterChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Electrician' && (
-                  <ElectricianForm
-                    electricianData={electricianData}
-                    onChange={handleElectricianChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'IT' && (
-                  <ITForm
-                    itData={itData}
-                    onChange={handleITChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Mechanic' && (
-                  <MechanicForm
-                    mechanicData={mechanicData}
-                    onChange={handleMechanicChange}
-                    nigerianStates={nigerianStates}
-                    carMakes={carMakes}
-                    carModels={carModels}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Media' && (
-                  <MediaForm
-                    mediaData={mediaData}
-                    onChange={handleMediaChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Plumbing' && (
-                  <PlumberForm
-                    plumberData={plumberData}
-                    onChange={handlePlumberChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Hospitality' && (
-                  <HospitalityForm
-                    hospitalityData={hospitalityData}
-                    onChange={handleHospitalityChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Event Management' && (
-                  <EventManagementForm
-                    eventManagementData={eventManagementData}
-                    onChange={handleEventManagementChange}
-                    nigerianStates={nigerianStates}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
-                  />
-                )}
-                {activeTab === 'Employment' && !employmentData.role && (
-  <EmploymentSelectionForm
-    onSelectRole={(role) => handleEmploymentChange('role', role)}
-  />
-)}
-{activeTab === 'Employment' && employmentData.role === 'employer' && (
-  <EmployerForm
-    employmentData={employmentData}
-    onChange={handleEmploymentChange}
-    nigerianStates={nigerianStates}
-    isChecked={isChecked}
-    setIsChecked={setIsChecked}
-  />
-)}
-{activeTab === 'Employment' && employmentData.role === 'jobSeeker' && (
-  <JobSeekerForm
-    employmentData={employmentData}
-    onChange={handleEmploymentChange}
-    nigerianStates={nigerianStates}
-    isChecked={isChecked}
-    setIsChecked={setIsChecked}
-  />
-)}
-                <div className="mt-8 flex flex-col items-end">
-                  {error && <div className="text-red-500 mb-2">{error}</div>}
-                  <button
-                    type="submit"
-                    className={`w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg flex items-center justify-center gap-2 ${
-                      !isFormValid() || !isChecked || loading ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                    disabled={!isFormValid() || !isChecked || loading}
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="animate-spin w-4 h-4" />
-                        Submitting...
-                      </>
-                    ) : (
-                      'Submit Request'
-                    )}
-                  </button>
-                </div>
-              </form>
-              {showDisclaimer && (
-                <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center z-50">
-                  <div className="bg-white p-6 rounded-lg w-[90%] mx-auto md:mx-0 md:max-w-md md:w-full">
-                    <h2 className="text-lg font-bold mb-4">Disclaimer</h2>
-                    <p className="text-sm mb-6">
-                      Fyndr acts solely as a platform to ensure your request is delivered to your selected service providers. We are not affiliated with, nor do we endorse or partner with, any of the service providers listed on the platform. Our involvement ends once communication begins between you and the service provider. The fee paid is strictly for facilitating the delivery of your request and does not guarantee the outcome or success of any transaction.
-                    </p>
-                    <div className="flex justify-end gap-4">
-                      <button
-                        onClick={handleDisclaimerCancel}
-                        className="px-4 py-2 bg-gray-200 text-sm cursor-pointer text-gray-800 rounded-lg"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleDisclaimerAgree}
-                        className="px-4 py-2 bg-[#541229] text-sm cursor-pointer text-white rounded-lg"
-                      >
-                        I Agree
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+      <NewRequestPageContent />
     </Suspense>
   );
 };
-}
 
 export default NewRequestPage;
