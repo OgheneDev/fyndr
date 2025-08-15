@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { Grid2X2PlusIcon } from "lucide-react";
-import ServicesModal from "@/components/ui/ServicesModal";
+import ServicesModal from "@/components/new requests/ServicesModal";
 import FeaturedProviders from "@/components/general/FeaturedProviders";
 
 const DashboardPage = () => {

@@ -4,7 +4,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/landing page/Navbar";
+import Navbar from "@/components/general/Navbar";
 import Sidebar from "@/components/general/Sidebar";
 import BottomNavbar from "@/components/general/BottomNavbar";
 import { useAuthStore } from "@/store/authStore";

@@ -22,7 +22,7 @@ import {
   EmploymentSelectionForm,
   EmployerForm,
   JobSeekerForm
-} from './RequestForms';
+} from '../../../components/new requests/RequestForms';
 import {
   realEstateRequest,
   carHireRequest,
