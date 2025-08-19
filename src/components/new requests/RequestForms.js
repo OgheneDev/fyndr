@@ -2356,31 +2356,35 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             </>
           )}
           <div>
-            <label className="block text-[#171214] mb-2 text-sm">Additional Skills</label>
-            <Select
-              isMulti
-              value={skills.filter(s => employmentData.additionalSkills?.includes(s)).map(s => ({ value: s.value, label: s.display }))}
-              onChange={(selected) => handleMultiSelectChange('additionalSkills', selected)}
-              options={skills.map(s => ({ value: s.value, label: s.display }))}
-              placeholder="Select skills"
-              className="text-sm"
-              styles={{
-                control: (base) => ({
-                  ...base,
-                  backgroundColor: '#f3f4f6',
-                  border: 'none',
-                  boxShadow: 'none',
-                  '&:hover': { border: 'none' }
-                }),
-                placeholder: (base) => ({ ...base, color: '#6B7280' }),
-                option: (base, state) => ({
-                  ...base,
-                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
-                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
-                })
-              }}
-            />
-          </div>
+              <label className="block text-[#171214] mb-2 text-sm">Additional Skills</label>
+              <Select
+                isMulti
+                value={(employmentData.additionalSkills || [])
+                  .map(val => {
+                    const s = skills.find(item => item.value === val);
+                    return { value: val, label: s ? s.display : val };
+                  })}
+                onChange={(selected) => handleMultiSelectChange('additionalSkills', selected)}
+                options={skills.map(s => ({ value: s.value, label: s.display }))}
+                placeholder="Select skills"
+                className="text-sm"
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    backgroundColor: '#f3f4f6',
+                    border: 'none',
+                    boxShadow: 'none',
+                    '&:hover': { border: 'none' }
+                  }),
+                  placeholder: (base) => ({ ...base, color: '#6B7280' }),
+                  option: (base, state) => ({
+                    ...base,
+                    backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+                    '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                  })
+                }}
+              />
+            </div>
           <div>
             <label className="block text-[#171214] mb-2 text-sm">Additional Certificate or License</label>
             <input
