@@ -16,7 +16,7 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
         setError(null);
         const response = await getAllJobs();
         // Ensure we're getting the array of jobs from the response
-        const jobsData = response?.data || [];
+        const jobsData = response?.data.data || [];
         setJobs(jobsData);
       } catch (err) {
         console.error('Error fetching jobs:', err);
@@ -64,7 +64,7 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
         {Array.isArray(jobs) && jobs.length > 0 ? (
           jobs.map((job) => (
             <div key={job._id} className="border p-4 my-2 rounded-lg">
-              <p>{job.title}</p>
+              <p>{job.jobDetails.title}</p>
               <p className="text-sm text-gray-600">{job.company}</p>
             </div>
           ))
