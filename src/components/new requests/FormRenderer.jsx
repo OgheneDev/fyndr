@@ -1,7 +1,7 @@
-
 "use client";
 
 import React, { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { nigerianStates } from '@/data/nigerianStates';
 import { 
   PropertiesForm, 
@@ -62,28 +62,64 @@ const FormRenderer = ({
   onEventManagementChange,
   onEmploymentChange,
   isChecked,
-  setIsChecked
+  setIsChecked,
+  showEmployerForm,
+  setShowEmployerForm,
+  showJobSeekerForm,
+  setShowJobSeekerForm
 }) => {
-  const [showEmployerForm, setShowEmployerForm] = useState(false);
-  const [showJobSeekerForm, setShowJobSeekerForm] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Callback to handle role selection and update URL
+  const handleSelectRole = (role) => {
+    onEmploymentChange('role', role);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('category', 'employment');
+    newParams.set('role', role);
+    newParams.delete('form');
+    router.push(`/dashboard/new-request?${newParams.toString()}`);
+  };
 
   // Callback to handle "Post a Job" button click
   const handlePostJobClick = () => {
     setShowEmployerForm(true);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('category', 'employment');
+    newParams.set('role', 'employer');
+    newParams.set('form', 'employer-form');
+    router.push(`/dashboard/new-request?${newParams.toString()}`);
   };
 
+  // Callback to handle "Apply for Jobs" button click
   const handleApplyJobClick = () => {
     setShowJobSeekerForm(true);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('category', 'employment');
+    newParams.set('role', 'jobSeeker');
+    newParams.set('form', 'jobSeeker-form');
+    router.push(`/dashboard/new-request?${newParams.toString()}`);
   };
 
-  // Callback to go back to EmployerScreen (optional, if you want a back button in EmployerForm)
+  // Callback to go back to EmployerScreen
   const handleBackToEmployerScreen = () => {
     setShowEmployerForm(false);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('category', 'employment');
+    newParams.set('role', 'employer');
+    newParams.delete('form');
+    router.push(`/dashboard/new-request?${newParams.toString()}`);
   };
 
+  // Callback to go back to JobSeekerScreen
   const handleBackToJobSeekerScreen = () => {
     setShowJobSeekerForm(false);
-  }
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('category', 'employment');
+    newParams.set('role', 'jobSeeker');
+    newParams.delete('form');
+    router.push(`/dashboard/new-request?${newParams.toString()}`);
+  };
 
   if (activeTab === 'Properties') {
     return (
@@ -250,7 +286,7 @@ const FormRenderer = ({
   } else if (activeTab === 'Employment' && !employmentData.role) {
     return (
       <EmploymentSelectionForm
-        onSelectRole={(role) => onEmploymentChange('role', role)}
+        onSelectRole={handleSelectRole}
       />
     );
   } else if (activeTab === 'Employment' && employmentData.role === 'employer') {
@@ -262,7 +298,7 @@ const FormRenderer = ({
           nigerianStates={nigerianStates}
           isChecked={isChecked}
           setIsChecked={setIsChecked}
-          onBack={handleBackToEmployerScreen} // Optional: Pass a back callback
+          onBack={handleBackToEmployerScreen}
         />
       );
     }
@@ -273,21 +309,21 @@ const FormRenderer = ({
         nigerianStates={nigerianStates}
         isChecked={isChecked}
         setIsChecked={setIsChecked}
-        onPostJobClick={handlePostJobClick} // Pass the callback to EmployerScreen
+        onPostJobClick={handlePostJobClick}
       />
     );
   } else if (activeTab === 'Employment' && employmentData.role === 'jobSeeker') {
     if (showJobSeekerForm) {
       return (
-      <JobSeekerForm
-        employmentData={employmentData}
-        onChange={onEmploymentChange}
-        nigerianStates={nigerianStates}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-        onBack={handleBackToJobSeekerScreen}
-      />
-    );
+        <JobSeekerForm
+          employmentData={employmentData}
+          onChange={onEmploymentChange}
+          nigerianStates={nigerianStates}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+          onBack={handleBackToJobSeekerScreen}
+        />
+      );
     }
     return (
       <JobSeekerScreen

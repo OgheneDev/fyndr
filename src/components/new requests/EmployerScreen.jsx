@@ -1,11 +1,66 @@
-// EmployerScreen.jsx
 "use client";
 
 import React, {useEffect, useState} from 'react';
 import { Search, X } from 'lucide-react';
-import { getAppliedJobsByUser } from '@/api/jobs/requests';
+import { getAllCvs } from '@/api/cvs/requests';
+import { Loader } from '../ui/Loader';
+import { CvsList } from './cvs/CvsList';
  
-const EmployerScreen = ({ employmentData, onChange, nigerianStates, isChecked, setIsChecked, onPostJobClick }) => {
+const EmployerScreen = ({ onPostJobClick }) => {
+  const [cvs, setCvs] = useState([]);
+  const [filteredCvs, setFilteredCvs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchCvs() {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await getAllCvs();
+        const cvsData = response?.data || [];
+        setCvs(cvsData);
+        setFilteredCvs(cvsData);
+      } catch (error) {
+        console.error('Error fetching CVs:', err);
+        setError('Failed to load CVs');
+        setCvs([]);
+        setFilteredCvs([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchCvs();
+  }, []);
+
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+
+    if (term.trim() === '') {
+      setFilteredCvs(cvs)
+    } else {
+      const filtered = cvs.filter(cv =>
+        cv.workExperienceDetails.jobTitle.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredCvs(filtered);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchTerm('');
+    setFilteredCvs(cvs);
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+  
+  if (error) {
+    return <div className="text-center py-4 text-red-500">{error}</div>;
+  }
+
   return (
     <div>
       <h2 className="mb-10 font-bold text-center text-xl">Employers Screen</h2>
@@ -20,14 +75,20 @@ const EmployerScreen = ({ employmentData, onChange, nigerianStates, isChecked, s
         <input
           type="text"
           placeholder="Search by Job Title"
+          value={searchTerm}
+          onChange={handleSearch}
           className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 text-gray-900 placeholder-gray-500 outline-0"
         />
         <button
           className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
           aria-label="Clear search"
+          onClick={clearSearch}
         >
           <X className="h-4 w-4 text-gray-400" />
         </button>
+      </div>
+      <div>
+        <CvsList filteredCvs={filteredCvs} />
       </div>
     </div>
   );

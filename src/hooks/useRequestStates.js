@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const useRequestStates = () => {
   const [formData, setFormData] = useState({
@@ -153,61 +153,75 @@ const useRequestStates = () => {
     endYear: '',
     workExperience: '',
     yearsOfExperience: '',
-    company: '',
     duration: '',
     additionalSkills: [],
     languages: [],
     preferredJobTitle: '',
   });
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = useCallback((field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleCarHireChange = (field, value) => {
+  }, [setFormData]);
+
+  const handleCarHireChange = useCallback((field, value) => {
     setCarHireData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleCleaningChange = (field, value) => {
+  }, [setCarHireData]);
+
+  const handleCleaningChange = useCallback((field, value) => {
     setCleaningData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleCarPartsChange = (field, value) => {
+  }, [setCleaningData]);
+
+  const handleCarPartsChange = useCallback((field, value) => {
     setCarPartsData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleAutomobileChange = (field, value) => {
+  }, [setCarPartsData]);
+
+  const handleAutomobileChange = useCallback((field, value) => {
     setAutomobileData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleBeautyChange = (field, value) => {
+  }, [setAutomobileData]);
+
+  const handleBeautyChange = useCallback((field, value) => {
     setBeautyData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleCateringChange = (field, value) => {
+  }, [setBeautyData]);
+
+  const handleCateringChange = useCallback((field, value) => {
     setCateringData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleCarpenterChange = (field, value) => {
+  }, [setCateringData]);
+
+  const handleCarpenterChange = useCallback((field, value) => {
     setcarpentryData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleElectricianChange = (field, value) => {
+  }, [setcarpentryData]);
+
+  const handleElectricianChange = useCallback((field, value) => {
     setElectricianData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleITChange = (field, value) => {
+  }, [setElectricianData]);
+
+  const handleITChange = useCallback((field, value) => {
     setITData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleMechanicChange = (field, value) => {
+  }, [setITData]);
+
+  const handleMechanicChange = useCallback((field, value) => {
     setMechanicData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleMediaChange = (field, value) => {
+  }, [setMechanicData]);
+
+  const handleMediaChange = useCallback((field, value) => {
     setMediaData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handlePlumberChange = (field, value) => {
+  }, [setMediaData]);
+
+  const handlePlumberChange = useCallback((field, value) => {
     setPlumberData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleHospitalityChange = (field, value) => {
+  }, [setPlumberData]);
+
+  const handleHospitalityChange = useCallback((field, value) => {
     setHospitalityData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleEventManagementChange = (field, value) => {
+  }, [setHospitalityData]);
+
+  const handleEventManagementChange = useCallback((field, value) => {
     setEventManagementData((prev) => ({ ...prev, [field]: value }));
-  };
-  const handleEmploymentChange = (field, value) => {
+  }, [setEventManagementData]);
+
+  const handleEmploymentChange = useCallback((field, value) => {
     setEmploymentData((prev) => ({ ...prev, [field]: value }));
-  };
+  }, [setEmploymentData]);
 
   return {
     formData, setFormData,

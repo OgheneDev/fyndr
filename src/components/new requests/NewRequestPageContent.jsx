@@ -1,8 +1,7 @@
-
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 import { Loader2 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
@@ -33,6 +32,7 @@ import useRequestStates from '@/hooks/useRequestStates';
 
 const NewRequestPageContent = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { token } = useAuthStore();
   const [activeTab, setActiveTab] = useState(initialTab);
   const {
@@ -74,6 +74,42 @@ const NewRequestPageContent = () => {
   const [success, setSuccess] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [showEmployerForm, setShowEmployerForm] = useState(false);
+  const [showJobSeekerForm, setShowJobSeekerForm] = useState(false);
+
+  // Memoize handleEmploymentChange to ensure stable reference
+  const memoizedHandleEmploymentChange = useCallback((key, value) => {
+    handleEmploymentChange(key, value);
+  }, [handleEmploymentChange]);
+
+  // Initialize state based on query parameters
+  useEffect(() => {
+    const category = searchParams.get('category');
+    const role = searchParams.get('role');
+    const form = searchParams.get('form');
+
+    if (category === 'employment') {
+      setActiveTab('Employment');
+      if (role && role !== employmentData.role) {
+        memoizedHandleEmploymentChange('role', role);
+      }
+      if (form === 'employer-form' && !showEmployerForm) {
+        setShowEmployerForm(true);
+      } else if (form === 'jobSeeker-form' && !showJobSeekerForm) {
+        setShowJobSeekerForm(true);
+      } else if (!form && (showEmployerForm || showJobSeekerForm)) {
+        setShowEmployerForm(false);
+        setShowJobSeekerForm(false);
+      }
+    } else {
+      // Reset employment-related state when switching away from employment
+      if (employmentData.role || showEmployerForm || showJobSeekerForm) {
+        setEmploymentData((prev) => ({ ...prev, role: '' }));
+        setShowEmployerForm(false);
+        setShowJobSeekerForm(false);
+      }
+    }
+  }, [searchParams, employmentData.role, showEmployerForm, showJobSeekerForm, memoizedHandleEmploymentChange, setEmploymentData]);
 
   const getCategory = () => {
     const tab = tabs.find((t) => t.label === activeTab);
@@ -245,412 +281,409 @@ const NewRequestPageContent = () => {
   };
 
   const handleDisclaimerAgree = async () => {
-  setShowDisclaimer(false);
-  setError('');
-  setSuccess('');
-  setLoading(true);
-  try {
-    const category = getCategory();
-    if (!category) {
-      throw new Error('Invalid request category');
-    }
-    let label = tabs.find((t) => t.category === category)?.label || 'Request';
-    let requestId;
-
-    if (category === 'real-estate') {
-      const response = await realEstateRequest({
-        title: 'Real Estate Request',
-        state: formData.state,
-        axis: formData.axis,
-        details: formData.details,
-        rentType: formData.rentType,
-        propertyType: formData.propertyType,
-        roomNumber: formData.roomNumber,
-        propertyCondition: formData.propertyCondition,
-        upperPriceLimit: Number(formData.upperPriceLimit) || 0,
-        lowerPriceLimit: Number(formData.lowerPriceLimit) || 0,
-      });
-      requestId = response.data._id;
-      setFormData({
-        state: '',
-        axis: [],
-        details: '',
-        rentType: '',
-        propertyType: '',
-        roomNumber: '',
-        propertyCondition: '',
-        upperPriceLimit: '',
-        lowerPriceLimit: '',
-      });
-    } else if (category === 'car-hire') {
-      const response = await carHireRequest({
-        title: 'Car Hire Request',
-        state: carHireData.state,
-        details: carHireData.details,
-        carType: carHireData.carType,
-        hireDuration: Number(carHireData.hireDuration) || 0,
-        pickupLocation: carHireData.pickupLocation,
-        airport: carHireData.airport,
-        travel: carHireData.travel === 'Yes',
-      });
-      requestId = response.data._id;
-      setCarHireData({
-        state: '',
-        details: '',
-        carType: '',
-        hireDuration: '',
-        pickupLocation: '',
-        airport: '',
-        travel: '',
-      });
-    } else if (category === 'cleaning') {
-      const response = await cleaningRequest({
-        title: 'Cleaning Request',
-        state: cleaningData.state,
-        lga: cleaningData.lga,
-        details: cleaningData.details,
-        propertyType: cleaningData.propertyType,
-        cleaningType: cleaningData.cleaningType,
-        propertyLocation: cleaningData.propertyLocation,
-        roomNumber: cleaningData.roomNumber,
-      });
-      requestId = response.data._id;
-      setCleaningData({
-        state: '',
-        lga: '',
-        details: '',
-        propertyType: '',
-        cleaningType: '',
-        propertyLocation: '',
-        roomNumber: '',
-      });
-    } else if (category === 'car-parts') {
-      const fd = new FormData();
-      fd.append('title', 'Car Parts Request');
-      fd.append('state', carPartsData.state);
-      fd.append('details', carPartsData.details);
-      fd.append('currentLocation', carPartsData.currentLocation);
-      fd.append('sourcingLocation', carPartsData.sourcingLocation);
-      fd.append('carMake', carPartsData.carMake);
-      fd.append('carModel', carPartsData.carModel);
-      fd.append('carYear', Number(carPartsData.carYear) || 0);
-      if (carPartsData.attachment) {
-        fd.append('car_part_image', carPartsData.attachment);
+    setShowDisclaimer(false);
+    setError('');
+    setSuccess('');
+    setLoading(true);
+    try {
+      const category = getCategory();
+      if (!category) {
+        throw new Error('Invalid request category');
       }
-      const response = await carPartsRequest(fd);
-      requestId = response.data._id;
-      setCarPartsData({
-        state: '',
-        details: '',
-        currentLocation: '',
-        sourcingLocation: '',
-        carMake: '',
-        carModel: '',
-        carYear: '',
-        attachment: null,
-      });
-    } else if (category === 'automobile') {
-      const response = await automobileRequest({
-        title: 'Automobile Request',
-        state: automobileData.state,
-        details: automobileData.details,
-        location: automobileData.location,
-        carMake: automobileData.carMake,
-        carModel: automobileData.carModel,
-        carYearFrom: Number(automobileData.carYearFrom) || 0,
-        carYearTo: Number(automobileData.carYearTo) || 0,
-        transmission: automobileData.transmission,
-        upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
-        lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0,
-      });
-      requestId = response.data._id;
-      setAutomobileData({
-        state: '',
-        details: '',
-        location: '',
-        carMake: '',
-        carModel: '',
-        carYearFrom: '',
-        carYearTo: '',
-        transmission: '',
-        upperPriceLimit: '',
-        lowerPriceLimit: '',
-      });
-    } else if (category === 'beauty') {
-      const response = await beautyRequest({
-        title: 'Beauty Request',
-        state: beautyData.state,
-        targetLocation: beautyData.targetLocation,
-        service: beautyData.service,
-        date: beautyData.date,
-        time: beautyData.time,
-        details: beautyData.details,
-      });
-      requestId = response.data._id;
-      setBeautyData({
-        state: '',
-        targetLocation: '',
-        service: '',
-        date: '',
-        time: '',
-        details: '',
-      });
-    } else if (category === 'catering') {
-      const response = await cateringRequest({
-        title: 'Catering Request',
-        state: cateringData.state,
-        location: cateringData.location,
-        eventLocation: cateringData.eventLocation,
-        eventDate: cateringData.eventDate,
-        details: cateringData.details,
-      });
-      requestId = response.data._id;
-      setCateringData({
-        state: '',
-        location: '',
-        eventLocation: '',
-        eventDate: '',
-        details: '',
-      });
-    } else if (category === 'carpenter') {
-      const response = await carpenterRequest({
-        title: 'Carpenter Request',
-        state: carpentryData.state,
-        location: carpentryData.location,
-        dateNeeded: carpentryData.dateNeeded,
-        details: carpentryData.details,
-      });
-      requestId = response.data._id;
-      setcarpentryData({
-        state: '',
-        location: '',
-        dateNeeded: '',
-        details: '',
-      });
-    } else if (category === 'electrician') {
-      const response = await electricianRequest({
-        title: 'Electrician Request',
-        state: electricianData.state,
-        location: electricianData.location,
-        dateNeeded: electricianData.dateNeeded,
-        details: electricianData.details,
-      });
-      requestId = response.data._id;
-      setElectricianData({
-        state: '',
-        location: '',
-        dateNeeded: '',
-        details: '',
-      });
-    } else if (category === 'it') {
-      const response = await itRequest({
-        title: 'IT Request',
-        state: itData.state,
-        targetLocation: itData.targetLocation,
-        service: itData.service,
-        details: itData.details,
-      });
-      requestId = response.data._id;
-      setITData({
-        state: '',
-        targetLocation: '',
-        service: '',
-        details: '',
-      });
-    } else if (category === 'mechanic') {
-      const response = await mechanicRequest({
-        title: 'Mechanic Request',
-        state: mechanicData.state,
-        currentLocation: mechanicData.currentLocation,
-        carMake: mechanicData.carMake,
-        carModel: mechanicData.carModel,
-        year: Number(mechanicData.year) || 0,
-        transmission: mechanicData.transmission,
-        details: mechanicData.details,
-      });
-      requestId = response.data._id;
-      setMechanicData({
-        state: '',
-        currentLocation: '',
-        carMake: '',
-        carModel: '',
-        year: '',
-        transmission: '',
-        details: '',
-      });
-    } else if (category === 'media') {
-      const response = await mediaRequest({
-        title: 'Media Request',
-        state: mediaData.state,
-        targetLocation: mediaData.targetLocation,
-        service: mediaData.service,
-        details: mediaData.details,
-      });
-      requestId = response.data._id;
-      setMediaData({
-        state: '',
-        targetLocation: '',
-        service: '',
-        details: '',
-      });
-    } else if (category === 'plumbing') {
-      const response = await plumberRequest({
-        title: 'Plumber Request',
-        state: plumberData.state,
-        location: plumberData.location,
-        dateNeeded: plumberData.dateNeeded,
-        details: plumberData.details,
-      });
-      requestId = response.data._id;
-      setPlumberData({
-        state: '',
-        location: '',
-        dateNeeded: '',
-        details: '',
-      });
-    } else if (category === 'hospitality') {
-      const response = await hospitalityRequest({
-        title: 'Hospitality Request',
-        state: hospitalityData.state,
-        location: hospitalityData.location,
-        service: hospitalityData.service,
-        dateNeeded: hospitalityData.dateNeeded,
-        timeNeeded: hospitalityData.timeNeeded,
-        details: hospitalityData.details,
-      });
-      requestId = response.data._id;
-      setHospitalityData({
-        state: '',
-        location: '',
-        service: '',
-        dateNeeded: '',
-        timeNeeded: '',
-        details: '',
-      });
-    } else if (category === 'event-management') {
-      const response = await eventManagementRequest({
-        title: 'Event Management Request',
-        state: eventManagementData.state,
-        location: eventManagementData.location,
-        service: eventManagementData.service,
-        eventLocation: eventManagementData.eventLocation,
-        dateNeeded: eventManagementData.dateNeeded,
-        details: eventManagementData.details,
-      });
-      requestId = response.data._id;
-      setEventManagementData({
-        state: '',
-        location: '',
-        service: '',
-        eventLocation: '',
-        dateNeeded: '',
-        details: '',
-      });
-    } else if (category === 'employment') {
-      if (employmentData.role === 'employer') {
-        const formData = {
-          company: employmentData.company,
-          firstName: employmentData.firstName,
-          lastName: employmentData.lastName,
-          number: employmentData.number,
-          email: employmentData.email,
-          howYouHeardAboutUs: employmentData.howYouHeardAboutUs,
-          jobTitle: employmentData.jobTitle,
-          jobLocation: employmentData.jobLocation,
-          type: employmentData.type,
-          startDate: employmentData.startDate,
-          salary: employmentData.salary,
-          salaryCurrency: employmentData.salaryCurrency,
-          benefits: employmentData.benefits,
-          availableVacancy: employmentData.availableVacancy,
-          description: employmentData.description,
-        };
-        console.log(formData)
-        const response = await createJob(formData);
-        console.log('createJob response:', response); // Log the response
-        requestId = response.data._id; // Adjust based on actual response structure
-        setEmploymentData({ ...employmentData, role: '' });
-      } else if (employmentData.role === 'jobSeeker') {
-        const formData = {
-          firstName: employmentData.firstName,
-          lastName: employmentData.lastName,
-          number: employmentData.number,
-          email: employmentData.email,
-          state: employmentData.state,
-          lga: employmentData.lga,
-          area: employmentData.area,
-          isGraduate: employmentData.graduate,
-          educationLevel: employmentData.levelOfEducation,
-          educationMajor: employmentData.whatDidYouStudy,
-          schoolName: employmentData.schoolName,
-          startYear: employmentData.startYear,
-          endYear: employmentData.endYear,
-          hasWorkExperience: employmentData.workExperience,
-          workExperienceYears: Number(employmentData.yearsOfExperience) || 0,
-          workExperienceCompany: employmentData.company,
-          workExperienceTitle: employmentData.jobTitle,
-          workExperienceDuration: employmentData.duration,
-          skills: employmentData.additionalSkills,
-          additionalCertificate: employmentData.additionalCertificate,
-          languages: employmentData.languages,
-        };
-        console.log(formData)
-        const response = await createCV(formData);
-        console.log('createCV response:', response);
-        requestId = response.data._id; // Adjust based on actual response structure
-        setEmploymentData({ ...employmentData, role: '' });
+      let label = tabs.find((t) => t.category === category)?.label || 'Request';
+      let requestId;
+
+      if (category === 'real-estate') {
+        const response = await realEstateRequest({
+          title: 'Real Estate Request',
+          state: formData.state,
+          axis: formData.axis,
+          details: formData.details,
+          rentType: formData.rentType,
+          propertyType: formData.propertyType,
+          roomNumber: formData.roomNumber,
+          propertyCondition: formData.propertyCondition,
+          upperPriceLimit: Number(formData.upperPriceLimit) || 0,
+          lowerPriceLimit: Number(formData.lowerPriceLimit) || 0,
+        });
+        requestId = response.data._id;
+        setFormData({
+          state: '',
+          axis: [],
+          details: '',
+          rentType: '',
+          propertyType: '',
+          roomNumber: '',
+          propertyCondition: '',
+          upperPriceLimit: '',
+          lowerPriceLimit: '',
+        });
+      } else if (category === 'car-hire') {
+        const response = await carHireRequest({
+          title: 'Car Hire Request',
+          state: carHireData.state,
+          details: carHireData.details,
+          carType: carHireData.carType,
+          hireDuration: Number(carHireData.hireDuration) || 0,
+          pickupLocation: carHireData.pickupLocation,
+          airport: carHireData.airport,
+          travel: carHireData.travel === 'Yes',
+        });
+        requestId = response.data._id;
+        setCarHireData({
+          state: '',
+          details: '',
+          carType: '',
+          hireDuration: '',
+          pickupLocation: '',
+          airport: '',
+          travel: '',
+        });
+      } else if (category === 'cleaning') {
+        const response = await cleaningRequest({
+          title: 'Cleaning Request',
+          state: cleaningData.state,
+          lga: cleaningData.lga,
+          details: cleaningData.details,
+          propertyType: cleaningData.propertyType,
+          cleaningType: cleaningData.cleaningType,
+          propertyLocation: cleaningData.propertyLocation,
+          roomNumber: cleaningData.roomNumber,
+        });
+        requestId = response.data._id;
+        setCleaningData({
+          state: '',
+          lga: '',
+          details: '',
+          propertyType: '',
+          cleaningType: '',
+          propertyLocation: '',
+          roomNumber: '',
+        });
+      } else if (category === 'car-parts') {
+        const fd = new FormData();
+        fd.append('title', 'Car Parts Request');
+        fd.append('state', carPartsData.state);
+        fd.append('details', carPartsData.details);
+        fd.append('currentLocation', carPartsData.currentLocation);
+        fd.append('sourcingLocation', carPartsData.sourcingLocation);
+        fd.append('carMake', carPartsData.carMake);
+        fd.append('carModel', carPartsData.carModel);
+        fd.append('carYear', Number(carPartsData.carYear) || 0);
+        if (carPartsData.attachment) {
+          fd.append('car_part_image', carPartsData.attachment);
+        }
+        const response = await carPartsRequest(fd);
+        requestId = response.data._id;
+        setCarPartsData({
+          state: '',
+          details: '',
+          currentLocation: '',
+          sourcingLocation: '',
+          carMake: '',
+          carModel: '',
+          carYear: '',
+          attachment: null,
+        });
+      } else if (category === 'automobile') {
+        const response = await automobileRequest({
+          title: 'Automobile Request',
+          state: automobileData.state,
+          details: automobileData.details,
+          location: automobileData.location,
+          carMake: automobileData.carMake,
+          carModel: automobileData.carModel,
+          carYearFrom: Number(automobileData.carYearFrom) || 0,
+          carYearTo: Number(automobileData.carYearTo) || 0,
+          transmission: automobileData.transmission,
+          upperPriceLimit: Number(automobileData.upperPriceLimit) || 0,
+          lowerPriceLimit: Number(automobileData.lowerPriceLimit) || 0,
+        });
+        requestId = response.data._id;
+        setAutomobileData({
+          state: '',
+          details: '',
+          location: '',
+          carMake: '',
+          carModel: '',
+          carYearFrom: '',
+          carYearTo: '',
+          transmission: '',
+          upperPriceLimit: '',
+          lowerPriceLimit: '',
+        });
+      } else if (category === 'beauty') {
+        const response = await beautyRequest({
+          title: 'Beauty Request',
+          state: beautyData.state,
+          targetLocation: beautyData.targetLocation,
+          service: beautyData.service,
+          date: beautyData.date,
+          time: beautyData.time,
+          details: beautyData.details,
+        });
+        requestId = response.data._id;
+        setBeautyData({
+          state: '',
+          targetLocation: '',
+          service: '',
+          date: '',
+          time: '',
+          details: '',
+        });
+      } else if (category === 'catering') {
+        const response = await cateringRequest({
+          title: 'Catering Request',
+          state: cateringData.state,
+          location: cateringData.location,
+          eventLocation: cateringData.eventLocation,
+          eventDate: cateringData.eventDate,
+          details: cateringData.details,
+        });
+        requestId = response.data._id;
+        setCateringData({
+          state: '',
+          location: '',
+          eventLocation: '',
+          eventDate: '',
+          details: '',
+        });
+      } else if (category === 'carpenter') {
+        const response = await carpenterRequest({
+          title: 'Carpenter Request',
+          state: carpentryData.state,
+          location: carpentryData.location,
+          dateNeeded: carpentryData.dateNeeded,
+          details: carpentryData.details,
+        });
+        requestId = response.data._id;
+        setcarpentryData({
+          state: '',
+          location: '',
+          dateNeeded: '',
+          details: '',
+        });
+      } else if (category === 'electrician') {
+        const response = await electricianRequest({
+          title: 'Electrician Request',
+          state: electricianData.state,
+          location: electricianData.location,
+          dateNeeded: electricianData.dateNeeded,
+          details: electricianData.details,
+        });
+        requestId = response.data._id;
+        setElectricianData({
+          state: '',
+          location: '',
+          dateNeeded: '',
+          details: '',
+        });
+      } else if (category === 'it') {
+        const response = await itRequest({
+          title: 'IT Request',
+          state: itData.state,
+          targetLocation: itData.targetLocation,
+          service: itData.service,
+          details: itData.details,
+        });
+        requestId = response.data._id;
+        setITData({
+          state: '',
+          targetLocation: '',
+          service: '',
+          details: '',
+        });
+      } else if (category === 'mechanic') {
+        const response = await mechanicRequest({
+          title: 'Mechanic Request',
+          state: mechanicData.state,
+          currentLocation: mechanicData.currentLocation,
+          carMake: mechanicData.carMake,
+          carModel: mechanicData.carModel,
+          year: Number(mechanicData.year) || 0,
+          transmission: mechanicData.transmission,
+          details: mechanicData.details,
+        });
+        requestId = response.data._id;
+        setMechanicData({
+          state: '',
+          currentLocation: '',
+          carMake: '',
+          carModel: '',
+          year: '',
+          transmission: '',
+          details: '',
+        });
+      } else if (category === 'media') {
+        const response = await mediaRequest({
+          title: 'Media Request',
+          state: mediaData.state,
+          targetLocation: mediaData.targetLocation,
+          service: mediaData.service,
+          details: mediaData.details,
+        });
+        requestId = response.data._id;
+        setMediaData({
+          state: '',
+          targetLocation: '',
+          service: '',
+          details: '',
+        });
+      } else if (category === 'plumbing') {
+        const response = await plumberRequest({
+          title: 'Plumber Request',
+          state: plumberData.state,
+          location: plumberData.location,
+          dateNeeded: plumberData.dateNeeded,
+          details: plumberData.details,
+        });
+        requestId = response.data._id;
+        setPlumberData({
+          state: '',
+          location: '',
+          dateNeeded: '',
+          details: '',
+        });
+      } else if (category === 'hospitality') {
+        const response = await hospitalityRequest({
+          title: 'Hospitality Request',
+          state: hospitalityData.state,
+          location: hospitalityData.location,
+          service: hospitalityData.service,
+          dateNeeded: hospitalityData.dateNeeded,
+          timeNeeded: hospitalityData.timeNeeded,
+          details: hospitalityData.details,
+        });
+        requestId = response.data._id;
+        setHospitalityData({
+          state: '',
+          location: '',
+          service: '',
+          dateNeeded: '',
+          timeNeeded: '',
+          details: '',
+        });
+      } else if (category === 'event-management') {
+        const response = await eventManagementRequest({
+          title: 'Event Management Request',
+          state: eventManagementData.state,
+          location: eventManagementData.location,
+          service: eventManagementData.service,
+          eventLocation: eventManagementData.eventLocation,
+          dateNeeded: eventManagementData.dateNeeded,
+          details: eventManagementData.details,
+        });
+        requestId = response.data._id;
+        setEventManagementData({
+          state: '',
+          location: '',
+          service: '',
+          eventLocation: '',
+          dateNeeded: '',
+          details: '',
+        });
+      } else if (category === 'employment') {
+        if (employmentData.role === 'employer') {
+          const formData = {
+            company: employmentData.company,
+            firstName: employmentData.firstName,
+            lastName: employmentData.lastName,
+            number: employmentData.number,
+            email: employmentData.email,
+            howYouHeardAboutUs: employmentData.howYouHeardAboutUs,
+            jobTitle: employmentData.jobTitle,
+            jobLocation: employmentData.jobLocation,
+            type: employmentData.type,
+            startDate: employmentData.startDate,
+            salary: employmentData.salary,
+            salaryCurrency: employmentData.salaryCurrency,
+            benefits: employmentData.benefits,
+            availableVacancy: employmentData.availableVacancy,
+            description: employmentData.description,
+          };
+          console.log(formData);
+          const response = await createJob(formData);
+          console.log('createJob response:', response);
+          requestId = response.data._id;
+          setEmploymentData({ ...employmentData, role: '' });
+          setShowEmployerForm(false);
+          setShowJobSeekerForm(false);
+        } else if (employmentData.role === 'jobSeeker') {
+          const formData = {
+            firstName: employmentData.firstName,
+            lastName: employmentData.lastName,
+            number: employmentData.number,
+            email: employmentData.email,
+            state: employmentData.state,
+            lga: employmentData.lga,
+            area: employmentData.area,
+            isGraduate: employmentData.graduate,
+            educationLevel: employmentData.levelOfEducation,
+            educationMajor: employmentData.whatDidYouStudy,
+            schoolName: employmentData.schoolName,
+            startYear: employmentData.startYear,
+            endYear: employmentData.endYear,
+            hasWorkExperience: employmentData.workExperience,
+            workExperienceYears: Number(employmentData.yearsOfExperience) || 0,
+            workExperienceCompany: employmentData.company,
+            workExperienceTitle: employmentData.jobTitle,
+            workExperienceDuration: employmentData.duration,
+            skills: employmentData.additionalSkills,
+            additionalCertificate: employmentData.additionalCertificate,
+            languages: employmentData.languages,
+          };
+          console.log(formData);
+          const response = await createCV(formData);
+          console.log('createCV response:', response);
+          requestId = response.data._id;
+          setEmploymentData({ ...employmentData, role: '' });
+          setShowEmployerForm(false);
+          setShowJobSeekerForm(false);
+        } else {
+          throw new Error('No role selected for employment request');
+        }
       } else {
-        throw new Error('No role selected for employment request');
+        throw new Error(`Unknown request category: ${category}`);
       }
-    } else {
-      throw new Error(`Unknown request category: ${category}`);
-    }
 
-    if (!requestId) {
-      throw new Error('Request ID not found in API response');
-    }
+      if (!requestId) {
+        throw new Error('Request ID not found in API response');
+      }
 
-    setSuccess('Request submitted successfully!');
-    // Skip payment page for employment requests
-if (category === 'employment') {
-  Swal.fire({
-    icon: 'success',
-    title: `${label} submitted successfully`,
-    text: 'Thank you for your submission!',
-    confirmButtonColor: '#541229',
-    timer: 2000,
-  });
-  setIsChecked(false);
-} else {
-  // For all other request types, continue to payment
-  Swal.fire({
-    icon: 'success',
-    title: `${label} request posted successfully`,
-    text: `Please make Payment.`,
-    confirmButtonColor: '#541229',
-    timer: 2000,
-  });
-  setIsChecked(false);
-  router.push(`/payment?id=${requestId}&token=${encodeURIComponent(token || '')}`);
-}
-  } catch (err) {
-    console.error('Error in handleDisclaimerAgree:', err);
-    setError('Failed to submit request: ' + (err.message || 'Unknown error'));
-  } finally {
-    setLoading(false);
-  }
-};
+      setSuccess('Request submitted successfully!');
+      if (category === 'employment') {
+        Swal.fire({
+          icon: 'success',
+          title: `${label} submitted successfully`,
+          text: 'Thank you for your submission!',
+          confirmButtonColor: '#541229',
+          timer: 2000,
+        });
+        setIsChecked(false);
+        // Reset URL after submission
+        router.push('/dashboard/new-request?category=employment');
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: `${label} request posted successfully`,
+          text: `Please make Payment.`,
+          confirmButtonColor: '#541229',
+          timer: 2000,
+        });
+        setIsChecked(false);
+        router.push(`/payment?id=${requestId}&token=${encodeURIComponent(token || '')}`);
+      }
+    } catch (err) {
+      console.error('Error in handleDisclaimerAgree:', err);
+      setError('Failed to submit request: ' + (err.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDisclaimerCancel = () => {
     setShowDisclaimer(false);
   };
-
-  useEffect(() => {
-    // Only reset role when switching AWAY from Employment tab
-    if (activeTab !== 'Employment' && employmentData.role) {
-      setEmploymentData((prev) => ({ ...prev, role: '' }));
-    }
-  }, [activeTab, employmentData.role, setEmploymentData]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -692,11 +725,15 @@ if (category === 'employment') {
                 onPlumberChange={handlePlumberChange}
                 onHospitalityChange={handleHospitalityChange}
                 onEventManagementChange={handleEventManagementChange}
-                onEmploymentChange={handleEmploymentChange}
+                onEmploymentChange={memoizedHandleEmploymentChange}
                 isChecked={isChecked}
                 setIsChecked={setIsChecked}
+                showEmployerForm={showEmployerForm}
+                setShowEmployerForm={setShowEmployerForm}
+                showJobSeekerForm={showJobSeekerForm}
+                setShowJobSeekerForm={setShowJobSeekerForm}
               />
-              {!(activeTab === 'Employment' && !employmentData.role) && (
+              {activeTab !== 'Employment' || (employmentData.role && (showEmployerForm || showJobSeekerForm)) ? (
                 <div className="mt-8 flex flex-col items-end">
                   {error && <div className="text-red-500 mb-2">{error}</div>}
                   <button
@@ -716,7 +753,7 @@ if (category === 'employment') {
                     )}
                   </button>
                 </div>
-              )}
+              ) : null}
             </form>
             <DisclaimerModal
               show={showDisclaimer}
