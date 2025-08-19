@@ -6,9 +6,9 @@ export const CvsList = ({filteredCvs}) => (
       filteredCvs.map((cv) => (
         <div 
           key={cv._id} 
-          className="group bg-white border border-gray-200 my-4 px-6 py-4 rounded-2xl flex items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+          className="group bg-white border border-gray-200 my-4 px-6 py-4 rounded-2xl flex gap-5 md:gap-0 flex-col md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
         >
-          <div className='flex items-center space-x-4'>
+          <div className='flex md:items-center space-x-4'>
             {/* Avatar */}
             <div className="w-12 h-12 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
               {cv.firstName[0]}{cv.lastName[0]}
@@ -34,7 +34,7 @@ export const CvsList = ({filteredCvs}) => (
           </div>
           
           {/* Action Button */}
-          <button className="flex items-center cursor-pointer gap-2 px-4 py-2 text-sm font-medium text-[#541229] bg-[#54122915] hover:bg-[#54122925] rounded-lg transition-colors duration-200 group-hover:shadow-sm">
+          <button className="flex items-center justify-center md:justify-start cursor-pointer gap-2 px-4 md:py-2 py-3 text-sm font-medium text-[#541229] bg-[#54122915] hover:bg-[#54122925] rounded-lg transition-colors duration-200 group-hover:shadow-sm">
             <Eye className="w-4 h-4" />
             View CV
             <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
