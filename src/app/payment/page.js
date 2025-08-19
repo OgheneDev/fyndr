@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState, Suspense } from "react";
-import { Loader2, CheckCircle, Clock, CreditCard, Hash, Tag, DollarSign, AlertCircle } from "lucide-react";
+import { Loader2, CheckCircle, Clock, CreditCard, Hash, Tag, AlertCircle } from "lucide-react";
 import axios from "axios"
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { CATEGORY_LABELS } from "@/data/data";
 
 const BASE_URL = "https://rheel-compare.onrender.com/api";
 
@@ -105,13 +106,6 @@ const PaymentSection = ({
   </div>
 );
 
-const CATEGORY_LABELS = {
-  "real-estate": "Real Estate",
-  "car-hire": "Car Hire",
-  "car-parts": "Car Parts",
-  "cleaning": "Cleaning",
-  "automobile": "Automobile"
-};
 
 function PaymentDetailPageInner() {
   const searchParams = useSearchParams();
@@ -223,7 +217,7 @@ function PaymentDetailPageInner() {
           <div className="min-h-screen bg-white flex items-center justify-center">
               <div className="animate-pulse">
                   <Image
-                      src="/images/logo.png"
+                      src="/images/logo-removebg-preview.png"
                       alt="Company Logo"
                       width={100}
                       height={100}
@@ -381,12 +375,17 @@ function PaymentDetailPageInner() {
 export default function PaymentDetailPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin text-[#57132A] mx-auto mb-4" />
-          <p className="text-gray-600">Loading payment details...</p>
-        </div>
-      </div>
+<div className="min-h-screen bg-white flex items-center justify-center">
+              <div className="animate-pulse">
+                  <Image
+                      src="/images/logo-removebg-preview.png"
+                      alt="Company Logo"
+                      width={100}
+                      height={100}
+                      className="transition-all duration-1000 hover:scale-110"
+                  />
+              </div>
+          </div>
     }>
       <PaymentDetailPageInner />
     </Suspense>

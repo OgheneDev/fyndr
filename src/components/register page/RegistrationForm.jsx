@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PhoneInput } from "../general/PhoneInput";
 import { OTPInput } from "../general/OTPInput";
 import { UserDetailsForm } from "./UserDetailsForm";
@@ -26,8 +26,35 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
   const [method, setMethod] = useState('phone'); // Add method state
   const [email, setEmail] = useState('');
   const [isResending, setIsResending] = useState(false);
+  const [countdown, setCountdown] = useState(3600); // 60 minutes in seconds
 
   const { setAuth } = useAuthStore();
+
+  useEffect(() => {
+      let timer;
+      if (step === 2 && countdown > 0) {
+        timer = setInterval(() => {
+          setCountdown((prev) => {
+            if (prev <= 1) {
+              clearInterval(timer);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      }
+      // Cleanup timer on unmount or when step changes
+      return () => {
+        if (timer) clearInterval(timer);
+      };
+    }, [step, countdown]);
+  
+    // Helper function to format time
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
   // Always send phone number with +234 prefix
   const getFullPhoneNumber = () => {
@@ -53,6 +80,7 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
       } else {
         await requestUserOtp({ number: getFullPhoneNumber() });
       }
+      setCountdown(3600); // Reset countdown when OTP is sent
       setStep(2);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
@@ -70,6 +98,7 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
       } else {
         await requestUserOtp({ email });
       }
+      setCountdown(3600); // Reset countdown when OTP is sent
       setStep(2);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
@@ -86,6 +115,7 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
       } else {
         await resendUserOtp(method === 'phone' ? { number: getFullPhoneNumber() } : { email });
       }
+      setCountdown(3600); // Reset countdown when OTP is sent
     } catch (err) {
       setError("Failed to resend OTP. Please try again.");
     }
@@ -195,7 +225,7 @@ const handleDetailsSubmit = async () => {
       );
 
   const handleBack = () => {
-    setUserType(null); // Reset user type in the store
+    window.location.reload();
   };
 
   return (
@@ -308,6 +338,9 @@ const handleDetailsSubmit = async () => {
             </p>
             <OTPInput value={otp} onChange={setOtp} />
             <div className="text-sm mt-4 text-center">
+              <p className="text-gray-500">
+                Code expires in <span className="font-medium text-gray-700">{formatTime(countdown)}</span>
+              </p>
               Didn&apos;t receive the code?{" "}
               <button 
                 onClick={handleResendOTP}

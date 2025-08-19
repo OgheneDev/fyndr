@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { PhoneInput } from "@/components/general/PhoneInput";
 import { OTPInput } from "@/components/general/OTPInput";
 import { useUserStore } from "@/store/userStore";
@@ -21,10 +21,37 @@ const LoginPage = () => {
   const [isResending, setIsResending] = useState(false);
   const [localUserType, setLocalUserType] = useState(null);
   const [error, setError] = useState(null);
+  const [countdown, setCountdown] = useState(3600); // 60 minutes in seconds
 
   const setUserType = useUserStore((state) => state.setUserType);
   const { setAuth } = useAuthStore();
   const router = useRouter();
+
+  useEffect(() => {
+    let timer;
+    if (step === 3 && countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    // Cleanup timer on unmount or when step changes
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [step, countdown]);
+
+  // Helper function to format time
+const formatTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
 
   const canProceedPhone = phoneNumber.trim().length >= 10;
   const canProceedEmail = email.includes('@') && email.includes('.');
@@ -58,6 +85,7 @@ const LoginPage = () => {
       } else {
         await requestUserOtp({ number: getFullPhoneNumber() });
       }
+      setCountdown(3600); // Reset countdown when OTP is sent
       setStep(3);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
@@ -75,6 +103,7 @@ const LoginPage = () => {
       } else {
         await requestUserOtp({ email });
       }
+      setCountdown(3600); // Reset countdown when OTP is sent
       setStep(3);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
@@ -126,6 +155,7 @@ const LoginPage = () => {
       } else {
         await resendUserOtp(method === 'phone' ? { number: getFullPhoneNumber() } : { email });
       }
+      setCountdown(3600); // Reset countdown after successful resend
     } catch (err) {
       setError("Failed to resend OTP. Please try again.");
     }
@@ -314,16 +344,21 @@ const LoginPage = () => {
               Enter the 4-digit code sent to {method === 'phone' ? phoneNumber : email}
             </p>
             <OTPInput value={otp} onChange={setOtp} />
-            <div className="text-sm mt-4 text-center">
-              Didn&apos;t receive the code?{" "}
-              <button 
-                onClick={handleResendOTP}
-                disabled={isResending || isLoading}
-                className="text-[#57132A] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
-              >
-                {isResending && <Loader2 className="w-3 h-3 animate-spin" />}
-                {isResending ? 'Resending...' : 'Resend OTP'}
-              </button>
+            <div className="text-sm mt-4 text-center space-y-2">
+              <p className="text-gray-500">
+                Code expires in <span className="font-medium text-gray-700">{formatTime(countdown)}</span>
+              </p>
+              <p>
+                Didn&apos;t receive the code?{" "}
+                <button 
+                  onClick={handleResendOTP}
+                  disabled={isResending || isLoading}
+                  className="text-[#57132A] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
+                >
+                  {isResending && <Loader2 className="w-3 h-3 animate-spin" />}
+                  {isResending ? 'Resending...' : 'Resend OTP'}
+                </button>
+              </p>
             </div>
           </div>
           <button
