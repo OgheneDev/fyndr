@@ -16,7 +16,7 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
         setError(null);
         const response = await getAllJobs();
         // Ensure we're getting the array of jobs from the response
-        const jobsData = response?.data.data || [];
+        const jobsData = response?.data || [];
         setJobs(jobsData);
       } catch (err) {
         console.error('Error fetching jobs:', err);
@@ -30,7 +30,17 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
   }, []);
 
   if (loading) {
-    return <div className="text-center py-4">Loading jobs...</div>;
+    return <div className="min-h-screen bg-white flex items-center justify-center">
+                  <div className="animate-pulse">
+                      <Image
+                          src="/images/logo-removebg-preview.png"
+                          alt="Company Logo"
+                          width={100}
+                          height={100}
+                          className="transition-all duration-1000 hover:scale-110"
+                      />
+                  </div>
+              </div>;
   }
 
   if (error) {
@@ -60,12 +70,21 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
           <X className="h-4 w-4 text-gray-400" />
         </button>
       </div>
-      <div>
+      <div className='flex flex-col gap-5'>
         {Array.isArray(jobs) && jobs.length > 0 ? (
           jobs.map((job) => (
-            <div key={job._id} className="border p-4 my-2 rounded-lg">
-              <p>{job.jobDetails.title}</p>
-              <p className="text-sm text-gray-600">{job.company}</p>
+            <div key={job._id} className="border px-4 py-3 my-4 rounded-4xl flex items-center justify-between">
+              <div className='text-sm'>
+                <div className='flex gap-1'>
+                  <p>{job.employerDetails.firstName}</p>
+                  <p>{job.employerDetails.lastName}</p>
+                </div>
+                <p>{job.jobDetails.title}</p>
+                <p>{job.jobDetails.location}</p>
+              </div>
+              <button>
+                View Job
+              </button>
             </div>
           ))
         ) : (
