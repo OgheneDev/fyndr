@@ -28,7 +28,7 @@ import JobSeekerScreen from './JobSeekerScreen';
 import { carTypes, propertyTypes, cleaningTypes, carMakes, carModels, carYears } from '@/constants/requestConstants';
 
 const FormRenderer = ({
-  activeTab,
+  activeTab, 
   formData,
   carHireData,
   cleaningData,

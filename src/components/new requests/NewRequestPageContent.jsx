@@ -55,7 +55,7 @@ const NewRequestPageContent = () => {
     handleInputChange,
     handleCarHireChange,
     handleCleaningChange,
-    handleCarPartsChange,
+    handleCarPartsChange, 
     handleAutomobileChange,
     handleBeautyChange,
     handleCateringChange,
@@ -84,32 +84,43 @@ const NewRequestPageContent = () => {
 
   // Initialize state based on query parameters
   useEffect(() => {
-    const category = searchParams.get('category');
-    const role = searchParams.get('role');
-    const form = searchParams.get('form');
+  const category = searchParams.get('category');
+  const role = searchParams.get('role');
+  const form = searchParams.get('form');
 
-    if (category === 'employment') {
-      setActiveTab('Employment');
-      if (role && role !== employmentData.role) {
-        memoizedHandleEmploymentChange('role', role);
-      }
-      if (form === 'employer-form' && !showEmployerForm) {
-        setShowEmployerForm(true);
-      } else if (form === 'jobSeeker-form' && !showJobSeekerForm) {
-        setShowJobSeekerForm(true);
-      } else if (!form && (showEmployerForm || showJobSeekerForm)) {
-        setShowEmployerForm(false);
-        setShowJobSeekerForm(false);
-      }
-    } else {
-      // Reset employment-related state when switching away from employment
-      if (employmentData.role || showEmployerForm || showJobSeekerForm) {
-        setEmploymentData((prev) => ({ ...prev, role: '' }));
-        setShowEmployerForm(false);
-        setShowJobSeekerForm(false);
-      }
+  if (category === 'employment') {
+    setActiveTab('Employment');
+
+    if (role && role !== employmentData.role) {
+      // set role from URL
+      memoizedHandleEmploymentChange('role', role);
+    } else if (!role && employmentData.role) {
+      // URL has no role -> clear internal role and any open subforms
+      setEmploymentData((prev) => ({ ...prev, role: '' }));
+      setShowEmployerForm(false);
+      setShowJobSeekerForm(false);
     }
-  }, [searchParams, employmentData.role, showEmployerForm, showJobSeekerForm, memoizedHandleEmploymentChange, setEmploymentData]);
+
+    // Respect explicit form param (employer-form / jobSeeker-form)
+    if (form === 'employer-form' && !showEmployerForm) {
+      setShowEmployerForm(true);
+      setShowJobSeekerForm(false);
+    } else if (form === 'jobSeeker-form' && !showJobSeekerForm) {
+      setShowJobSeekerForm(true);
+      setShowEmployerForm(false);
+    } else if (!form && (showEmployerForm || showJobSeekerForm)) {
+      setShowEmployerForm(false);
+      setShowJobSeekerForm(false);
+    }
+  } else {
+    // Reset employment-related state when switching away from employment
+    if (employmentData.role || showEmployerForm || showJobSeekerForm) {
+      setEmploymentData((prev) => ({ ...prev, role: '' }));
+      setShowEmployerForm(false);
+      setShowJobSeekerForm(false);
+    }
+  }
+}, [searchParams, employmentData.role, showEmployerForm, showJobSeekerForm, memoizedHandleEmploymentChange, setEmploymentData]);
 
   const getCategory = () => {
     const tab = tabs.find((t) => t.label === activeTab);
