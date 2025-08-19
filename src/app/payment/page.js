@@ -4,8 +4,8 @@ import { useEffect, useState, Suspense } from "react";
 import { Loader2, CheckCircle, Clock, CreditCard, Hash, Tag, AlertCircle } from "lucide-react";
 import axios from "axios"
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { CATEGORY_LABELS } from "@/data/data";
+import { Loader } from "@/components/ui/Loader";
 
 const BASE_URL = "https://rheel-compare.onrender.com/api";
 
@@ -214,17 +214,7 @@ function PaymentDetailPageInner() {
 
   if (loading) {
       return (
-          <div className="min-h-screen bg-white flex items-center justify-center">
-              <div className="animate-pulse">
-                  <Image
-                      src="/images/logo-removebg-preview.png"
-                      alt="Company Logo"
-                      width={100}
-                      height={100}
-                      className="transition-all duration-1000 hover:scale-110"
-                  />
-              </div>
-          </div>
+        <Loader />
       );
   }
 
@@ -375,17 +365,7 @@ function PaymentDetailPageInner() {
 export default function PaymentDetailPage() {
   return (
     <Suspense fallback={
-<div className="min-h-screen bg-white flex items-center justify-center">
-              <div className="animate-pulse">
-                  <Image
-                      src="/images/logo-removebg-preview.png"
-                      alt="Company Logo"
-                      width={100}
-                      height={100}
-                      className="transition-all duration-1000 hover:scale-110"
-                  />
-              </div>
-          </div>
+     <Loader />
     }>
       <PaymentDetailPageInner />
     </Suspense>

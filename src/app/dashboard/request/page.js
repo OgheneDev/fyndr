@@ -14,7 +14,7 @@ import {
     chooseMerchantForRequest
 } from "@/api/requests/users/requests";
 import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
+import { Loader } from "@/components/ui/Loader";
 
 
 // Modularized components
@@ -216,22 +216,6 @@ function RequestDetailPageInner() {
     }
 };
 
-    // Choose merchant handler
-    const handleChooseMerchant = async () => {
-        if (!chooseMerchantId) return;
-        setChooseMerchantLoading(true);
-        setActionError(null);
-        try {
-            await chooseMerchantForRequest(id, chooseMerchantId);
-            setReloadFlag(f => f + 1);
-        } catch (err) {
-            setActionError(
-                (err && err.message) || (typeof err === "string" ? err : "Failed to choose merchant.")
-            );
-        } finally {
-            setChooseMerchantLoading(false);
-        }
-    };
     
 
     // Find accepted merchant (if any)
@@ -274,17 +258,7 @@ function RequestDetailPageInner() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <div className="animate-pulse">
-                    <Image
-                        src="/images/logo-removebg-preview.png"
-                        alt="Company Logo"
-                        width={100}
-                        height={100}
-                        className="transition-all duration-1000 hover:scale-110"
-                    />
-                </div>
-            </div>
+            <Loader />
         );
     } 
 
@@ -316,25 +290,6 @@ function RequestDetailPageInner() {
         return "Not specified";
     };
     
-
-    const getLocationText = () => {
-        if (data.carHire?.pickupLocation) return data.carHire.pickupLocation;
-        if (data.cleaning?.propertyLocation) return data.cleaning.propertyLocation;
-        if (data.targetState) return data.targetState;
-        if (data.carPart?.currentLocation) return data.carPart.currentLocation;
-        if (data.automobile?.location) return data.automobile.location;
-        return "Location not specified";
-    };
-
-    const getBudgetText = () => {
-        if (data.realEstate?.lowerPriceLimit && data.realEstate?.upperPriceLimit) {
-            return formatBudget(data.realEstate.lowerPriceLimit, data.realEstate.upperPriceLimit);
-        }
-        if (data.automobile?.lowerPriceLimit && data.automobile?.upperPriceLimit) {
-            return formatBudget(data.automobile.lowerPriceLimit, data.automobile.upperPriceLimit);
-        }
-        return "Not specified";
-    };
 
     // Determine if paid (robust for your API structure)
     const isPaid =
@@ -410,17 +365,7 @@ function RequestDetailPageInner() {
 
 export default function RequestDetailPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
-                    <div className="animate-pulse">
-                        <Image
-                            src="/images/logo-removebg-preview.png"
-                            alt="Company Logo"
-                            width={100}
-                            height={100}
-                            className="transition-all duration-1000 hover:scale-110"
-                        />
-                    </div>
-                </div>}>
+        <Suspense fallback={ <Loader /> }>
             <RequestDetailPageInner />
         </Suspense>
     );
