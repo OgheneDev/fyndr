@@ -1937,16 +1937,16 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
               />
             </div>
           </div>
-          {/*<div>
+          <div>
             <label className="block text-[#171214] mb-2 text-sm">How did you hear about us?</label>
             <input
               type="text"
-              value={employmentData.howDidYouHear || ''}
-              onChange={(e) => onChange('howDidYouHear', e.target.value)}
+              value={employmentData.howYouHeardAboutUs || ''}
+              onChange={(e) => onChange('howYouHeardAboutUs', e.target.value)}
               placeholder="E.g., Social media, friend, etc."
               className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
             />
-          </div>*/}
+          </div>
         </div>
       </div>
       <div>

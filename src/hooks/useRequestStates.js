@@ -131,7 +131,7 @@ const useRequestStates = () => {
     lastName: '',
     number: '',
     email: '',
-    howDidYouHear: '',
+    howYouHeardAboutUs: '',
     jobTitle: '',
     jobLocation: '',
     state: '',

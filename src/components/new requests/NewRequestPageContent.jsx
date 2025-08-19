@@ -218,7 +218,8 @@ const NewRequestPageContent = () => {
           employmentData.salaryCurrency &&
           employmentData.benefits &&
           employmentData.availableVacancy &&
-          employmentData.description
+          employmentData.description &&
+          employmentData.howYouHeardAboutUs
         );
       } else if (employmentData.role === 'jobSeeker') {
         return (
@@ -553,6 +554,7 @@ const NewRequestPageContent = () => {
           lastName: employmentData.lastName,
           number: employmentData.number,
           email: employmentData.email,
+          howYouHeardAboutUs: employmentData.howYouHeardAboutUs,
           jobTitle: employmentData.jobTitle,
           jobLocation: employmentData.jobLocation,
           type: employmentData.type,
