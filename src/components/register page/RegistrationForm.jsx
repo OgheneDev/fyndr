@@ -273,7 +273,7 @@ const handleDetailsSubmit = async () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto mt-13 px-5 md:px-0">
       <button
         onClick={handleBack}
         className="cursor-pointer flex gap-3 items-center text-gray-600 text-sm hover:text-[#57132A] transition-colors mb-4"
