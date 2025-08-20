@@ -1,12 +1,12 @@
 import { Eye, User, Building, ChevronRight } from 'lucide-react';
 
 export const CvsList = ({filteredCvs}) => (
-  <div className='flex flex-col gap-4'>
+  <div className='flex flex-col gap-4 mt-4'>
     {Array.isArray(filteredCvs) && filteredCvs.length > 0 ? (
       filteredCvs.map((cv) => (
         <div 
           key={cv._id} 
-          className="group bg-white border border-gray-200 my-4 px-6 py-4 rounded-2xl flex gap-5 md:gap-0 flex-col md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+          className="group bg-white border border-gray-200  px-6 py-4 rounded-2xl flex gap-5 md:gap-0 flex-col md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
         >
           <div className='flex md:items-center space-x-4'>
             {/* Avatar */}

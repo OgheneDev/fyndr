@@ -1,12 +1,12 @@
 import { Eye, Building, ChevronRight } from 'lucide-react';
 
 export const JobsList = ({ filteredJobs }) => (
-  <div className='flex flex-col gap-4'>
+  <div className='flex flex-col gap-4 mt-4'>
     {Array.isArray(filteredJobs) && filteredJobs.length > 0 ? (
       filteredJobs.map((job) => (
         <div
           key={job._id}
-          className="group bg-white border border-gray-200 my-4 px-6 py-4 rounded-2xl flex flex-col gap-5 md:gap-0 md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+          className="group bg-white border border-gray-200 px-6 py-4 rounded-2xl flex flex-col gap-5 md:gap-0 md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
         >
           <div className='flex md:items-center space-x-4'>
             {/* Avatar */}

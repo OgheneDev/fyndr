@@ -671,8 +671,6 @@ const NewRequestPageContent = () => {
           timer: 2000,
         });
         setIsChecked(false);
-        // Reset URL after submission
-        router.push('/dashboard/new-request?category=employment');
       } else {
         Swal.fire({
           icon: 'success',
