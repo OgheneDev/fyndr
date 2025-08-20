@@ -671,6 +671,7 @@ const NewRequestPageContent = () => {
           timer: 2000,
         });
         setIsChecked(false);
+        window.location.reload();
       } else {
         Swal.fire({
           icon: 'success',
@@ -747,7 +748,7 @@ const NewRequestPageContent = () => {
                   {error && <div className="text-red-500 mb-2">{error}</div>}
                   <button
                     type="submit"
-                    className={`w-full sm:w-auto px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg flex items-center justify-center gap-2 ${
+                    className={`w-full px-8 py-3 bg-[#541229] text-sm cursor-pointer text-white rounded-lg flex items-center justify-center gap-2 ${
                       !isFormValid() || !isChecked || loading ? 'opacity-50 cursor-not-allowed' : ''
                     }`}
                     disabled={!isFormValid() || !isChecked || loading}

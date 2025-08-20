@@ -20,6 +20,8 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
         setError(null);
         const response = await getAllJobs();
         const jobsData = response?.data || [];
+        // sort by createdAt: newest first
+        jobsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setJobs(jobsData);
         setFilteredJobs(jobsData);
       } catch (err) {
@@ -42,8 +44,8 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
     if (term.trim() === '') {
       setFilteredJobs(jobs);
     } else {
-      const filtered = jobs.filter(job => 
-        job.jobDetails.title.toLowerCase().includes(term.toLowerCase())
+      const filtered = jobs.filter(job =>
+        (job.jobDetails?.title || '').toLowerCase().includes(term.toLowerCase())
       );
       setFilteredJobs(filtered);
     }

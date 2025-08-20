@@ -23,13 +23,24 @@ export const CvsList = ({filteredCvs}) => (
                 </div>
               </div>
               
-              <div className=' text-sm text-gray-600'>
-                <p className="font-medium text-[#541229]">{cv.workExperienceDetails.jobTitle}</p>
-              </div>
-              
-              <div className='flex items-center gap-2 text-sm text-gray-500'>
-                <p>at {cv.workExperienceDetails.company}</p>
-              </div>
+              {/*
+                Conditionally render work experience: if workExperienceDetails exists and
+                has jobTitle or company show them, otherwise show a fallback message.
+              */}
+              {cv.workExperienceDetails && (cv.workExperienceDetails.jobTitle || cv.workExperienceDetails.company) ? (
+                <>
+                  <div className=' text-sm text-gray-600'>
+                    {cv.workExperienceDetails.jobTitle && (
+                      <p className="font-medium text-[#541229]">{cv.workExperienceDetails.jobTitle}</p>
+                    )}
+                  </div>
+                  <div className='flex items-center gap-2 text-sm text-gray-500'>
+                    {cv.workExperienceDetails.company && <p>at {cv.workExperienceDetails.company}</p>}
+                  </div>
+                </>
+              ) : (
+                <div className='text-sm text-gray-500 italic'>No work experience listed</div>
+              )}
             </div>
           </div>
           

@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import { Search, X } from 'lucide-react';
-import { getAllCvs } from '@/api/cvs/requests';
+import { getAllCvs } from '@/api/cvs/requests'; 
 import { Loader } from '../ui/Loader';
 import { CvsList } from './cvs/CvsList';
  
@@ -20,10 +20,12 @@ const EmployerScreen = ({ onPostJobClick }) => {
         setError(null);
         const response = await getAllCvs();
         const cvsData = response?.data || [];
+        // sort by createdAt: newest first
+        cvsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setCvs(cvsData);
         setFilteredCvs(cvsData);
       } catch (error) {
-        console.error('Error fetching CVs:', err);
+        console.error('Error fetching CVs:', error);
         setError('Failed to load CVs');
         setCvs([]);
         setFilteredCvs([]);
@@ -42,7 +44,7 @@ const EmployerScreen = ({ onPostJobClick }) => {
       setFilteredCvs(cvs)
     } else {
       const filtered = cvs.filter(cv =>
-        cv.workExperienceDetails.jobTitle.toLowerCase().includes(term.toLowerCase())
+        (cv.workExperienceDetails?.jobTitle || '').toLowerCase().includes(term.toLowerCase())
       );
       setFilteredCvs(filtered);
     }

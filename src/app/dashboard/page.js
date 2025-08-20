@@ -43,9 +43,9 @@ const DashboardPage = () => {
       hasContent: true,
     },
     {
-      id: "car-hire",
-      title: "Car Hire",
-      icon: "images/hire.JPG",
+      id: "employment",
+      title: "Employment",
+      icon: "images/employment.jpg",
       hasContent: true,
     },
     {
@@ -67,9 +67,9 @@ const DashboardPage = () => {
       hasContent: true,
     },
     {
-      id: "carpenter",
-      title: "Carpenter",
-      icon: "images/auto.PNG",
+      id: "car-hire",
+      title: "Car Hire",
+      icon: "images/hire.JPG",
       hasContent: true,
     },
   ];
