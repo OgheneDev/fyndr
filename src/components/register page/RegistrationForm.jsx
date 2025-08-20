@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect } from "react";
 import { PhoneInput } from "../general/PhoneInput";
 import { OTPInput } from "../general/OTPInput";
@@ -14,8 +15,11 @@ import {
 } from "@/api/auth/merchants/requests";
 import { requestUserOtp, registerUser, resendUserOtp } from "@/api/auth/users/requests";
 import Swal from "sweetalert2";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export const RegistrationForm = ({ userType, onSuccess }) => {
+export const RegistrationForm = ({ userType, onSuccess, initialStep = null, initMethod = null, initPhone = null, initEmail = null }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const setUserType = useUserStore((state) => state.setUserType);
   const [step, setStep] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -81,6 +85,7 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
         await requestUserOtp({ number: getFullPhoneNumber() });
       }
       setCountdown(3600); // Reset countdown when OTP is sent
+      // navigate to verify-otp with phone query
       setStep(2);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
@@ -99,6 +104,7 @@ export const RegistrationForm = ({ userType, onSuccess }) => {
         await requestUserOtp({ email });
       }
       setCountdown(3600); // Reset countdown when OTP is sent
+      // navigate to verify-otp with email query
       setStep(2);
     } catch (err) {
       setError("Failed to send OTP. Please try again.");
@@ -224,8 +230,46 @@ const handleDetailsSubmit = async () => {
         method === 'phone' ? formData.email : formData.number
       );
 
+  // Initialize from props or search params (so route pages can prefill)
+  useEffect(() => {
+    // priority: explicit props -> search params
+    const spMethod = searchParams?.get?.('method');
+    const spPhone = searchParams?.get?.('phone');
+    const spEmail = searchParams?.get?.('email');
+
+    if (initMethod) setMethod(initMethod);
+    else if (spMethod) setMethod(spMethod);
+
+    if (initPhone) setPhoneNumber(initPhone);
+    else if (spPhone) setPhoneNumber(spPhone ? decodeURIComponent(spPhone) : '');
+
+    if (initEmail) setEmail(initEmail);
+    else if (spEmail) setEmail(spEmail ? decodeURIComponent(spEmail) : '');
+
+    if (initialStep) setStep(initialStep);
+    // If no initialStep but URL indicates verify step, set step accordingly
+    const spStep = searchParams?.get?.('step');
+    if (!initialStep && spStep) setStep(Number(spStep));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialStep, initMethod, initPhone, initEmail, searchParams]);
+
+  // When step changes, keep route in sync (so the URL matches the UI)
+  useEffect(() => {
+    if (step === 1) {
+      router.replace('/register/method');
+    } else if (step === 2) {
+      // encode phone/email into query so verify page can prefill
+      const q = method === 'phone' ? `?method=phone&phone=${encodeURIComponent(phoneNumber)}` : `?method=email&email=${encodeURIComponent(email)}`;
+      router.replace(`/register/verify-otp${q}`);
+    } else if (step === 3) {
+      router.replace('/register/registration-form');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, method, phoneNumber, email]);
+
   const handleBack = () => {
-    window.location.reload();
+    // navigate back to selection
+    router.push('/register');
   };
 
   return (

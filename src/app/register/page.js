@@ -1,8 +1,7 @@
 "use client"
 import { useState } from "react";
-import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
-import { useRouter } from "next/navigation"; // Add this import
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,8 +11,10 @@ const RegistrationPage = () => {
   const router = useRouter(); // Add this line
 
   const handleTypeSelect = (type) => {
-    setSelectedType(type); 
-    setUserType(type); 
+    setSelectedType(type);
+    setUserType(type);
+    // navigate to method selection route
+    router.push('/register/method');
   }; 
 
   // Add this handler to redirect after registration
@@ -25,20 +26,7 @@ const RegistrationPage = () => {
     }
   };
 
-  if (selectedType) {
-    return (
-      <div className="min-h-screen py-8 px-4 lg:px-12">
-        <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Join Fyndr</h1>
-          </div>
-          <RegistrationForm userType={selectedType} onSuccess={handleRegistrationSuccess} />
-        </div>
-      </div>
-    );
-  }
-
-  // Initial Selection Screen
+  // keep selection UI on this page; navigation happens in handleTypeSelect
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center">
