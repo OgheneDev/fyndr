@@ -77,7 +77,7 @@ const DashboardPage = () => {
   // Filter categories for mobile: exclude Beauty and Carpenter
   const filteredCategories = isMobile
     ? categories.filter(
-        (category) => category.id !== "beauty" && category.id !== "carpenter"
+        (category) => category.id !== "beauty" && category.id !== "car-hire"
       )
     : categories;
 
