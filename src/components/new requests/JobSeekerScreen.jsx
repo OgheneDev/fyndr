@@ -18,7 +18,7 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
       try {
         setLoading(true);
         setError(null);
-        const response = await getAllJobs();
+        const response = await getAllJobs(); 
         const jobsData = response?.data || [];
         // sort by createdAt: newest first
         jobsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
