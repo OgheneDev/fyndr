@@ -1,18 +1,23 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { getJobById } from "@/api/jobs/requests";
-import { Loader } from "@/components/ui/Loader";
+import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { getJobById } from "@/api/jobs/requests";
+import { Loader } from "../ui/Loader";
 
-export default function JobDetailsPage() {
-  const searchParams = useSearchParams();
+// add: number formatter
+function formatNumberWithCommas(value) {
+  if (value === null || value === undefined || value === "") return "";
+  const num = Number(String(value).replace(/,/g, ""));
+  if (Number.isNaN(num)) return String(value);
+  return num.toLocaleString();
+}
+
+export default function JobDetailsScreen({ jobId }) {
   const router = useRouter();
-  const jobId = searchParams?.get("jobId");
-
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(Boolean(jobId));
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!jobId) {
@@ -20,18 +25,14 @@ export default function JobDetailsPage() {
       setLoading(false);
       return;
     }
-
     let mounted = true;
     async function fetchJob() {
       setLoading(true);
-      setError(null);
+      setError("");
       try {
         const res = await getJobById({ jobId });
-        // API helper returns response.data — example shape: { code, message, data }
-        const jobObj = res?.data || res; // try both
-        if (mounted) {
-          setJob(jobObj);
-        }
+        const jobObj = res?.data || res;
+        if (mounted) setJob(jobObj);
       } catch (err) {
         console.error("Error fetching job:", err);
         if (mounted) setError("Failed to load job");
@@ -39,12 +40,15 @@ export default function JobDetailsPage() {
         if (mounted) setLoading(false);
       }
     }
-
     fetchJob();
     return () => { mounted = false; };
   }, [jobId]);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <Loader />
+    );
+  }
 
   if (error) {
     return (
@@ -73,7 +77,7 @@ export default function JobDetailsPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
-      <button onClick={() => router.back()} className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+      <button onClick={() => router.back()} className="flex items-center gap-2 text-sm cursor-pointer text-gray-600 mb-4">
         <ArrowLeft className="w-4 h-4" /> Back
       </button>
 
@@ -100,7 +104,7 @@ export default function JobDetailsPage() {
         {jd.salary !== undefined && (
           <div className="mb-3 text-sm text-gray-700">
             <span className="font-medium">Salary: </span>
-            <span>{jd.salaryCurrency || ""} {jd.salary}</span>
+            <span>{jd.salaryCurrency || ""} {formatNumberWithCommas(jd.salary)}</span>
           </div>
         )}
 
@@ -121,8 +125,8 @@ export default function JobDetailsPage() {
         </div>
 
         <div className="flex gap-3">
-          <button className="flex-1 bg-[#541229] text-white py-2 rounded-md">Apply</button>
-          <button className="flex-1 border border-gray-200 text-gray-700 py-2 rounded-md" onClick={() => router.push('/dashboard')}>
+          <button className="flex-1 cursor-pointer bg-[#541229] text-white py-2 rounded-md">Apply</button>
+          <button className="flex-1 border cursor-pointer border-gray-200 text-gray-700 py-2 rounded-md" onClick={() => router.push('/dashboard')}>
             Back to Jobs
           </button>
         </div>

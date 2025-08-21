@@ -7,7 +7,7 @@ export const JobsList = ({ filteredJobs }) => {
     <div className='flex flex-col gap-4 mt-4'>
       {Array.isArray(filteredJobs) && filteredJobs.length > 0 ? (
         filteredJobs.map((job) => (
-          <div
+          <div 
             key={job._id}
             className="group bg-white border border-gray-200 px-6 py-4 rounded-2xl flex flex-col gap-5 md:gap-0 md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
@@ -43,9 +43,10 @@ export const JobsList = ({ filteredJobs }) => {
                 e.preventDefault();
                 e.stopPropagation();
                 console.log('Navigating to job', job._id);
-                router.push(`/dashboard/jobs?jobId=${encodeURIComponent(job._id)}`);
+                // Navigate into the new-request flow with employment role and jobId param
+                router.push(`/dashboard/new-request?category=employment&role=jobSeeker&jobId=${encodeURIComponent(job._id)}`);
               }}
-              className="flex items-center gap-2 justify-center md:justify-start px-4 py-3 md:py-2 text-sm font-medium text-[#541229] bg-[#54122915] hover:bg-[#54122925] rounded-lg transition-colors duration-200 group-hover:shadow-sm"
+              className="flex items-center cursor-pointer gap-2 justify-center md:justify-start px-4 py-3 md:py-2 text-sm font-medium text-[#541229] bg-[#54122915] hover:bg-[#54122925] rounded-lg transition-colors duration-200 group-hover:shadow-sm"
             >
               <Eye className="w-4 h-4" />
               <span>View Job</span>

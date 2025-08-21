@@ -8,6 +8,8 @@ import { useAuthStore } from '@/store/authStore';
 import SearchParamsTab from './SearchParamsTab';
 import FormRenderer from './FormRenderer';
 import DisclaimerModal from './DisclaimerModal';
+import { getJobById } from '@/api/jobs/requests'; // existing
+import JobDetailsScreen from './JobDetailsScreen'; // NEW import
 import {
   realEstateRequest,
   carHireRequest,
@@ -77,6 +79,11 @@ const NewRequestPageContent = () => {
   const [showEmployerForm, setShowEmployerForm] = useState(false);
   const [showJobSeekerForm, setShowJobSeekerForm] = useState(false);
 
+  // New: job preview state
+  const [jobPreview, setJobPreview] = useState(null);
+  const [jobLoading, setJobLoading] = useState(false);
+  const [jobError, setJobError] = useState('');
+
   // Memoize handleEmploymentChange to ensure stable reference
   const memoizedHandleEmploymentChange = useCallback((key, value) => {
     handleEmploymentChange(key, value);
@@ -121,6 +128,47 @@ const NewRequestPageContent = () => {
     }
   }
 }, [searchParams, employmentData.role, showEmployerForm, showJobSeekerForm, memoizedHandleEmploymentChange, setEmploymentData]);
+
+  // New: fetch job preview when jobId present in query
+  useEffect(() => {
+    const jobId = searchParams.get('jobId');
+    let mounted = true;
+    if (!jobId) {
+      setJobPreview(null);
+      setJobError('');
+      setJobLoading(false);
+      return;
+    }
+
+    async function fetchJob() {
+      setJobLoading(true);
+      setJobError('');
+      try {
+        const res = await getJobById({ jobId });
+        const jobObj = res?.data || res;
+        if (mounted) {
+          setJobPreview(jobObj);
+        }
+      } catch (err) {
+        console.error('Failed to fetch job preview:', err);
+        if (mounted) setJobError('Failed to load job preview');
+      } finally {
+        if (mounted) setJobLoading(false);
+      }
+    }
+    fetchJob();
+    return () => { mounted = false; };
+  }, [searchParams]);
+
+  const clearJobSelection = () => {
+    // remove jobId from current query and navigate
+    const params = new URLSearchParams();
+    for (const [k, v] of searchParams.entries()) {
+      if (k !== 'jobId') params.set(k, v);
+    }
+    const query = params.toString();
+    router.push(`/dashboard/new-request${query ? `?${query}` : ''}`);
+  };
 
   const getCategory = () => {
     const tab = tabs.find((t) => t.label === activeTab);
@@ -662,27 +710,15 @@ const NewRequestPageContent = () => {
       }
 
       setSuccess('Request submitted successfully!');
-      if (category === 'employment') {
-        Swal.fire({
-          icon: 'success',
-          title: `${label} submitted successfully`,
-          text: 'Thank you for your submission!',
-          confirmButtonColor: '#541229',
-          timer: 2000,
-        });
-        setIsChecked(false);
-        window.location.reload();
-      } else {
-        Swal.fire({
-          icon: 'success',
-          title: `${label} request posted successfully`,
-          text: `Please make Payment.`,
-          confirmButtonColor: '#541229',
-          timer: 2000,
-        });
-        setIsChecked(false);
-        router.push(`/payment?id=${requestId}&token=${encodeURIComponent(token || '')}`);
-      }
+      Swal.fire({
+        icon: 'success',
+        title: `${label} submitted successfully`,
+        text: 'Thank you for your submission!',
+        confirmButtonColor: '#541229',
+        timer: 2000,
+      });
+      setIsChecked(false);
+      window.location.reload();
     } catch (err) {
       console.error('Error in handleDisclaimerAgree:', err);
       setError('Failed to submit request: ' + (err.message || 'Unknown error'));
@@ -694,6 +730,15 @@ const NewRequestPageContent = () => {
   const handleDisclaimerCancel = () => {
     setShowDisclaimer(false);
   };
+
+  // Add: read query params and short-circuit to JobDetailsScreen when viewing a specific job for job seekers
+  const _category = searchParams.get('category');
+  const _role = searchParams.get('role');
+  const _jobId = searchParams.get('jobId');
+
+  if (_category === 'employment' && _role === 'jobSeeker' && _jobId) {
+    return <JobDetailsScreen jobId={_jobId} />;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -733,7 +778,7 @@ const NewRequestPageContent = () => {
                 onMechanicChange={handleMechanicChange}
                 onMediaChange={handleMediaChange}
                 onPlumberChange={handlePlumberChange}
-                onHospitalityChange={handleHospitalityChange}
+                onHospitalityChange={handleHospitalityChange} 
                 onEventManagementChange={handleEventManagementChange}
                 onEmploymentChange={memoizedHandleEmploymentChange}
                 isChecked={isChecked}
@@ -774,7 +819,8 @@ const NewRequestPageContent = () => {
         </div>
       </div>
     </div>
-  );
+  ); 
 };
 
 export default NewRequestPageContent;
+                
