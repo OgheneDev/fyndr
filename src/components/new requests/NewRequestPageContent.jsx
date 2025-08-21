@@ -759,7 +759,7 @@ const NewRequestPageContent = () => {
                         Submitting...
                       </>
                     ) : (
-                      'Submit Request'
+                      'Submit Request' 
                     )}
                   </button>
                 </div>

@@ -97,7 +97,7 @@ const DashboardPage = () => {
     media: "media",
     plumbing: "plumbing",
     "real-estate": "real-estate",
-    it: "it",
+    it: "it", 
     employment: 'employment'
   };
 
