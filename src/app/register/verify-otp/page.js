@@ -1,28 +1,10 @@
-"use client"
-import { RegistrationForm } from "@/components/register page/RegistrationForm";
-import { useUserStore } from "@/store/userStore";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+// pages/register/verify-otp/page.jsx
+import { VerifyOtpClient } from "@/components/register page/VerifyOtpClient";
 
-export default function VerifyOtpPage() {
-  const userType = useUserStore((s) => s.userType);
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export default function VerifyOtpPage({ searchParams }) {
+  const method = searchParams?.method || undefined;
+  const phone = searchParams?.phone ? decodeURIComponent(searchParams.phone) : undefined;
+  const email = searchParams?.email ? decodeURIComponent(searchParams.email) : undefined;
 
-  useEffect(() => {
-    if (!userType) {
-      router.replace('/register');
-    }
-  }, [userType, router]);
-
-  const method = searchParams?.get('method') || undefined;
-  const phone = searchParams?.get('phone') ? decodeURIComponent(searchParams.get('phone')) : undefined;
-  const email = searchParams?.get('email') ? decodeURIComponent(searchParams.get('email')) : undefined;
-
-  const handleSuccess = () => {
-    if (userType === "merchant") router.push("/dashboard/open-requests");
-    else router.push("/dashboard");
-  };
-
-  return <RegistrationForm userType={userType} onSuccess={handleSuccess} initialStep={2} initMethod={method} initPhone={phone} initEmail={email} />;
+  return <VerifyOtpClient initialMethod={method} initialPhone={phone} initialEmail={email} />;
 }

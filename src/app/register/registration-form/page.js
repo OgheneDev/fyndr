@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import { Loader } from "@/components/ui/Loader";
 
 export default function RegistrationFormPage() {
   const userType = useUserStore((s) => s.userType);
@@ -10,7 +11,7 @@ export default function RegistrationFormPage() {
 
   useEffect(() => {
     if (!userType) {
-      router.replace('/register');
+      router.replace("/register");
     }
   }, [userType, router]);
 
@@ -19,5 +20,13 @@ export default function RegistrationFormPage() {
     else router.push("/dashboard");
   };
 
-  return <RegistrationForm userType={userType} onSuccess={handleSuccess} initialStep={3} />;
+  return (
+    <Suspense fallback={<div><Loader /></div>}>
+      <RegistrationForm
+        userType={userType}
+        onSuccess={handleSuccess}
+        initialStep={3}
+      />
+    </Suspense>
+  );
 }

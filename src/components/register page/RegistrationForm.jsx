@@ -19,7 +19,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export const RegistrationForm = ({ userType, onSuccess, initialStep = null, initMethod = null, initPhone = null, initEmail = null }) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); 
   const setUserType = useUserStore((state) => state.setUserType);
   const [step, setStep] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState('');

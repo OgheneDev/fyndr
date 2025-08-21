@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import { Loader } from "@/components/ui/Loader";
 
 export default function MethodPage() {
   const userType = useUserStore((s) => s.userType);
@@ -10,15 +11,22 @@ export default function MethodPage() {
 
   useEffect(() => {
     if (!userType) {
-      router.replace('/register');
+      router.replace("/register");
     }
   }, [userType, router]);
 
   const handleSuccess = () => {
-    // after full registration, route based on stored userType
     if (userType === "merchant") router.push("/dashboard/open-requests");
     else router.push("/dashboard");
   };
 
-  return <RegistrationForm userType={userType} onSuccess={handleSuccess} initialStep={1} />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <RegistrationForm
+        userType={userType}
+        onSuccess={handleSuccess}
+        initialStep={1}
+      />
+    </Suspense>
+  );
 }
