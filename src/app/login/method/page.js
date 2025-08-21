@@ -1,6 +1,6 @@
 "use client"
-import React, { useEffect, useState } from 'react'
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState, Suspense } from 'react'
+import { useRouter, useSearchParams } from "next/navigation";
 import { PhoneInput } from "@/components/general/PhoneInput";
 import Image from 'next/image';
 import { ArrowLeft, User, Store, Loader2 } from 'lucide-react';
@@ -18,26 +18,36 @@ export default function LoginMethod() {
 
   useEffect(() => {
     const raw = sessionStorage.getItem('login_flow');
-    if (!raw) {
+    if (!raw) { 
       router.replace('/login');
       return;
     }
     setFlow(JSON.parse(raw));
   }, [router]);
 
+  // child that uses useSearchParams (must be wrapped by Suspense)
+  function SyncMethodFromSearch({ onInit }) {
+    const searchParams = useSearchParams();
+    const initial = searchParams?.get('method') || '';
+    useEffect(() => {
+      if (initial) onInit(initial);
+    }, [initial, onInit]);
+    return null;
+  }
+  
   const getFullPhoneNumber = () => {
     const trimmed = phoneNumber.trim();
     return trimmed.startsWith("+234") ? trimmed : `+234${trimmed}`;
   };
-
+  
   const canProceedPhone = phoneNumber.trim().length >= 10;
   const canProceedEmail = email.includes('@') && email.includes('.');
-
+  
   const handleBack = () => {
     sessionStorage.removeItem('login_flow');
     router.push('/login');
   };
-
+  
   const sendOtp = async () => {
     setError(null);
     if ((method === 'phone' && !canProceedPhone) || (method === 'email' && !canProceedEmail)) return;
@@ -57,9 +67,9 @@ export default function LoginMethod() {
     }
     setIsLoading(false);
   };
-
+  
   if (!flow) return null;
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md mx-auto">
@@ -67,7 +77,7 @@ export default function LoginMethod() {
           <ArrowLeft className="w-4 h-4" />
           Back to selection screen
         </button>
-
+  
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             {flow.userType === 'user' ? (
@@ -79,27 +89,31 @@ export default function LoginMethod() {
           </div>
           <div className="w-[52px]"></div>
         </div>
-
+  
         {error && <div className="mb-4 text-red-600 text-sm text-center">{error}</div>}
-
+  
         <div className="space-y-6">
           <div>
             <h3 className="font-medium mb-2">How would you like to receive your verification code?</h3>
             <div className="space-y-4 mb-6">
-              <button
-                onClick={() => setMethod('phone')}
-                className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${method === 'phone' ? 'border-[#57132A] text-[#57132A]' : 'border-gray-200 text-gray-600'}`}
-              >
-                Via Phone Number
-              </button>
-              <button
-                onClick={() => setMethod('email')}
-                className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${method === 'email' ? 'border-[#57132A] text-[#57132A]' : 'border-gray-200 text-gray-600'}`}
-              >
-                Via Email
-              </button>
++              {/* useSearchParams must live inside a Suspense boundary */}
++              <Suspense fallback={null}>
++                <SyncMethodFromSearch onInit={setMethod} />
++              </Suspense>
+               <button
+                 onClick={() => setMethod('phone')}
+                 className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${method === 'phone' ? 'border-[#57132A] text-[#57132A]' : 'border-gray-200 text-gray-600'}`}
+               >
+                 Via Phone Number
+               </button>
+               <button
+                 onClick={() => setMethod('email')}
+                 className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${method === 'email' ? 'border-[#57132A] text-[#57132A]' : 'border-gray-200 text-gray-600'}`}
+               >
+                 Via Email
+               </button>
             </div>
-
+  
             {method === 'phone' ? (
               <PhoneInput value={phoneNumber} onChange={setPhoneNumber} placeholder="Enter your phone number" />
             ) : method === 'email' ? (
@@ -112,7 +126,7 @@ export default function LoginMethod() {
               />
             ) : null}
           </div>
-
+  
           <button
             onClick={sendOtp}
             disabled={method === '' || isLoading || ((method === 'phone') ? !canProceedPhone : !canProceedEmail)}

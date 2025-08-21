@@ -13,7 +13,7 @@ export default function LoginSelection() {
     setUserType(type);
     // persist flow state between routes
     sessionStorage.setItem('login_flow', JSON.stringify({ userType: type }));
-    router.push('/login/method');
+    router.push('/login/method'); 
   };
 
   return (

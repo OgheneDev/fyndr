@@ -12,7 +12,7 @@ const EmployerScreen = ({ onPostJobClick }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
-
+ 
   useEffect(() => {
     async function fetchCvs() {
       try {
@@ -83,8 +83,8 @@ const EmployerScreen = ({ onPostJobClick }) => {
         />
         <button
           className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
-          aria-label="Clear search"
           onClick={clearSearch}
+          aria-label="Clear search"  
         >
           <X className="h-4 w-4 text-gray-400" />
         </button>
