@@ -78,7 +78,7 @@ const EmployerScreen = ({ onPostJobClick }) => {
         <Search className="h-5 w-5 text-green-900 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none" />
         <input
           type="text"
-          placeholder="Search by Job Title"
+          placeholder="Filter by Job Title"
           value={searchTerm}
           onChange={handleSearch}
           className="w-full pl-12 pr-4 py-4  border border-[#2E8B57] text-gray-900 placeholder-gray-500 outline-0"
