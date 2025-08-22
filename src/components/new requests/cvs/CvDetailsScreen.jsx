@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, User } from "lucide-react";
+import Image from "next/image";
 import { getCvById } from "@/api/cvs/requests";
 import { Loader } from "../../ui/Loader";
 
@@ -13,6 +14,7 @@ export default function CvDetailsScreen({ cvId }) {
   const [cv, setCv] = useState(null);
   const [loading, setLoading] = useState(Boolean(cvId));
   const [error, setError] = useState("");
+  const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
     if (!cvId) {
@@ -74,8 +76,22 @@ export default function CvDetailsScreen({ cvId }) {
 
       <div className="bg-white border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold">
-            {cv.firstName?.[0] || "U"}{cv.lastName?.[0] || ""}
+          {/* Avatar: Image from cv.user.avatar with icon fallback */}
+          <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+            {cv.user?.avatar && !imgError ? (
+              <Image
+                src={cv.user.avatar}
+                alt={`${cv.firstName} ${cv.lastName} avatar`}
+                width={48}
+                height={48}
+                className="w-full h-full object-cover"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                <User className="w-6 h-6 text-gray-400" />
+              </div>
+            )}
           </div>
           <div>
             <div className="font-semibold text-gray-900">
@@ -116,7 +132,7 @@ export default function CvDetailsScreen({ cvId }) {
           <div className="flex flex-wrap gap-2">
             {Array.isArray(cv.skills) && cv.skills.length > 0 ? cv.skills.map((s, i) => (
               <div key={i} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-                {humanize(s)}
+                {humanize(s)} 
               </div>
             )) : <div className="text-sm text-gray-500 italic">No skills listed</div>}
           </div>
