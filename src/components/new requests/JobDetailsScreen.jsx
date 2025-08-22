@@ -1,9 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-import { getJobById } from "@/api/jobs/requests";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { getJobById, submitJobApplication } from "@/api/jobs/requests";
 import { Loader } from "../ui/Loader";
+import { BENEFITS } from "@/data/data";
+import Swal from "sweetalert2";
 
 // add: number formatter
 function formatNumberWithCommas(value) {
@@ -13,11 +15,18 @@ function formatNumberWithCommas(value) {
   return num.toLocaleString();
 }
 
+const BENEFITS_MAP = Object.fromEntries(BENEFITS.map(b => [b.value, b.display]));
+
 export default function JobDetailsScreen({ jobId }) {
   const router = useRouter();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(Boolean(jobId));
   const [error, setError] = useState("");
+  const [showApplyForm, setShowApplyForm] = useState(false);
+  const [proposal, setProposal] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [applicationError, setApplicationError] = useState("");
+  const [applicationSuccess, setApplicationSuccess] = useState("");
 
   useEffect(() => {
     if (!jobId) {
@@ -37,12 +46,49 @@ export default function JobDetailsScreen({ jobId }) {
         console.error("Error fetching job:", err);
         if (mounted) setError("Failed to load job");
       } finally {
-        if (mounted) setLoading(false);
+        if (mounted) setLoading(false); 
       }
     }
     fetchJob();
     return () => { mounted = false; };
   }, [jobId]);
+
+  // Toggle apply form. Do NOT auto-submit CV alone.
+  const handleApplyClick = () => {
+    setApplicationError("");
+    setApplicationSuccess("");
+    setShowApplyForm(prev => !prev);
+  };
+
+  const handleSendProposal = async () => {
+    setApplicationError("");
+    setApplicationSuccess("");
+    const savedCvId = typeof window !== "undefined" ? localStorage.getItem("cvId") : null;
+    if (!savedCvId) {
+      setApplicationError("No CV found. Please upload your CV first.");
+      return;
+    }
+    try {
+      setSubmitting(true);
+      const idToUse = job?._id || jobId;
+      await submitJobApplication({ jobId: idToUse, cvId: savedCvId, proposal: proposal || "" });
+      // show a sweetalert on success and close the apply form
+      Swal.fire({
+        icon: "success",
+        title: "Application sent",
+        text: "Your application was submitted successfully.",
+        confirmButtonColor: "#541229",
+        timer: 2000
+      });
+      setProposal("");
+      setShowApplyForm(false);
+    } catch (err) {
+      console.error("Sending proposal failed:", err);
+      setApplicationError("Failed to send application.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -112,9 +158,15 @@ export default function JobDetailsScreen({ jobId }) {
           <div className="mb-4">
             <div className="text-sm font-medium text-gray-700 mb-1">Benefits</div>
             <div className="flex flex-wrap gap-2">
-              {jd.benefits.map((b, i) => (
-                <div key={i} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{b}</div>
-              ))}
+              {jd.benefits.map((b, i) => {
+                // Map stored value to user-friendly display; fallback to humanized value
+                const label = BENEFITS_MAP[b] || String(b).replace(/-/g, " ").replace(/\b\w/g, ch => ch.toUpperCase());
+                return (
+                  <div key={i} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                    {label}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -125,12 +177,51 @@ export default function JobDetailsScreen({ jobId }) {
         </div>
 
         <div className="flex gap-3">
-          <button className="flex-1 cursor-pointer bg-[#541229] text-white py-2 rounded-md">Apply</button>
-          <button className="flex-1 border cursor-pointer border-gray-200 text-gray-700 py-2 rounded-md" onClick={() => router.push('/dashboard')}>
+          <button
+            type="button"
+            onClick={handleApplyClick}
+            className="flex-1 cursor-pointer text-sm bg-[#541229] text-white py-2 rounded-md"
+            disabled={submitting}
+          >
+            {showApplyForm ? "Close" : "Apply"}
+          </button>
+          <button className="flex-1 border text-sm cursor-pointer border-gray-200 text-gray-700 py-2 rounded-md" onClick={() => router.push('/dashboard')}>
             Back to Jobs
           </button>
         </div>
+
+        {showApplyForm && (
+          <div className="mt-4">
+            <div className="text-sm text-gray-700 mb-2">Application</div>
+            {applicationError && <div className="text-red-500 text-sm mb-2">{applicationError}</div>}
+            {applicationSuccess && <div className="text-green-600 text-sm mb-2">{applicationSuccess}</div>}
+            <textarea
+              value={proposal}
+              onChange={(e) => setProposal(e.target.value)}
+              placeholder="Write a brief proposal or cover letter"
+              className="w-full border border-gray-200 rounded outline-0 min-h-[150px] p-2 mb-2 text-sm"
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={handleSendProposal}
+                disabled={submitting}
+                className="px-4 py-2 bg-[#541229] text-sm text-white cursor-pointer rounded"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="animate-spin w-4 h-4 mr-2 inline-block align-middle" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Application"
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
+

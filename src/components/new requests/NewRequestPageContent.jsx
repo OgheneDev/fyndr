@@ -8,14 +8,14 @@ import { useAuthStore } from '@/store/authStore';
 import SearchParamsTab from './SearchParamsTab';
 import FormRenderer from './FormRenderer';
 import DisclaimerModal from './DisclaimerModal';
-import { getJobById } from '@/api/jobs/requests'; // existing
 import JobDetailsScreen from './JobDetailsScreen'; // NEW import
+import CvDetailsScreen from './cvs/CvDetailsScreen'; // NEW import
 import {
   realEstateRequest,
   carHireRequest,
   cleaningRequest,
   carPartsRequest,
-  automobileRequest,
+  automobileRequest, 
   beautyRequest,
   cateringRequest,
   carpenterRequest,
@@ -27,7 +27,7 @@ import {
   hospitalityRequest,
   eventManagementRequest,
 } from '@/api/requests/users/requests';
-import { createJob } from '@/api/jobs/requests';
+import { createJob, getJobById } from '@/api/jobs/requests';
 import { createCV } from '@/api/cvs/requests';
 import { tabs, initialTab } from '@/constants/requestConstants';
 import useRequestStates from '@/hooks/useRequestStates';
@@ -42,7 +42,7 @@ const NewRequestPageContent = () => {
     carHireData, setCarHireData,
     cleaningData, setCleaningData,
     carPartsData, setCarPartsData,
-    automobileData, setAutomobileData,
+    automobileData, setAutomobileData, 
     beautyData, setBeautyData,
     cateringData, setCateringData,
     carpentryData, setcarpentryData,
@@ -695,6 +695,15 @@ const NewRequestPageContent = () => {
           const response = await createCV(formData);
           console.log('createCV response:', response);
           requestId = response.data._id;
+          // Save CV id so job seekers can apply later
+          try {
+            if (typeof window !== 'undefined' && response?.data?._id) {
+              localStorage.setItem('cvId', response.data._id);
+            }
+          } catch (e) {
+            // ignore storage errors
+            console.warn('Failed to save cvId to localStorage', e);
+          }
           setEmploymentData({ ...employmentData, role: '' });
           setShowEmployerForm(false);
           setShowJobSeekerForm(false);
@@ -735,6 +744,12 @@ const NewRequestPageContent = () => {
   const _category = searchParams.get('category');
   const _role = searchParams.get('role');
   const _jobId = searchParams.get('jobId');
+  const _cvId = searchParams.get('cvId');
+
+  // Employer viewing a CV -> show CV details
+  if (_category === 'employment' && _role === 'employer' && _cvId) {
+    return <CvDetailsScreen cvId={_cvId} />;
+  }
 
   if (_category === 'employment' && _role === 'jobSeeker' && _jobId) {
     return <JobDetailsScreen jobId={_jobId} />;
@@ -823,4 +838,4 @@ const NewRequestPageContent = () => {
 };
 
 export default NewRequestPageContent;
-                
+

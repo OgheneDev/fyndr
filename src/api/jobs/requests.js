@@ -79,9 +79,13 @@ export const deleteJobListing = async ({jobId}) => {
     }
 }
 
-export const submitJobApplication = async (formData) => {
+export const submitJobApplication = async ({ jobId, cvId, proposal }) => {
   try {
-    const response = await axiosInstance.post('v1/job/application', formData);
+    // Send cvId + proposal to the job application endpoint
+    const response = await axiosInstance.post(`v1/job/single/${jobId}`, {
+      cvId,
+      proposal,
+    });
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -144,6 +148,7 @@ export const getJobById = async ({jobId}) => {
         const response = await axiosInstance.get(
             `v1/job/single/${jobId}`
         );
+        console.log(response);
         return response.data
     } catch (error) {
         if (error.response) {

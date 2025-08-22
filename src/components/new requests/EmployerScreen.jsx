@@ -81,13 +81,15 @@ const EmployerScreen = ({ onPostJobClick }) => {
           onChange={handleSearch}
           className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 text-gray-900 placeholder-gray-500 outline-0"
         />
-        <button
+        {searchTerm && (
+        <button 
           className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
           onClick={clearSearch}
           aria-label="Clear search"  
         >
           <X className="h-4 w-4 text-gray-400" />
         </button>
+        )}
       </div>
       <div>
         <CvsList filteredCvs={filteredCvs} />
