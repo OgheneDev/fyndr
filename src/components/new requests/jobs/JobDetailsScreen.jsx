@@ -97,7 +97,7 @@ export default function JobDetailsScreen({ jobId }) {
         icon: "success",
         title: "Application sent",
         text: "Your application was submitted successfully.",
-        confirmButtonColor: "#541229",
+        confirmButtonColor: "#2E8B57",
         timer: 2000
       });
       setProposal("");
@@ -169,7 +169,7 @@ export default function JobDetailsScreen({ jobId }) {
 
       <div className="bg-white border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold">
+          <div className="w-12 h-12 bg-gradient-to-br from-[#2E8B57] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold">
             {ed.firstName?.[0] || "E"}{ed.lastName?.[0] || ""}
           </div>
           <div>
@@ -180,7 +180,7 @@ export default function JobDetailsScreen({ jobId }) {
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold text-[#541229] mb-2">{jd.title}</h3>
+        <h3 className="text-xl font-semibold text-[#2E8B57] mb-2">{jd.title}</h3>
         <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
           <div>{jd.location}</div>
           <div className="capitalize">{jd.type}</div>
@@ -220,7 +220,7 @@ export default function JobDetailsScreen({ jobId }) {
           <button
             type="button"
             onClick={handleApplyClick}
-            className="flex-1 cursor-pointer text-sm bg-[#541229] text-white py-2 rounded-md"
+            className="flex-1 cursor-pointer text-sm bg-[#2E8B57] text-white py-2 rounded-md"
             disabled={submitting || hasApplied}
           >
             {hasApplied ? "Already Applied" : (showApplyForm ? "Close" : "Apply")}
@@ -251,7 +251,7 @@ export default function JobDetailsScreen({ jobId }) {
                     type="button"
                     onClick={handleSendProposal}
                     disabled={submitting}
-                    className="px-4 py-2 bg-[#541229] text-sm text-white cursor-pointer rounded"
+                    className="px-4 py-2 bg-[#2E8B57] text-sm text-white cursor-pointer rounded"
                   >
                     {submitting ? (
                       <>

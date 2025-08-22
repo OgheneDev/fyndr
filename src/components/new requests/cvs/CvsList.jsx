@@ -47,7 +47,7 @@ export const CvsList = ({filteredCvs}) => {
                       {cv.workExperienceDetails.jobTitle && (
                         <p className=" text-gray-900">{cv.workExperienceDetails.jobTitle}</p>
                       )}
-                    </div>
+                    </div> 
                   </>
                 ) : (
                   <div className='text-[12px] text-gray-900'>No work experience.</div>

@@ -46,7 +46,7 @@ export const JobsList = ({ filteredJobs }) => {
                 // Navigate into the new-request flow with employment role and jobId param
                 router.push(`/dashboard/new-request?category=employment&role=jobSeeker&jobId=${encodeURIComponent(job._id)}`);
               }}
-              className="cursor-pointer text-sm font-medium text-[#2E8B57]"
+              className="cursor-pointer text-[12px] font-medium text-[#2E8B57]"
             >
               <span>View Job</span>
             </button>
