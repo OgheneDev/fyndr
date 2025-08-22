@@ -45,17 +45,19 @@ export const CvsList = ({filteredCvs}) => {
                   <>
                     <div className=' text-[12px] text-gray-900'>
                       {cv.workExperienceDetails.jobTitle && (
-                        <p className="font-medium text-gray-900">{cv.workExperienceDetails.jobTitle}</p>
+                        <p className=" text-gray-900">{cv.workExperienceDetails.jobTitle}</p>
                       )}
-                    </div>
-                    <div className='flex items-center gap-2 text-[12px] text-gray-900'>
-                      {cv.workExperienceDetails.company && <p>at {cv.workExperienceDetails.company}</p>}
                     </div>
                   </>
                 ) : (
                   <div className='text-[12px] text-gray-900'>No work experience listed</div>
                 )}
+
+                <div>
+                  <p className='text-[12px]'>{cv.state}, Nigeria</p>
+                </div>
               </div>
+
             </div>
             
             {/* Action Button */}
@@ -66,7 +68,7 @@ export const CvsList = ({filteredCvs}) => {
                 e.stopPropagation();
                 router.push(`/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cv._id)}`);
               }}
-              className="cursor-pointer text-sm font-semibold text-green-800"
+              className="cursor-pointer text-[12px] font-semibold text-green-800"
             >
               View CV
             </button>
