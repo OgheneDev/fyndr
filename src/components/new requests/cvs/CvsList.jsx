@@ -50,7 +50,7 @@ export const CvsList = ({filteredCvs}) => {
                     </div>
                   </>
                 ) : (
-                  <div className='text-[12px] text-gray-900'>No work experience listed</div>
+                  <div className='text-[12px] text-gray-900'>No work experience.</div>
                 )}
 
                 <div>
