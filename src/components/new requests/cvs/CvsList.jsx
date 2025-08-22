@@ -1,26 +1,37 @@
-import { Eye, User, Building, ChevronRight } from 'lucide-react';
+import { User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export const CvsList = ({filteredCvs}) => {
   const router = useRouter();
   return (
-    <div className='flex flex-col gap-4 mt-4'>
+    <div className='flex flex-col gap-4 mt-6'>
       {Array.isArray(filteredCvs) && filteredCvs.length > 0 ? (
         filteredCvs.map((cv) => (
           <div 
             key={cv._id} 
-            className="group bg-white border border-gray-200  px-6 py-4 rounded-2xl flex gap-5 md:gap-0 flex-col md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            className="group bg-white border border-green-700 pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
-            <div className='flex md:items-center space-x-4'>
+            <div className='flex items-center space-x-4'>
               {/* Avatar */}
-              <div className="w-12 h-12 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
-                {cv.firstName[0]}{cv.lastName[0]}
-              </div>
+              {cv.user?.avatar ? (
+                <Image
+                  src={cv.user.avatar}
+                  alt={`${cv.firstName} ${cv.lastName} avatar`}
+                  width={64}
+                  height={64}
+                  className="w-16 h-16 rounded-full object-cover shadow-md"
+                />
+              ) : (
+                <div className="w-16 h-16 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
+                  {cv.firstName[0]}{cv.lastName[0]}
+                </div>
+              )}
               
               {/* Content */}
-              <div className='space-y-1'>
+              <div className=''>
                 <div className=''>
-                  <div className='flex gap-1 font-semibold text-gray-900'>
+                  <div className='flex gap-1 text-sm text-gray-900'>
                     <p>{cv.firstName}</p>
                     <p>{cv.lastName}</p>
                   </div>
@@ -32,17 +43,17 @@ export const CvsList = ({filteredCvs}) => {
                 */}
                 {cv.workExperienceDetails && (cv.workExperienceDetails.jobTitle || cv.workExperienceDetails.company) ? (
                   <>
-                    <div className=' text-sm text-gray-600'>
+                    <div className=' text-[12px] text-gray-900'>
                       {cv.workExperienceDetails.jobTitle && (
-                        <p className="font-medium text-[#541229]">{cv.workExperienceDetails.jobTitle}</p>
+                        <p className="font-medium text-gray-900">{cv.workExperienceDetails.jobTitle}</p>
                       )}
                     </div>
-                    <div className='flex items-center gap-2 text-sm text-gray-500'>
+                    <div className='flex items-center gap-2 text-[12px] text-gray-900'>
                       {cv.workExperienceDetails.company && <p>at {cv.workExperienceDetails.company}</p>}
                     </div>
                   </>
                 ) : (
-                  <div className='text-sm text-gray-500 italic'>No work experience listed</div>
+                  <div className='text-[12px] text-gray-900'>No work experience listed</div>
                 )}
               </div>
             </div>
@@ -55,11 +66,9 @@ export const CvsList = ({filteredCvs}) => {
                 e.stopPropagation();
                 router.push(`/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cv._id)}`);
               }}
-              className="flex items-center justify-center md:justify-start cursor-pointer gap-2 px-4 md:py-2 py-3 text-sm font-medium text-[#541229] bg-[#54122915] hover:bg-[#54122925] rounded-lg transition-colors duration-200 group-hover:shadow-sm"
+              className="cursor-pointer text-sm font-semibold text-green-800"
             >
-              <Eye className="w-4 h-4" />
               View CV
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
             </button>
           </div>
         ))

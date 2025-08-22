@@ -13,7 +13,7 @@ const EmployerScreen = ({ onPostJobClick }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
  
-  useEffect(() => {
+  useEffect(() => { 
     async function fetchCvs() {
       try {
         setLoading(true);
@@ -65,21 +65,23 @@ const EmployerScreen = ({ onPostJobClick }) => {
 
   return (
     <div>
-      <h2 className="mb-10 font-bold text-center text-xl">Employers Screen</h2>
-      <button
-        className="text-center py-3 text-white bg-[#541229] cursor-pointer w-full rounded-md text-sm mb-5"
+      <h2 className="mb-5 font-bold text-center text-xl">Employers Screen</h2>
+      <div className="flex justify-center">
+        <button
+        className="text-center py-3 px-5 text-white bg-green-700 cursor-pointer w-fit md:w-full rounded-md text-sm mb-5"
         onClick={onPostJobClick} // Call the callback to show EmployerForm
       >
         Post a Job
       </button>
+      </div>
       <div className="relative">
-        <Search className="h-5 w-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+        <Search className="h-5 w-5 text-green-900 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none" />
         <input
           type="text"
           placeholder="Search by Job Title"
           value={searchTerm}
           onChange={handleSearch}
-          className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 text-gray-900 placeholder-gray-500 outline-0"
+          className="w-full pl-12 pr-4 py-4  border border-green-700 text-gray-900 placeholder-gray-500 outline-0"
         />
         {searchTerm && (
         <button 

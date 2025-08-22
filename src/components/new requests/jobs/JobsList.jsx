@@ -9,28 +9,28 @@ export const JobsList = ({ filteredJobs }) => {
         filteredJobs.map((job) => ( 
           <div 
             key={job._id}
-            className="group bg-white border border-gray-200 px-6 py-4 rounded-2xl flex flex-col gap-5 md:gap-0 md:flex-row md:items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            className="group bg-white border border-green-700 pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
-            <div className='flex md:items-center space-x-4'>
+            <div className='flex items-center space-x-4'>
               {/* Avatar */}
-              <div className="w-12 h-12 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
                 {job.employerDetails.firstName[0]}{job.employerDetails.lastName[0]}
               </div>
 
               {/* Content */}
-              <div className='space-y-1'>
+              <div className=''>
                 <div className=''>
-                  <div className='flex gap-1 font-semibold text-gray-900'>
+                  <div className='flex gap-1 text-sm text-gray-900'>
                     <p>{job.employerDetails.firstName}</p>
                     <p>{job.employerDetails.lastName}</p>
                   </div>
                 </div>
 
-                <div className='text-sm text-gray-600'>
-                  <p className="font-medium text-[#541229]">{job.jobDetails.title}</p>
+                <div className='text-[12px] text-gray-900'>
+                  <p className="font-medium">{job.jobDetails.title}</p>
                 </div>
 
-                <div className='flex items-center gap-2 text-sm text-gray-500'>
+                <div className='flex items-center gap-2 text-[12px] text-gray-900'>
                   <p>{job.jobDetails.location}</p>
                 </div>
               </div>
@@ -46,11 +46,9 @@ export const JobsList = ({ filteredJobs }) => {
                 // Navigate into the new-request flow with employment role and jobId param
                 router.push(`/dashboard/new-request?category=employment&role=jobSeeker&jobId=${encodeURIComponent(job._id)}`);
               }}
-              className="flex items-center cursor-pointer gap-2 justify-center md:justify-start px-4 py-3 md:py-2 text-sm font-medium text-[#541229] bg-[#54122915] hover:bg-[#54122925] rounded-lg transition-colors duration-200 group-hover:shadow-sm"
+              className="cursor-pointer text-sm font-medium text-green-800"
             >
-              <Eye className="w-4 h-4" />
               <span>View Job</span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
             </button>
           </div>
         ))
