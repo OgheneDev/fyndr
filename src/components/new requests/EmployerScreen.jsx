@@ -65,7 +65,7 @@ const EmployerScreen = ({ onPostJobClick }) => {
 
   return (
     <div>
-      <h2 className="mb-5 font-bold text-center text-xl">Employers Screen</h2>
+      <h2 className="mb-5 text-center text-lg">Employer Portal</h2>
       <div className="flex justify-center">
         <button
         className="text-center py-3 px-5 text-white bg-[#2E8B57] cursor-pointer w-fit md:w-full rounded-lg text-sm mb-5"
