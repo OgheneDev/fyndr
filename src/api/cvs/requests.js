@@ -43,7 +43,7 @@ export const getAllCvs = async () => {
     }
 }
 
-export const getCvById = async ({cvId}) => {
+export const getCvById = async ({cvId}) => { 
     try {
         const response = await axiosInstance.get(
             `v1/cv/single/${cvId}`

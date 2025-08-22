@@ -61,15 +61,15 @@ const DashboardPage = () => {
       hasContent: true,
     },
     {
-      id: "beauty",
-      title: "Beauty",
-      icon: "images/auto.PNG",
-      hasContent: true,
-    },
-    {
       id: "car-hire",
       title: "Car Hire",
       icon: "images/hire.JPG",
+      hasContent: true,
+    },
+    {
+      id: "beauty",
+      title: "Beauty",
+      icon: "images/beauty.jpeg",
       hasContent: true,
     },
   ];
