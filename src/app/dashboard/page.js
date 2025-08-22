@@ -69,7 +69,7 @@ const DashboardPage = () => {
     {
       id: "beauty",
       title: "Beauty",
-      icon: "images/beauty.jpeg",
+      icon: "images/beauty.jpg",
       hasContent: true,
     },
   ];

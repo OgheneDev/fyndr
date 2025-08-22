@@ -8,8 +8,8 @@ import { useAuthStore } from '@/store/authStore';
 import SearchParamsTab from './SearchParamsTab';
 import FormRenderer from './FormRenderer';
 import DisclaimerModal from './DisclaimerModal';
-import JobDetailsScreen from './JobDetailsScreen'; // NEW import
-import CvDetailsScreen from './cvs/CvDetailsScreen'; // NEW import
+import JobDetailsScreen from './jobs/JobDetailsScreen';
+import CvDetailsScreen from './cvs/CvDetailsScreen';
 import {
   realEstateRequest,
   carHireRequest,
@@ -42,7 +42,7 @@ const NewRequestPageContent = () => {
     carHireData, setCarHireData,
     cleaningData, setCleaningData,
     carPartsData, setCarPartsData,
-    automobileData, setAutomobileData, 
+    automobileData, setAutomobileData,  
     beautyData, setBeautyData,
     cateringData, setCateringData,
     carpentryData, setcarpentryData,

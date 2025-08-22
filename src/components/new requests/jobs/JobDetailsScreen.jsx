@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { getJobById, submitJobApplication } from "@/api/jobs/requests";
-import { Loader } from "../ui/Loader";
+import { Loader } from "@/components/ui/Loader";
 import { BENEFITS } from "@/data/data";
 import Swal from "sweetalert2";
 
@@ -28,6 +28,9 @@ export default function JobDetailsScreen({ jobId }) {
   const [applicationError, setApplicationError] = useState("");
   const [applicationSuccess, setApplicationSuccess] = useState("");
 
+  // Track whether the CV in localStorage already applied to this job
+  const [hasApplied, setHasApplied] = useState(false);
+
   useEffect(() => {
     if (!jobId) {
       setError("No job specified");
@@ -41,7 +44,24 @@ export default function JobDetailsScreen({ jobId }) {
       try {
         const res = await getJobById({ jobId });
         const jobObj = res?.data || res;
-        if (mounted) setJob(jobObj);
+        if (mounted) {
+          setJob(jobObj);
+          // determine whether saved cvId is among applicants
+          try {
+            const savedCvId = typeof window !== "undefined" ? localStorage.getItem("cvId") : null;
+            let alreadyApplied = false;
+            if (savedCvId && Array.isArray(jobObj?.applicants)) {
+              alreadyApplied = jobObj.applicants.some((a) => {
+                const cv = a?.cv;
+                // support cv object or direct id
+                return !!cv && (cv._id === savedCvId || cv === savedCvId || String(cv) === savedCvId);
+              });
+            }
+            setHasApplied(alreadyApplied);
+          } catch (e) {
+            console.warn("Failed to determine applied status", e);
+          }
+        }
       } catch (err) {
         console.error("Error fetching job:", err);
         if (mounted) setError("Failed to load job");
@@ -82,6 +102,26 @@ export default function JobDetailsScreen({ jobId }) {
       });
       setProposal("");
       setShowApplyForm(false);
+
+      // Reload job and recompute applied status so user cannot apply again
+      try {
+        const res = await getJobById({ jobId: idToUse });
+        const updatedJob = res?.data || res;
+        setJob(updatedJob);
+        const savedCvId2 = typeof window !== "undefined" ? localStorage.getItem("cvId") : null;
+        let alreadyApplied = false;
+        if (savedCvId2 && Array.isArray(updatedJob?.applicants)) {
+          alreadyApplied = updatedJob.applicants.some((a) => {
+            const cv = a?.cv;
+            return !!cv && (cv._id === savedCvId2 || cv === savedCvId2 || String(cv) === savedCvId2);
+          });
+        }
+        setHasApplied(alreadyApplied);
+      } catch (e) {
+        console.warn("Failed to reload job after applying", e);
+        // As a fallback, mark as applied to prevent duplicate attempts
+        setHasApplied(true);
+      }
     } catch (err) {
       console.error("Sending proposal failed:", err);
       setApplicationError("Failed to send application.");
@@ -181,9 +221,9 @@ export default function JobDetailsScreen({ jobId }) {
             type="button"
             onClick={handleApplyClick}
             className="flex-1 cursor-pointer text-sm bg-[#541229] text-white py-2 rounded-md"
-            disabled={submitting}
+            disabled={submitting || hasApplied}
           >
-            {showApplyForm ? "Close" : "Apply"}
+            {hasApplied ? "Already Applied" : (showApplyForm ? "Close" : "Apply")}
           </button>
           <button className="flex-1 border text-sm cursor-pointer border-gray-200 text-gray-700 py-2 rounded-md" onClick={() => router.push('/dashboard')}>
             Back to Jobs
@@ -192,32 +232,39 @@ export default function JobDetailsScreen({ jobId }) {
 
         {showApplyForm && (
           <div className="mt-4">
+            {hasApplied ? (
+              <div className="text-sm text-green-600 mb-2">You have already applied to this job with your saved CV.</div>
+            ) : null}
             <div className="text-sm text-gray-700 mb-2">Application</div>
             {applicationError && <div className="text-red-500 text-sm mb-2">{applicationError}</div>}
             {applicationSuccess && <div className="text-green-600 text-sm mb-2">{applicationSuccess}</div>}
-            <textarea
-              value={proposal}
-              onChange={(e) => setProposal(e.target.value)}
-              placeholder="Write a brief proposal or cover letter"
-              className="w-full border border-gray-200 rounded outline-0 min-h-[150px] p-2 mb-2 text-sm"
-            />
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={handleSendProposal}
-                disabled={submitting}
-                className="px-4 py-2 bg-[#541229] text-sm text-white cursor-pointer rounded"
-              >
-                {submitting ? (
-                  <>
-                    <Loader2 className="animate-spin w-4 h-4 mr-2 inline-block align-middle" />
-                    Sending...
-                  </>
-                ) : (
-                  "Send Application"
-                )}
-              </button>
-            </div>
+            {!hasApplied ? (
+              <>
+                <textarea
+                  value={proposal}
+                  onChange={(e) => setProposal(e.target.value)}
+                  placeholder="Write a brief proposal or cover letter"
+                  className="w-full border border-gray-200 rounded outline-0 min-h-[150px] p-2 mb-2 text-sm"
+                />
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={handleSendProposal}
+                    disabled={submitting}
+                    className="px-4 py-2 bg-[#541229] text-sm text-white cursor-pointer rounded"
+                  >
+                    {submitting ? (
+                      <>
+                        <Loader2 className="animate-spin w-4 h-4 mr-2 inline-block align-middle" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Application"
+                    )}
+                  </button>
+                </div>
+              </>
+            ) : null}
           </div>
         )}
       </div>
