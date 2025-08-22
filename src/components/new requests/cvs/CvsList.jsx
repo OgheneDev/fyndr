@@ -10,7 +10,7 @@ export const CvsList = ({filteredCvs}) => {
         filteredCvs.map((cv) => (
           <div 
             key={cv._id} 
-            className="group bg-white border border-green-700 pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            className="group bg-white border border-[#2E8B57] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
             <div className='flex items-center space-x-4'>
               {/* Avatar */}
@@ -68,7 +68,7 @@ export const CvsList = ({filteredCvs}) => {
                 e.stopPropagation();
                 router.push(`/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cv._id)}`);
               }}
-              className="cursor-pointer text-[12px] font-semibold text-green-800"
+              className="cursor-pointer text-[12px] font-semibold text-[#2E8B57]"
             >
               View CV
             </button>

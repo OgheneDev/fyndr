@@ -68,7 +68,7 @@ const EmployerScreen = ({ onPostJobClick }) => {
       <h2 className="mb-5 font-bold text-center text-xl">Employers Screen</h2>
       <div className="flex justify-center">
         <button
-        className="text-center py-3 px-5 text-white bg-green-700 cursor-pointer w-fit md:w-full rounded-md text-sm mb-5"
+        className="text-center py-3 px-5 text-white bg-[#2E8B57] cursor-pointer w-fit md:w-full rounded-lg text-sm mb-5"
         onClick={onPostJobClick} // Call the callback to show EmployerForm
       >
         Post a Job
@@ -81,7 +81,7 @@ const EmployerScreen = ({ onPostJobClick }) => {
           placeholder="Search by Job Title"
           value={searchTerm}
           onChange={handleSearch}
-          className="w-full pl-12 pr-4 py-4  border border-green-700 text-gray-900 placeholder-gray-500 outline-0"
+          className="w-full pl-12 pr-4 py-4  border border-[#2E8B57] text-gray-900 placeholder-gray-500 outline-0"
         />
         {searchTerm && (
         <button 

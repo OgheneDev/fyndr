@@ -9,7 +9,7 @@ export const JobsList = ({ filteredJobs }) => {
         filteredJobs.map((job) => ( 
           <div 
             key={job._id}
-            className="group bg-white border border-green-700 pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            className="group bg-white border border-[#2E8B57] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
             <div className='flex items-center space-x-4'>
               {/* Avatar */}
@@ -46,7 +46,7 @@ export const JobsList = ({ filteredJobs }) => {
                 // Navigate into the new-request flow with employment role and jobId param
                 router.push(`/dashboard/new-request?category=employment&role=jobSeeker&jobId=${encodeURIComponent(job._id)}`);
               }}
-              className="cursor-pointer text-sm font-medium text-green-800"
+              className="cursor-pointer text-sm font-medium text-[#2E8B57]"
             >
               <span>View Job</span>
             </button>
