@@ -1,8 +1,8 @@
-import { Eye, Building, ChevronRight } from 'lucide-react';
+import { Building} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export const JobsList = ({ filteredJobs }) => {
-  const router = useRouter(); // added
+  const router = useRouter();
   return (
     <div className='flex flex-col gap-4 mt-4'>
       {Array.isArray(filteredJobs) && filteredJobs.length > 0 ? (
@@ -27,7 +27,7 @@ export const JobsList = ({ filteredJobs }) => {
                 </div>
 
                 <div className='text-[10px] md:text-[12px] text-gray-900'>
-                  <p className="font-medium">{job.jobDetails.title}</p>
+                  <p className="font-medium truncate max-w-[130px] md:max-w-[300px]">{job.jobDetails.title}</p>
                 </div>
 
                 <div className='flex items-center gap-2 text-[10px] md:text-[12px] text-gray-900'>
@@ -36,17 +36,16 @@ export const JobsList = ({ filteredJobs }) => {
               </div>
             </div>
 
-            {/* Action Button: programmatic navigation to avoid form submit */}
-           <button
+            {/* Action Button */}
+            <button
               type="button"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 console.log('Navigating to job', job._id);
-                // Navigate into the new-request flow with employment role and jobId param
                 router.push(`/dashboard/new-request?category=employment&role=jobSeeker&jobId=${encodeURIComponent(job._id)}`);
               }}
-              className="cursor-pointer text-[12px] font-medium text-[#85CE5C]"
+              className="cursor-pointer text-[10px] md:text-[12px] font-medium text-[#85CE5C]"
             >
               <span>View Job</span>
             </button>
