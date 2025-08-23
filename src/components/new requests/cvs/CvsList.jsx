@@ -45,7 +45,7 @@ export const CvsList = ({filteredCvs}) => {
                   <>
                     <div className=' text-[10px] md:text-[12px] text-gray-900'>
                       {cv.workExperienceDetails.jobTitle && (
-                        <p className=" text-gray-900">{cv.workExperienceDetails.jobTitle}</p>
+                        <p className=" text-gray-900 truncate max-w-[130px] md:max-w-[300px]">{cv.workExperienceDetails.jobTitle}</p>
                       )}
                     </div> 
                   </>
@@ -68,7 +68,7 @@ export const CvsList = ({filteredCvs}) => {
                 e.stopPropagation();
                 router.push(`/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cv._id)}`);
               }}
-              className="cursor-pointer text-[12px] font-semibold text-[#85CE5C]"
+              className="cursor-pointer text-[10px] md:text-[12px] font-semibold text-[#85CE5C]"
             >
               View CV
             </button>
