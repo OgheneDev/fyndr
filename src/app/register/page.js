@@ -52,21 +52,21 @@ const RegistrationPage = () => {
         </p>
 
         <p className='mb-12 text-sm'>
-          Already have an account? <Link href={'/login'}><span className='text-[#57132A] cursor-pointer  underline'>Sign in</span></Link>
+          Already have an account? <Link href={'/login'}><span className='text-[#85CE5C] cursor-pointer  underline'>Sign in</span></Link>
         </p>
         
         {/* Buttons */}
         <div className="space-y-4">
           <button
             onClick={() => handleTypeSelect('merchant')}
-            className="w-full py-4 px-6 bg-white border-2 border-[#57132A] text-[#57132A] cursor-pointer rounded-lg transition-all duration-200"
+            className="w-full py-4 px-6 bg-white border-2 border-[#85CE5C] text-[#85CE5C] cursor-pointer rounded-lg transition-all duration-200"
           >
             Sign up as a Merchant
           </button>
           
           <button
             onClick={() => handleTypeSelect('user')}
-            className="w-full py-4 px-6 bg-[#57132A] text-white cursor-pointer rounded-lg  transition-all duration-200"
+            className="w-full py-4 px-6 bg-[#85CE5C] text-white cursor-pointer rounded-lg  transition-all duration-200"
           >
             Sign up as a Customer
           </button>

@@ -131,7 +131,7 @@ export default function VerifyOtpPage() {
               <button 
                 onClick={handleResendOTP}
                 disabled={isResending || isLoading}
-                className="text-[#57132A] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
+                className="text-[#85CE5C] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
               >
                 {isResending && <Loader2 className="w-3 h-3 animate-spin" />}
                 {isResending ? 'Resending...' : 'Resend OTP'}
@@ -143,7 +143,7 @@ export default function VerifyOtpPage() {
         <button
           onClick={handleOTPSubmit}
           disabled={!canProceedOTP || isLoading || isResending}
-          className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full bg-[#85CE5C] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
           {isLoading ? 'Verifying...' : 'Verify Code'}

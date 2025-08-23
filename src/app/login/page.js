@@ -35,18 +35,18 @@ export default function LoginSelection() {
           Sign in to continue chatting safely and securely.
         </p>
         <p className="mb-12 text-sm">
-          Don&apos;t have an account? <Link href="/register"><span className="text-[#57132A] cursor-pointer underline">Sign up</span></Link>
+          Don&apos;t have an account? <Link href="/register"><span className="text-[#85CE5C] cursor-pointer underline">Sign up</span></Link>
         </p>
         <div className="space-y-4">
           <button
             onClick={() => handleTypeSelect('merchant')}
-            className="w-full py-4 px-6 bg-white border-2 border-[#57132A] text-[#57132A] cursor-pointer rounded-lg transition-all duration-200"
+            className="w-full py-4 px-6 bg-white border-2 border-[#85CE5C] text-[#85CE5C] cursor-pointer rounded-lg transition-all duration-200"
           >
             Sign in as a Merchant
           </button>
           <button
             onClick={() => handleTypeSelect('user')}
-            className="w-full py-4 px-6 bg-[#57132A] text-white cursor-pointer rounded-lg transition-all duration-200"
+            className="w-full py-4 px-6 bg-[#85CE5C] text-white cursor-pointer rounded-lg transition-all duration-200"
           >
             Sign in as a Customer
           </button>

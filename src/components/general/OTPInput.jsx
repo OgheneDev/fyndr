@@ -36,7 +36,7 @@ export const OTPInput = ({ value, onChange }) => {
           value={value[index] || ''}
           onChange={(e) => handleChange(index, e.target.value)}
           onKeyDown={(e) => handleKeyDown(index, e)}
-          className="w-14 h-14 text-center text-xl font-semibold bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="w-14 h-14 text-center text-xl font-semibold bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
       ))}
     </div>

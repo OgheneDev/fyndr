@@ -197,7 +197,7 @@ const handleDetailsSubmit = async () => {
       icon: "success",
       title: "Registration Successful!",
       text: "Your account has been created.",
-      confirmButtonColor: "#541229"
+      confirmButtonColor: "#85CE5C"
     });
     if (onSuccess) {
       onSuccess();
@@ -276,7 +276,7 @@ const handleDetailsSubmit = async () => {
     <div className="w-full max-w-md mx-auto mt-13 px-5 md:px-0">
       <button
         onClick={handleBack}
-        className="cursor-pointer flex gap-3 items-center text-gray-600 text-sm hover:text-[#57132A] transition-colors mb-4"
+        className="cursor-pointer flex gap-3 items-center text-gray-600 text-sm hover:text-[#85CE5C] transition-colors mb-4"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to selection screen
@@ -285,9 +285,9 @@ const handleDetailsSubmit = async () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           {userType === 'user' ? (
-            <User className="w-6 h-6 text-[#541229] mr-2" />
+            <User className="w-6 h-6 text-[#85CE5C] mr-2" />
           ) : (
-            <Store className="w-6 h-6 text-[#541229] mr-2" />
+            <Store className="w-6 h-6 text-[#85CE5C] mr-2" />
           )}
           <h2 className="text-xl font-semibold capitalize">{userType} Registration</h2>
         </div>
@@ -300,14 +300,14 @@ const handleDetailsSubmit = async () => {
           <div key={stepNum} className="flex items-center">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
               step >= stepNum 
-                ? 'bg-[#541229] text-white' 
+                ? 'bg-[#85CE5C] text-white' 
                 : 'bg-gray-200 text-gray-600'
             }`}>
               {step > stepNum ? <CheckCircle className="w-5 h-5" /> : stepNum}
             </div>
             {stepNum < 3 && (
               <div className={`h-1 w-16 mx-2 ${
-                step > stepNum ? 'bg-[#541229]' : 'bg-gray-200'
+                step > stepNum ? 'bg-[#85CE5C]' : 'bg-gray-200'
               }`} />
             )}
           </div>
@@ -328,7 +328,7 @@ const handleDetailsSubmit = async () => {
                 onClick={() => handleMethodSelect('phone')}
                 className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${
                   method === 'phone' 
-                    ? 'border-[#57132A] text-[#57132A]' 
+                    ? 'border-[#85CE5C] text-[#85CE5C]' 
                     : 'border-gray-200 text-gray-600'
                 }`}
               >
@@ -338,7 +338,7 @@ const handleDetailsSubmit = async () => {
                 onClick={() => handleMethodSelect('email')}
                 className={`w-full py-4 px-6 border-2 cursor-pointer rounded-lg ${
                   method === 'email'
-                    ? 'border-[#57132A] text-[#57132A]'
+                    ? 'border-[#85CE5C] text-[#85CE5C]'
                     : 'border-gray-200 text-gray-600'
                 }`}
               >
@@ -358,14 +358,14 @@ const handleDetailsSubmit = async () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent outline-none transition-all"
               />
             )}
           </div>
           <button
             onClick={method === 'phone' ? handlePhoneSubmit : handleEmailSubmit}
             disabled={method === 'phone' ? !canProceedPhone : !canProceedEmail || isLoading}
-            className="w-full bg-[#541229] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-[#85CE5C] text-white py-3 rounded-full text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
             {isLoading && <Loader2 className="w-4 h-4 animate-spin" /> }
             {isLoading ? 'Sending...' : 'Send Code'}
@@ -389,7 +389,7 @@ const handleDetailsSubmit = async () => {
               <button 
                 onClick={handleResendOTP}
                 disabled={isResending || isLoading}
-                className="text-[#57132A] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
+                className="text-[#85CE5C] cursor-pointer underline disabled:opacity-50 inline-flex items-center gap-1"
               >
                 {isResending && <Loader2 className="w-3 h-3 animate-spin" />}
                 {isResending ? 'Resending...' : 'Resend OTP'}
@@ -399,7 +399,7 @@ const handleDetailsSubmit = async () => {
           <button
             onClick={handleOTPSubmit}
             disabled={!canProceedOTP || isLoading || isResending}
-            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#85CE5C] text-white py-3 cursor-pointer rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? 'Verifying...' : 'Verify Code'}
           </button>
@@ -433,7 +433,7 @@ const handleDetailsSubmit = async () => {
           <button
             onClick={handleDetailsSubmit}
             disabled={!canProceedDetails || isLoading}
-            className="w-full bg-[#541229] text-white py-3 cursor-pointer rounded-lg text-sm  disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-[#85CE5C] text-white py-3 cursor-pointer rounded-lg text-sm  disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
             {isLoading && <Loader2 className="w-4 h-4 animate-spin" /> }
             {isLoading ? 'Creating Account...' : 'Complete Registration'}
@@ -444,9 +444,9 @@ const handleDetailsSubmit = async () => {
       {/* Terms */}
       <p className="text-xs text-gray-500 text-center mt-6">
         By continuing, you agree to our{' '}
-        <a href="#" className="text-[#541229] hover:underline">Terms of Service</a>
+        <a href="#" className="text-[#85CE5C] hover:underline">Terms of Service</a>
         {' '}and{' '}
-        <a href="#" className="text-[#541229] hover:underline">Privacy Policy</a>
+        <a href="#" className="text-[#85CE5C] hover:underline">Privacy Policy</a>
       </p>
     </div>
   );
