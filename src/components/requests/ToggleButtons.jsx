@@ -21,7 +21,7 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
         
         {/* Sliding indicator */}
         <div 
-          className={`absolute bottom-0 h-1 bg-[#57132A] rounded-t-md transition-all duration-300 ease-in-out ${
+          className={`absolute bottom-0 h-1 bg-[#85CE5C] rounded-t-md transition-all duration-300 ease-in-out ${
             activeTab === 'completed' ? 'left-0 w-1/2 md:left-[16.67%] md:w-1/6' : 'left-1/2 w-1/2 md:left-[66.67%] md:w-1/6'
           }`}
         ></div>

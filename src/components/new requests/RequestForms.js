@@ -136,9 +136,9 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
             }),
             option: (base, state) => ({
               ...base,
-              backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
+              backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
               '&:hover': {
-                backgroundColor: state.isSelected ? '#541229' : '#f3f4f6'
+                backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6'
               }
             })
           }}
@@ -181,8 +181,8 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
             step={10000}
             value={[Number(formData.lowerPriceLimit) || 0, Number(formData.upperPriceLimit) || 1000000000]}
             onChange={handleSliderChange}
-            trackStyle={{ backgroundColor: '#541229' }}
-            handleStyle={{ borderColor: '#541229', backgroundColor: '#fff' }}
+            trackStyle={{ backgroundColor: '#85CE5C' }}
+            handleStyle={{ borderColor: '#85CE5C', backgroundColor: '#fff' }}
             railStyle={{ backgroundColor: '#E5E8EB' }}
           />
           <div className="grid grid-cols-2 gap-6">
@@ -228,7 +228,7 @@ export function PropertiesForm({ formData, onChange, nigerianStates, propertyTyp
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦499 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -348,7 +348,7 @@ export function CarHireForm({ carHireData, onChange, nigerianStates, carTypes, i
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦499 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -479,7 +479,7 @@ export function CleaningForm({ cleaningData, onChange, nigerianStates, propertyT
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦499 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -626,7 +626,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦499 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -779,8 +779,8 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
             step={10000}
             value={[Number(automobileData.lowerPriceLimit) || 0, Number(automobileData.upperPriceLimit) || 1000000000]}
             onChange={handleSliderChange}
-            trackStyle={{ backgroundColor: '#541229' }}
-            handleStyle={{ borderColor: '#541229', backgroundColor: '#fff' }}
+            trackStyle={{ backgroundColor: '#85CE5C' }}
+            handleStyle={{ borderColor: '#85CE5C', backgroundColor: '#fff' }}
             railStyle={{ backgroundColor: '#E5E8EB' }}
           />
           <div className="grid grid-cols-2 gap-6">
@@ -826,7 +826,7 @@ export function AutomobileForm({ automobileData, onChange, nigerianStates, carMa
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦499 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -923,7 +923,7 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
           value={beautyData.details || ''}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="outline-0 w-full px-4 min-h-[150px] py-3 bg-gray-100 border-none rounded-lg text-sm"
+          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
         />
       </div>
       <div className="mt-4">
@@ -934,7 +934,7 @@ export function BeautyForm({ beautyData, onChange, nigerianStates, isChecked, se
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -1008,7 +1008,7 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
           value={cateringData.details || ''}
           onChange={(e) => onChange('details', e.target.value)}
           placeholder="Enter any additional comments"
-          className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+          className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
       </div>
       <div className="mt-4">
@@ -1019,7 +1019,7 @@ export function CateringForm({ cateringData, onChange, nigerianStates, isChecked
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -1258,7 +1258,7 @@ export function ITForm({ itData, onChange, nigerianStates, isChecked, setIsCheck
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -1392,7 +1392,7 @@ export function MechanicForm({ mechanicData, onChange, nigerianStates, carMakes,
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -1481,7 +1481,7 @@ export function MediaForm({ mediaData, onChange, nigerianStates, isChecked, setI
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -1637,8 +1637,8 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
           onChange={(e) => onChange('dateNeeded', e.target.value)}
           className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
-      </div>
-      <div className='flex-1'>
+        </div>
+              <div className='flex-1'>
         <label className="block text-[#171214] mb-3 text-sm">Time Needed</label>
         <input
           type="time"
@@ -1665,7 +1665,7 @@ export function HospitalityForm({ hospitalityData, onChange, nigerianStates, isC
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -1730,8 +1730,8 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
         >
           <option value="">Select Service</option>
           {eventServices.map((service) => (
-            <option key={service} value={service}>
-              {service}
+            <option key={service.value} value={service.value}>
+              {service.display}
             </option>
           ))}
         </select>
@@ -1759,7 +1759,7 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
         <label className="block text-[#171214] mb-3 text-sm">Additional Details</label>
         <textarea
           value={eventManagementData.details || ''}
-          onChange={(e) => onChange('details', e.target.value)}
+          onChange={(e) => onChange('details', e.target.value)} 
           placeholder="Enter any additional details"
           className="outline-0 w-full px-4 py-3 bg-gray-100 min-h-[150px] border-none rounded-lg text-sm"
         />
@@ -1772,7 +1772,7 @@ export function EventManagementForm({ eventManagementData, onChange, nigerianSta
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -1788,14 +1788,14 @@ export function EmploymentSelectionForm({ onSelectRole }) {
         <div className="flex flex-col gap-4 justify-center">
           <button
             onClick={() => onSelectRole('employer')}
-            className="px-6 py-3 w-full bg-[#541229] cursor-pointer text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
+            className="px-6 py-3 w-full bg-[#85CE5C] cursor-pointer text-white rounded-lg text-sm"
           >
             Employer
           </button>
           <span className='text-sm uppercase'>Or</span>
           <button
             onClick={() => onSelectRole('jobSeeker')}
-            className="px-6 py-3 w-full bg-[#541229] cursor-pointer text-white rounded-lg text-sm hover:bg-[#3d0d1f] transition-colors"
+            className="px-6 py-3 w-full bg-[#85CE5C] cursor-pointer text-white rounded-lg text-sm"
           >
             Job Seeker
           </button>
@@ -2041,8 +2041,8 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
     placeholder: (base) => ({ ...base, color: '#6B7280' }),
     option: (base, state) => ({
       ...base,
-      backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
-      '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+      backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
+      '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' }
     })
   }}
 />
@@ -2079,7 +2079,7 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -2210,8 +2210,8 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                 placeholder: (base) => ({ ...base, color: '#6B7280' }),
                 option: (base, state) => ({
                   ...base,
-                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
-                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                  backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' }
                 })
               }}
             />
@@ -2379,8 +2379,8 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                   placeholder: (base) => ({ ...base, color: '#6B7280' }),
                   option: (base, state) => ({
                     ...base,
-                    backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
-                    '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                    backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
+                    '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' }
                   })
                 }}
               />
@@ -2415,8 +2415,8 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                 placeholder: (base) => ({ ...base, color: '#6B7280' }),
                 option: (base, state) => ({
                   ...base,
-                  backgroundColor: state.isSelected ? '#541229' : base.backgroundColor,
-                  '&:hover': { backgroundColor: state.isSelected ? '#541229' : '#f3f4f6' }
+                  backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' }
                 })
               }}
             />
@@ -2432,7 +2432,7 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦500 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
         </label>
       </div>
     </div>

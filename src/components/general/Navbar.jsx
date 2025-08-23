@@ -68,7 +68,7 @@ const Navbar = () => {
         {name: "Services", path: '#services'},
         {name: "How it works", path: '#how-it-works'},
         {name: "Testimonials", path: '#testimonials'},
-        {name: "Become a merchant", path: '#become-a-merchant'}
+        {name: "Become a merchant", path: '/register'}
     ]
 
     const dropdownItems = [

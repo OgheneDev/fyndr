@@ -70,7 +70,7 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
       <h2 className="mb-5 text-center text-lg">Job Seeker's Portal</h2>
       <div className='flex justify-center'>
         <button
-        className="text-center py-3 px-5 text-white bg-[#2E8B57] cursor-pointer w-fit md:w-full rounded-lg text-sm mb-5"
+        className="text-center py-3 px-5 text-white bg-[#85CE5C] cursor-pointer w-fit md:w-full rounded-lg text-sm mb-5"
         onClick={onShowApplicationClick}
       >
         Create CV
@@ -81,7 +81,7 @@ const JobSeekerScreen = ({onShowApplicationClick}) => {
         <input
           type="text"
           placeholder="Filter by Job Title"
-          className="w-full pl-12 pr-4 py-4  border border-[#2E8B57] text-gray-900 placeholder-gray-500 outline-0"
+          className="w-full pl-12 pr-4 py-4  border border-[#85CE5C] text-gray-900 placeholder-gray-500 outline-0"
           value={searchTerm}
           onChange={handleSearch}
         />

@@ -16,7 +16,7 @@ export function PaymentDetails({ data }) {
             </div>
             {data.transaction_status?.toLowerCase() === "pending" && (
                 <Link href={`/payment?id=${data._id}&token=${encodeURIComponent(token || "")}`}>
-                    <button className="w-full py-3 px-4 cursor-pointer bg-[#57132A] text-white rounded-lg text-sm">
+                    <button className="w-full py-3 px-4 cursor-pointer bg-[#85CE5C] text-white rounded-lg text-sm">
                         Initiate Payment
                     </button>
                 </Link>

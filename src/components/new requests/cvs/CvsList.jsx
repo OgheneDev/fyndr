@@ -10,7 +10,7 @@ export const CvsList = ({filteredCvs}) => {
         filteredCvs.map((cv) => (
           <div 
             key={cv._id} 
-            className="group bg-white border border-[#2E8B57] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            className="group bg-white border border-[#85CE5C] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
             <div className='flex items-center space-x-4'>
               {/* Avatar */}
@@ -31,7 +31,7 @@ export const CvsList = ({filteredCvs}) => {
               {/* Content */}
               <div className=''>
                 <div className=''>
-                  <div className='flex gap-1 text-sm text-gray-900'>
+                  <div className='flex gap-1 text-[12px] md:text-sm text-gray-900'>
                     <p>{cv.firstName}</p>
                     <p>{cv.lastName}</p>
                   </div>
@@ -43,18 +43,18 @@ export const CvsList = ({filteredCvs}) => {
                 */}
                 {cv.workExperienceDetails && (cv.workExperienceDetails.jobTitle || cv.workExperienceDetails.company) ? (
                   <>
-                    <div className=' text-[12px] text-gray-900'>
+                    <div className=' text-[10px] md:text-[12px] text-gray-900'>
                       {cv.workExperienceDetails.jobTitle && (
                         <p className=" text-gray-900">{cv.workExperienceDetails.jobTitle}</p>
                       )}
                     </div> 
                   </>
                 ) : (
-                  <div className='text-[12px] text-gray-900'>No work experience.</div>
+                  <div className='text-[10px] md:text-[12px] text-gray-900'>No work experience.</div>
                 )}
 
                 <div>
-                  <p className='text-[12px]'>{cv.state}, Nigeria</p>
+                  <p className='text-[10px] md:text-[12px]'>{cv.state}, Nigeria</p>
                 </div>
               </div>
 
@@ -68,7 +68,7 @@ export const CvsList = ({filteredCvs}) => {
                 e.stopPropagation();
                 router.push(`/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cv._id)}`);
               }}
-              className="cursor-pointer text-[12px] font-semibold text-[#2E8B57]"
+              className="cursor-pointer text-[12px] font-semibold text-[#85CE5C]"
             >
               View CV
             </button>

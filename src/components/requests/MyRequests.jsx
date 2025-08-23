@@ -70,7 +70,7 @@ export default function ServiceRequests() {
         </div>
 
         <Link href="/dashboard">
-          <button className="text-white w-full max-w-md mx-auto block px-6 mb-4 text-sm cursor-pointer bg-[#57132A] text-center py-3 rounded-lg">
+          <button className="text-white w-full max-w-md mx-auto block px-6 mb-4 text-sm cursor-pointer bg-[#85CE5C] text-center py-3 rounded-lg">
             Create New Request
           </button>
         </Link>

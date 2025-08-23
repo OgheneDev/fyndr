@@ -285,7 +285,7 @@ const ProfilePage = () => {
               </div>
             </div>
           )}
-          <button onClick={handleLogout} className='w-full text-center mt-5 text-sm text-white bg-[#57132A] py-3 rounded-md cursor-pointer'>
+          <button onClick={handleLogout} className='w-full text-center mt-5 text-sm text-white bg-[#85CE5C] py-3 rounded-md cursor-pointer'>
             Log Out
           </button>
         </div>

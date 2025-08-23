@@ -1,16 +1,15 @@
-// app/dashboard/layout.js
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Inter } from "next/font/google";
+import { Sora } from "next/font/google";
 import Navbar from "@/components/general/Navbar";
 import Sidebar from "@/components/general/Sidebar";
 import BottomNavbar from "@/components/general/BottomNavbar";
 import { useAuthStore } from "@/store/authStore";
 import { useUserStore } from "@/store/userStore";
 
-const inter = Inter({ subsets: ["latin"] });
+const sora = Sora({ subsets: ["latin"] });
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
@@ -55,7 +54,7 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-    <div className={`flex flex-col ${inter.className}`}>
+    <div className={`flex flex-col ${sora.className}`}>
       {!shouldHideLayout && <Navbar />}
       <div className="flex flex-1">
         {!shouldHideLayout && <Sidebar />}

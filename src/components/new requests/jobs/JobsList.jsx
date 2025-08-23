@@ -9,7 +9,7 @@ export const JobsList = ({ filteredJobs }) => {
         filteredJobs.map((job) => ( 
           <div 
             key={job._id}
-            className="group bg-white border border-[#2E8B57] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            className="group bg-white border border-[#85CE5C] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
             <div className='flex items-center space-x-4'>
               {/* Avatar */}
@@ -20,17 +20,17 @@ export const JobsList = ({ filteredJobs }) => {
               {/* Content */}
               <div className=''>
                 <div className=''>
-                  <div className='flex gap-1 text-sm text-gray-900'>
+                  <div className='flex gap-1 text-[12px] md:text-sm text-gray-900'>
                     <p>{job.employerDetails.firstName}</p>
                     <p>{job.employerDetails.lastName}</p>
                   </div>
                 </div>
 
-                <div className='text-[12px] text-gray-900'>
+                <div className='text-[10px] md:text-[12px] text-gray-900'>
                   <p className="font-medium">{job.jobDetails.title}</p>
                 </div>
 
-                <div className='flex items-center gap-2 text-[12px] text-gray-900'>
+                <div className='flex items-center gap-2 text-[10px] md:text-[12px] text-gray-900'>
                   <p>{job.jobDetails.location}</p>
                 </div>
               </div>
@@ -46,7 +46,7 @@ export const JobsList = ({ filteredJobs }) => {
                 // Navigate into the new-request flow with employment role and jobId param
                 router.push(`/dashboard/new-request?category=employment&role=jobSeeker&jobId=${encodeURIComponent(job._id)}`);
               }}
-              className="cursor-pointer text-[12px] font-medium text-[#2E8B57]"
+              className="cursor-pointer text-[12px] font-medium text-[#85CE5C]"
             >
               <span>View Job</span>
             </button>

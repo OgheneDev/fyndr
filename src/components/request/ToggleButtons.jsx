@@ -35,7 +35,7 @@ export function ToggleButtons({ activeTab, setActiveTab, merchants }) {
                     Payment
                 </button>
                 <div 
-                    className={`absolute bottom-0 h-1 bg-[#57132A] rounded-t-md transition-all duration-300 ease-in-out ${
+                    className={`absolute bottom-0 h-1 bg-[#85CE5C] rounded-t-md transition-all duration-300 ease-in-out ${
                         activeTab === 'details' ? 'left-0 w-1/3 md:left-[8.33%] md:w-1/6' :
                         activeTab === 'merchants' ? 'left-1/3 w-1/3 md:left-[41.67%] md:w-1/6' :
                         'left-2/3 w-1/3 md:left-[75%] md:w-1/6'

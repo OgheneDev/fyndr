@@ -21,7 +21,7 @@ const DisclaimerModal = ({ show, onAgree, onCancel }) => {
           </button>
           <button
             onClick={onAgree}
-            className="px-4 py-2 bg-[#541229] text-sm cursor-pointer text-white rounded-lg"
+            className="px-4 py-2 bg-[#85CE5C] text-sm cursor-pointer text-white rounded-lg"
           >
             I Agree
           </button>

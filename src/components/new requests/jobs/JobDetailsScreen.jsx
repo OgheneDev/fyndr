@@ -7,7 +7,7 @@ import { Loader } from "@/components/ui/Loader";
 import { BENEFITS } from "@/data/data";
 import Swal from "sweetalert2";
 
-// add: number formatter
+
 function formatNumberWithCommas(value) {
   if (value === null || value === undefined || value === "") return "";
   const num = Number(String(value).replace(/,/g, ""));
@@ -27,8 +27,6 @@ export default function JobDetailsScreen({ jobId }) {
   const [submitting, setSubmitting] = useState(false);
   const [applicationError, setApplicationError] = useState("");
   const [applicationSuccess, setApplicationSuccess] = useState("");
-
-  // Track whether the CV in localStorage already applied to this job
   const [hasApplied, setHasApplied] = useState(false);
 
   useEffect(() => {
@@ -46,14 +44,12 @@ export default function JobDetailsScreen({ jobId }) {
         const jobObj = res?.data || res;
         if (mounted) {
           setJob(jobObj);
-          // determine whether saved cvId is among applicants
           try {
             const savedCvId = typeof window !== "undefined" ? localStorage.getItem("cvId") : null;
             let alreadyApplied = false;
             if (savedCvId && Array.isArray(jobObj?.applicants)) {
               alreadyApplied = jobObj.applicants.some((a) => {
                 const cv = a?.cv;
-                // support cv object or direct id
                 return !!cv && (cv._id === savedCvId || cv === savedCvId || String(cv) === savedCvId);
               });
             }
@@ -73,7 +69,6 @@ export default function JobDetailsScreen({ jobId }) {
     return () => { mounted = false; };
   }, [jobId]);
 
-  // Toggle apply form. Do NOT auto-submit CV alone.
   const handleApplyClick = () => {
     setApplicationError("");
     setApplicationSuccess("");
@@ -92,18 +87,16 @@ export default function JobDetailsScreen({ jobId }) {
       setSubmitting(true);
       const idToUse = job?._id || jobId;
       await submitJobApplication({ jobId: idToUse, cvId: savedCvId, proposal: proposal || "" });
-      // show a sweetalert on success and close the apply form
       Swal.fire({
         icon: "success",
         title: "Application sent",
         text: "Your application was submitted successfully.",
-        confirmButtonColor: "#2E8B57",
+        confirmButtonColor: "#85CE5C",
         timer: 2000
       });
       setProposal("");
       setShowApplyForm(false);
 
-      // Reload job and recompute applied status so user cannot apply again
       try {
         const res = await getJobById({ jobId: idToUse });
         const updatedJob = res?.data || res;
@@ -119,7 +112,6 @@ export default function JobDetailsScreen({ jobId }) {
         setHasApplied(alreadyApplied);
       } catch (e) {
         console.warn("Failed to reload job after applying", e);
-        // As a fallback, mark as applied to prevent duplicate attempts
         setHasApplied(true);
       }
     } catch (err) {
@@ -169,7 +161,7 @@ export default function JobDetailsScreen({ jobId }) {
 
       <div className="bg-white border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#2E8B57] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold">
+          <div className="w-12 h-12 bg-gradient-to-br from-[#85CE5C] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold">
             {ed.firstName?.[0] || "E"}{ed.lastName?.[0] || ""}
           </div>
           <div>
@@ -180,7 +172,7 @@ export default function JobDetailsScreen({ jobId }) {
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold text-[#2E8B57] mb-2">{jd.title}</h3>
+        <h3 className="text-xl font-semibold text-[#85CE5C] mb-2">{jd.title}</h3>
         <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
           <div>{jd.location}</div>
           <div className="capitalize">{jd.type}</div>
@@ -199,7 +191,6 @@ export default function JobDetailsScreen({ jobId }) {
             <div className="text-sm font-medium text-gray-700 mb-1">Benefits</div>
             <div className="flex flex-wrap gap-2">
               {jd.benefits.map((b, i) => {
-                // Map stored value to user-friendly display; fallback to humanized value
                 const label = BENEFITS_MAP[b] || String(b).replace(/-/g, " ").replace(/\b\w/g, ch => ch.toUpperCase());
                 return (
                   <div key={i} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
@@ -220,12 +211,12 @@ export default function JobDetailsScreen({ jobId }) {
           <button
             type="button"
             onClick={handleApplyClick}
-            className="flex-1 cursor-pointer text-sm bg-[#2E8B57] text-white py-2 rounded-md"
+            className="flex-1 cursor-pointer text-sm bg-[#85CE5C] text-white py-2 rounded-md"
             disabled={submitting || hasApplied}
           >
             {hasApplied ? "Already Applied" : (showApplyForm ? "Close" : "Apply")}
           </button>
-          <button className="flex-1 border text-sm cursor-pointer border-gray-200 text-gray-700 py-2 rounded-md" onClick={() => router.push('/dashboard')}>
+          <button className="flex-1 border text-sm cursor-pointer border-gray-200 text-gray-700 py-2 rounded-md" onClick={() => router.push(`/dashboard/new-request?category=employment&role=jobSeeker&jobId=${encodeURIComponent(job._id)}`)}>
             Back to Jobs
           </button>
         </div>
@@ -251,7 +242,7 @@ export default function JobDetailsScreen({ jobId }) {
                     type="button"
                     onClick={handleSendProposal}
                     disabled={submitting}
-                    className="px-4 py-2 bg-[#2E8B57] text-sm text-white cursor-pointer rounded"
+                    className="px-4 py-2 bg-[#85CE5C] text-sm text-white cursor-pointer rounded"
                   >
                     {submitting ? (
                       <>

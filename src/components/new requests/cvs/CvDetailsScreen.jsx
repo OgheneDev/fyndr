@@ -77,7 +77,7 @@ export default function CvDetailsScreen({ cvId }) {
       <div className="bg-white border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center gap-4 mb-4">
           {/* Avatar: Image from cv.user.avatar with icon fallback */}
-          <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+          <div className="w-18 h-18 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
             {cv.user?.avatar && !imgError ? (
               <Image
                 src={cv.user.avatar}
