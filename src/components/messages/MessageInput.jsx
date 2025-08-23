@@ -133,7 +133,7 @@ export const MessageInput = ({
       <div className={`px-4 py-3 bg-white border-t border-gray-100 mb-16 md:mb-0 transition-all duration-200 ${
         isFocused ? ' shadow-lg' : 'border-gray-200'
       }`}>
-        <div className="flex items-end gap-3 max-w-4xl mx-auto">
+        <div className="flex items-end gap-3 max-w-full mx-auto">
           {/* User Avatar */}
           <div className="flex-shrink-0 mb-1">
             <MessageAvatar party={getCurrentUserParty(chatInfo, userType)} />
