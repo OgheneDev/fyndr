@@ -157,6 +157,7 @@ const useRequestStates = () => {
     additionalSkills: [],
     languages: [],
     preferredJobTitle: '',
+    company_image: ''
   });
 
   const handleInputChange = useCallback((field, value) => {

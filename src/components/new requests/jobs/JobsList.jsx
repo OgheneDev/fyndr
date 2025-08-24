@@ -1,5 +1,6 @@
-import { Building} from 'lucide-react';
+import { Building, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export const JobsList = ({ filteredJobs }) => {
   const router = useRouter();
@@ -13,16 +14,25 @@ export const JobsList = ({ filteredJobs }) => {
           >
             <div className='flex items-center space-x-4'>
               {/* Avatar */}
-              <div className="w-16 h-16 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
-                {job.employerDetails.firstName[0]}{job.employerDetails.lastName[0]}
-              </div>
-
+              {job.employerDetails?.companyImage ? (
+                <Image
+                 src={job.employerDetails.companyImage}
+                 alt={`${job.employerDetails.company} logo`}
+                 width={64}
+                 height={64}
+                 className="w-16 h-16 rounded-full object-cover shadow-md"
+                />
+              ) : (
+                  <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                    <User size={30} className="text-gray-500" />
+                  </div>
+              )}
+              
               {/* Content */}
               <div className=''>
                 <div className=''>
-                  <div className='flex gap-1 text-[12px] md:text-sm text-gray-900'>
-                    <p>{job.employerDetails.firstName}</p>
-                    <p>{job.employerDetails.lastName}</p>
+                  <div className='text-[12px] md:text-sm text-gray-900'>
+                    <p>{job.employerDetails.company || "Company Name"}</p>
                   </div>
                 </div>
 

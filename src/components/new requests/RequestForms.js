@@ -1818,7 +1818,7 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
   { display: 'Volunteer', value: 'volunteer' },
   { display: 'Internship', value: 'internship' }
 ];
-  const benefits = [
+  const benefitOptions = [
   { display: 'Work from home', value: 'work-from-home' },
   { display: 'Flexitime', value: 'flexitime' },
   { display: 'Company pension', value: 'company-pension' },
@@ -1866,6 +1866,24 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
     onChange(field, selectedOptions ? selectedOptions.map(option => option.value) : []);
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        onChange('company_image', event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    onChange('company_image', '');
+    // Reset the file input
+    const fileInput = document.getElementById('company-image-input');
+    if (fileInput) fileInput.value = '';
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
@@ -1883,6 +1901,44 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
       <div className="mt-5 md:mt-16">
         <h3 className="text-[#171214] mb-3 text-sm font-bold">Create Profile</h3>
         <div className="space-y-4">
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Company Logo</label>
+            <div className="relative">
+              {employmentData.company_image ? (
+                <div className="relative w-full h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+                  <img 
+                    src={employmentData.company_image} 
+                    alt="Company logo preview" 
+                    className="w-full h-full object-contain bg-white"
+                  />
+                  <button
+                    onClick={removeImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <label 
+                  htmlFor="company-image-input"
+                  className="cursor-pointer  w-full h-40 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 flex flex-col items-center justify-center text-gray-500"
+                >
+                  <svg className="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="text-sm font-medium">Upload Company Logo</span>
+                  <span className="text-xs text-gray-400 mt-1">PNG, JPG up to 5MB</span>
+                </label>
+              )}
+              <input
+                id="company-image-input"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </div>
+          </div>
           <div>
             <label className="block text-[#171214] mb-2 text-sm">Company Name</label>
             <input
@@ -2024,10 +2080,10 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
             <Select
   isMulti
   value={employmentData.benefits?.map(selectedValue => 
-    benefits.find(b => b.value === selectedValue)
+    benefitOptions.find(b => b.value === selectedValue)
   )?.filter(b => b).map(b => ({ value: b.value, label: b.display })) || []}
   onChange={(selected) => handleMultiSelectChange('benefits', selected)}
-  options={benefits.map(b => ({ value: b.value, label: b.display }))}
+  options={benefitOptions.map(b => ({ value: b.value, label: b.display }))}
   placeholder="Select benefits"
   className="text-sm"
   styles={{

@@ -23,8 +23,8 @@ export const CvsList = ({filteredCvs}) => {
                   className="w-16 h-16 rounded-full object-cover shadow-md"
                 />
               ) : (
-                <div className="w-16 h-16 bg-gradient-to-br from-[#541229] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
-                  {cv.firstName[0]}{cv.lastName[0]}
+                <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                  <User size={30} className="text-gray-500" />
                 </div>
               )}
               

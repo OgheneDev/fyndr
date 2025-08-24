@@ -2,9 +2,9 @@ import axiosInstance from "../axios";
 
 export const createJob = async (formData) => {
     try {
-        const response = await axiosInstance.post('v1/job', formData); // Add await
-        console.log('createJob API response:', response); // Log full response for debugging
-        return response.data; // Return response.data
+        const response = await axiosInstance.post('v1/job', formData);
+        console.log('createJob API response:', response);
+        return response.data;
     } catch (error) {
         if (error.response) {
             console.error("Error response:", error.response.data);

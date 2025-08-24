@@ -307,14 +307,15 @@ const NewRequestPageContent = () => {
           employmentData.email &&
           employmentData.jobTitle &&
           employmentData.jobLocation &&
-          employmentData.type &&
+          employmentData.type && 
           employmentData.startDate &&
           employmentData.salary &&
           employmentData.salaryCurrency &&
           employmentData.benefits &&
           employmentData.availableVacancy &&
           employmentData.description &&
-          employmentData.howYouHeardAboutUs
+          employmentData.howYouHeardAboutUs &&
+          employmentData.company_image
         );
       } else if (employmentData.role === 'jobSeeker') {
         return (
@@ -653,12 +654,13 @@ const NewRequestPageContent = () => {
             jobTitle: employmentData.jobTitle,
             jobLocation: employmentData.jobLocation,
             type: employmentData.type,
-            startDate: employmentData.startDate,
+            startDate: employmentData.startDate, 
             salary: employmentData.salary,
             salaryCurrency: employmentData.salaryCurrency,
             benefits: employmentData.benefits,
             availableVacancy: employmentData.availableVacancy,
             description: employmentData.description,
+            company_image: employmentData.company_image
           };
           console.log(formData);
           const response = await createJob(formData);
