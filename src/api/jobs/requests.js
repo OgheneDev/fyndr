@@ -2,7 +2,15 @@ import axiosInstance from "../axios";
 
 export const createJob = async (formData) => {
     try {
-        const response = await axiosInstance.post('v1/job', formData);
+        const response = await axiosInstance.post(
+            'v1/job', 
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
         console.log('createJob API response:', response);
         return response.data;
     } catch (error) {
@@ -17,7 +25,7 @@ export const createJob = async (formData) => {
             throw new Error(error.message);
         }
     }
-};
+}; 
 
 export const getJobListingsByUser = async () => {
     try {
