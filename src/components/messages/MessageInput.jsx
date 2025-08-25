@@ -149,17 +149,6 @@ export const MessageInput = ({
                   ? 'border-gray-300 bg-white' 
                   : 'border-gray-200'
             }`}>
-              {/* Emoji Button */}
-              <div className="flex items-center pl-3 pb-2">
-                <button
-                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  className="p-1.5 text-gray-400 cursor-pointer hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
-                  disabled={chatLoading}
-                  title="Add emoji"
-                >
-                  <Smile className="w-5 h-5" />
-                </button>
-              </div>
 
               {/* Textarea */}
               <div className="flex-1 relative">
