@@ -2130,7 +2130,7 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦0 is required to post this request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
@@ -2483,7 +2483,7 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             onChange={(e) => setIsChecked(e.target.checked)}
             className="mr-2"
           />
-          As per our policy a payment of ₦250 is required to post a request on Fyndr, accept to proceed
+          As per our policy a payment of ₦0 is required to post this request on Fyndr, accept to proceed
         </label>
       </div>
     </div>
