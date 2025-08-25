@@ -88,9 +88,9 @@ export default function CvDetailsScreen({ cvId }) {
                 onError={() => setImgError(true)}
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                <User className="w-6 h-6 text-gray-400" />
-              </div>
+<div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                  <User size={30} className="text-gray-500" />
+                </div>
             )}
           </div>
           <div>

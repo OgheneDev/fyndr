@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, User } from "lucide-react";
 import { getJobById, submitJobApplication } from "@/api/jobs/requests";
 import { Loader } from "@/components/ui/Loader";
 import { BENEFITS } from "@/data/data";
 import Swal from "sweetalert2";
+import Image from "next/image";
 
 
 function formatNumberWithCommas(value) {
@@ -161,14 +162,24 @@ export default function JobDetailsScreen({ jobId }) {
 
       <div className="bg-white border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#85CE5C] to-[#7a1b3d] rounded-full flex items-center justify-center text-white font-semibold">
-            {ed.firstName?.[0] || "E"}{ed.lastName?.[0] || ""}
-          </div>
+          {ed?.companyImage ? (
+                          <Image
+                           src={ed.companyImage}
+                           alt={`${ed.company} logo`}
+                           width={64}
+                           height={64}
+                           className="w-16 h-16 rounded-full object-cover shadow-md"
+                          />
+                        ) : (
+                            <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                              <User size={30} className="text-gray-500" />
+                            </div>
+                        )}
           <div>
             <div className="font-semibold text-gray-900">
-              {ed.firstName} {ed.lastName}
+              {ed.company}
             </div>
-            <div className="text-sm text-gray-500">{ed.company}</div>
+            <div className="text-sm text-gray-500">{ed.firstName} {ed.lastName}</div>
           </div>
         </div>
 

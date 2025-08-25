@@ -666,7 +666,7 @@ const NewRequestPageContent = () => {
           const response = await createJob(formData);
           console.log('createJob response:', response);
           requestId = response.data._id;
-          setEmploymentData({ ...employmentData, role: '' });
+          setEmploymentData({ ...employmentData, role: '', company_image: null });
           setShowEmployerForm(false);
           setShowJobSeekerForm(false);
         } else if (employmentData.role === 'jobSeeker') {

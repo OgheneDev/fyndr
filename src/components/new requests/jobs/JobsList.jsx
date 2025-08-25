@@ -8,7 +8,7 @@ export const JobsList = ({ filteredJobs }) => {
     <div className='flex flex-col gap-4 mt-4'>
       {Array.isArray(filteredJobs) && filteredJobs.length > 0 ? (
         filteredJobs.map((job) => ( 
-          <div 
+          <div  
             key={job._id}
             className="group bg-white border border-[#85CE5C] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >

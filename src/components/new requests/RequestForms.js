@@ -607,7 +607,7 @@ export function CarPartsForm({ carPartsData, onChange, nigerianStates, carMakes,
           className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
         />
         {imagePreview && (
-          <div className="mt-2">
+          <div className="mt-2"> 
             <Image
               src={imagePreview}
               height={50}
@@ -1807,7 +1807,7 @@ export function EmploymentSelectionForm({ onSelectRole }) {
 
 export function EmployerForm({ employmentData, onChange, nigerianStates, isChecked, setIsChecked, onBack }) {
   const jobTypes = [
-  { display: 'Full time', value: 'full-time' },
+  { display: 'Full time', value: 'full-time' }, 
   { display: 'Part time', value: 'part-time' },
   { display: 'Remote', value: 'remote' },
   { display: 'Hybrid', value: 'hybrid' },
@@ -1867,22 +1867,17 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        onChange('company_image', event.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const file = e.target.files[0];
+  if (file) {
+    onChange('company_image', file); // Store the file object directly
+  }
+};
 
   const removeImage = () => {
-    onChange('company_image', '');
-    // Reset the file input
-    const fileInput = document.getElementById('company-image-input');
-    if (fileInput) fileInput.value = '';
-  };
+  onChange('company_image', null); // Reset to null
+  const fileInput = document.getElementById('company-image-input');
+  if (fileInput) fileInput.value = '';
+};
 
   return (
     <div className="space-y-6">
@@ -1905,31 +1900,31 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
             <label className="block text-[#171214] mb-2 text-sm">Company Logo</label>
             <div className="relative">
               {employmentData.company_image ? (
-                <div className="relative w-full h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
-                  <img 
-                    src={employmentData.company_image} 
-                    alt="Company logo preview" 
-                    className="w-full h-full object-contain bg-white"
-                  />
-                  <button
-                    onClick={removeImage}
-                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
-                  >
-                    ×
-                  </button>
-                </div>
-              ) : (
-                <label 
-                  htmlFor="company-image-input"
-                  className="cursor-pointer  w-full h-40 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 flex flex-col items-center justify-center text-gray-500"
-                >
-                  <svg className="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
-                  </svg>
-                  <span className="text-sm font-medium">Upload Company Logo</span>
-                  <span className="text-xs text-gray-400 mt-1">PNG, JPG up to 5MB</span>
-                </label>
-              )}
+  <div className="relative w-full h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+    <img
+      src={URL.createObjectURL(employmentData.company_image)}
+      alt="Company logo preview"
+      className="w-full h-full object-contain bg-white"
+    />
+    <button
+      onClick={removeImage}
+      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+    >
+      ×
+    </button>
+  </div>
+) : (
+  <label
+    htmlFor="company-image-input"
+    className="cursor-pointer w-full h-40 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 flex flex-col items-center justify-center text-gray-500"
+  >
+    <svg className="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+    </svg>
+    <span className="text-sm font-medium">Upload Company Logo</span>
+    <span className="text-xs text-gray-400 mt-1">PNG, JPG up to 5MB</span>
+  </label>
+)}
               <input
                 id="company-image-input"
                 type="file"
