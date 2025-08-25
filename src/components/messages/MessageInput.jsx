@@ -1,3 +1,5 @@
+'use client'
+
 import { useRef, useEffect, useState } from 'react'
 import MessageAvatar from "./MessageAvatar"
 import { Send, Smile, X } from "lucide-react"
@@ -14,45 +16,36 @@ export const MessageInput = ({
 }) => {
   const textareaRef = useRef(null)
   const [isTyping, setIsTyping] = useState(false)
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const typingTimeoutRef = useRef(null)
 
-  // Auto-resize textarea
   useEffect(() => {
     const textarea = textareaRef.current
     if (textarea) {
       textarea.style.height = 'auto'
       const scrollHeight = textarea.scrollHeight
-      const maxHeight = 120 // 3 lines roughly
+      const maxHeight = 120
       textarea.style.height = Math.min(scrollHeight, maxHeight) + 'px'
     }
   }, [messageInput])
 
-  // Handle typing indicator
   const handleInputChange = (e) => {
     const value = e.target.value
     setMessageInput(value)
     
-    // Typing indicator logic
     if (value.trim() && !isTyping) {
       setIsTyping(true)
-      // Here you could emit a typing event to other users
     }
     
-    // Clear existing timeout
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current)
     }
     
-    // Set new timeout to stop typing indicator
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false)
-      // Here you could emit a stop typing event
     }, 1000)
   }
 
-  // Enhanced key press handler
   const handleEnhancedKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -66,32 +59,6 @@ export const MessageInput = ({
     }
   }
 
-  // Expanded emoji collection
-  const commonEmojis = [
-    '😊', '😂', '❤️', '👍', '👎', '😢', '😮', '😡',
-    '🎉', '🔥', '✨', '💯', '🙏', '👏', '💪', '🤝',
-    '😍', '🥰', '😘', '😎', '🤔', '😬', '😅', '🙄',
-    '🎈', '🌟', '⭐', '💫', '🌈', '☀️', '🌙', '⚡',
-    '🚀', '💡', '🎯', '🏆', '🎁', '🍕', '☕', '🍺'
-  ]
-
-  const insertEmoji = (emoji) => {
-    const textarea = textareaRef.current
-    if (textarea) {
-      const start = textarea.selectionStart
-      const end = textarea.selectionEnd
-      const newValue = messageInput.slice(0, start) + emoji + messageInput.slice(end)
-      setMessageInput(newValue)
-      
-      // Reset cursor position
-      setTimeout(() => {
-        textarea.setSelectionRange(start + emoji.length, start + emoji.length)
-        textarea.focus()
-      }, 0)
-    }
-    setShowEmojiPicker(false)
-  }
-
   const clearMessage = () => {
     setMessageInput('')
     setIsTyping(false)
@@ -103,45 +70,15 @@ export const MessageInput = ({
 
   return (
     <div className="relative">
-      {/* Emoji Picker Overlay */}
-      {showEmojiPicker && (
-        <>
-          <div 
-            className="fixed inset-0 z-40 bg-transparent"
-            onClick={() => setShowEmojiPicker(false)}
-          />
-          <div className="absolute bottom-full left-4 mb-2 z-50 bg-white rounded-2xl shadow-2xl border border-gray-200 p-4">
-            <div className="flex flex-wrap gap-2 max-w-80">
-              {commonEmojis.map((emoji, index) => (
-                <button
-                  key={index}
-                  onClick={() => insertEmoji(emoji)}
-                  className="w-10 h-10 flex items-center justify-center text-xl hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  {emoji}
-                </button>
-              ))}
-            </div>
-            <div className="text-xs text-gray-400 mt-3 text-center">
-              Click any emoji to add it
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* Main Input Container */}
-      <div className={`px-4 py-3 bg-white border-t border-gray-100 mb-16 md:mb-0 transition-all duration-200 ${
-        isFocused ? ' shadow-lg' : 'border-gray-200'
+      <div className={`px-4 py-3 bg-white border-t border-gray-100 transition-all duration-200 ${
+        isFocused ? 'shadow-lg' : 'border-gray-200'
       }`}>
         <div className="flex items-end gap-3 max-w-full mx-auto">
-          {/* User Avatar */}
           <div className="flex-shrink-0 mb-1">
             <MessageAvatar party={getCurrentUserParty(chatInfo, userType)} />
           </div>
 
-          {/* Input Area */}
           <div className="flex-1 min-w-0">
-            {/* Input Container */}
             <div className={`relative flex items-end bg-gray-50 rounded-2xl border transition-all duration-200 ${
               isFocused 
                 ? 'bg-white shadow-sm' 
@@ -149,8 +86,6 @@ export const MessageInput = ({
                   ? 'border-gray-300 bg-white' 
                   : 'border-gray-200'
             }`}>
-
-              {/* Textarea */}
               <div className="flex-1 relative">
                 <textarea
                   ref={textareaRef}
@@ -169,8 +104,6 @@ export const MessageInput = ({
                     scrollbarWidth: 'thin'
                   }}
                 />
-                
-                {/* Clear button for long messages */}
                 {messageInput.length > 50 && (
                   <button
                     onClick={clearMessage}
@@ -182,7 +115,6 @@ export const MessageInput = ({
               </div>
             </div>
 
-            {/* Character count and typing indicator */}
             <div className="flex justify-between items-center mt-1 px-2">
               <div className="flex items-center gap-2">
                 {isTyping && (
@@ -207,14 +139,13 @@ export const MessageInput = ({
             </div>
           </div>
 
-          {/* Send Button */}
           <div className="flex-shrink-0 mb-1">
             <button
               onClick={handleSendMessage}
               disabled={!messageInput.trim() || chatLoading || messageInput.length > 1000}
               className={`p-3 rounded-full transition-all duration-200 flex-shrink-0 transform ${
                 messageInput.trim() && !chatLoading && messageInput.length <= 1000
-                  ? 'bg-[#85CE5C]  text-white scale-100 shadow-lg hover:scale-105 hover:shadow-xl'
+                  ? 'bg-[#85CE5C] text-white scale-100 shadow-lg hover:scale-105 hover:shadow-xl'
                   : 'bg-gray-300 text-gray-500 scale-95 cursor-not-allowed'
               }`}
               style={{ width: 44, height: 44 }}
@@ -227,7 +158,6 @@ export const MessageInput = ({
             </button>
           </div>
         </div>
-
       </div>
     </div>
   )

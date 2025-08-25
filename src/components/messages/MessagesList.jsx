@@ -142,7 +142,7 @@ export const MessagesList = ({ chatMessages, chatLoading, chatInfo, userType }) 
   return (
     <div 
       ref={messagesContainerRef}
-      className="flex-1 overflow-y-auto px-4 py-2"
+      className="flex-1 overflow-y-auto px-4 py-2" 
     >
       <div className="space-y-1">
         {chatMessages.map((message, index) => {

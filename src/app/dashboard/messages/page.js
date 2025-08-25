@@ -7,7 +7,7 @@ import { Search } from 'lucide-react'
 import { ChatHeader } from '@/components/messages/ChatHeader'
 import { MessagesList } from '@/components/messages/MessagesList'
 import { MessageInput } from '@/components/messages/MessageInput'
-import { ConversationsList } from '@/components/messages/ConversationsList'
+import { ConversationsList } from '@/components/messages/ConversationsList' 
 
 const MessagesPage = () => {
   const [selectedChat, setSelectedChat] = useState(null)
@@ -21,24 +21,20 @@ const MessagesPage = () => {
 
   // Helper to reload conversations
   const reloadConversations = () => {
-    setConversationsLoading(true);
+    setConversationsLoading(true)
     getChats()
       .then(data => setConversations(data || []))
-      .finally(() => setConversationsLoading(false));
-  };
+      .finally(() => setConversationsLoading(false))
+  }
 
-  // Fetch all chats on mount
   useEffect(() => {
-    // Check if a chat was passed from the request page
-    const storedChat = typeof window !== 'undefined' ? localStorage.getItem('fynder_selected_chat') : null;
+    const storedChat = typeof window !== 'undefined' ? localStorage.getItem('fynder_selected_chat') : null
     if (storedChat) {
       try {
-        const chatObj = JSON.parse(storedChat);
-        setSelectedChat(chatObj);
-      } catch (e) {
-        // ignore parse error
-      }
-      localStorage.removeItem('fynder_selected_chat');
+        const chatObj = JSON.parse(storedChat)
+        setSelectedChat(chatObj)
+      } catch (e) {}
+      localStorage.removeItem('fynder_selected_chat')
     }
     setConversationsLoading(true)
     getChats()
@@ -46,7 +42,6 @@ const MessagesPage = () => {
       .finally(() => setConversationsLoading(false))
   }, [])
 
-  // Fetch a specific chat when selectedChat changes
   useEffect(() => {
     if (selectedChat && selectedChat._id) {
       setChatLoading(true)
@@ -67,7 +62,6 @@ const MessagesPage = () => {
           senderType: userType === 'merchant' ? 'Merchant' : 'User',
           content: messageInput.trim()
         })
-        // Refresh chat after sending
         setChatLoading(true)
         getChatById(selectedChat._id)
           .then(data => {
@@ -76,9 +70,7 @@ const MessagesPage = () => {
           })
           .finally(() => setChatLoading(false))
         setMessageInput('')
-      } catch (err) {
-        // Optionally show error
-      }
+      } catch (err) {}
     }
   }
 
@@ -91,17 +83,17 @@ const MessagesPage = () => {
 
   if (selectedChat) {
     return (
-      <div className="flex flex-col h-screen md:pt-[80px] pt-[72px]">
+      <div className="fixed inset-0 z-105 md:z-0 flex flex-col md:pt-[80px] pt-0 bg-white">
         <ChatHeader
           chatInfo={chatInfo}
           userType={userType}
           onBack={() => {
-            setSelectedChat(null);
-            reloadConversations();
+            setSelectedChat(null)
+            reloadConversations()
           }}
         />
         <MessagesList
-          chatMessages={chatMessages}
+ChatHeader          chatMessages={chatMessages}
           chatLoading={chatLoading}
           chatInfo={chatInfo} 
           userType={userType}
@@ -116,12 +108,12 @@ const MessagesPage = () => {
           userType={userType}
         />
       </div>
+
     )
   }
 
   return (
     <div className="min-h-screen pb-16 md:pb-20 lg:pb-10 md:pt-[80px] pt-[72px]">
-      {/* Header */}
       <div className="bg-white px-4 py-4 pt-6 md:max-w-4xl mx-auto">
         <h1 className="text-2xl font-semibold text-center text-gray-900">Messages</h1>
       </div>
@@ -131,7 +123,6 @@ const MessagesPage = () => {
         setSelectedChat={setSelectedChat}
         userType={userType}
       />
-      {/* Empty State */}
       {!conversationsLoading && conversations.length === 0 && (
         <div className="text-center py-16 px-4">
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">

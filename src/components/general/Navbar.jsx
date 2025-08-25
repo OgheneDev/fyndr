@@ -208,7 +208,7 @@ const Navbar = () => {
                 <Image
                     src={avatarUrl}
                     alt="avatar"
-                    width={40}
+                    width={40} 
                     height={40}
                     className="object-cover rounded-full"
                 />
