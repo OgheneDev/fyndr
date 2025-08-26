@@ -89,16 +89,18 @@ const HeroSection = () => {
           className='flex items-center justify-center md:justify-start gap-4 md:gap-6'
           variants={buttonVariants}
         >
-          <motion.button 
-            className='bg-[#57132A] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
+          <Link href={'/login'}>
+            <motion.button 
+            className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Learn More
+            Sign In
           </motion.button>
+          </Link>
           <Link href={'/register'}>
           <motion.button 
-            className='bg-[#57132A] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
+            className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

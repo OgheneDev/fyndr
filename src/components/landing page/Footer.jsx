@@ -34,7 +34,7 @@ const Footer = () => {
 
   return (
     <motion.footer 
-      className="bg-[#57132A] text-white px-5 md:px-12 py-8 md:py-10"
+      className="bg-[#85CE5C] text-white px-5 md:px-12 py-8 md:py-10"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -55,12 +55,12 @@ const Footer = () => {
         <div className="flex items-center space-x-3 sm:space-x-4">
           <span className="text-white text-sm">Follow Us :</span>
           <div className="flex space-x-2 sm:space-x-3">
-            <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
-            <RiFacebookCircleFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
-            <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
-            <RiLinkedinBoxFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
-            <RiYoutubeFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
-            <RiRedditFill className="w-5 h-5 sm:w-5 sm:h-5 text-[#D2D2D2] cursor-pointer hover:opacity-80" />
+            <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
+            <RiFacebookCircleFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
+            <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
+            <RiLinkedinBoxFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
+            <RiYoutubeFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
+            <RiRedditFill className="w-5 h-5 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
           </div>
         </div>
       </motion.div>
@@ -128,7 +128,7 @@ const Footer = () => {
                   className='w-full md:w-auto min-w-0 placeholder:text-[12px] outline-0 placeholder:text-[#000000]'
               />
               <button
-                  className='w-full md:w-auto bg-[#57132A] text-white text-sm py-2 px-5 rounded-sm cursor-pointer'
+                  className='w-full md:w-auto bg-[#85CE5C] text-white text-sm py-2 px-5 rounded-sm cursor-pointer'
               >
                   Send
               </button>

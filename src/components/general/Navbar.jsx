@@ -234,8 +234,8 @@ const Navbar = () => {
                         <Image
                             src={'/images/logo-removebg-preview.png'}
                             alt="Logo"
-                            width={60}
-                            height={45}
+                            width={70}
+                            height={55}
                         />
                     </Link>
                 </motion.div>
@@ -338,7 +338,7 @@ const Navbar = () => {
                                 {isLoggedIn ? (
                                     <motion.button 
                                         onClick={handleLogout}
-                                        className='bg-[#57132A] text-white py-3 cursor-pointer rounded-full text-sm w-full'
+                                        className='bg-[#85CE5C] text-white py-3 cursor-pointer rounded-full text-sm w-full'
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
@@ -348,7 +348,7 @@ const Navbar = () => {
                                     <>
                                         <Link href={'/login'}>
                                             <motion.button 
-                                                className='bg-[#57132A] text-white py-3 cursor-pointer rounded-full text-sm w-full'
+                                                className='bg-[#85CE5C] text-white py-3 cursor-pointer rounded-full text-sm w-full'
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
@@ -357,7 +357,7 @@ const Navbar = () => {
                                         </Link>
                                         <Link href={'register'}>
                                             <motion.button 
-                                                className='text-[#57132A] border border-[#57132A] py-3 rounded-full text-sm w-full'
+                                                className='text-[#85CE5C] border border-[#85CE5C] py-3 rounded-full text-sm w-full'
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
@@ -451,7 +451,7 @@ const Navbar = () => {
                         </Link>
                         <Link href={'register'}>
                             <motion.button 
-                                className='bg-[#57132A] text-white text-sm cursor-pointer py-2 px-6 rounded-md'
+                                className='bg-[#85CE5C] text-white text-sm cursor-pointer py-2 px-6 rounded-md'
                                 variants={buttonVariants}
                                 whileHover={{ 
                                     scale: 1.02,
