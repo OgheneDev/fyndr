@@ -1,23 +1,17 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
-import { sendMessage, getChatById, getChats } from '@/api/messages/requests'
+import { getChats } from '@/api/messages/requests'
 import { Search } from 'lucide-react'
-import { ChatHeader } from '@/components/messages/ChatHeader'
-import { MessagesList } from '@/components/messages/MessagesList'
-import { MessageInput } from '@/components/messages/MessageInput'
-import { ConversationsList } from '@/components/messages/ConversationsList' 
+import { ConversationsList } from '@/components/messages/ConversationsList'
 
 const MessagesPage = () => {
-  const [selectedChat, setSelectedChat] = useState(null)
-  const [messageInput, setMessageInput] = useState('')
   const [conversations, setConversations] = useState([])
   const [conversationsLoading, setConversationsLoading] = useState(true)
-  const [chatLoading, setChatLoading] = useState(false)
-  const [chatMessages, setChatMessages] = useState([])
-  const [chatInfo, setChatInfo] = useState(null)
   const { userType } = useUserStore()
+  const router = useRouter()
 
   // Helper to reload conversations
   const reloadConversations = () => {
@@ -32,84 +26,15 @@ const MessagesPage = () => {
     if (storedChat) {
       try {
         const chatObj = JSON.parse(storedChat)
-        setSelectedChat(chatObj)
+        router.push(`/dashboard/messages/chat?chatId=${chatObj._id}`)
       } catch (e) {}
       localStorage.removeItem('fynder_selected_chat')
     }
-    setConversationsLoading(true)
-    getChats()
-      .then(data => setConversations(data || []))
-      .finally(() => setConversationsLoading(false))
+    reloadConversations()
   }, [])
 
-  useEffect(() => {
-    if (selectedChat && selectedChat._id) {
-      setChatLoading(true)
-      getChatById(selectedChat._id)
-        .then(data => {
-          setChatMessages(data?.messages || [])
-          setChatInfo(data)
-        })
-        .finally(() => setChatLoading(false))
-    }
-  }, [selectedChat])
-
-  const handleSendMessage = async () => {
-    if (messageInput.trim() && selectedChat) {
-      try {
-        await sendMessage({
-          chatId: selectedChat._id,
-          senderType: userType === 'merchant' ? 'Merchant' : 'User',
-          content: messageInput.trim()
-        })
-        setChatLoading(true)
-        getChatById(selectedChat._id)
-          .then(data => {
-            setChatMessages(data?.messages || [])
-            setChatInfo(data)
-          })
-          .finally(() => setChatLoading(false))
-        setMessageInput('')
-      } catch (err) {}
-    }
-  }
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
-    }
-  }
-
-  if (selectedChat) {
-    return (
-      <div className="fixed inset-0 z-105 md:z-0 flex flex-col md:pt-[80px] pt-0 bg-white">
-        <ChatHeader
-          chatInfo={chatInfo}
-          userType={userType}
-          onBack={() => {
-            setSelectedChat(null)
-            reloadConversations()
-          }}
-        />
-        <MessagesList
-ChatHeader          chatMessages={chatMessages}
-          chatLoading={chatLoading}
-          chatInfo={chatInfo} 
-          userType={userType}
-        />
-        <MessageInput
-          messageInput={messageInput}
-          setMessageInput={setMessageInput}
-          handleSendMessage={handleSendMessage}
-          handleKeyPress={handleKeyPress}
-          chatLoading={chatLoading}
-          chatInfo={chatInfo}
-          userType={userType}
-        />
-      </div>
-
-    )
+  const handleSelectChat = (chat) => {
+    router.push(`/dashboard/messages/chat?chatId=${chat._id}`)
   }
 
   return (
@@ -120,7 +45,7 @@ ChatHeader          chatMessages={chatMessages}
       <ConversationsList
         conversations={conversations}
         conversationsLoading={conversationsLoading}
-        setSelectedChat={setSelectedChat}
+        setSelectedChat={handleSelectChat}
         userType={userType}
       />
       {!conversationsLoading && conversations.length === 0 && (

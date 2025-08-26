@@ -24,6 +24,7 @@ export default function DashboardLayout({ children }) {
   const merchantAllowedRoutes = [
     "/dashboard/open-requests",
     "/dashboard/messages",
+    "/dashboard/messages/chat",
     "/dashboard/profile",
     "/dashboard/request",
   ];
@@ -31,6 +32,7 @@ export default function DashboardLayout({ children }) {
     "/dashboard",
     "/dashboard/my-requests",
     "/dashboard/messages",
+    "/dashboard/messages/chat",
     "/dashboard/profile",
     "/dashboard/request/user",
     "/dashboard/new-request"

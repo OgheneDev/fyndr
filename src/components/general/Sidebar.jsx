@@ -99,22 +99,25 @@ const Sidebar = () => {
     <div className="bg-white w-[280px] flex-col h-full hidden lg:flex fixed top-0 left-0 border-r border-gray-100">
       <div className="px-4 py-4 flex-1 pt-[100px]">
         <ul className="flex flex-col space-y-1">
-          {menuItems.map((item, index) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.path;
-            return (
-              <li key={index}>
-                <Link
-                  href={item.path}
-                  className={`py-3 px-4 rounded-lg flex items-center gap-3 text-sm font-medium transition-all duration-200 hover:bg-gray-50
-                    ${isActive ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"}`}
-                >
-                  <Icon size={20} className={isActive ? "text-gray-900" : "text-gray-500"} />
-                  <span>{item.name}</span>
-                </Link>
-              </li>
-            );
-          })}
+         {menuItems.map((item, index) => {
+  const Icon = item.icon;
+  // Highlight "My requests" for both /dashboard/my-requests and /dashboard/open-requests
+  const isActive = item.name === "My requests" 
+    ? pathname.startsWith("/dashboard/my-requests") || pathname.startsWith("/dashboard/open-requests")
+    : pathname === item.path;
+  return (
+    <li key={index}>
+      <Link
+        href={item.path}
+        className={`py-3 px-4 rounded-lg flex items-center gap-3 text-sm font-medium transition-all duration-200 hover:bg-gray-50
+          ${isActive ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"}`}
+      >
+        <Icon size={20} className={isActive ? "text-gray-900" : "text-gray-500"} />
+        <span>{item.name}</span>
+      </Link>
+    </li>
+  );
+})}
         </ul>
       </div>
       <div className="px-4 py-4 border-t border-gray-100 flex items-center gap-3">
