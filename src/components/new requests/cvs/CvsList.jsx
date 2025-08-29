@@ -5,8 +5,6 @@ import Image from 'next/image';
 export const CvsList = ({ filteredCvs }) => {
   const router = useRouter();
 
-  //const workExperiences = Array.isArray(cv.workExperienceDetails) ? cv.workExperienceDetails : [];
-  
   return (
     <div className='flex flex-col gap-4 mt-6'>
       {Array.isArray(filteredCvs) && filteredCvs.length > 0 ? (
@@ -16,7 +14,6 @@ export const CvsList = ({ filteredCvs }) => {
             className="group bg-white border border-[#85CE5C] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
             <div className='flex items-center space-x-4'>
-              
               {/* Avatar */}
               {cv.profileImage ? (
                 <Image
@@ -42,11 +39,9 @@ export const CvsList = ({ filteredCvs }) => {
                 {/* Work Experience */}
                 {cv.workExperienceDetails && cv.workExperienceDetails.length > 0 ? (
                   <div className='text-[10px] md:text-[12px] text-gray-900'>
-                    {cv.workExperienceDetails.map((work, index) => (
-                      <div key={work._id || index} className="truncate max-w-[180px] md:max-w-[300px]">
-                        <p className="font-medium">{work.jobTitle || "Job title not provided"}</p>
-                      </div>
-                    ))}
+                    <div className="truncate max-w-[180px] md:max-w-[300px]">
+                      {cv.workExperienceDetails[0]?.jobTitle || "Professional"}
+                    </div>
                   </div>
                 ) : (
                   <div className='text-[10px] md:text-[12px] text-gray-900'>
