@@ -235,11 +235,11 @@ const handleExportPDF = async () => {
                   <>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">English</span>
+                      <span className="text-[10px] md:text-sm">English</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">Local Language</span>
+                      <span className="text-[10px] md:text-sm">Local Language</span>
                     </li>
                   </>
                 )}
@@ -260,27 +260,27 @@ const handleExportPDF = async () => {
                   <>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">Management Skills</span>
+                      <span className="text-[10px] md:text-sm">Management Skills</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">Creativity</span>
+                      <span className="text-[10px] md:text-sm">Creativity</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">Digital Marketing</span>
+                      <span className="text-[10px] md:text-sm">Digital Marketing</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">Negotiation</span>
+                      <span className="text-[10px] md:text-sm">Negotiation</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">Critical Thinking</span>
+                      <span className="text-[10px] md:text-sm">Critical Thinking</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
-                      <span className="text-xs md:text-sm">Leadership</span>
+                      <span className="text-[10px] md:text-sm">Leadership</span>
                     </li>
                   </>
                 )}
@@ -322,13 +322,13 @@ const handleExportPDF = async () => {
                 ))
               ) : (
                 <div className="mb-6 md:mb-8">
-                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-1">
+                  <h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1">
                     Entry Level Professional - {cv.state || "Nigeria"}
                   </h3>
-                  <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3">
+                  <p className="text-[10px] md:text-sm text-gray-600 mb-2 md:mb-3">
                     Recent Graduate
                   </p>
-                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                  <p className="text-[10px] md:text-base text-gray-700 leading-relaxed">
                     Recent graduate with strong academic foundation and eager to apply theoretical knowledge in a practical professional setting.
                   </p>
                 </div>
