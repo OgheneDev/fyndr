@@ -6,27 +6,11 @@ import Image from "next/image";
 import { getCvById } from "@/api/cvs/requests";
 import { Loader } from "../../ui/Loader";
 
-// Simple humanize helper
+
 const humanize = (s) => (s ? String(s).replace(/-/g, " ").replace(/\b\w/g, ch => ch.toUpperCase()) : "");
 
-// Progress bar component
-const SkillBar = ({ skill, percentage }) => (
-  <div className="mb-3">
-    <div className="flex justify-between items-center mb-1">
-      <span className="text-sm font-medium">{skill}</span>
-      <span className="text-sm font-bold">{percentage}%</span>
-    </div>
-    <div className="w-full bg-gray-300 rounded-full h-2">
-      <div 
-        className="bg-gray-800 h-2 rounded-full transition-all duration-500"
-        style={{ width: `${percentage}%` }}
-      ></div>
-    </div>
-  </div>
-);
 
-// Export CV to PDF - Fixed version with working icons
-const exportPDF = (cv, skillsWithPercentages) => {
+const exportPDF = (cv) => {
   const ed = cv.educationDetails || {};
   const workExperiences = Array.isArray(cv.workExperienceDetails) ? cv.workExperienceDetails : [];
 
@@ -77,6 +61,8 @@ const exportPDF = (cv, skillsWithPercentages) => {
               border-radius: 24px;
               display: flex;
               flex-direction: column;
+              max-height: 90vh;
+              overflow: hidden;
             }
             
             .profile-img { 
@@ -489,16 +475,6 @@ export default function CvDetailsScreen({ cvId }) {
   const ed = cv.educationDetails || {};
   const workExperiences = Array.isArray(cv.workExperienceDetails) ? cv.workExperienceDetails : [];
 
-  // Mock data for skills with percentages
-  const skillsWithPercentages = [
-    { name: "Design Process", percentage: 78 },
-    { name: "Project Management", percentage: 81 },
-    ...(cv.skills || []).slice(2).map((skill, index) => ({
-      name: humanize(skill),
-      percentage: 65 + (index * 5)
-    }))
-  ];
-
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
       <div className="flex justify-between items-center mb-6">
@@ -506,7 +482,7 @@ export default function CvDetailsScreen({ cvId }) {
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
         <button 
-          onClick={() => exportPDF(cv, skillsWithPercentages)}
+          onClick={() => exportPDF(cv)}
           className="bg-teal-700 cursor-pointer text-white px-4 py-2 rounded hover:bg-teal-800 transition"
         >
           Export CV
@@ -719,26 +695,6 @@ export default function CvDetailsScreen({ cvId }) {
                   </p>
                 </div>
               )}
-            </div>
-
-            {/* Skills Summary */}
-            <div>
-              <div className="bg-teal-700 text-white text-center py-3 mb-6 font-bold text-sm tracking-wider">
-                SKILLS SUMMARY
-              </div>
-              
-              <div className="space-y-4">
-                {skillsWithPercentages.length > 0 ? skillsWithPercentages.slice(0, 4).map((skill, i) => (
-                  <SkillBar key={i} skill={skill.name} percentage={skill.percentage} />
-                )) : (
-                  <>
-                    <SkillBar skill="Professional Skills" percentage={78} />
-                    <SkillBar skill="Communication" percentage={85} />
-                    <SkillBar skill="Problem Solving" percentage={72} />
-                    <SkillBar skill="Teamwork" percentage={88} />
-                  </>
-                )}
-              </div>
             </div>
           </div>
         </div>
