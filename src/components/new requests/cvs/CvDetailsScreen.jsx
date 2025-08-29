@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, User, Phone, Mail, MapPin, Download } from "lucide-react";
 import Image from "next/image";
 import { getCvById } from "@/api/cvs/requests";
 import { Loader } from "../../ui/Loader";
-import html2pdf from "html2pdf.js";
+import { useReactToPrint } from "react-to-print";
 
 // Simple humanize helper
 const humanize = (s) => (s ? String(s).replace(/-/g, " ").replace(/\b\w/g, ch => ch.toUpperCase()) : "");
@@ -32,6 +32,7 @@ export default function CvDetailsScreen({ cvId }) {
   const [loading, setLoading] = useState(Boolean(cvId));
   const [error, setError] = useState("");
   const [imgError, setImgError] = useState(false);
+  const cvRef = useRef(null);
 
   useEffect(() => {
     if (!cvId) {
@@ -58,58 +59,10 @@ export default function CvDetailsScreen({ cvId }) {
     return () => { mounted = false; };
   }, [cvId]);
 
-const handleExportPDF = async () => {
-  const element = document.getElementById("cv-content");
-  if (!element) return;
-
-  // Create a temporary stylesheet to override oklch colors
-  const style = document.createElement("style");
-  style.innerHTML = `
-    .bg-teal-700 { background-color: #00695c !important; }
-    .text-teal-700 { color: #00695c !important; }
-    .bg-teal-800 { background-color: #004d40 !important; }
-    .text-teal-600 { color: #00796b !important; }
-    .text-teal-100 { color: #b2dfdb !important; }
-    .bg-gray-300 { background-color: #d1d5db !important; }
-    .text-gray-300 { color: #d1d5db !important; }
-    .bg-gray-800 { background-color: #374151 !important; }
-    .text-gray-800 { color: #374151 !important; }
-    .text-gray-600 { color: #4b5563 !important; }
-    .text-gray-700 { color: #374151 !important; }
-    .bg-gray-100 { background-color: #f3f4f6 !important; }
-    .text-gray-900 { color: #1f2a44 !important; }
-    .bg-white { background-color: #ffffff !important; }
-    .text-white { color: #ffffff !important; }
-    body { background: #ffffff !important; }
-  `;
-  document.head.appendChild(style);
-
-  try {
-    const opt = {
-      margin: 0,
-      filename: `${cv?.firstName || "cv"}-${cv?.lastName || "details"}.pdf`,
-      image: { type: "png", quality: 1 },
-      html2canvas: {
-        scale: 6,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait",
-      },
-      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
-    };
-
-    await html2pdf().set(opt).from(element).save();
-  } catch (error) {
-    console.error("Error generating PDF:", error);
-    alert("Failed to export PDF. Please try again.");
-  } finally {
-    document.head.removeChild(style);
-  }
-};
+const handleDownload = useReactToPrint({
+  contentRef: cvRef,   // <-- new API (v3+)
+  documentTitle: "CV",
+});
 
   if (loading) return <Loader />;
 
@@ -143,33 +96,34 @@ const handleExportPDF = async () => {
   const workExperiences = Array.isArray(cv.workExperienceDetails) ? cv.workExperienceDetails : [];
 
   // Mock data for skills with percentages
-  const skillsWithPercentages = [
-    { name: "Design Process", percentage: 78 },
-    { name: "Project Management", percentage: 81 },
-    ...(cv.skills || []).slice(2).map((skill, index) => ({
-      name: humanize(skill),
-      percentage: 65 + (index * 5)
-    }))
-  ];
+ const skillsWithPercentages = [
+  { name: "Design Process", percentage: 78 },
+  { name: "Project Management", percentage: 81 },
+  ...(cv.skills || []).slice(2).map((skill, index) => ({
+    name: humanize(skill),
+    percentage: 65 + (index * 5) // ✅ fixed
+  }))
+];
+
 
   return (
-    <div className="max-w-6xl mx-auto py-4 md:py-8 px-2 md:px-4">
+    <div className="max-w-4xl mx-auto py-4 md:py-8 px-2 md:px-4">
       <div className="flex items-center gap-4 mb-4 md:mb-6 px-2">
         <button onClick={() => router.back()} className="flex items-center gap-2 text-sm cursor-pointer text-gray-600">
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
         <button
-          onClick={handleExportPDF}
+          onClick={handleDownload}
           className="flex items-center cursor-pointer gap-2 text-sm text-white bg-teal-700 px-4 py-2 rounded-lg hover:bg-teal-800 transition"
         >
           <Download className="w-4 h-4" /> Export PDF
         </button>
       </div>
 
-      <div id="cv-content" className="bg-white overflow-hidden">
+      <div id="cv-content" ref={cvRef} className="bg-white overflow-hidden">
         <div className="flex flex-row lg:min-h-screen">
           {/* Left Sidebar - Dark Green */}
-          <div className="w-[170px] lg:w-70 bg-teal-700 rounded-2xl md:rounded-3xl text-white p-4 md:p-8 flex flex-col">
+          <div className="w-[170px] lg:w-82 bg-teal-700 rounded-2xl md:rounded-3xl text-white p-4 md:p-8 flex flex-col">
             <div className="mb-6 md:mb-8 flex justify-center">
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-teal-800 flex items-center justify-center">
                 {cv.profileImage && !imgError ? (

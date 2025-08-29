@@ -42,7 +42,7 @@ export const CvsList = ({ filteredCvs }) => {
                   <div className='text-[10px] md:text-[12px] text-gray-900'>
                     {cv.workExperienceDetails.map((work, index) => (
                       <div key={work._id || index} className="truncate max-w-[180px] md:max-w-[300px]">
-                        <p className="font-medium">{work.jobTitle || "Job title not provided"}</p>
+                        <p className="font-medium">{work.jobTitle[0] || "Job title not provided"}</p>
                       </div>
                     ))}
                   </div>
