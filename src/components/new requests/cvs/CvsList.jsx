@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 export const CvsList = ({ filteredCvs }) => {
   const router = useRouter();
+
+  //const workExperiences = Array.isArray(cv.workExperienceDetails) ? cv.workExperienceDetails : [];
   
   return (
     <div className='flex flex-col gap-4 mt-6'>
