@@ -1,4 +1,3 @@
-// components/register page/VerifyOtpClient.jsx
 "use client";
 import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";

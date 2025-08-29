@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { CATEGORY_LABELS } from "@/data/data";
 import { Loader } from "@/components/ui/Loader";
 
-const BASE_URL = "https://rheel-compare.onrender.com/api";
+const BASE_URL = "https://api.fyndr.ng/api";
 
 // Payment Section Component
 const PaymentSection = ({
