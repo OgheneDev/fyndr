@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function ToggleButtons({ activeTab, setActiveTab }) {
   return (
     <div className="relative flex justify-center border-b md:border-b-0 border-b-gray-400 mb-6">
@@ -18,11 +20,21 @@ export function ToggleButtons({ activeTab, setActiveTab }) {
         >
           Awaiting Payment
         </button>
+        <button
+          onClick={() => setActiveTab('cvs')}
+          className={`relative flex-1 py-3 px-4 text-sm font-medium transition-colors cursor-pointer duration-300 text-center ${
+            activeTab === 'cvs' ? 'text-[#121417]' : 'text-gray-400'
+          }`}
+        >
+          CVs
+        </button>
         
         {/* Sliding indicator */}
         <div 
           className={`absolute bottom-0 h-1 bg-[#85CE5C] rounded-t-md transition-all duration-300 ease-in-out ${
-            activeTab === 'completed' ? 'left-0 w-1/2 md:left-[16.67%] md:w-1/6' : 'left-1/2 w-1/2 md:left-[66.67%] md:w-1/6'
+            activeTab === 'completed' ? 'left-0 w-1/3' :
+            activeTab === 'pending' ? 'left-1/3 w-1/3' :
+            'left-2/3 w-1/3'
           }`}
         ></div>
       </div>

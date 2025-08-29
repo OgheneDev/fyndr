@@ -4,10 +4,14 @@ import { useEffect, useState } from 'react';
 import { getRequests } from '@/api/requests/users/requests';
 import { ToggleButtons } from './ToggleButtons';
 import { RequestSection } from './RequestSection';
+import { getPersonalCvs } from '@/api/cvs/requests';
+import { CvsList } from './CvsList';
 
 export default function ServiceRequests() {
   const [requests, setRequests] = useState([]);
+  const [cvs, setCvs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('completed');
 
   // Touch/swipe state
@@ -17,14 +21,38 @@ export default function ServiceRequests() {
   useEffect(() => {
     async function fetchRequests() {
       setLoading(true);
-      const data = await getRequests();
-      const sortedData = (data || []).sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-      setRequests(sortedData);
-      setLoading(false);
+      try {
+        const data = await getRequests();
+        const sortedData = (data || []).sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setRequests(sortedData);
+      } catch (err) {
+        setError('Failed to load requests');
+      } finally {
+        setLoading(false);
+      }
     }
     fetchRequests();
+  }, []);
+
+  useEffect(() => {
+    async function fetchCvs() {
+      try {
+        setLoading(true);
+        const response = await getPersonalCvs();
+        const cvsData = response?.data || [];
+        cvsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setCvs(cvsData);
+      } catch (error) {
+        console.error('Error fetching CVs:', error);
+        setError('Failed to load CVs');
+        setCvs([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchCvs();
   }, []);
 
   const liveRequests = requests.filter(
@@ -52,11 +80,13 @@ export default function ServiceRequests() {
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
-    if (isLeftSwipe && activeTab === 'completed') {
-      setActiveTab('pending');
+    if (isLeftSwipe) {
+      if (activeTab === 'completed') setActiveTab('pending');
+      else if (activeTab === 'pending') setActiveTab('cvs');
     }
-    if (isRightSwipe && activeTab === 'pending') {
-      setActiveTab('completed');
+    if (isRightSwipe) {
+      if (activeTab === 'cvs') setActiveTab('pending');
+      else if (activeTab === 'pending') setActiveTab('completed');
     }
   };
 
@@ -75,7 +105,11 @@ export default function ServiceRequests() {
           </button>
         </Link>
 
-        <ToggleButtons activeTab={activeTab} setActiveTab={setActiveTab} />
+        <ToggleButtons
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          tabs={['completed', 'pending', 'cvs']} // Updated to include 'cvs' tab
+        />
 
         {/* Sliding content container */}
         <div
@@ -96,10 +130,19 @@ export default function ServiceRequests() {
           {/* Pending Requests */}
           <div
             className={`absolute top-0 left-0 w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
-              activeTab === 'pending' ? 'translate-x-0' : 'translate-x-[100vw]'
+              activeTab === 'pending' ? 'translate-x-0' : activeTab === 'completed' ? 'translate-x-[100vw]' : 'translate-x-[100vw]'
             }`}
           >
             <RequestSection loading={loading} requests={awaitingRequests} />
+          </div>
+
+          {/* CVs */}
+          <div
+            className={`absolute top-0 left-0 w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
+              activeTab === 'cvs' ? 'translate-x-0' : 'translate-x-[100vw]'
+            }`}
+          >
+            <CvsList loading={loading} cvs={cvs} />
           </div>
         </div>
       </div>
