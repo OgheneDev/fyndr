@@ -151,13 +151,14 @@ const useRequestStates = () => {
     schoolName: '',
     startYear: '',
     endYear: '',
-    workExperience: '',
-    yearsOfExperience: '',
+    hasWorkExperience: null,
+    workExperienceDetails: [],
     duration: '',
     additionalSkills: [],
     languages: [],
     preferredJobTitle: '',
-    company_image: null
+    company_image: null,
+    cv_image: null
   });
 
   const handleInputChange = useCallback((field, value) => {

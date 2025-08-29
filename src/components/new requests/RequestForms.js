@@ -2139,24 +2139,24 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
 
 export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChecked, setIsChecked, onBack }) {
   const educationLevels = [
-    {display: 'None', value: 'none'},
-    {display: 'Primary', value: 'primary'},
-    {display: 'Secondary', value: 'secondary'},
-    {display: 'University', value: 'university'},
+    { display: 'None', value: 'none' },
+    { display: 'Primary', value: 'primary' },
+    { display: 'Secondary', value: 'secondary' },
+    { display: 'University', value: 'university' },
   ];
   const skills = [
-    {display: 'Customer service', value: 'customer-service'}, 
-    {display: 'Organizational skills', value: 'organizational-skills'}, 
-    {display: 'Microsoft office', value: 'microsoft-office'}, 
-    {display: 'Maintenance', value: 'maintenance'},
-    {display: 'Communication', value: 'communication'},
-    {display: 'Leadership', value: 'leadership'}, 
-    {display: 'Accounting', value: 'accounting'}, 
-    {display: 'Cash handling', value: 'cash-handling'}
+    { display: 'Customer service', value: 'customer-service' },
+    { display: 'Organizational skills', value: 'organizational-skills' },
+    { display: 'Microsoft office', value: 'microsoft-office' },
+    { display: 'Maintenance', value: 'maintenance' },
+    { display: 'Communication', value: 'communication' },
+    { display: 'Leadership', value: 'leadership' },
+    { display: 'Accounting', value: 'accounting' },
+    { display: 'Cash handling', value: 'cash-handling' },
   ];
   const languages = [
-    'English', 'Yoruba', 'Hausa', 'Igbo', 'French', 'Spanish', 
-    'Arabic', 'Pidgin', 'Edo', 'Ibibio', 'Fulfulde', 'Kanuri'
+    'English', 'Yoruba', 'Hausa', 'Igbo', 'French', 'Spanish',
+    'Arabic', 'Pidgin', 'Edo', 'Ibibio', 'Fulfulde', 'Kanuri',
   ];
 
   const lgaOptions = employmentData.state && nigerianStates[employmentData.state]
@@ -2167,12 +2167,50 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
     onChange(field, selectedOptions ? selectedOptions.map(option => option.value) : []);
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      onChange('cv_image', file); // Store the file object directly
+    }
+  };
+
+  const removeImage = () => {
+    onChange('cv_image', null); // Reset to null
+    const fileInput = document.getElementById('cv-image-input');
+    if (fileInput) fileInput.value = '';
+  };
+
+  // Initialize workExperienceDetails with one entry if it doesn't exist
+  const workExperienceDetails = employmentData.workExperienceDetails?.length > 0
+    ? employmentData.workExperienceDetails
+    : [{ company: '', jobTitle: '', duration: '' }];
+
+  // Handle changes to work experience details
+  const handleWorkExperienceDetailChange = (index, field, value) => {
+    const updatedDetails = [...workExperienceDetails];
+    updatedDetails[index] = { ...updatedDetails[index], [field]: value };
+    onChange('workExperienceDetails', updatedDetails);
+  };
+
+  // Add a new work experience entry
+  const addWorkExperience = () => {
+    onChange('workExperienceDetails', [...workExperienceDetails, { company: '', jobTitle: '', duration: '' }]);
+  };
+
+  // Remove a work experience entry
+  const removeWorkExperience = (index) => {
+    if (workExperienceDetails.length > 1) {
+      const updatedDetails = workExperienceDetails.filter((_, i) => i !== index);
+      onChange('workExperienceDetails', updatedDetails);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-start gap-5 md:gap-[200px] py-3 md:py-5 fixed top-0 bg-white z-50 w-full">
-          <button onClick={onBack} className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
-            <ArrowLeft className="w-6 h-6 text-gray-600" />
-          </button>
+        <button onClick={onBack} className="p-1 hover:bg-gray-100 rounded-full cursor-pointer transition-colors">
+          <ArrowLeft className="w-6 h-6 text-gray-600" />
+        </button>
         <article className="text-center">
           <h2 className="text-lg font-bold mb-1">Post a Job Seeker Request</h2>
           <p className="text-[12px]">Find job opportunities that match your skills</p>
@@ -2184,6 +2222,44 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
       <div className="mt-5 md:mt-16">
         <h3 className="text-[#171214] mb-3 text-sm font-bold">Create Profile</h3>
         <div className="space-y-4">
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Profile Image</label>
+            <div className="relative">
+              {employmentData.cv_image ? (
+                <div className="relative w-full h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+                  <img
+                    src={URL.createObjectURL(employmentData.cv_image)}
+                    alt="Profile image preview"
+                    className="w-full h-full object-contain bg-white"
+                  />
+                  <button
+                    onClick={removeImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <label
+                  htmlFor="cv-image-input"
+                  className="cursor-pointer w-full h-40 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 flex flex-col items-center justify-center text-gray-500"
+                >
+                  <svg className="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="text-sm font-medium">Upload Profile Image</span>
+                  <span className="text-xs text-gray-400 mt-1">PNG, JPG up to 5MB</span>
+                </label>
+              )}
+              <input
+                id="cv-image-input"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </div>
+          </div>
           <div className="flex gap-3">
             <div className="flex-1">
               <label className="block text-[#171214] mb-2 text-sm">First Name</label>
@@ -2256,14 +2332,14 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                   backgroundColor: '#f3f4f6',
                   border: 'none',
                   boxShadow: 'none',
-                  '&:hover': { border: 'none' }
+                  '&:hover': { border: 'none' },
                 }),
                 placeholder: (base) => ({ ...base, color: '#6B7280' }),
                 option: (base, state) => ({
                   ...base,
                   backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
-                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' }
-                })
+                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' },
+                }),
               }}
             />
           </div>
@@ -2278,20 +2354,20 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             />
           </div>
           <div>
-  <label className="block text-[#171214] mb-2 text-sm">Graduate</label>
-  <select
-    value={employmentData.graduate === true ? 'true' : employmentData.graduate === false ? 'false' : ''}
-    onChange={(e) => {
-      const value = e.target.value === 'true' ? true : e.target.value === 'false' ? false : null;
-      onChange('graduate', value);
-    }}
-    className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-  >
-    <option value="">Select</option>
-    <option value="true">Yes</option>
-    <option value="false">No</option>
-  </select>
-</div>
+            <label className="block text-[#171214] mb-2 text-sm">Graduate</label>
+            <select
+              value={employmentData.graduate === true ? 'true' : employmentData.graduate === false ? 'false' : ''}
+              onChange={(e) => {
+                const value = e.target.value === 'true' ? true : e.target.value === 'false' ? false : null;
+                onChange('graduate', value);
+              }}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
           <div>
             <label className="block text-[#171214] mb-2 text-sm">Level of Education</label>
             <select
@@ -2326,116 +2402,133 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             />
           </div>
           <div className="flex gap-3">
-            <div className='flex-1'>
-            <label className="block text-[#171214] mb-2 text-sm">Start Year</label>
-            <input
-              type="text"
-              value={employmentData.startYear || ''}
-              onChange={(e) => onChange('startYear', e.target.value)}
-              placeholder="E.g., 2015 - 2019"
-              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-            />
-          </div>
-          <div className='flex-1'>
-            <label className="block text-[#171214] mb-2 text-sm">End Year</label>
-            <input
-              type="text"
-              value={employmentData.endYear || ''}
-              onChange={(e) => onChange('endYear', e.target.value)}
-              placeholder="E.g., 2015 - 2019"
-              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-            />
-          </div>
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">Start Year</label>
+              <input
+                type="text"
+                value={employmentData.startYear || ''}
+                onChange={(e) => onChange('startYear', e.target.value)}
+                placeholder="E.g., 2015 - 2019"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#171214] mb-2 text-sm">End Year</label>
+              <input
+                type="text"
+                value={employmentData.endYear || ''}
+                onChange={(e) => onChange('endYear', e.target.value)}
+                placeholder="E.g., 2015 - 2019"
+                className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+              />
+            </div>
           </div>
           <div>
-  <label className="block text-[#171214] mb-2 text-sm">Work Experience</label>
-  <select
-    value={employmentData.workExperience === true ? 'true' : employmentData.workExperience === false ? 'false' : ''}
-    onChange={(e) => {
-      const value = e.target.value === 'true' ? true : e.target.value === 'false' ? false : null;
-      onChange('workExperience', value);
-    }}
-    className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-  >
-    <option value="">Select</option>
-    <option value="true">Yes</option>
-    <option value="false">No</option>
-  </select>
-</div>
-          {employmentData.workExperience === true && (
+            <label className="block text-[#171214] mb-2 text-sm">Do you have work experience?</label>
+            <select
+              value={employmentData.hasWorkExperience === true ? 'true' : employmentData.hasWorkExperience === false ? 'false' : ''}
+              onChange={(e) => {
+                const value = e.target.value === 'true' ? true : e.target.value === 'false' ? false : null;
+                onChange('hasWorkExperience', value);
+                if (value === false) {
+                  onChange('workExperienceDetails', []);
+                  onChange('yearsOfExperience', '');
+                } else if (value === true && workExperienceDetails.length === 0) {
+                  onChange('workExperienceDetails', [{ company: '', jobTitle: '', duration: '' }]);
+                }
+              }}
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            >
+              <option value="">Select</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          {employmentData.hasWorkExperience === true && (
             <>
-              <div>
-                <label className="block text-[#171214] mb-2 text-sm">How many years?</label>
-                <input
-                  type="number"
-                  value={employmentData.yearsOfExperience || ''}
-                  onChange={(e) => onChange('yearsOfExperience', e.target.value)}
-                  placeholder="Enter years of experience"
-                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                />
-              </div>
-              <div>
-                <label className="block text-[#171214] mb-2 text-sm">Company</label>
-                <input
-                  type="text"
-                  value={employmentData.company || ''}
-                  onChange={(e) => onChange('company', e.target.value)}
-                  placeholder="Enter company name"
-                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                />
-              </div>
-              <div>
-                <label className="block text-[#171214] mb-2 text-sm">Work Experience Title</label>
-                <input
-                  type="text"
-                  value={employmentData.jobTitle || ''}
-                  onChange={(e) => onChange('jobTitle', e.target.value)}
-                  placeholder="Enter job title"
-                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                />
-              </div>
-              <div>
-                <label className="block text-[#171214] mb-2 text-sm">Duration</label>
-                <input
-                  type="text"
-                  value={employmentData.duration || ''}
-                  onChange={(e) => onChange('duration', e.target.value)}
-                  placeholder="E.g., 2018 - 2020"
-                  className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                />
-              </div>
+              {workExperienceDetails.map((exp, index) => (
+                <div key={index} className="space-y-4 border-t pt-4 mt-4">
+                  <h4 className="text-sm font-semibold">Work Experience {index + 1}</h4>
+                  <div>
+                    <label className="block text-[#171214] mb-2 text-sm">Company</label>
+                    <input
+                      type="text"
+                      value={exp.company || ''}
+                      onChange={(e) => handleWorkExperienceDetailChange(index, 'company', e.target.value)}
+                      placeholder="Enter company name"
+                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[#171214] mb-2 text-sm">Job Title</label>
+                    <input
+                      type="text"
+                      value={exp.jobTitle || ''}
+                      onChange={(e) => handleWorkExperienceDetailChange(index, 'jobTitle', e.target.value)}
+                      placeholder="Enter job title"
+                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[#171214] mb-2 text-sm">Duration</label>
+                    <input
+                      type="text"
+                      value={exp.duration || ''}
+                      onChange={(e) => handleWorkExperienceDetailChange(index, 'duration', e.target.value)}
+                      placeholder="E.g., 2018 - 2020"
+                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                    />
+                  </div>
+                  {workExperienceDetails.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeWorkExperience(index)}
+                      className="text-red-500 text-sm hover:underline"
+                    >
+                      Remove Experience
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addWorkExperience}
+                className="text-[#85CE5C] text-sm hover:underline mt-2"
+              >
+                Add Another Experience
+              </button>
             </>
           )}
           <div>
-              <label className="block text-[#171214] mb-2 text-sm">Additional Skills</label>
-              <Select
-                isMulti
-                value={(employmentData.additionalSkills || [])
-                  .map(val => {
-                    const s = skills.find(item => item.value === val);
-                    return { value: val, label: s ? s.display : val };
-                  })}
-                onChange={(selected) => handleMultiSelectChange('additionalSkills', selected)}
-                options={skills.map(s => ({ value: s.value, label: s.display }))}
-                placeholder="Select skills"
-                className="text-sm"
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    backgroundColor: '#f3f4f6',
-                    border: 'none',
-                    boxShadow: 'none',
-                    '&:hover': { border: 'none' }
-                  }),
-                  placeholder: (base) => ({ ...base, color: '#6B7280' }),
-                  option: (base, state) => ({
-                    ...base,
-                    backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
-                    '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' }
-                  })
-                }}
-              />
-            </div>
+            <label className="block text-[#171214] mb-2 text-sm">Additional Skills</label>
+            <Select
+              isMulti
+              value={(employmentData.additionalSkills || [])
+                .map(val => {
+                  const s = skills.find(item => item.value === val);
+                  return { value: val, label: s ? s.display : val };
+                })}
+              onChange={(selected) => handleMultiSelectChange('additionalSkills', selected)}
+              options={skills.map(s => ({ value: s.value, label: s.display }))}
+              placeholder="Select skills"
+              className="text-sm"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: '#f3f4f6',
+                  border: 'none',
+                  boxShadow: 'none',
+                  '&:hover': { border: 'none' },
+                }),
+                placeholder: (base) => ({ ...base, color: '#6B7280' }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
+                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' },
+                }),
+              }}
+            />
+          </div>
           <div>
             <label className="block text-[#171214] mb-2 text-sm">Additional Certificate or License</label>
             <input
@@ -2461,20 +2554,19 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                   backgroundColor: '#f3f4f6',
                   border: 'none',
                   boxShadow: 'none',
-                  '&:hover': { border: 'none' }
+                  '&:hover': { border: 'none' },
                 }),
                 placeholder: (base) => ({ ...base, color: '#6B7280' }),
                 option: (base, state) => ({
                   ...base,
                   backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
-                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' }
-                })
+                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' },
+                }),
               }}
             />
           </div>
         </div>
       </div>
-      
       <div className="mt-4">
         <label className="flex items-start md:items-center text-sm text-[#171214]">
           <input

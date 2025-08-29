@@ -327,7 +327,14 @@ const NewRequestPageContent = () => {
           employmentData.lga &&
           employmentData.area &&
           employmentData.graduate &&
-          employmentData.levelOfEducation
+          employmentData.levelOfEducation &&
+          (employmentData.hasWorkExperience === false || (
+            employmentData.hasWorkExperience === true &&
+            employmentData.workExperienceDetails?.every(exp =>
+              exp.company && exp.jobTitle && exp.duration
+            )
+          )) &&
+          employmentData.cv_image
         );
       }
       return false;
@@ -684,14 +691,12 @@ const NewRequestPageContent = () => {
             schoolName: employmentData.schoolName,
             startYear: employmentData.startYear,
             endYear: employmentData.endYear,
-            hasWorkExperience: employmentData.workExperience,
-            workExperienceYears: Number(employmentData.yearsOfExperience) || 0,
-            workExperienceCompany: employmentData.company,
-            workExperienceTitle: employmentData.jobTitle,
-            workExperienceDuration: employmentData.duration,
+            hasWorkExperience: employmentData.hasWorkExperience,
+            workExperienceDetails: employmentData.hasWorkExperience ? employmentData.workExperienceDetails : [],
             skills: employmentData.additionalSkills,
             additionalCertificate: employmentData.additionalCertificate,
             languages: employmentData.languages,
+            cv_image: employmentData.cv_image
           };
           console.log(formData);
           const response = await createCV(formData);
@@ -706,7 +711,7 @@ const NewRequestPageContent = () => {
             // ignore storage errors
             console.warn('Failed to save cvId to localStorage', e);
           }
-          setEmploymentData({ ...employmentData, role: '' });
+          setEmploymentData({ ...employmentData, role: '', cv_image: null });
           setShowEmployerForm(false);
           setShowJobSeekerForm(false);
         } else {

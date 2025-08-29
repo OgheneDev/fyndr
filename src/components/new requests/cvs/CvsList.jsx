@@ -2,21 +2,23 @@ import { User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-export const CvsList = ({filteredCvs}) => {
+export const CvsList = ({ filteredCvs }) => {
   const router = useRouter();
+  
   return (
     <div className='flex flex-col gap-4 mt-6'>
       {Array.isArray(filteredCvs) && filteredCvs.length > 0 ? (
         filteredCvs.map((cv) => (
-          <div 
-            key={cv._id} 
+          <div
+            key={cv._id}
             className="group bg-white border border-[#85CE5C] pr-6 rounded-4xl flex gap-5 md:gap-0 flex-row items-center justify-between transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
           >
             <div className='flex items-center space-x-4'>
+              
               {/* Avatar */}
-              {cv.user?.avatar ? (
+              {cv.profileImage ? (
                 <Image
-                  src={cv.user.avatar}
+                  src={cv.profileImage}
                   alt={`${cv.firstName} ${cv.lastName} avatar`}
                   width={64}
                   height={64}
@@ -27,46 +29,45 @@ export const CvsList = ({filteredCvs}) => {
                   <User size={30} className="text-gray-500" />
                 </div>
               )}
-              
+
               {/* Content */}
-              <div className=''>
-                <div className=''>
-                  <div className='flex gap-1 text-[12px] md:text-sm text-gray-900'>
-                    <p>{cv.firstName}</p>
-                    <p>{cv.lastName}</p>
+              <div>
+                <div className='flex gap-1 text-[12px] md:text-sm text-gray-900'>
+                  <p>{cv.firstName}</p>
+                  <p>{cv.lastName}</p>
+                </div>
+
+                {/* Work Experience */}
+                {cv.workExperienceDetails && cv.workExperienceDetails.length > 0 ? (
+                  <div className='text-[10px] md:text-[12px] text-gray-900'>
+                    {cv.workExperienceDetails.map((work, index) => (
+                      <div key={work._id || index} className="truncate max-w-[180px] md:max-w-[300px]">
+                        <p className="font-medium">{work.jobTitle || "Job title not provided"}</p>
+                      </div>
+                    ))}
                   </div>
-                </div> 
-                
-                {/*
-                  Conditionally render work experience: if workExperienceDetails exists and
-                  has jobTitle or company show them, otherwise show a fallback message.
-                */}
-                {cv.workExperienceDetails && (cv.workExperienceDetails.jobTitle || cv.workExperienceDetails.company) ? (
-                  <>
-                    <div className=' text-[10px] md:text-[12px] text-gray-900'>
-                      {cv.workExperienceDetails.jobTitle && (
-                        <p className=" text-gray-900 truncate max-w-[130px] md:max-w-[300px]">{cv.workExperienceDetails.jobTitle}</p>
-                      )}
-                    </div> 
-                  </>
                 ) : (
-                  <div className='text-[10px] md:text-[12px] text-gray-900'>No work experience.</div>
+                  <div className='text-[10px] md:text-[12px] text-gray-900'>
+                    No work experience.
+                  </div>
                 )}
 
+                {/* Location */}
                 <div>
                   <p className='text-[10px] md:text-[12px]'>{cv.state}, Nigeria</p>
                 </div>
               </div>
-
             </div>
-            
+
             {/* Action Button */}
             <button
               type="button"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                router.push(`/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cv._id)}`);
+                router.push(
+                  `/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cv._id)}`
+                );
               }}
               className="cursor-pointer text-[10px] md:text-[12px] font-semibold text-[#85CE5C]"
             >
@@ -84,5 +85,5 @@ export const CvsList = ({filteredCvs}) => {
         </div>
       )}
     </div>
-   );
-}
+  );
+};
