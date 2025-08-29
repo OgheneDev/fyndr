@@ -675,7 +675,7 @@ export default function CvDetailsScreen({ cvId }) {
                   {ed.schoolName || "University"}
                 </h3>
                 <p className="text-gray-700 font-medium">
-                  {humanize(ed.educationLevel) || "Bachelor's Degree"}{ed.educationMajor ? ` of ${ed.educationMajor}` : " in Business"}
+                  {ed.educationMajor}
                 </p>
                 <p className="text-sm text-gray-600">
                   {ed.startYear || "2018"}-{ed.endYear || "2022"}
@@ -689,9 +689,6 @@ export default function CvDetailsScreen({ cvId }) {
                   </h3>
                   <p className="text-gray-700 font-medium">
                     {cv.additionalCertificate}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Professional Development
                   </p>
                 </div>
               )}
