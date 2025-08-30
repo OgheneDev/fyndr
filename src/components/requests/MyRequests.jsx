@@ -4,12 +4,10 @@ import { useEffect, useState } from 'react';
 import { getRequests } from '@/api/requests/users/requests';
 import { ToggleButtons } from './ToggleButtons';
 import { RequestSection } from './RequestSection';
-import { getPersonalCvs } from '@/api/cvs/requests';
 import { CvsList } from './CvsList';
 
 export default function ServiceRequests() {
   const [requests, setRequests] = useState([]);
-  const [cvs, setCvs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('completed');
@@ -36,24 +34,6 @@ export default function ServiceRequests() {
     fetchRequests();
   }, []);
 
-  useEffect(() => {
-    async function fetchCvs() {
-      try {
-        setLoading(true);
-        const response = await getPersonalCvs();
-        const cvsData = response?.data || [];
-        cvsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setCvs(cvsData);
-      } catch (error) {
-        console.error('Error fetching CVs:', error);
-        setError('Failed to load CVs');
-        setCvs([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCvs();
-  }, []);
 
   const liveRequests = requests.filter(
     (request) => request.transaction_status === 'completed'
@@ -142,7 +122,7 @@ export default function ServiceRequests() {
               activeTab === 'cvs' ? 'translate-x-0' : 'translate-x-[100vw]'
             }`}
           >
-            <CvsList loading={loading} cvs={cvs} />
+            <CvsList  />
           </div>
         </div>
       </div>

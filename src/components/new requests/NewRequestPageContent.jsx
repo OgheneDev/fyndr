@@ -730,7 +730,7 @@ const NewRequestPageContent = () => {
         icon: 'success',
         title: `${label} submitted successfully`,
         text: 'Thank you for your submission!',
-        confirmButtonColor: '#541229',
+        confirmButtonColor: '#85CE5C',
         timer: 2000,
       });
       setIsChecked(false);
