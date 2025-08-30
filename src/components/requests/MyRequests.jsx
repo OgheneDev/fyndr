@@ -12,10 +12,6 @@ export default function ServiceRequests() {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('completed');
 
-  // Touch/swipe state
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-
   useEffect(() => {
     async function fetchRequests() {
       setLoading(true);
@@ -34,41 +30,12 @@ export default function ServiceRequests() {
     fetchRequests();
   }, []);
 
-
   const liveRequests = requests.filter(
     (request) => request.transaction_status === 'completed'
   );
   const awaitingRequests = requests.filter(
     (request) => request.transaction_status === 'pending'
   );
-
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      if (activeTab === 'completed') setActiveTab('pending');
-      else if (activeTab === 'pending') setActiveTab('cvs');
-    }
-    if (isRightSwipe) {
-      if (activeTab === 'cvs') setActiveTab('pending');
-      else if (activeTab === 'pending') setActiveTab('completed');
-    }
-  };
 
   return (
     <div className="min-h-screen w-full max-w-[100vw] md:max-w-4xl mx-auto box-border">
@@ -88,42 +55,17 @@ export default function ServiceRequests() {
         <ToggleButtons
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          tabs={['completed', 'pending', 'cvs']} // Updated to include 'cvs' tab
+          tabs={['completed', 'pending', 'cvs']}
         />
 
-        {/* Sliding content container */}
-        <div
-          className="relative w-full max-w-[100vw] overflow-x-hidden box-border"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
-          {/* Completed Requests */}
-          <div
-            className={`w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
-              activeTab === 'completed' ? 'translate-x-0' : '-translate-x-[100vw]'
-            }`}
-          >
+        <div className="relative w-full max-w-[100vw] box-border">
+          {activeTab === 'completed' && (
             <RequestSection loading={loading} requests={liveRequests} />
-          </div>
-
-          {/* Pending Requests */}
-          <div
-            className={`absolute top-0 left-0 w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
-              activeTab === 'pending' ? 'translate-x-0' : activeTab === 'completed' ? 'translate-x-[100vw]' : 'translate-x-[100vw]'
-            }`}
-          >
+          )}
+          {activeTab === 'pending' && (
             <RequestSection loading={loading} requests={awaitingRequests} />
-          </div>
-
-          {/* CVs */}
-          <div
-            className={`absolute top-0 left-0 w-full max-w-[100vw] transition-transform duration-300 ease-in-out ${
-              activeTab === 'cvs' ? 'translate-x-0' : 'translate-x-[100vw]'
-            }`}
-          >
-            <CvsList  />
-          </div>
+          )}
+          {activeTab === 'cvs' && <CvsList />}
         </div>
       </div>
     </div>
