@@ -17,14 +17,14 @@ export const ModalContent = ({
   setFormData
 }) => (
   <div
-    className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999] p-2 sm:p-4 transition-all duration-300"
+    className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999] p-0 sm:p-4 transition-all duration-300 h-full w-full"
     aria-modal="true"
     role="dialog"
     tabIndex={-1}
     onClick={() => setShowEditModal(false)}
   >
     <div
-      className="bg-white rounded-xl sm:rounded-2xl max-w-3xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden relative shadow-2xl transform transition-all duration-300 scale-100"
+      className="bg-white rounded-none sm:rounded-2xl max-w-3xl w-full max-h-full sm:max-h-[90vh] overflow-hidden relative shadow-2xl transform transition-all duration-300 scale-100 h-full sm:h-auto"
       onClick={(e) => e.stopPropagation()}
     >
       {/* Header */}
@@ -43,7 +43,7 @@ export const ModalContent = ({
         </button>
       </div>
 
-      <div className="overflow-y-auto max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-140px)]">
+      <div className="overflow-y-auto max-h-[calc(100vh-120px)] sm:max-h-[calc(90vh-140px)]">
         <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
           {/* Work Experience Section */}
           <div className="space-y-4">
@@ -66,7 +66,7 @@ export const ModalContent = ({
                         type="text"
                         value={exp.company}
                         onChange={(e) => updateWorkExperience(index, 'company', e.target.value)}
-                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all duration-200 bg-white text-sm sm:text-base"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray- by-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all duration-200 bg-white text-sm sm:text-base"
                         placeholder="Company name"
                       />
                     </div>
@@ -144,7 +144,7 @@ export const ModalContent = ({
                     <button
                       type="button"
                       onClick={() => removeSkill(index)}
-                      className="px-3 py-2.5 sm:py-3 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 touch-target"
+                      className="px-3 py-2.5 sm:py-3 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 opacity-0 sm:opacity-0 sm:group-hover:opacity-100 touch-target"
                     >
                       <Trash2 size={16} />
                     </button>
