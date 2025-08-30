@@ -490,7 +490,7 @@ export default function CvDetailsScreen({ cvId }) {
       </div>
 
       <div className="bg-white overflow-hidden">
-        <div className="flex min-h-screen">
+        <div className="flex flex-col md:flex-row min-h-screen">
           {/* Left Sidebar - Dark Green */}
           <div className="w-80 bg-teal-700 rounded-3xl text-white p-8 flex flex-col">
             {/* Profile Image */}

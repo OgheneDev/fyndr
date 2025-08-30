@@ -7,6 +7,7 @@ import { Loader } from "@/components/ui/Loader";
 import { BENEFITS } from "@/data/data";
 import Swal from "sweetalert2";
 import Image from "next/image";
+import { getPersonalCvs } from "@/api/cvs/requests";
 
 
 function formatNumberWithCommas(value) {
@@ -163,18 +164,18 @@ export default function JobDetailsScreen({ jobId }) {
       <div className="bg-white border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center gap-4 mb-4">
           {ed?.companyImage ? (
-                          <Image
-                           src={ed.companyImage}
-                           alt={`${ed.company} logo`}
-                           width={64}
-                           height={64}
-                           className="w-16 h-16 rounded-full object-cover shadow-md"
-                          />
-                        ) : (
-                            <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                              <User size={30} className="text-gray-500" />
-                            </div>
-                        )}
+            <Image
+              src={ed.companyImage}
+              alt={`${ed.company} logo`}
+              width={64}
+              height={64}
+              className="w-16 h-16 rounded-full object-cover shadow-md"
+            />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                <User size={30} className="text-gray-500" />
+              </div>
+            )}
           <div>
             <div className="font-semibold text-gray-900">
               {ed.company}
