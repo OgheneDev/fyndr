@@ -286,7 +286,7 @@ export default function JobDetailsScreen({ jobId }) {
                     </div>
                     <button 
                       onClick={() => setShowApplyForm(false)} 
-                      className="text-white/80 hover:text-white hover:bg-white/20 rounded-full p-2 transition-all duration-200"
+                      className="text-white/80 hover:text-white cursor-pointer hover:bg-white/20 rounded-full p-2 transition-all duration-200"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -324,8 +324,8 @@ export default function JobDetailsScreen({ jobId }) {
                             <h5 className="font-medium text-gray-700 mb-1">No CVs Found</h5>
                             <p className="text-sm text-gray-500 mb-4">You need to upload a CV before applying</p>
                             <button
-                              onClick={() => router.push('/dashboard/cv')}
-                              className="text-sm font-medium text-[#85CE5C] hover:text-[#7BC04E] transition-colors"
+                              onClick={() => router.push('/dashboard/new-request?category=employment&role=jobSeeker&form=jobSeeker-form')}
+                              className="text-sm font-medium text-[#85CE5C] cursor-pointer hover:text-[#7BC04E] transition-colors"
                             >
                               Upload CV →
                             </button>
