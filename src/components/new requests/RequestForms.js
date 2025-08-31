@@ -1901,7 +1901,9 @@ export function EmployerForm({ employmentData, onChange, nigerianStates, isCheck
             <div className="relative">
               {employmentData.company_image ? (
   <div className="relative w-full h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
-    <img
+    <Image
+      width={45}
+      height={45}
       src={URL.createObjectURL(employmentData.company_image)}
       alt="Company logo preview"
       className="w-full h-full object-contain bg-white"
@@ -2227,7 +2229,9 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             <div className="relative">
               {employmentData.cv_image ? (
                 <div className="relative w-full h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
-                  <img
+                  <Image
+                    width={50}
+                    height={50}
                     src={URL.createObjectURL(employmentData.cv_image)}
                     alt="Profile image preview"
                     className="w-full h-full object-contain bg-white"
