@@ -1,9 +1,9 @@
 "use client"
 
-import React, {useState} from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Megaphone } from 'lucide-react'
+import { ArrowLeft, Trash2, Plus } from 'lucide-react'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Select from 'react-select'
@@ -2156,10 +2156,6 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
     { display: 'Accounting', value: 'accounting' },
     { display: 'Cash handling', value: 'cash-handling' },
   ];
-  const languages = [
-    'English', 'Yoruba', 'Hausa', 'Igbo', 'French', 'Spanish',
-    'Arabic', 'Pidgin', 'Edo', 'Ibibio', 'Fulfulde', 'Kanuri',
-  ];
 
   const lgaOptions = employmentData.state && nigerianStates[employmentData.state]
     ? nigerianStates[employmentData.state].map(lga => ({ value: lga, label: lga }))
@@ -2172,39 +2168,53 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      onChange('cv_image', file); // Store the file object directly
+      onChange('cv_image', file);
     }
   };
 
   const removeImage = () => {
-    onChange('cv_image', null); // Reset to null
+    onChange('cv_image', null);
     const fileInput = document.getElementById('cv-image-input');
     if (fileInput) fileInput.value = '';
   };
 
-  // Initialize workExperienceDetails with one entry if it doesn't exist
   const workExperienceDetails = employmentData.workExperienceDetails?.length > 0
     ? employmentData.workExperienceDetails
     : [{ company: '', jobTitle: '', duration: '' }];
 
-  // Handle changes to work experience details
   const handleWorkExperienceDetailChange = (index, field, value) => {
     const updatedDetails = [...workExperienceDetails];
     updatedDetails[index] = { ...updatedDetails[index], [field]: value };
     onChange('workExperienceDetails', updatedDetails);
   };
 
-  // Add a new work experience entry
   const addWorkExperience = () => {
     onChange('workExperienceDetails', [...workExperienceDetails, { company: '', jobTitle: '', duration: '' }]);
   };
 
-  // Remove a work experience entry
   const removeWorkExperience = (index) => {
     if (workExperienceDetails.length > 1) {
       const updatedDetails = workExperienceDetails.filter((_, i) => i !== index);
       onChange('workExperienceDetails', updatedDetails);
     }
+  };
+
+  // Language handling functions
+  const addLanguage = () => {
+    onChange('languages', [...(employmentData.languages || []), '']);
+  };
+
+  const removeLanguage = (index) => {
+    if ((employmentData.languages || []).length > 1) {
+      const updatedLanguages = (employmentData.languages || []).filter((_, i) => i !== index);
+      onChange('languages', updatedLanguages);
+    }
+  };
+
+  const updateLanguage = (index, value) => {
+    const updatedLanguages = [...(employmentData.languages || [])];
+    updatedLanguages[index] = value;
+    onChange('languages', updatedLanguages);
   };
 
   return (
@@ -2412,7 +2422,7 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                 type="text"
                 value={employmentData.startYear || ''}
                 onChange={(e) => onChange('startYear', e.target.value)}
-                placeholder="E.g., 2015 - 2019"
+                placeholder="E.g., 2015"
                 className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
               />
             </div>
@@ -2422,7 +2432,7 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                 type="text"
                 value={employmentData.endYear || ''}
                 onChange={(e) => onChange('endYear', e.target.value)}
-                placeholder="E.g., 2015 - 2019"
+                placeholder="E.g., 2019"
                 className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
               />
             </div>
@@ -2543,31 +2553,40 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
               className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
             />
           </div>
-          <div>
-            <label className="block text-[#171214] mb-2 text-sm">Languages</label>
-            <Select
-              isMulti
-              value={employmentData.languages?.map(lang => ({ value: lang, label: lang })) || []}
-              onChange={(selected) => handleMultiSelectChange('languages', selected)}
-              options={languages.map(lang => ({ value: lang, label: lang }))}
-              placeholder="Select languages"
-              className="text-sm"
-              styles={{
-                control: (base) => ({
-                  ...base,
-                  backgroundColor: '#f3f4f6',
-                  border: 'none',
-                  boxShadow: 'none',
-                  '&:hover': { border: 'none' },
-                }),
-                placeholder: (base) => ({ ...base, color: '#6B7280' }),
-                option: (base, state) => ({
-                  ...base,
-                  backgroundColor: state.isSelected ? '#85CE5C' : base.backgroundColor,
-                  '&:hover': { backgroundColor: state.isSelected ? '#85CE5C' : '#f3f4f6' },
-                }),
-              }}
-            />
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-4">
+              <h3 className="text-sm font-semibold text-[#171214]">Languages</h3>
+            </div>
+            <div className="grid grid-cols-1 gap-3">
+              {(employmentData.languages || ['']).map((language, index) => (
+                <div key={index} className="flex gap-2 group">
+                  <input
+                    type="text"
+                    value={language}
+                    onChange={(e) => updateLanguage(index, e.target.value)}
+                    placeholder="e.g. English (Native), Spanish (Fluent)"
+                    className="flex-1 px-4 py-3 bg-gray-100 border-none rounded-lg text-sm focus:outline-none focus:border-transparent transition-all duration-200"
+                  />
+                  {(employmentData.languages || []).length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeLanguage(index)}
+                      className="px-3 py-3 text-red-600 cursor-pointer hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={addLanguage}
+              className="flex items-center gap-2 text-[#85CE5C] cursor-pointer hover:text-[#6FB848] hover:bg-[#85CE5C]/5 px-4 py-3 rounded-lg transition-all duration-200 font-medium text-sm"
+            >
+              <Plus size={16} />
+              Add Language
+            </button>
           </div>
         </div>
       </div>
@@ -2584,5 +2603,5 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
       </div>
     </div>
   );
-};
+}
 

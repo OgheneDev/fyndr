@@ -155,7 +155,7 @@ const useRequestStates = () => {
     workExperienceDetails: [],
     duration: '',
     additionalSkills: [],
-    languages: [],
+    languages: [''],
     preferredJobTitle: '',
     company_image: null,
     cv_image: null

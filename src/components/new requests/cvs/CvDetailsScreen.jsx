@@ -61,7 +61,7 @@ const exportPDF = (cv) => {
               border-radius: 24px;
               display: flex;
               flex-direction: column;
-              max-height: 90vh;
+              max-height: 87vh;
               overflow: hidden;
             }
             
