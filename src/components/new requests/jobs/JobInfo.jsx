@@ -39,11 +39,11 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
                 alt={`${ed.company} logo`}
                 width={72}
                 height={72}
-                className="w-18 h-18 rounded-2xl object-cover shadow-md border-2 border-white"
+                className="w-20 h-20 rounded-2xl object-cover shadow-md border-2 border-white"
               />
             </div>
           ) : (
-            <div className="w-18 h-18 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-md border-2 border-white">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-md border-2 border-white">
               <Building2 size={32} className="text-gray-500" />
             </div>
           )}
@@ -131,7 +131,7 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
           <div className="mb-8">
             <h4 className="text-sm font-semibold text-gray-900 mb-3">Job Description</h4>
             <div className="prose prose-sm max-w-none">
-              <div className="text-gray-700 leading-relaxed whitespace-pre-wrap bg-gray-50 rounded-xl p-4 border border-gray-100">
+              <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap bg-gray-50 rounded-xl p-4 border border-gray-100">
                 {jd.description}
               </div>
             </div>
