@@ -31,7 +31,7 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
     <div className="bg-white border border-gray-200 rounded-3xl shadow-lg overflow-hidden">
       {/* Header Section */}
       <div className="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-100">
-        <div className="flex flex-col md:flex-row items-start gap-4">
+        <div className="flex items-start gap-4">
           {ed?.companyImage ? (
             <div className="relative">
               <Image
@@ -51,8 +51,6 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h2 className="text-lg font-bold text-gray-900 truncate">{ed.company}</h2>
-              <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-              <span className="text-sm text-gray-600">Hiring Manager</span>
             </div>
             <div className="flex items-center gap-1 text-sm text-gray-500">
               <User size={14} />
