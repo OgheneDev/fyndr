@@ -1,5 +1,5 @@
 import React from "react";
-import { X, CheckCircle, Loader2, Briefcase } from "lucide-react";
+import { X, CheckCircle, Loader2, Briefcase, FileText } from "lucide-react";
 import CvCard from "./CvCard";
 
 export default function ApplyForm({
