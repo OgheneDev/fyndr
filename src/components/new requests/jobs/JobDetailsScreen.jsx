@@ -110,50 +110,54 @@ export default function JobDetailsScreen({ jobId }) {
   };
 
   const handleSendProposal = async () => {
-    setApplicationError("");
-    setApplicationSuccess("");
-    if (!selectedCvId) {
-      setApplicationError("Please select a CV to apply with.");
-      return;
-    }
+  setApplicationError("");
+  setApplicationSuccess("");
+  if (!selectedCvId) {
+    setApplicationError("Please select a CV to apply with.");
+    return;
+  }
+  if (!proposal.trim()) {
+    setApplicationError("Please provide a cover letter.");
+    return;
+  }
+  try {
+    setSubmitting(true);
+    const idToUse = job?._id || jobId;
+    await submitJobApplication({ jobId: idToUse, cvId: selectedCvId, proposal: proposal || "" });
+    Swal.fire({
+      icon: "success",
+      title: "Application sent",
+      text: "Your application was submitted successfully.",
+      confirmButtonColor: "#85CE5C",
+      timer: 2000
+    });
+    setProposal("");
+    setShowApplyForm(false);
     try {
-      setSubmitting(true);
-      const idToUse = job?._id || jobId;
-      await submitJobApplication({ jobId: idToUse, cvId: selectedCvId, proposal: proposal || "" });
-      Swal.fire({
-        icon: "success",
-        title: "Application sent",
-        text: "Your application was submitted successfully.",
-        confirmButtonColor: "#85CE5C",
-        timer: 2000
-      });
-      setProposal("");
-      setShowApplyForm(false);
-      try {
-        const res = await getJobById({ jobId: idToUse });
-        const updatedJob = res?.data || res;
-        setJob(updatedJob);
-        let alreadyApplied = false;
-        if (Array.isArray(cvs) && Array.isArray(updatedJob?.applicants)) {
-          alreadyApplied = updatedJob.applicants.some((a) => {
-            const cv = a?.cv;
-            return !!cv && cvs.some(userCv => 
-              userCv._id === cv._id || userCv._id === cv || String(userCv._id) === String(cv)
-            );
-          });
-        }
-        setHasApplied(alreadyApplied);
-      } catch (e) {
-        console.warn("Failed to reload job after applying", e);
-        setHasApplied(true);
+      const res = await getJobById({ jobId: idToUse });
+      const updatedJob = res?.data || res;
+      setJob(updatedJob);
+      let alreadyApplied = false;
+      if (Array.isArray(cvs) && Array.isArray(updatedJob?.applicants)) {
+        alreadyApplied = updatedJob.applicants.some((a) => {
+          const cv = a?.cv;
+          return !!cv && cvs.some(userCv => 
+            userCv._id === cv._id || userCv._id === cv || String(userCv._id) === String(cv)
+          );
+        });
       }
-    } catch (err) {
-      console.error("Sending proposal failed:", err);
-      setApplicationError("Failed to send application.");
-    } finally {
-      setSubmitting(false);
+      setHasApplied(alreadyApplied);
+    } catch (e) {
+      console.warn("Failed to reload job after applying", e);
+      setHasApplied(true);
     }
-  };
+  } catch (err) {
+    console.error("Sending proposal failed:", err);
+    setApplicationError("Failed to send application.");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   if (loading) {
     return <Loader />;
@@ -274,8 +278,7 @@ export default function JobDetailsScreen({ jobId }) {
                 <div className="flex-shrink-0 bg-gradient-to-r from-[#85CE5C] to-[#7BC04E] text-white p-4 sm:p-6 sm:rounded-t-2xl">
                   <div className="flex justify-between items-start">
                     <div className="flex-1 pr-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Briefcase className="w-5 h-5" />
+                      <div className="mb-2">
                         <h3 className="text-lg sm:text-xl font-bold">Apply for Position</h3>
                       </div>
                       <p className="text-white/90 text-sm font-medium truncate">{jd.title}</p>
@@ -463,23 +466,23 @@ export default function JobDetailsScreen({ jobId }) {
                         Cancel
                       </button>
                       <button
-                        type="button"
-                        onClick={handleSendProposal}
-                        disabled={submitting || !selectedCvId}
-                        className="sm:flex-1 px-6 py-3 text-sm cursor-pointer bg-gradient-to-r from-[#85CE5C] to-[#7BC04E] text-white rounded-xl font-semibold hover:from-[#7BC04E] hover:to-[#6FB03D] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
-                      >
-                        {submitting ? (
-                          <div className="flex items-center justify-center gap-2">
-                            <Loader2 className="animate-spin w-4 h-4" />
-                            <span>Submitting Application...</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center justify-center gap-2">
-                            <span>Submit Application</span>
-                            <ArrowLeft className="w-4 h-4 rotate-180" />
-                          </div>
-                        )}
-                      </button>
+  type="button"
+  onClick={handleSendProposal}
+  disabled={submitting || !selectedCvId || !proposal.trim()}
+  className="sm:flex-1 px-6 py-3 text-sm cursor-pointer bg-gradient-to-r from-[#85CE5C] to-[#7BC04E] text-white rounded-xl font-semibold hover:from-[#7BC04E] hover:to-[#6FB03D] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+>
+  {submitting ? (
+    <div className="flex items-center justify-center gap-2">
+      <Loader2 className="animate-spin w-4 h-4" />
+      <span>Submitting Application...</span>
+    </div>
+  ) : (
+    <div className="flex items-center justify-center gap-2">
+      <span>Submit Application</span>
+      <ArrowLeft className="w-4 h-4 rotate-180" />
+    </div>
+  )}
+</button>
                     </div>
                     
                     {/* Application Summary */}
