@@ -27,7 +27,7 @@ export default function Sidebar({ cv, imgError, setImgError }) {
       {/* About Me Section */}
       <div className="mb-8">
         <h3 className="text-lg md:text-xl font-bold mb-4">About Me</h3>
-        <p className="text-xs md:text-sm leading-relaxed text-teal-100">
+        <p className="text-[10px] md:text-sm leading-relaxed text-teal-100">
           {cv.bio || "A dedicated professional with extensive experience and a passion for excellence. Committed to delivering high-quality work and contributing meaningfully to organizational success."}
         </p>
       </div>
@@ -60,24 +60,24 @@ export default function Sidebar({ cv, imgError, setImgError }) {
 
       {/* Languages */}
       <div className="mb-8">
-        <div className="bg-white text-teal-700 text-center py-2 mb-4 rounded font-bold text-xs md:text-sm">
+        <div className="bg-white text-teal-700 text-center py-2 mb-4 rounded font-bold text-[10px] md:text-sm">
           LANGUAGE
         </div>
         <ul className="space-y-2">
           {cv.languages && cv.languages.length > 0 ? cv.languages.map((lang, i) => (
             <li key={i} className="flex items-center gap-2">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <span className="text-xs md:text-sm">{lang}</span>
+              <span className="text-[10px] md:text-sm">{lang}</span>
             </li>
           )) : (
             <>
               <li className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span className="text-xs md:text-sm">English</span>
+                <span className="text-[10px] md:text-sm">English</span>
               </li>
               <li className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span className="text-xs md:text-sm">Local Language</span>
+                <span className="text-[10px] md:text-sm">Local Language</span>
               </li>
             </>
           )}
@@ -93,7 +93,7 @@ export default function Sidebar({ cv, imgError, setImgError }) {
           {cv.skills && cv.skills.length > 0 ? cv.skills.slice(0, 6).map((skill, i) => (
             <li key={i} className="flex items-center gap-2">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <span className="text-xs md:text-sm">{humanize(skill)}</span>
+              <span className="text-[10px] md:text-sm">{humanize(skill)}</span>
             </li>
           )) : (
             <>
