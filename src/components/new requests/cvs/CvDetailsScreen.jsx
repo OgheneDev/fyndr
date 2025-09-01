@@ -79,7 +79,7 @@ export default function CvDetailsScreen({ cvId }) {
       </div>
 
       <div className="bg-white overflow-hidden">
-        <div className="flex flex-col md:flex-row min-h-screen">
+        <div className="flex gap-5 md:gap-12 min-h-screen">
           <Sidebar cv={cv} imgError={imgError} setImgError={setImgError} />
           <MainContent cv={cv} />
         </div>
