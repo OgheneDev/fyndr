@@ -26,41 +26,45 @@ export const exportPDF = (cv) => {
             
             body { 
               font-family: 'CustomFont', Arial, sans-serif;
-              margin: 0;
+              margin: 0; /* Remove all margins */
+              margin-top: 20px !important;
               padding: 0;
               display: flex; 
-              min-height: 100vh;
-              max-width: 896px;
-              margin: 30px auto;
+              width: 210mm; /* Explicit A4 width */
+              height: 290mm; /* Explicit A4 height */
+              max-width: 210mm;
+              min-height: 297mm;
               -webkit-print-color-adjust: exact;
               print-color-adjust: exact;
               color-adjust: exact;
+              font-size: 10px; /* Base font size reduced for compactness */
             }
             
             .container { 
               display: flex; 
               width: 100%; 
-              min-height: 100vh;
+              height: 100%; /* Ensure container fits A4 height */
+              page-break-inside: avoid; /* Prevent page breaks */
             }
             
             .sidebar { 
-              width: 320px; 
+              width: 250px; /* Reduced width to save space */
               background-color: #0f766e !important; 
               color: white; 
-              padding: 32px; 
-              border-radius: 24px;
+              padding: 16px; /* Reduced padding */
+              border-radius: 12px; /* Smaller radius */
               display: flex;
               flex-direction: column;
-              max-height: 85vh;
+              max-height: 290mm; /* Cap at A4 height */
               overflow: hidden;
             }
             
             .profile-img { 
-              width: 128px; 
-              height: 128px; 
+              width: 80px; /* Smaller profile image */
+              height: 80px; 
               border-radius: 50%; 
               background-color: #134e4a !important; 
-              margin: 0 auto 32px; 
+              margin: 0 auto 16px; /* Reduced margin */
               display: flex; 
               align-items: center; 
               justify-content: center; 
@@ -74,38 +78,38 @@ export const exportPDF = (cv) => {
             }
             
             .profile-img .placeholder { 
-              font-size: 60px; 
+              font-size: 40px; /* Smaller placeholder icon */
               color: #5eead4; 
             }
             
             .sidebar h3 { 
-              font-size: 20px; 
+              font-size: 16px; /* Smaller heading */
               font-weight: bold; 
-              margin-bottom: 16px;
+              margin-bottom: 8px; /* Reduced margin */
               color: white;
             }
             
             .sidebar p, .sidebar span { 
-              font-size: 14px; 
-              line-height: 1.6; 
+              font-size: 11px; /* Smaller text */
+              line-height: 1.4; /* Tighter line height */
               color: #a7f3d0;
             }
             
             .about-text {
               color: #a7f3d0;
-              margin-bottom: 32px;
+              margin-bottom: 16px; /* Reduced margin */
             }
             
             .contact-item { 
               display: flex; 
               align-items: center; 
-              gap: 12px; 
-              margin-bottom: 16px; 
+              gap: 8px; /* Smaller gap */
+              margin-bottom: 8px; /* Reduced margin */
             }
             
             .contact-icon { 
-              width: 32px; 
-              height: 32px; 
+              width: 24px; /* Smaller icon */
+              height: 24px; 
               background-color: white !important; 
               border-radius: 50%; 
               display: flex; 
@@ -117,20 +121,20 @@ export const exportPDF = (cv) => {
             
             .contact-icon::after {
               content: '📞';
-              font-size: 16px;
+              font-size: 12px; /* Smaller icon */
               line-height: 1;
             }
             
             .contact-icon.mail-icon::after {
               content: '✉';
-              font-size: 16px;
+              font-size: 12px;
               line-height: 1;
               color: #0f766e;
             }
             
             .contact-icon.location-icon::after {
               content: '📍';
-              font-size: 16px;
+              font-size: 12px;
               line-height: 1;
             }
             
@@ -138,121 +142,123 @@ export const exportPDF = (cv) => {
               background-color: white !important; 
               color: #0f766e !important; 
               text-align: center; 
-              padding: 8px; 
+              padding: 6px; /* Reduced padding */
               border-radius: 4px; 
               font-weight: bold; 
-              font-size: 12px; 
-              margin: 32px 0 16px 0;
+              font-size: 10px; /* Smaller font */
+              margin: 16px 0 8px 0; /* Reduced margins */
               letter-spacing: 0.5px;
             }
             
             .list-item { 
               display: flex; 
               align-items: center; 
-              gap: 8px; 
-              margin-bottom: 8px; 
+              gap: 6px; /* Smaller gap */
+              margin-bottom: 6px; /* Reduced margin */
             }
             
             .list-dot { 
-              width: 8px; 
-              height: 8px; 
+              width: 6px; /* Smaller dot */
+              height: 6px; 
               background-color: white !important; 
               border-radius: 50%;
               flex-shrink: 0;
             }
             
             .list-item span {
-              font-size: 14px;
+              font-size: 11px; /* Smaller text */
               color: white;
             }
             
             .main-content { 
               flex: 1; 
-              padding: 48px; 
+              padding: 24px; /* Reduced padding */
               background-color: white;
+              page-break-inside: avoid; /* Prevent page breaks */
             }
             
             .main-content h1 { 
-              font-size: 48px; 
+              font-size: 36px; /* Smaller heading */
               font-weight: bold; 
               color: #0f766e; 
-              margin-bottom: 8px;
+              margin-bottom: 4px; /* Reduced margin */
               letter-spacing: 0.05em;
               line-height: 1.1;
             }
             
             .main-content h2 { 
-              font-size: 20px; 
+              font-size: 16px; /* Smaller subheading */
               color: #0d9488; 
               font-weight: 500;
-              margin-bottom: 16px;
+              margin-bottom: 8px; /* Reduced margin */
             }
             
             .main-content > p { 
-              font-size: 16px; 
+              font-size: 12px; /* Smaller text */
               color: #4b5563; 
-              line-height: 1.6; 
-              margin-bottom: 48px;
-              max-width: 600px;
+              line-height: 1.4; /* Tighter line height */
+              margin-bottom: 24px; /* Reduced margin */
+              max-width: 100%; /* Allow full width */
             }
             
             .section-header { 
               background-color: #0f766e !important; 
               color: white !important; 
               text-align: center; 
-              padding: 12px; 
+              padding: 8px; /* Reduced padding */
               font-weight: bold; 
-              font-size: 14px; 
-              margin-bottom: 24px;
+              font-size: 11px; /* Smaller font */
+              margin-bottom: 12px; /* Reduced margin */
               letter-spacing: 0.1em;
             }
             
             .experience-item, .education-item { 
-              margin-bottom: 32px; 
+              margin-bottom: 16px; /* Reduced margin */
+              page-break-inside: avoid; /* Prevent page breaks */
             }
             
             .experience-item h3, .education-item h3 { 
-              font-size: 18px; 
+              font-size: 14px; /* Smaller heading */
               font-weight: bold; 
               color: #111827;
-              margin-bottom: 4px;
+              margin-bottom: 2px; /* Reduced margin */
             }
             
             .experience-item .date, .education-item .date { 
-              font-size: 14px;
+              font-size: 11px; /* Smaller text */
               color: #6b7280;
-              margin-bottom: 12px;
+              margin-bottom: 6px; /* Reduced margin */
             }
             
             .experience-item p:not(.date), .education-item p:not(.date) { 
-              font-size: 16px;
+              font-size: 12px; /* Smaller text */
               color: #374151;
-              line-height: 1.6;
+              line-height: 1.4; /* Tighter line height */
             }
             
             .skill-bar { 
-              margin-bottom: 16px; 
+              margin-bottom: 8px; /* Reduced margin */
             }
             
             .skill-bar .label { 
               display: flex; 
               justify-content: space-between; 
               align-items: center;
-              font-size: 14px; 
-              margin-bottom: 8px;
+              font-size: 11px; /* Smaller font */
+              margin-bottom: 4px; /* Reduced margin */
               font-weight: 500;
             }
             
             .skill-bar .bar { 
               width: 100%; 
               background-color: #d1d5db !important; 
-              height: 8px; 
+              height: 6px; /* Thinner bar */
               border-radius: 9999px; 
             }
             
             .skill-bar .fill { 
               background-color: #374151 !important; 
-              height: 8px; 
+              height: 6px; 
               border-radius: 9999px; 
               transition: width 0.5s ease;
             }
@@ -262,6 +268,11 @@ export const exportPDF = (cv) => {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                transform: scale(0.95); /* Slightly scale down to fit */
+                transform-origin: top left;
               }
               
               .sidebar { 
@@ -308,8 +319,8 @@ export const exportPDF = (cv) => {
             }
 
             @page {
-              margin: 0;
-              size: A4;
+              margin: 0; /* No margins for A4 */
+              size: A4; /* Enforce A4 size */
             }
           </style>
         </head>
@@ -321,7 +332,7 @@ export const exportPDF = (cv) => {
               </div>
               
               <h3>About Me</h3>
-              <p class="about-text">${cv.bio || "A dedicated professional with extensive experience and a passion for excellence. Committed to delivering high-quality work and contributing meaningfully to organizational success."}</p>
+              <p class="about-text">${cv.bio?.substring(0, 150) || "A dedicated professional with extensive experience and a passion for excellence."}</p> <!-- Truncate bio -->
               
               <div class="contact-item">
                 <div class="contact-icon phone-icon"></div>
@@ -338,7 +349,7 @@ export const exportPDF = (cv) => {
               
               <div class="list-header">LANGUAGE</div>
               <ul>
-                ${(cv.languages && cv.languages.length > 0 ? cv.languages : ['English', 'Local Language']).map(lang => `
+                ${(cv.languages && cv.languages.length > 0 ? cv.languages.slice(0, 3) : ['English', 'Local Language']).map(lang => `
                   <li class="list-item">
                     <div class="list-dot"></div>
                     <span>${lang}</span>
@@ -348,7 +359,7 @@ export const exportPDF = (cv) => {
               
               <div class="list-header">EXPERTISE</div>
               <ul>
-                ${(cv.skills && cv.skills.length > 0 ? cv.skills.slice(0, 6) : ['Management Skills', 'Creativity', 'Digital Marketing', 'Negotiation', 'Critical Thinking', 'Leadership']).map(skill => `
+                ${(cv.skills && cv.skills.length > 0 ? cv.skills.slice(0, 4) : ['Management Skills', 'Creativity', 'Digital Marketing', 'Leadership']).map(skill => `
                   <li class="list-item">
                     <div class="list-dot"></div>
                     <span>${humanize(skill)}</span>
@@ -360,20 +371,20 @@ export const exportPDF = (cv) => {
             <div class="main-content">
               <h1>${(cv.firstName?.toUpperCase() || "FIRST")} ${(cv.lastName?.toUpperCase() || "LAST")}</h1>
               <h2>${workExperiences[0]?.jobTitle || ed.educationMajor || "Professional"}</h2>
-              <p>${cv.bio || `${cv.hasWorkExperience ? 'An experienced' : 'A passionate'} professional with a strong background in ${workExperiences[0]?.jobTitle || ed.educationMajor || 'their field'} and a commitment to delivering excellence in every project.`}</p>
+              <p>${cv.bio?.substring(0, 100) || `${cv.hasWorkExperience ? 'An experienced' : 'A passionate'} professional with a strong background in ${workExperiences[0]?.jobTitle || ed.educationMajor || 'their field'}.`}</p>
               
               <div class="section-header">EXPERIENCE</div>
-              ${cv.hasWorkExperience && workExperiences.length > 0 ? workExperiences.map(we => `
+              ${cv.hasWorkExperience && workExperiences.length > 0 ? workExperiences.slice(0, 2).map(we => `
                 <div class="experience-item">
                   <h3>${we.company || "Previous Company"} - ${cv.state || "Location"}</h3>
                   <p class="date">${we.startYear || "2020"} - ${we.endYear || "2024"}</p>
-                  <p>${we.description || `Served as ${we.jobTitle || "Professional"} with ${we.years || "multiple"} years of experience. Demonstrated expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"} and contributed significantly to organizational goals through dedicated service and professional excellence.`}</p>
+                  <p>${we.description?.substring(0, 150) || `Served as ${we.jobTitle || "Professional"} with expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"}.`}</p>
                 </div>
               `).join('') : `
                 <div class="experience-item">
                   <h3>Entry Level Professional - ${cv.state || "Nigeria"}</h3>
                   <p class="date">Recent Graduate</p>
-                  <p>Recent graduate with strong academic foundation and eager to apply theoretical knowledge in a practical professional setting. Demonstrates excellent learning ability and commitment to professional growth.</p>
+                  <p>Recent graduate eager to apply theoretical knowledge in a professional setting.</p>
                 </div>
               `}
               
@@ -385,8 +396,8 @@ export const exportPDF = (cv) => {
               </div>
               ${cv.additionalCertificate ? `
                 <div class="education-item">
-                  <h3>Additional Certification</h3>
-                  <p>${cv.additionalCertificate}</p>
+                  <h3>Certification</h3>
+                  <p>${cv.additionalCertificate.substring(0, 100)}</p>
                 </div>
               ` : ''}
             </div>
