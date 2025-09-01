@@ -27,7 +27,7 @@ export const exportPDF = (cv) => {
             body { 
               font-family: 'CustomFont', Arial, sans-serif;
               margin: 0; /* Remove all margins */
-              margin-top: 20px !important;
+              padding-top: 20px !important;
               padding: 0;
               display: flex; 
               width: 210mm; /* Explicit A4 width */
@@ -332,7 +332,7 @@ export const exportPDF = (cv) => {
               </div>
               
               <h3>About Me</h3>
-              <p class="about-text">${cv.bio?.substring(0, 150) || "A dedicated professional with extensive experience and a passion for excellence."}</p> <!-- Truncate bio -->
+              <p class="about-text">${cv.bio || "A dedicated professional with extensive experience and a passion for excellence."}</p> <!-- Truncate bio -->
               
               <div class="contact-item">
                 <div class="contact-icon phone-icon"></div>
@@ -349,7 +349,7 @@ export const exportPDF = (cv) => {
               
               <div class="list-header">LANGUAGE</div>
               <ul>
-                ${(cv.languages && cv.languages.length > 0 ? cv.languages.slice(0, 3) : ['English', 'Local Language']).map(lang => `
+                ${(cv.languages && cv.languages.length > 0 ? cv.languages : ['English', 'Local Language']).map(lang => `
                   <li class="list-item">
                     <div class="list-dot"></div>
                     <span>${lang}</span>
@@ -359,7 +359,7 @@ export const exportPDF = (cv) => {
               
               <div class="list-header">EXPERTISE</div>
               <ul>
-                ${(cv.skills && cv.skills.length > 0 ? cv.skills.slice(0, 4) : ['Management Skills', 'Creativity', 'Digital Marketing', 'Leadership']).map(skill => `
+                ${(cv.skills && cv.skills.length > 0 ? cv.skills : ['Management Skills', 'Creativity', 'Digital Marketing', 'Leadership']).map(skill => `
                   <li class="list-item">
                     <div class="list-dot"></div>
                     <span>${humanize(skill)}</span>
@@ -371,14 +371,14 @@ export const exportPDF = (cv) => {
             <div class="main-content">
               <h1>${(cv.firstName?.toUpperCase() || "FIRST")} ${(cv.lastName?.toUpperCase() || "LAST")}</h1>
               <h2>${workExperiences[0]?.jobTitle || ed.educationMajor || "Professional"}</h2>
-              <p>${cv.bio?.substring(0, 100) || `${cv.hasWorkExperience ? 'An experienced' : 'A passionate'} professional with a strong background in ${workExperiences[0]?.jobTitle || ed.educationMajor || 'their field'}.`}</p>
+              <p>${cv.bio || `${cv.hasWorkExperience ? 'An experienced' : 'A passionate'} professional with a strong background in ${workExperiences[0]?.jobTitle || ed.educationMajor || 'their field'}.`}</p>
               
               <div class="section-header">EXPERIENCE</div>
-              ${cv.hasWorkExperience && workExperiences.length > 0 ? workExperiences.slice(0, 2).map(we => `
+              ${cv.hasWorkExperience && workExperiences.length > 0 ? workExperiences.map(we => `
                 <div class="experience-item">
                   <h3>${we.company || "Previous Company"} - ${cv.state || "Location"}</h3>
                   <p class="date">${we.startYear || "2020"} - ${we.endYear || "2024"}</p>
-                  <p>${we.description?.substring(0, 150) || `Served as ${we.jobTitle || "Professional"} with expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"}.`}</p>
+                  <p>${we.description || `Served as ${we.jobTitle || "Professional"} with expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"}.`}</p>
                 </div>
               `).join('') : `
                 <div class="experience-item">
