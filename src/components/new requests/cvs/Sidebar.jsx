@@ -27,7 +27,7 @@ export default function Sidebar({ cv, imgError, setImgError }) {
       {/* About Me Section */}
       <div className="mb-[12px] md:mb-8">
         <h3 className="text-[16px] md:text-xl font-bold mb-[8px] md:mb-4 text-white">About Me</h3>
-        <p className="text-[11px] leading-[1.4] text-teal-100 md:text-sm">
+        <p className="text-[10px] leading-[1.4] text-teal-100 md:text-sm">
           {cv.bio || "A dedicated professional with extensive experience and a passion for excellence."}
         </p>
       </div>
@@ -36,23 +36,23 @@ export default function Sidebar({ cv, imgError, setImgError }) {
       <div className="mb-[12px] md:mb-8">
         <div className="flex items-center gap-[8px] mb-[8px] md:mb-4">
           <div className="w-[24px] h-[24px] md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center">
-            <Phone size={12} className="text-teal-700 md:size-16" />
+            <Phone size={12} className="text-teal-700 " />
           </div>
-          <span className="text-[11px] md:text-sm truncate max-w-[120px] md:max-w-[180px]">{cv.number || "+123-456-7890"}</span>
+          <span className="text-[10px] md:text-sm truncate max-w-[120px] md:max-w-[180px]">{cv.number || "+123-456-7890"}</span>
         </div>
         
         <div className="flex items-center gap-[8px] mb-[8px] md:mb-4">
           <div className="w-[24px] h-[24px] md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center">
-            <Mail size={12} className="text-teal-700 md:size-16" />
+            <Mail size={12} className="text-teal-700 " />
           </div>
-          <span className="text-[11px] md:text-sm truncate max-w-[120px] md:max-w-[180px]">{cv.email || "email@example.com"}</span>
+          <span className="text-[10px] md:text-sm truncate max-w-[120px] md:max-w-[180px]">{cv.email || "email@example.com"}</span>
         </div>
         
         <div className="flex items-center gap-[8px] mb-[8px] md:mb-6">
           <div className="w-[24px] h-[24px] md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center">
-            <MapPin size={12} className="text-teal-700 md:size-16" />
+            <MapPin size={12} className="text-teal-700 " />
           </div>
-          <span className="text-[11px] md:text-sm truncate max-w-[120px] md:max-w-[180px]">
+          <span className="text-[10px] md:text-sm truncate max-w-[120px] md:max-w-[180px]">
             {cv.area || "Any Area"}, {cv.lga || "Any LGA"}
           </span>
         </div>
@@ -67,17 +67,17 @@ export default function Sidebar({ cv, imgError, setImgError }) {
           {cv.languages && cv.languages.length > 0 ? cv.languages.map((lang, i) => (
             <li key={i} className="flex items-center gap-[6px] md:gap-2">
               <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-              <span className="text-[11px] md:text-sm truncate max-w-[140px] md:max-w-[180px]">{lang}</span>
+              <span className="text-[10px] md:text-sm truncate max-w-[140px] md:max-w-[180px]">{lang}</span>
             </li>
           )) : ( 
             <>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">English</span>
+                <span className="text-[10px] md:text-sm">English</span>
               </li>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">Local Language</span>
+                <span className="text-[10px] md:text-sm">Local Language</span>
               </li>
             </>
           )}
@@ -93,33 +93,33 @@ export default function Sidebar({ cv, imgError, setImgError }) {
           {cv.skills && cv.skills.length > 0 ? cv.skills.slice(0, 6).map((skill, i) => (
             <li key={i} className="flex items-center gap-[6px] md:gap-2">
               <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-              <span className="text-[11px] md:text-sm truncate max-w-[140px] md:max-w-[180px]">{humanize(skill)}</span>
+              <span className="text-[10px] md:text-sm truncate max-w-[140px] md:max-w-[180px]">{humanize(skill)}</span>
             </li>
           )) : (
             <>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">Management Skills</span>
+                <span className="text-[10px] md:text-sm">Management Skills</span>
               </li>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">Creativity</span>
+                <span className="text-[10px] md:text-sm">Creativity</span>
               </li>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">Digital Marketing</span>
+                <span className="text-[10px] md:text-sm">Digital Marketing</span>
               </li>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">Negotiation</span>
+                <span className="text-[10px] md:text-sm">Negotiation</span>
               </li>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">Critical Thinking</span>
+                <span className="text-[10px] md:text-sm">Critical Thinking</span>
               </li>
               <li className="flex items-center gap-[6px] md:gap-2">
                 <div className="w-[6px] h-[6px] md:w-2 md:h-2 bg-white rounded-full"></div>
-                <span className="text-[11px] md:text-sm">Leadership</span>
+                <span className="text-[10px] md:text-sm">Leadership</span>
               </li>
             </>
           )}

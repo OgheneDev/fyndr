@@ -9,10 +9,10 @@ export default function MainContent({ cv }) {
     <div className="flex-1 p-[16px] md:p-8 bg-white">
       {/* Header */}
       <div className="mb-[16px] md:mb-12"> 
-        <h1 className="text-[25px] md:text-5xl font-bold text-teal-700 mb-[4px] md:mb-2 tracking-[0.05em] leading-[1.1]">
+        <h1 className="text-[20px] md:text-5xl font-bold text-teal-700 mb-[4px] md:mb-2 tracking-[0.05em] leading-[1.1]">
           {(cv.firstName?.toUpperCase() || "FIRST")} {(cv.lastName?.toUpperCase() || "LAST")}
         </h1>
-        <h2 className="text-[14px] md:text-xl text-teal-600 font-medium mb-[8px] md:mb-4">
+        <h2 className="text-[12px] md:text-xl text-teal-600 font-medium mb-[8px] md:mb-4">
           {workExperiences[0]?.jobTitle || ed.educationMajor || "Professional"}
         </h2>
         <p className="text-gray-600 text-[10px] leading-[1.4] md:text-sm">
@@ -29,10 +29,10 @@ export default function MainContent({ cv }) {
         {cv.hasWorkExperience && workExperiences.length > 0 ? (
           workExperiences.map((we, index) => (
             <div key={index} className="mb-[12px] md:mb-8">
-              <h3 className="text-[14px] md:text-lg font-bold text-gray-900 mb-[2px] md:mb-1">
+              <h3 className="text-[12px] md:text-lg font-bold text-gray-900 mb-[2px] md:mb-1">
                 {we.company || "Previous Company"} - {cv.state || "Location"}
               </h3>
-              <p className="text-[11px] md:text-sm text-gray-600 mb-[6px] md:mb-3">
+              <p className="text-[10px] md:text-sm text-gray-600 mb-[6px] md:mb-3">
                 {we.startYear || "2020"} - {we.endYear || "2024"}
               </p>
               <p className="text-gray-700 text-[10px] md:text-sm leading-[1.4]">
@@ -62,23 +62,23 @@ export default function MainContent({ cv }) {
         </div>
         
         <div className="mb-[12px] md:mb-6">
-          <h3 className="text-[14px] md:text-lg font-bold text-gray-900 mb-[2px] md:mb-1">
+          <h3 className="text-[12px] md:text-lg font-bold text-gray-900 mb-[2px] md:mb-1">
             {ed.schoolName || "University"}
           </h3>
-          <p className="text-gray-700 text-[12px] md:text-sm font-medium">
+          <p className="text-gray-700 text-[10px] md:text-sm font-medium">
             {ed.educationMajor}
           </p>
-          <p className="text-[11px] md:text-sm text-gray-600">
+          <p className="text-[10px] md:text-sm text-gray-600">
             {ed.startYear || "2018"}-{ed.endYear || "2022"}
           </p>
         </div>
 
         {cv.additionalCertificate && (
           <div className="mb-[12px] md:mb-6">
-            <h3 className="text-[14px] md:text-lg font-bold text-gray-900 mb-[2px] md:mb-1">
+            <h3 className="text-[12px] md:text-lg font-bold text-gray-900 mb-[2px] md:mb-1">
               Certification
             </h3>
-            <p className="text-gray-700 text-[12px] md:text-sm font-medium">
+            <p className="text-gray-700 text-[10px] md:text-sm font-medium">
               {cv.additionalCertificate}
             </p>
           </div>
