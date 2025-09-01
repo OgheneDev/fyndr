@@ -153,12 +153,12 @@ const useRequestStates = () => {
     endYear: '',
     hasWorkExperience: null,
     workExperienceDetails: [],
-    duration: '',
     additionalSkills: [],
     languages: [''],
     preferredJobTitle: '',
     company_image: null,
-    cv_image: null
+    cv_image: null,
+    bio: ''
   });
 
   const handleInputChange = useCallback((field, value) => {

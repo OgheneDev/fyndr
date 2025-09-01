@@ -7,6 +7,7 @@ export const createCV = async (formData) => {
     fd.append('lastName', formData.lastName || '');
     fd.append('number', formData.number || '');
     fd.append('email', formData.email || '');
+    fd.append('bio', formData.bio || '');
     fd.append('state', formData.state || '');
     fd.append('lga', formData.lga || '');
     fd.append('area', formData.area || '');

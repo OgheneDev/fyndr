@@ -381,7 +381,7 @@ const exportPDF = (cv) => {
                 <div class="experience-item">
                   <h3>${we.company || "Previous Company"} - ${cv.state || "Location"}</h3>
                   <p class="date">${we.startYear || "2020"} - ${we.endYear || "2024"}</p>
-                  <p>${we.jobDescription || `Served as ${we.jobTitle || "Professional"} with ${we.years || "multiple"} years of experience. Demonstrated expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"} and contributed significantly to organizational goals through dedicated service and professional excellence.`}</p>
+                  <p>${we.description || `Served as ${we.jobTitle || "Professional"} with ${we.years || "multiple"} years of experience. Demonstrated expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"} and contributed significantly to organizational goals through dedicated service and professional excellence.`}</p>
                 </div>
               `).join('') : `
                 <div class="experience-item">
@@ -645,7 +645,7 @@ export default function CvDetailsScreen({ cvId }) {
                       {we.startYear || "2020"} - {we.endYear || "2024"}
                     </p>
                     <p className="text-gray-700 leading-relaxed">
-                      {we.jobDescription || `Served as ${we.jobTitle || "Professional"} with ${we.years || "multiple"} years of experience. Demonstrated expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"} and contributed significantly to organizational goals through dedicated service and professional excellence.`}
+                      {we.description || `Served as ${we.jobTitle || "Professional"} with ${we.years || "multiple"} years of experience. Demonstrated expertise in ${cv.skills?.[0] ? humanize(cv.skills[0]) : "core competencies"} and contributed significantly to organizational goals through dedicated service and professional excellence.`}
                     </p>
                   </div>
                 ))

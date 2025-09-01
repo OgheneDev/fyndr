@@ -323,6 +323,7 @@ const NewRequestPageContent = () => {
           employmentData.lastName &&
           employmentData.number &&
           employmentData.email &&
+          employmentData.bio &&
           employmentData.state &&
           employmentData.lga &&
           employmentData.area &&
@@ -331,7 +332,7 @@ const NewRequestPageContent = () => {
           (employmentData.hasWorkExperience === false || (
             employmentData.hasWorkExperience === true &&
             employmentData.workExperienceDetails?.every(exp =>
-              exp.company && exp.jobTitle && exp.duration
+              exp.company && exp.jobTitle && exp.startYear && exp.endYear && exp.description
             )
           )) &&
           employmentData.cv_image
@@ -696,7 +697,8 @@ const NewRequestPageContent = () => {
             skills: employmentData.additionalSkills,
             additionalCertificate: employmentData.additionalCertificate,
             languages: employmentData.languages,
-            cv_image: employmentData.cv_image
+            cv_image: employmentData.cv_image,
+            bio: employmentData.bio
           };
           console.log(formData);
           const response = await createCV(formData);

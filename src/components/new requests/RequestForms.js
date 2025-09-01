@@ -2180,7 +2180,7 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
 
   const workExperienceDetails = employmentData.workExperienceDetails?.length > 0
     ? employmentData.workExperienceDetails
-    : [{ company: '', jobTitle: '', duration: '' }];
+    : [{ company: '', jobTitle: '', startYear: '', endYear: '', description: '' }];
 
   const handleWorkExperienceDetailChange = (index, field, value) => {
     const updatedDetails = [...workExperienceDetails];
@@ -2189,7 +2189,7 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
   };
 
   const addWorkExperience = () => {
-    onChange('workExperienceDetails', [...workExperienceDetails, { company: '', jobTitle: '', duration: '' }]);
+    onChange('workExperienceDetails', [...workExperienceDetails, { company: '', jobTitle: '', startYear: '', endYear: '', description: '' }]);
   };
 
   const removeWorkExperience = (index) => {
@@ -2317,6 +2317,15 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                 className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
               />
             </div>
+          </div>
+          <div>
+            <label className="block text-[#171214] mb-2 text-sm">Bio</label>
+            <textarea
+              value={employmentData.bio || ''}
+              onChange={(e) => onChange('bio', e.target.value)}
+              placeholder="About yourself"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
+            />
           </div>
           <div>
             <label className="block text-[#171214] mb-2 text-sm">State</label>
@@ -2483,16 +2492,37 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
                       className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
                     />
                   </div>
-                  <div>
-                    <label className="block text-[#171214] mb-2 text-sm">Duration</label>
+                  <div className="flex gap-3">
+                    <div className="flex-1">
+                    <label className="block text-[#171214] mb-2 text-sm">Start Year</label>
                     <input
                       type="text"
-                      value={exp.duration || ''}
-                      onChange={(e) => handleWorkExperienceDetailChange(index, 'duration', e.target.value)}
-                      placeholder="E.g., 2018 - 2020"
+                      value={exp.startYear || ''}
+                      onChange={(e) => handleWorkExperienceDetailChange(index, 'startYear', e.target.value)}
+                      placeholder="E.g., 2018"
                       className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
                     />
                   </div>
+                  <div className="flex-1">
+                    <label className="block text-[#171214] mb-2 text-sm">End Year</label>
+                    <input
+                      type="text"
+                      value={exp.endYear || ''}
+                      onChange={(e) => handleWorkExperienceDetailChange(index, 'endYear', e.target.value)}
+                      placeholder="E.g., 2020"
+                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+                    />
+                  </div>
+                  </div>
+                  <div>
+            <label className="block text-[#171214] mb-2 text-sm">Job Description</label>
+            <textarea
+              value={exp.description || ''}
+              onChange={(e) => handleWorkExperienceDetailChange(index, 'description', e.target.value)}
+              placeholder="Enter job description"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
+            />
+          </div>
                   {workExperienceDetails.length > 1 && (
                     <button
                       type="button"

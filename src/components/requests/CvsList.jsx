@@ -7,7 +7,7 @@ import { User, EllipsisVertical, Eye, Edit, Trash2 } from 'lucide-react';
 import { deleteCv, updateCv, getPersonalCvs } from '@/api/cvs/requests';
 import { ModalContent } from './EditModalContent';
 import { Skeleton } from './Skeleton';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'; 
 
 export const CvsList = ({ onCvUpdate }) => {
   const [cvs, setCvs] = useState([]);
@@ -44,7 +44,7 @@ export const CvsList = ({ onCvUpdate }) => {
 
   // Form state for editing
   const [formData, setFormData] = useState({
-    workExperienceDetails: [{ company: '', jobTitle: '', duration: '' }],
+    workExperienceDetails: [{ company: '', jobTitle: '', startYear: '', endYear: '', description: '' }],
     skills: [''],
     additionalCertificate: '',
     languages: [''],
@@ -85,7 +85,7 @@ export const CvsList = ({ onCvUpdate }) => {
     setActiveDropdown(null);
     setEditingCv(cv);
     setFormData({
-      workExperienceDetails: cv.workExperienceDetails?.length ? cv.workExperienceDetails : [{ company: '', jobTitle: '', duration: '' }],
+      workExperienceDetails: cv.workExperienceDetails?.length ? cv.workExperienceDetails : [{ company: '', jobTitle: '', startYear: '', endYear: '', description: '' }],
       skills: cv.skills?.length ? cv.skills : [''],
       additionalCertificate: cv.additionalCertificate || '',
       languages: cv.languages?.length ? cv.languages : [''],
@@ -170,7 +170,7 @@ export const CvsList = ({ onCvUpdate }) => {
   const addWorkExperience = () => {
     setFormData(prev => ({
       ...prev,
-      workExperienceDetails: [...prev.workExperienceDetails, { company: '', jobTitle: '', duration: '' }],
+      workExperienceDetails: [...prev.workExperienceDetails, { company: '', jobTitle: '', startYear: '', endYear: '', description: '' }],
     }));
   };
 
@@ -187,24 +187,6 @@ export const CvsList = ({ onCvUpdate }) => {
       workExperienceDetails: prev.workExperienceDetails.map((exp, i) => 
         i === index ? { ...exp, [field]: value } : exp
       ),
-    }));
-  };
-
-  const addSkill = () => {
-    setFormData(prev => ({ ...prev, skills: [...prev.skills, ''] }));
-  };
-
-  const removeSkill = (index) => {
-    setFormData(prev => ({
-      ...prev,
-      skills: prev.skills.filter((_, i) => i !== index),
-    }));
-  };
-
-  const updateSkill = (index, value) => {
-    setFormData(prev => ({
-      ...prev,
-      skills: prev.skills.map((skill, i) => i === index ? value : skill),
     }));
   };
 
@@ -336,9 +318,6 @@ export const CvsList = ({ onCvUpdate }) => {
           addWorkExperience={addWorkExperience}
           removeWorkExperience={removeWorkExperience}
           updateWorkExperience={updateWorkExperience}
-          addSkill={addSkill}
-          removeSkill={removeSkill}
-          updateSkill={updateSkill}
           addLanguage={addLanguage}
           removeLanguage={removeLanguage}
           updateLanguage={updateLanguage}

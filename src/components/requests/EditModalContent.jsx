@@ -17,11 +17,8 @@ export const ModalContent = ({
   handleFormSubmit,
   removeWorkExperience,
   removeLanguage,
-  removeSkill,
   addLanguage,
-  addSkill,
   updateLanguage,
-  updateSkill,
   updateWorkExperience,
   isUpdating,
   formData,
@@ -29,14 +26,14 @@ export const ModalContent = ({
   setFormData
 }) => (
   <div
-    className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999] p-0 sm:p-4 transition-all duration-300 h-full w-full"
+    className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999] p-0 sm:p-4 transition-all endYear-300 h-full w-full"
     aria-modal="true"
     role="dialog"
     tabIndex={-1}
     onClick={() => setShowEditModal(false)}
   >
     <div
-      className="bg-white rounded-none sm:rounded-2xl max-w-3xl w-full max-h-full sm:max-h-[90vh] overflow-hidden relative shadow-2xl transform transition-all duration-300 scale-100 h-full sm:h-auto"
+      className="bg-white rounded-none sm:rounded-2xl max-w-3xl w-full max-h-full sm:max-h-[90vh] overflow-hidden relative shadow-2xl transform transition-all endYear-300 scale-100 h-full sm:h-auto"
       onClick={(e) => e.stopPropagation()}
     >
       {/* Header */}
@@ -51,7 +48,7 @@ export const ModalContent = ({
           onClick={() => setShowEditModal(false)}
           className="p-1.5 sm:p-2 cursor-pointer hover:bg-white/20 transition-colors rounded-full group touch-target"
         >
-          <X size={18} className="sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-200" />
+          <X size={18} className="sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform endYear-200" />
         </button>
       </div>
 
@@ -68,7 +65,7 @@ export const ModalContent = ({
             
             <div className="space-y-4">
               {formData.workExperienceDetails.map((exp, index) => (
-                <div key={index} className="group border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-5 hover:border-[#85CE5C]/30 hover:shadow-md transition-all duration-200 bg-gray-50/50">
+                <div key={index} className="group border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-5 hover:border-[#85CE5C]/30 hover:shadow-md transition-all endYear-200 bg-gray-50/50">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-1">
                       <label className="block text-sm font-medium text-gray-700">
@@ -78,7 +75,7 @@ export const ModalContent = ({
                         type="text"
                         value={exp.company}
                         onChange={(e) => updateWorkExperience(index, 'company', e.target.value)}
-                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all duration-200 bg-white text-sm sm:text-base"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white text-sm sm:text-base"
                         placeholder="Company name"
                       />
                     </div>
@@ -90,29 +87,56 @@ export const ModalContent = ({
                         type="text"
                         value={exp.jobTitle}
                         onChange={(e) => updateWorkExperience(index, 'jobTitle', e.target.value)}
-                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all duration-200 bg-white text-sm sm:text-base"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white text-sm sm:text-base"
                         placeholder="Position title"
                       />
                     </div>
                   </div>
-                  <div className="mt-3 sm:mt-4 space-y-1">
+                  <div className="flex gap-3">
+                    <div className="mt-3 sm:mt-4 space-y-1 flex-1">
                     <label className="block text-sm font-medium text-gray-700">
-                      Duration
+                      Start Year
                     </label>
                     <input
                       type="text"
-                      value={exp.duration}
-                      onChange={(e) => updateWorkExperience(index, 'duration', e.target.value)}
-                      placeholder="e.g. Jan 2020 - Present"
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all duration-200 bg-white text-sm sm:text-base"
+                      value={exp.startYear}
+                      onChange={(e) => updateWorkExperience(index, 'startYear', e.target.value)}
+                      placeholder="e.g. 2020"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white text-sm sm:text-base"
                     />
+                  </div>
+                  <div className="mt-3 sm:mt-4 space-y-1 flex-1">
+                    <label className="block text-sm font-medium text-gray-700">
+                      End Year
+                    </label>
+                    <input
+                      type="text"
+                      value={exp.endYear}
+                      onChange={(e) => updateWorkExperience(index, 'endYear', e.target.value)}
+                      placeholder="e.g. 2021"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white text-sm sm:text-base"
+                    />
+                  </div>
+                  </div>
+                  <div className="mt-3 sm:mt-4 space-y-1">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Job Description
+                    </label>
+                     <div>
+            <textarea
+              value={exp.description || ''}
+              onChange={(e) => updateWorkExperience(index, 'description', e.target.value)}
+              placeholder="Enter job description"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white text-sm sm:text-base min-h-[150px]"
+            />
+          </div>
                   </div>
                   {formData.workExperienceDetails.length > 1 && (
                     <div className="flex justify-end mt-3 sm:mt-4">
                       <button
                         type="button"
                         onClick={() => removeWorkExperience(index)}
-                        className="flex items-center cursor-pointer gap-2 px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 text-sm font-medium touch-target"
+                        className="flex items-center cursor-pointer gap-2 px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all endYear-200 text-sm font-medium touch-target"
                       >
                         <Trash2 size={16} />
                         <span className="hidden sm:inline">Remove</span>
@@ -126,7 +150,7 @@ export const ModalContent = ({
             <button
               type="button"
               onClick={addWorkExperience}
-              className="flex items-center gap-2 cursor-pointer text-[#85CE5C] hover:text-[#6FB848] hover:bg-[#85CE5C]/5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all duration-200 font-medium text-sm sm:text-base"
+              className="flex items-center gap-2 cursor-pointer text-[#85CE5C] hover:text-[#6FB848] hover:bg-[#85CE5C]/5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all endYear-200 font-medium text-sm sm:text-base"
             >
               <Plus size={16} className="sm:w-[18px] sm:h-[18px]" />
               Add Work Experience
@@ -220,7 +244,7 @@ export const ModalContent = ({
                 }
                 placeholder="List your certifications, achievements, or additional qualifications..."
                 rows={4}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all duration-200 bg-white resize-none text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white resize-none text-sm sm:text-base"
               />
             </div>
           </div>
@@ -242,13 +266,13 @@ export const ModalContent = ({
                     value={language}
                     onChange={(e) => updateLanguage(index, e.target.value)}
                     placeholder="e.g. English (Native), Spanish (Fluent)"
-                    className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all duration-200 bg-white text-sm sm:text-base"
+                    className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white text-sm sm:text-base"
                   />
                   {formData.languages.length > 1 && (
                     <button
                       type="button"
                       onClick={() => removeLanguage(index)}
-                      className="px-3 py-2.5 sm:py-3 cursor-pointer text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 touch-target"
+                      className="px-3 py-2.5 sm:py-3 cursor-pointer text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all endYear-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 touch-target"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -260,7 +284,7 @@ export const ModalContent = ({
             <button
               type="button"
               onClick={addLanguage}
-              className="flex items-center cursor-pointer gap-2 text-[#85CE5C] hover:text-[#6FB848] hover:bg-[#85CE5C]/5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all duration-200 font-medium text-sm sm:text-base"
+              className="flex items-center cursor-pointer gap-2 text-[#85CE5C] hover:text-[#6FB848] hover:bg-[#85CE5C]/5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all endYear-200 font-medium text-sm sm:text-base"
             >
               <Plus size={16} className="sm:w-[18px] sm:h-[18px]" />
               Add Language
@@ -275,7 +299,7 @@ export const ModalContent = ({
           <button
             type="button"
             onClick={() => setShowEditModal(false)}
-            className="order-2 sm:order-1 cursor-pointer sm:ml-auto px-4 sm:px-6 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 font-medium text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+            className="order-2 sm:order-1 cursor-pointer sm:ml-auto px-4 sm:px-6 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all endYear-200 font-medium text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isUpdating}
           >
             Cancel
@@ -284,7 +308,7 @@ export const ModalContent = ({
             type="submit"
             disabled={isUpdating}
             onClick={handleFormSubmit}
-            className="order-1 sm:order-2 px-6 cursor-pointer sm:px-8 py-3 bg-gradient-to-r from-[#85CE5C] to-[#6FB848] text-white rounded-lg hover:from-[#6FB848] hover:to-[#5FA63B] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base min-h-[48px] touch-target"
+            className="order-1 sm:order-2 px-6 cursor-pointer sm:px-8 py-3 bg-gradient-to-r from-[#85CE5C] to-[#6FB848] text-white rounded-lg hover:from-[#6FB848] hover:to-[#5FA63B] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl transition-all endYear-200 transform hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base min-h-[48px] touch-target"
           >
             {isUpdating && (
               <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
