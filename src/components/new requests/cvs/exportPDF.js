@@ -347,7 +347,7 @@ export const exportPDF = (cv) => {
                 <span>${cv.area || "Any Area"}, ${cv.lga || "Any LGA"}</span>
               </div>
               
-              <div class="list-header">LANGUAGE</div>
+              <div class="list-header">LANGUAGES</div>
               <ul>
                 ${(cv.languages && cv.languages.length > 0 ? cv.languages : ['English', 'Local Language']).map(lang => `
                   <li class="list-item">
@@ -391,13 +391,13 @@ export const exportPDF = (cv) => {
               <div class="section-header">EDUCATION</div>
               <div class="education-item">
                 <h3>${ed.schoolName || "University"}</h3>
-                <p>${humanize(ed.educationLevel) || "Bachelor's Degree"}${ed.educationMajor ? ` of ${ed.educationMajor}` : " in Business"}</p>
+                <p>${ed.educationMajor}</p>
                 <p class="date">${ed.startYear || "2018"}-${ed.endYear || "2022"}</p>
               </div>
               ${cv.additionalCertificate ? `
                 <div class="education-item">
                   <h3>Certification</h3>
-                  <p>${cv.additionalCertificate.substring(0, 100)}</p>
+                  <p>${cv.additionalCertificate}</p>
                 </div>
               ` : ''}
             </div>
