@@ -65,21 +65,21 @@ export default function CvDetailsScreen({ cvId }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
-      <div className="flex justify-between items-center mb-6">
-        <button onClick={() => router.back()} className="flex items-center gap-2 text-sm cursor-pointer text-gray-600">
+    <div className="max-w-[210mm] mx-auto pt-[20px] px-4 md:max-w-4xl md:py-8">
+      <div className="flex justify-between items-center mb-[16px] md:mb-6">
+        <button onClick={() => router.back()} className="flex items-center gap-2 text-[11px] md:text-sm cursor-pointer text-gray-600">
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
         <button 
           onClick={() => exportPDF(cv)}
-          className="bg-teal-700 cursor-pointer text-white px-4 py-2 rounded hover:bg-teal-800 transition"
+          className="bg-teal-700 cursor-pointer text-white px-4 py-2 rounded hover:bg-teal-800 transition text-[11px] md:text-base"
         >
           Export CV
         </button>
       </div>
-
+ 
       <div className="bg-white overflow-hidden">
-        <div className="flex gap-5 md:gap-12 min-h-screen">
+        <div className="flex flex-row min-h-[290mm] md:min-h-screen md:gap-12">
           <Sidebar cv={cv} imgError={imgError} setImgError={setImgError} />
           <MainContent cv={cv} />
         </div>
