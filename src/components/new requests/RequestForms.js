@@ -2318,14 +2318,18 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
               />
             </div>
           </div>
-          <div>
+          <div className="relative">
             <label className="block text-[#171214] mb-2 text-sm">Bio</label>
             <textarea
               value={employmentData.bio || ''}
               onChange={(e) => onChange('bio', e.target.value)}
               placeholder="Enter bio"
+              maxLength={300}
               className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
             />
+             <div className="text-xs text-gray-400 mt-1 text-right">
+              {employmentData.bio?.length || 0}/300 characters
+            </div>
           </div>
           <div>
             <label className="block text-[#171214] mb-2 text-sm">State</label>
@@ -2468,81 +2472,85 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             </select>
           </div>
           {employmentData.hasWorkExperience === true && (
-            <>
-              {workExperienceDetails.map((exp, index) => (
-                <div key={index} className="space-y-4 border-t pt-4 mt-4">
-                  <h4 className="text-sm font-semibold">Work Experience {index + 1}</h4>
-                  <div>
-                    <label className="block text-[#171214] mb-2 text-sm">Company</label>
-                    <input
-                      type="text"
-                      value={exp.company || ''}
-                      onChange={(e) => handleWorkExperienceDetailChange(index, 'company', e.target.value)}
-                      placeholder="Enter company name"
-                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[#171214] mb-2 text-sm">Job Title</label>
-                    <input
-                      type="text"
-                      value={exp.jobTitle || ''}
-                      onChange={(e) => handleWorkExperienceDetailChange(index, 'jobTitle', e.target.value)}
-                      placeholder="Enter job title"
-                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                    />
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="flex-1">
-                    <label className="block text-[#171214] mb-2 text-sm">Start Year</label>
-                    <input
-                      type="text"
-                      value={exp.startYear || ''}
-                      onChange={(e) => handleWorkExperienceDetailChange(index, 'startYear', e.target.value)}
-                      placeholder="E.g., 2018"
-                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="block text-[#171214] mb-2 text-sm">End Year</label>
-                    <input
-                      type="text"
-                      value={exp.endYear || ''}
-                      onChange={(e) => handleWorkExperienceDetailChange(index, 'endYear', e.target.value)}
-                      placeholder="E.g., 2020"
-                      className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
-                    />
-                  </div>
-                  </div>
-                  <div>
-            <label className="block text-[#171214] mb-2 text-sm">Job Description</label>
-            <textarea
-              value={exp.description || ''}
-              onChange={(e) => handleWorkExperienceDetailChange(index, 'description', e.target.value)}
-              placeholder="Enter job description"
-              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
+  <>
+    {workExperienceDetails.map((exp, index) => (
+      <div key={index} className="space-y-4 pt-4 mt-4">
+        <h4 className="text-sm font-semibold">Work Experience {index + 1}</h4>
+        <div>
+          <label className="block text-[#171214] mb-2 text-sm">Company</label>
+          <input
+            type="text"
+            value={exp.company || ''}
+            onChange={(e) => handleWorkExperienceDetailChange(index, 'company', e.target.value)}
+            placeholder="Enter company name"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+          />
+        </div>
+        <div>
+          <label className="block text-[#171214] mb-2 text-sm">Job Title</label>
+          <input
+            type="text"
+            value={exp.jobTitle || ''}
+            onChange={(e) => handleWorkExperienceDetailChange(index, 'jobTitle', e.target.value)}
+            placeholder="Enter job title"
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+          />
+        </div>
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <label className="block text-[#171214] mb-2 text-sm">Start Year</label>
+            <input
+              type="text"
+              value={exp.startYear || ''}
+              onChange={(e) => handleWorkExperienceDetailChange(index, 'startYear', e.target.value)}
+              placeholder="E.g., 2018"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
             />
           </div>
-                  {workExperienceDetails.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeWorkExperience(index)}
-                      className="text-red-500 text-sm hover:underline"
-                    >
-                      Remove Experience
-                    </button>
-                  )}
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={addWorkExperience}
-                className="text-[#85CE5C] text-sm hover:underline mt-2"
-              >
-                Add Another Experience
-              </button>
-            </>
-          )}
+          <div className="flex-1">
+            <label className="block text-[#171214] mb-2 text-sm">End Year</label>
+            <input
+              type="text"
+              value={exp.endYear || ''}
+              onChange={(e) => handleWorkExperienceDetailChange(index, 'endYear', e.target.value)}
+              placeholder="E.g., 2020"
+              className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm"
+            />
+          </div>
+        </div>
+        <div className="relative">
+          <label className="block text-[#171214] mb-2 text-sm">Job Description</label>
+          <textarea
+            value={exp.description || ''}
+            onChange={(e) => handleWorkExperienceDetailChange(index, 'description', e.target.value)}
+            placeholder="Enter job description"
+            maxLength={200}
+            className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
+          />
+          <div className="text-xs text-gray-400 mt-1 text-right">
+            {exp.description?.length || 0}/200 characters
+          </div>
+        </div>
+        {workExperienceDetails.length > 1 && (
+          <button
+            type="button"
+            onClick={() => removeWorkExperience(index)}
+            className="text-red-500 text-sm hover:underline"
+          >
+            Remove Experience
+          </button>
+        )}
+      </div>
+    ))}
+    <button
+      type="button"
+      onClick={addWorkExperience}
+      className="text-[#85CE5C] text-sm hover:underline mt-2"
+    >
+      Add Another Experience
+    </button>
+  </>
+)}
           <div>
             <label className="block text-[#171214] mb-2 text-sm">Additional Skills</label>
             <Select

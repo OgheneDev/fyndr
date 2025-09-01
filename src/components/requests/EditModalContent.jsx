@@ -118,7 +118,7 @@ export const ModalContent = ({
                     />
                   </div>
                   </div>
-                  <div className="mt-3 sm:mt-4 space-y-1">
+                  <div className="mt-3 sm:mt-4 space-y-1 relative">
                     <label className="block text-sm font-medium text-gray-700">
                       Job Description
                     </label>
@@ -127,8 +127,12 @@ export const ModalContent = ({
               value={exp.description || ''}
               onChange={(e) => updateWorkExperience(index, 'description', e.target.value)}
               placeholder="Enter job description"
+              maxLength={200}
               className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#85CE5C] focus:border-transparent transition-all endYear-200 bg-white text-sm sm:text-base min-h-[150px]"
             />
+            <div className="text-xs text-gray-400 mt-1 text-right">
+              {exp.description?.length || 0}/200 characters
+            </div>
           </div>
                   </div>
                   {formData.workExperienceDetails.length > 1 && (

@@ -387,7 +387,6 @@ export const exportPDF = (cv) => {
                 <div class="education-item">
                   <h3>Additional Certification</h3>
                   <p>${cv.additionalCertificate}</p>
-                  <p class="date">Professional Development</p>
                 </div>
               ` : ''}
             </div>
