@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/useToast";
 import { getJobById, submitJobApplication } from "@/api/jobs/requests";
 import { getPersonalCvs } from "@/api/cvs/requests";
 import { Loader } from "@/components/ui/Loader";
@@ -8,6 +9,7 @@ import Swal from "sweetalert2";
 import JobHeader from "./JobHeader";
 import JobInfo from "./JobInfo";
 import ApplyForm from "./ApplyForm";
+import { Toast } from "@/components/ui/Toast";
 
 export default function JobDetailsScreen({ jobId }) {
   const router = useRouter();
@@ -23,6 +25,7 @@ export default function JobDetailsScreen({ jobId }) {
   const [cvs, setCvs] = useState([]);
   const [selectedCvId, setSelectedCvId] = useState(null);
   const [cvLoading, setCvLoading] = useState(false);
+  const { showToast, toastMessage, triggerToast } = useToast();
 
   useEffect(() => {
     if (!jobId) {
@@ -114,13 +117,7 @@ export default function JobDetailsScreen({ jobId }) {
       setSubmitting(true);
       const idToUse = job?._id || jobId;
       await submitJobApplication({ jobId: idToUse, cvId: selectedCvId, proposal: proposal || "" });
-      Swal.fire({
-        icon: "success",
-        title: "Application sent",
-        text: "Your application was submitted successfully.",
-        confirmButtonColor: "#85CE5C",
-        timer: 2000
-      });
+      triggerToast('Your application was submitted successfully.')
       setProposal("");
       setShowApplyForm(false);
       try {
@@ -199,6 +196,7 @@ export default function JobDetailsScreen({ jobId }) {
           router={router}
         />
       )}
+      <Toast show={showToast} message={toastMessage} />
     </div>
   );
 }

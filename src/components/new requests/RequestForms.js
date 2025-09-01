@@ -2323,7 +2323,7 @@ export function JobSeekerForm({ employmentData, onChange, nigerianStates, isChec
             <textarea
               value={employmentData.bio || ''}
               onChange={(e) => onChange('bio', e.target.value)}
-              placeholder="About yourself"
+              placeholder="Enter bio"
               className="outline-0 w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-sm min-h-[150px]"
             />
           </div>
