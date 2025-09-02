@@ -224,113 +224,113 @@ export default function JobDetailsScreen({ jobId }) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4">
-      <JobHeader router={router} />
-      <JobInfo
-        job={job}
-        handleApplyClick={handleApplyClick}
-        submitting={submitting}
-        hasApplied={hasApplied}
-        isOwnJob={isOwnJob}
-        handleViewApplications={handleViewApplications}
-        router={router}
-      />
-      {showApplyForm && !isOwnJob && (
-        <ApplyForm
-          job={job}
-          hasApplied={hasApplied}
-          cvs={cvs}
-          cvLoading={cvLoading}
-          selectedCvId={selectedCvId}
-          setSelectedCvId={setSelectedCvId}
-          proposal={proposal}
-          setProposal={setProposal}
-          applicationError={applicationError}
-          applicationSuccess={applicationSuccess}
-          submitting={submitting}
-          handleSendProposal={handleSendProposal}
-          setShowApplyForm={setShowApplyForm}
-          router={router}
-        />
-      )}
+<div className="w-full max-w-2xl mx-auto py-6 px-4 sm:px-6">
+  <JobHeader router={router} />
+  <JobInfo
+    job={job}
+    handleApplyClick={handleApplyClick}
+    submitting={submitting}
+    hasApplied={hasApplied}
+    isOwnJob={isOwnJob}
+    handleViewApplications={handleViewApplications}
+    router={router}
+  />
+  {showApplyForm && !isOwnJob && (
+    <ApplyForm
+      job={job}
+      hasApplied={hasApplied}
+      cvs={cvs}
+      cvLoading={cvLoading}
+      selectedCvId={selectedCvId}
+      setSelectedCvId={setSelectedCvId}
+      proposal={proposal}
+      setProposal={setProposal}
+      applicationError={applicationError}
+      applicationSuccess={applicationSuccess}
+      submitting={submitting}
+      handleSendProposal={handleSendProposal}
+      setShowApplyForm={setShowApplyForm}
+      router={router}
+    />
+  )}
 
-      {/* Enhanced Applications Modal */}
-      <Modal
-        isOpen={showApplicationsModal}
-        onClose={() => setShowApplicationsModal(false)}
-        title={`Applications for ${job.jobDetails?.title || "Job"}`}
-        className="w-full max-w-4xl mx-4"
-      >
-        <div className="p-6">
-          {/* Modal Header Info */}
-          <div className="mb-6 p-4 bg-green-50 rounded-xl border border-blue-100">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-semibold text-gray-900">{job.jobDetails?.title}</h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {jobApplications.length} {jobApplications.length === 1 ? 'application' : 'applications'} received
-                </p>
-              </div>
-              <div className="text-right">
-                <div className="text-sm font-medium text-green-900">
-                  {job.jobDetails?.salary ? `Salary: ${formatSalary(job.jobDetails.salary, job.jobDetails.salaryCurrency)}` : 'Salary not specified'}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  Posted {new Date(job.createdAt).toLocaleDateString()}
-                </div>
-              </div>
-            </div>
+  {/* Enhanced Applications Modal */}
+  <Modal
+    isOpen={showApplicationsModal}
+    onClose={() => setShowApplicationsModal(false)}
+    title={`Applications for ${job.jobDetails?.title || "Job"}`}
+    className="w-full sm:max-w-4xl"
+  >
+    <div className="p-4 sm:p-6">
+      {/* Modal Header Info */}
+      <div className="mb-6 p-4 bg-green-50 rounded-xl border border-blue-100">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h3 className="font-semibold text-gray-900 text-base sm:text-lg">{job.jobDetails?.title}</h3>
+            <p className="text-sm text-gray-600 mt-1">
+              {jobApplications.length} {jobApplications.length === 1 ? 'application' : 'applications'} received
+            </p>
           </div>
-
-          {/* Applications Content */}
-          {applicationsLoading ? (
-            <div className="flex items-center gap-2 justify-center py-8">
-              <Loader2 className="w-6 h-6 animate-spin text-[#85CE5C]" />
-              <p className="text-gray-500">Loading applications...</p>
+          <div className="text-left sm:text-right">
+            <div className="text-sm font-medium text-green-900">
+              {job.jobDetails?.salary ? `Salary: ${formatSalary(job.jobDetails.salary, job.jobDetails.salaryCurrency)}` : 'Salary not specified'}
             </div>
-          ) : jobApplications.length === 0 ? (
-            <div className="text-center py-12">
-              <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">No Applications Yet</h3>
-              <p className="text-gray-500">
-                Your job posting hasn't received any applications yet. 
-                <br />
-                Consider sharing it to reach more candidates.
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {/* Applications List */}
-              <div className="grid gap-6">
-                {jobApplications.map((app, index) => (
-                  <ApplicationCard key={index} application={app} index={index} router={router} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Modal Footer */}
-          <div className="mt-8 pt-6 border-t border-gray-100">
-            <div className="flex justify-end space-x-3">
-              <button
-                onClick={() => setShowApplicationsModal(false)}
-                className="px-6 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200"
-              >
-                Close
-              </button>
-              {jobApplications.length > 0 && (
-                <button className="px-6 py-2 bg-[#85CE5C] text-white cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200">
-                  Export Applications
-                </button>
-              )}
+            <div className="text-xs text-gray-500 mt-1">
+              Posted {new Date (job.createdAt).toLocaleDateString()}
             </div>
           </div>
         </div>
-      </Modal>
+      </div>
 
-      <Toast show={showToast} message={toastMessage} />
+      {/* Applications Content */}
+      {applicationsLoading ? (
+        <div className="flex items-center gap-2 justify-center py-8">
+          <Loader2 className="w-6 h-6 animate-spin text-[#85CE5C]" />
+          <p className="text-gray-500">Loading applications...</p>
+        </div>
+      ) : jobApplications.length === 0 ? (
+        <div className="text-center py-12">
+          <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <h3 className="text-base sm:text-lg font-semibold text-gray-700 mb-2">No Applications Yet</h3>
+          <p className="text-gray-500 text-sm">
+            Your job posting hasn't received any applications yet.
+            <br />
+            Consider sharing it to reach more candidates.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {/* Applications List */}
+          <div className="grid gap-6">
+            {jobApplications.map((app, index) => (
+              <ApplicationCard key={index} application={app} index={index} router={router} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Modal Footer */}
+      <div className="mt-8 pt-6 border-t border-gray-100">
+        <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+          <button
+            onClick={() => setShowApplicationsModal(false)}
+            className="px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200"
+          >
+            Close
+          </button>
+          {jobApplications.length > 0 && (
+            <button className="px-6 py-3 bg-[#85CE5C] text-white cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200">
+              Export Applications
+            </button>
+          )}
+        </div>
+      </div>
     </div>
+  </Modal>
+
+  <Toast show={showToast} message={toastMessage} />
+</div>
   );
 }
