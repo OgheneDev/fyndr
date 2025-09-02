@@ -7,7 +7,7 @@ import { Loader } from "@/components/ui/Loader";
 
 export default function RegistrationFormPage() {
   const userType = useUserStore((s) => s.userType);
-  const router = useRouter();
+  const router = useRouter(); 
 
   useEffect(() => {
     if (!userType) {

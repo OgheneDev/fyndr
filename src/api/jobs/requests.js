@@ -42,7 +42,7 @@ export const createJob = async (formData) => {
       throw new Error(error.message);
     }
   }
-};
+}; 
 
 export const getJobListingsByUser = async () => {
     try {

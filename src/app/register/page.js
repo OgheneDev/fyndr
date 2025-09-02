@@ -12,7 +12,7 @@ const RegistrationPage = () => {
 
   const handleTypeSelect = (type) => {
     setSelectedType(type);
-    setUserType(type);
+    setUserType(type); 
     // navigate to method selection route
     router.push('/register/method');
   }; 

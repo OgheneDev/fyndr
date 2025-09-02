@@ -7,4 +7,4 @@ export default function VerifyOtpPage({ searchParams }) {
   const email = searchParams?.email ? decodeURIComponent(searchParams.email) : undefined;
 
   return <VerifyOtpClient initialMethod={method} initialPhone={phone} initialEmail={email} />;
-}
+} 

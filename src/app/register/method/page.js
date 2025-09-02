@@ -11,7 +11,7 @@ export default function MethodPage() {
 
   useEffect(() => {
     if (!userType) {
-      router.replace("/register");
+      router.replace("/register"); 
     }
   }, [userType, router]);
 

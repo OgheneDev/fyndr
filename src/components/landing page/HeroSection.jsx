@@ -1,11 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useAuthStore } from '@/store/authStore'
 
 const HeroSection = () => {
+  const { isAuthenticated } = useAuthStore();
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated);
+
+  useEffect(() => {
+    setIsLoggedIn(isAuthenticated);
+  }, [isAuthenticated]);
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -85,29 +93,31 @@ const HeroSection = () => {
             Merchants offering services you need
           </motion.p>
         </article>
-        <motion.div 
-          className='flex items-center justify-center md:justify-start gap-4 md:gap-6'
-          variants={buttonVariants}
-        >
-          <Link href={'/login'}>
-            <motion.button 
-            className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        {!isLoggedIn && (
+          <motion.div 
+            className='flex items-center justify-center md:justify-start gap-4 md:gap-6'
+            variants={buttonVariants}
           >
-            Sign In
-          </motion.button>
-          </Link>
-          <Link href={'/register'}>
-          <motion.button 
-            className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Register
-          </motion.button>
-          </Link>
-        </motion.div>
+            <Link href={'/login'}>
+              <motion.button 
+                className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Sign In
+              </motion.button>
+            </Link>
+            <Link href={'/register'}>
+              <motion.button 
+                className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Register
+              </motion.button>
+            </Link>
+          </motion.div>
+        )}
       </motion.div>
 
       <motion.div 

@@ -3,6 +3,7 @@ import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, Suspense, useState } from "react";
+import { Loader } from "../ui/Loader";
 
 export function VerifyOtpClient({ initialMethod, initialPhone, initialEmail }) {
   const [isMounted, setIsMounted] = useState(false);
@@ -13,7 +14,7 @@ export function VerifyOtpClient({ initialMethod, initialPhone, initialEmail }) {
   useEffect(() => {
     setIsMounted(true);
     if (userType === null || userType === undefined) {
-      router.replace("/register");
+      router.replace("/register"); 
     }
   }, [userType, router]);
 
@@ -35,7 +36,7 @@ export function VerifyOtpClient({ initialMethod, initialPhone, initialEmail }) {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <RegistrationForm
         userType={userType}
         onSuccess={handleSuccess}

@@ -1,30 +1,31 @@
 import React from "react";
 import Image from "next/image";
-import { 
-  User, 
-  MapPin, 
-  Clock, 
-  Calendar, 
+import {
+  User,
+  MapPin,
+  Clock,
+  Calendar,
   Building2,
   ArrowLeft,
   CheckCircle2,
-  Loader2
+  Loader2,
+  Users,
 } from "lucide-react";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
 import { BENEFITS_MAP } from "@/data/benefits";
 
-export default function JobInfo({ job, handleApplyClick, submitting, hasApplied, router }) {
+export default function JobInfo({ job, handleApplyClick, submitting, hasApplied, isOwnJob, handleViewApplications, router }) {
   const jd = job.jobDetails || {};
   const ed = job.employerDetails || {};
 
   const formatSalary = (salary, currency) => {
     if (!salary) return null;
-    return `${currency || '$'} ${formatNumberWithCommas(salary)}`;
+    return `${currency || "$"} ${formatNumberWithCommas(salary)}`;
   };
 
   const formatJobType = (type) => {
     if (!type) return null;
-    return type.replace(/-/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase());
+    return type.replace(/-/g, " ").replace(/\b\w/g, (ch) => ch.toUpperCase());
   };
 
   return (
@@ -47,14 +48,15 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
               <Building2 size={32} className="text-gray-500" />
             </div>
           )}
-          
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h2 className="text-lg font-bold text-gray-900 truncate">{ed.company}</h2>
             </div>
             <div className="flex items-center gap-1 text-sm text-gray-500">
               <User size={14} />
-              <span>{ed.firstName} {ed.lastName}</span>
+              <span>
+                {ed.firstName} {ed.lastName}
+              </span>
             </div>
           </div>
         </div>
@@ -63,7 +65,6 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
       {/* Job Title and Quick Info */}
       <div className="p-6 pb-4">
         <h1 className="text-2xl font-bold text-gray-900 mb-4 leading-tight">{jd.title}</h1>
-        
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
           {jd.location && (
             <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
@@ -71,14 +72,12 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
               <span className="truncate">{jd.location}</span>
             </div>
           )}
-          
           {jd.type && (
             <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
               <Clock size={16} className="text-gray-400 flex-shrink-0" />
               <span className="truncate">{formatJobType(jd.type)}</span>
             </div>
           )}
-          
           {jd.startDate && (
             <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
               <Calendar size={16} className="text-gray-400 flex-shrink-0" />
@@ -110,10 +109,14 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
             </h4>
             <div className="flex flex-wrap gap-2">
               {jd.benefits.map((b, i) => {
-                const label = BENEFITS_MAP[b] || String(b).replace(/-/g, " ").replace(/\b\w/g, ch => ch.toUpperCase());
+                const label =
+                  BENEFITS_MAP[b] ||
+                  String(b)
+                    .replace(/-/g, " ")
+                    .replace(/\b\w/g, (ch) => ch.toUpperCase());
                 return (
-                  <span 
-                    key={i} 
+                  <span
+                    key={i}
                     className="inline-flex items-center text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full"
                   >
                     {label}
@@ -140,35 +143,46 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
       {/* Action Buttons */}
       <div className="px-6 pb-6">
         <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            type="button"
-            onClick={handleApplyClick}
-            className={`
-              flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200
-              ${hasApplied 
-                ? 'bg-green-100 text-green-800 border-2 border-green-200 cursor-default' 
-                : submitting
-                  ? 'bg-gray-400 text-white cursor-not-allowed'
-                  : 'bg-[#85CE5C] hover:bg-[#75BE4C] text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5'
-              }
-            `}
-            disabled={submitting || hasApplied}
-          >
-            {submitting ? (
-              <>
-                <Loader2 size={16} className="animate-spin" />
-                Applying...
-              </>
-            ) : hasApplied ? (
-              <>
-                <CheckCircle2 size={16} />
-                Application Submitted
-              </>
-            ) : (
-              'Apply for this Position'
-            )}
-          </button>
-          
+          {isOwnJob ? (
+            <button
+              type="button"
+              onClick={handleViewApplications}
+              className="flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              <Users size={16} />
+              View Applications
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleApplyClick}
+              className={`
+                flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200
+                ${
+                  hasApplied
+                    ? "bg-green-100 text-green-800 border-2 border-green-200 cursor-default"
+                    : submitting
+                    ? "bg-gray-400 text-white cursor-not-allowed"
+                    : "bg-[#85CE5C] hover:bg-[#75BE4C] text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                }
+              `}
+              disabled={submitting || hasApplied}
+            >
+              {submitting ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  Applying...
+                </>
+              ) : hasApplied ? (
+                <>
+                  <CheckCircle2 size={16} />
+                  Application Submitted
+                </>
+              ) : (
+                "Apply for this Position"
+              )}
+            </button>
+          )}
           <button
             className="flex items-center justify-center cursor-pointer gap-2 px-6 py-3 border-2 border-gray-200 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
             onClick={() => router.push(`/dashboard/new-request?category=employment&role=jobSeeker`)}
@@ -177,11 +191,17 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
             Back to Jobs
           </button>
         </div>
-        
-        {hasApplied && (
+        {hasApplied && !isOwnJob && (
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
               Your application has been submitted successfully. The employer will review it shortly.
+            </p>
+          </div>
+        )}
+        {isOwnJob && (
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-600">
+              This is your job posting. You can view applications submitted by candidates.
             </p>
           </div>
         )}
