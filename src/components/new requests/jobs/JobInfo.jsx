@@ -147,7 +147,7 @@ export default function JobInfo({ job, handleApplyClick, submitting, hasApplied,
             <button
               type="button"
               onClick={handleViewApplications}
-              className="flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 bg-[#85CE5C] text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="flex-1 flex items-center justify-center cursor-pointer gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               <Users size={16} />
               View Applications
