@@ -37,16 +37,16 @@ export const Modal = ({ isOpen, onClose, title, children, className = "" }) => {
         `}
       >
         {/* Header */}
-        <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-green-50">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-[#85CE5C]">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">{title}</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white text-gray-900 truncate">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-white/80 cursor-pointer rounded-full transition-colors duration-200 group"
+              className="p-2 cursor-pointer rounded-full transition-colors duration-200 group"
               aria-label="Close modal"
             >
               <svg
-                className="w-5 h-5 text-gray-500 group-hover:text-gray-700 transition-colors"
+                className="w-5 h-5 text-white transition-colors"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"

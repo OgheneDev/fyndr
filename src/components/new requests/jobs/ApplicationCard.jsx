@@ -6,11 +6,6 @@ export const ApplicationCard = ({ application, index, router }) => {
 
   return (
     <div className="group relative bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:border-blue-200">
-      {/* Application Number Badge */}
-      <div className="absolute -top-2 -right-2 bg-[#85CE5C] text-white text-xs font-medium px-3 py-1 rounded-full shadow-lg">
-        #{index + 1}
-      </div>
-
       {/* Applicant Info */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
