@@ -35,7 +35,7 @@ export const Modal = ({ isOpen, onClose, title, children, className = "" }) => {
         ${className}
       `}>
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className="px-6 py-4 border-b border-gray-100 bg-green-50">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
             <button

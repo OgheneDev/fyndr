@@ -263,7 +263,7 @@ export default function JobDetailsScreen({ jobId }) {
       >
         <div className="p-6">
           {/* Modal Header Info */}
-          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+          <div className="mb-6 p-4 bg-green-50 rounded-xl border border-blue-100">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-semibold text-gray-900">{job.jobDetails?.title}</h3>
@@ -272,7 +272,7 @@ export default function JobDetailsScreen({ jobId }) {
                 </p>
               </div>
               <div className="text-right">
-                <div className="text-sm font-medium text-blue-600">
+                <div className="text-sm font-medium text-green-900">
                   {job.jobDetails?.salary ? `Salary: ${formatSalary(job.jobDetails.salary, job.jobDetails.salaryCurrency)}` : 'Salary not specified'}
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
@@ -321,7 +321,7 @@ export default function JobDetailsScreen({ jobId }) {
                 Close
               </button>
               {jobApplications.length > 0 && (
-                <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200">
+                <button className="px-6 py-2 bg-[#85CE5C] text-white cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200">
                   Export Applications
                 </button>
               )}

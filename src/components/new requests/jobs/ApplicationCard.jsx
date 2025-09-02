@@ -7,7 +7,7 @@ export const ApplicationCard = ({ application, index, router }) => {
   return (
     <div className="group relative bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:border-blue-200">
       {/* Application Number Badge */}
-      <div className="absolute -top-2 -right-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-xs font-medium px-3 py-1 rounded-full shadow-lg">
+      <div className="absolute -top-2 -right-2 bg-[#85CE5C] text-white text-xs font-medium px-3 py-1 rounded-full shadow-lg">
         #{index + 1}
       </div>
 
@@ -23,7 +23,7 @@ export const ApplicationCard = ({ application, index, router }) => {
               className="rounded-full w-12 h-12 object-cover"
             />
           ) : (
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-semibold text-lg shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#85CE5C] to-black rounded-full flex items-center justify-center text-white font-semibold text-lg shadow-lg">
             {`${application.cv?.firstName?.[0] || 'U'}${application.cv?.lastName?.[0] || 'A'}`}
           </div>
           )}
@@ -70,7 +70,7 @@ export const ApplicationCard = ({ application, index, router }) => {
           )}
         </div>
         
-        <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-500">
+        <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-[#85CE5C]">
           <p className="text-sm text-gray-700 leading-relaxed">
             {application.proposal || "No cover letter provided"}
           </p>
@@ -114,7 +114,7 @@ export const ApplicationCard = ({ application, index, router }) => {
               )}`
             );
         }}
-        className="bg-blue-600 hover:bg-blue-700 w-full cursor-pointer text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+        className="bg-[#85CE5C] w-full cursor-pointer text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors duration-200">
           View CV
         </button>
       </div>
