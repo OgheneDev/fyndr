@@ -313,18 +313,13 @@ export default function JobDetailsScreen({ jobId }) {
 
       {/* Modal Footer */}
       <div className="mt-8 pt-6 border-t border-gray-100">
-        <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+        <div className="flex justify-end">
           <button
             onClick={() => setShowApplicationsModal(false)}
             className="px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200"
           >
             Close
           </button>
-          {jobApplications.length > 0 && (
-            <button className="px-6 py-3 bg-[#85CE5C] text-white cursor-pointer text-sm rounded-lg font-medium transition-colors duration-200">
-              Export Applications
-            </button>
-          )}
         </div>
       </div>
     </div>
