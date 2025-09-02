@@ -194,6 +194,7 @@ export const getJobApplications = async ({jobId}) => {
         const response = await axiosInstance.get(
             `/v1/job/single/${jobId}/applications`
         );
+        console.log("Applications:", response)
         return response.data
     } catch (error) {
         if (error.response) {
