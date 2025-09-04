@@ -2,7 +2,7 @@ export const howItWorks = [
         {
             image: '/images/picking.png',
             title: 'Select a Service',
-            description: 'Choose from Property, Car Hire, Cleaning, or Car Parts based on what you need.'
+            description: 'Choose from Property, Car Hire, Cleaning, Car Parts and more based on what you need.'
         },
         {
             image: 'images/post.png',
@@ -53,10 +53,11 @@ export const services = [
         description: 'Buy new or used vehicles at competitive prices, locally or through international sourcing.'
     },
     {
-        image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970913/employment_s4utlz.jpg',
-        title: 'Employment',
-        description: 'Find reliable contractors for home repairs and renovations.'
-    }
+    image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970913/employment_s4utlz.jpg',
+    title: 'Employment',
+    description: 'Post jobs as an employer and apply for opportunities as a job seeker.'
+}
+
 ];
 
 
