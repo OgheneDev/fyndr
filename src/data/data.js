@@ -28,33 +28,33 @@ export const howItWorks = [
 
 export const services = [
     {
-        image: 'images/car.png',
+        image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970909/car_ni49wn.jpg',
         title: 'Car Parts',
         description: 'Source genuine car parts from trusted suppliers.'
     },
     {
-        image: 'images/house.png',
+        image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970939/house_eezlxq.png',
         title: 'Real Estate',
         description: 'Explore property listings and make smart investments in residential or commercial real estate.'
     },
     {
-        image: 'images/hire.JPG',
+        image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970913/hire_iegyuy.jpg',
         title: 'Car Hire',
         description: 'Rent a car for your next trip or daily commute.'
     },
     {
-        image: 'images/clean.png',
+        image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756971555/clean_yyijvm.png',
         title: 'Cleaning Services',
         description: 'Book professional cleaning services for your home or office.'
     },
     {
-        image: 'images/auto.PNG',
+        image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970924/auto_aq54cg.png',
         title: 'Automobile Purchase',
         description: 'Buy new or used vehicles at competitive prices, locally or through international sourcing.'
     },
     {
-        image: 'images/other.PNG',
-        title: 'Other Home Services',
+        image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970913/employment_s4utlz.jpg',
+        title: 'Employment',
         description: 'Find reliable contractors for home repairs and renovations.'
     }
 ];

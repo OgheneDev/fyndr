@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/data/data";
+import { humanize } from "@/utils/humanize";
 
 const formatDate = (dateString) => {
   if (!dateString) return "Not specified";
@@ -81,17 +82,17 @@ const RequestDetailsSections = ({ data }) => (
           <p><span className="">Property Type:</span> {data.cleaning.propertyType}</p>
           <p><span className="">Property Location:</span> {data.cleaning.propertyLocation}</p>
           <p><span className="">Rooms:</span> {data.cleaning.roomNumber}</p>
-          <p><span className="">Cleaning Type:</span> {data.cleaning.cleaningType}</p>
+          <p><span className="">Cleaning Type:</span> {humanize(data.cleaning.cleaningType)}</p>
         </div>
       </div>
     )}
     {data.realEstate && (
       <div className="text-sm">
         <div className="space-y-1">
-          <p><span className="">Rent or Purchase:</span> {data.realEstate.rentType}</p>
+          <p><span className="">Rent or Purchase:</span> {humanize(data.realEstate.rentType)}</p>
           <p><span className="">Property Type:</span> {data.realEstate.propertyType}</p>
           <p><span className="">Room Number:</span> {data.realEstate.roomNumber}</p>
-          <p><span className="">Condition:</span> {data.realEstate.propertyCondition}</p>
+          <p><span className="">Condition:</span> {humanize(data.realEstate.propertyCondition)}</p>
           <p><span className="">Price Range:</span> {getBudgetText(data)}</p>
           <p><span className="">Target Axis:</span> {data.realEstate.axis?.join(", ") || "Not specified"}</p>
         </div>
@@ -108,7 +109,7 @@ const RequestDetailsSections = ({ data }) => (
           {data.carPart.image && (
             <div>
               <span className="">Image:</span>
-              <Image src={data.carPart.image} alt="Car Part" width={50} height={50} className="mt-2 max-w-xs rounded" />
+              <Image src={data.carPart.image} alt="Car Part" width={100} height={100} className="mt-2 rounded" />
             </div>
           )}
         </div>
@@ -122,7 +123,7 @@ const RequestDetailsSections = ({ data }) => (
           <p><span className="">Car Model:</span> {data.automobile.carModel}</p>
           <p><span className="">Car Year From:</span> {data.automobile.carYearFrom}</p>
           <p><span className="">Car Year To:</span> {data.automobile.carYearTo}</p>
-          <p><span className="">Transmission:</span> {data.automobile.transmission}</p>
+          <p><span className="">Transmission:</span> {humanize(data.automobile.transmission)}</p>
           <p><span className="">Price Range:</span> {getBudgetText(data)}</p>
         </div>
       </div>
@@ -131,7 +132,7 @@ const RequestDetailsSections = ({ data }) => (
       <div className="text-sm">
         <div className="space-y-1">
           <p><span className="">Target Location:</span> {data.beauty.targetLocation}</p>
-          <p><span className="">Service:</span> {data.beauty.service}</p>
+          <p><span className="">Service:</span> {humanize(data.beauty.service)}</p>
           <p><span className="">Date:</span> {formatDate(data.beauty.date)}</p>
           <p><span className="">Time:</span> {data.beauty.time}</p>
         </div>

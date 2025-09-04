@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
+import { humanize } from "@/utils/humanize";
 
 export function PaymentDetails({ data }) {
     const { token } = useAuthStore();
@@ -10,8 +11,8 @@ export function PaymentDetails({ data }) {
             <div className="mb-15">
                 <h3>Transaction ID: {data.transaction_id || "Not available"}</h3>
                 <h3>Reference: {data.transaction_reference || "Not available"}</h3>
-                <h3>Payment Method: {data.payment_method || "Not specified"}</h3>
-                <h3>Status: {data.transaction_status || "Not available"}</h3>
+                <h3>Payment Method: {humanize(data.payment_method || "Not specified")}</h3>
+                <h3>Status: {humanize(data.transaction_status || "Not available")}</h3>
                 <h3>Attempts: {data.payment_attempts || "0"}</h3>
             </div>
             {data.transaction_status?.toLowerCase() === "pending" && (

@@ -95,7 +95,7 @@ const BrowseMerchants = () => {
     'Car Hire': 'car-hire',
     'Cleaning Services': 'cleaning',
     'Automobile Purchase': 'automobile',
-    'Other Home Services': 'other-services'
+    'Employment': 'employment'
   }
 
   const handleServiceClick = (serviceTitle) => {
