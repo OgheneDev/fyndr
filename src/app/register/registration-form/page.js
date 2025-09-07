@@ -2,28 +2,45 @@
 import { RegistrationForm } from "@/components/register page/RegistrationForm";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import { Loader } from "@/components/ui/Loader";
 
 export default function RegistrationFormPage() {
   const userType = useUserStore((s) => s.userType);
   const router = useRouter();
+  const [regFlow, setRegFlow] = useState({});
 
   useEffect(() => {
-    const regFlow = JSON.parse(sessionStorage.getItem("reg_flow") || "{}");
-    if (!userType || !regFlow.userType) {
-      router.replace("/register");
+    // Only access sessionStorage in the browser
+    if (typeof window !== "undefined") {
+      const storedRegFlow = JSON.parse(sessionStorage.getItem("reg_flow") || "{}");
+      setRegFlow(storedRegFlow);
+
+      // Redirect if userType or regFlow.userType is missing
+      if (!userType || !storedRegFlow.userType) {
+        router.replace("/register");
+      }
     }
   }, [userType, router]);
 
   const handleSuccess = () => {
-    const regFlow = JSON.parse(sessionStorage.getItem("reg_flow") || "{}");
-    if (regFlow.userType === "merchant") router.push("/dashboard/open-requests");
-    else router.push("/dashboard");
-    sessionStorage.removeItem("reg_flow"); // Clear session storage on success
+    // Only access sessionStorage in the browser
+    if (typeof window !== "undefined") {
+      const storedRegFlow = JSON.parse(sessionStorage.getItem("reg_flow") || "{}");
+      if (storedRegFlow.userType === "merchant") {
+        router.push("/dashboard/open-requests");
+      } else {
+        router.push("/dashboard");
+      }
+      sessionStorage.removeItem("reg_flow"); // Clear session storage on success
+    }
   };
 
-  const regFlow = JSON.parse(sessionStorage.getItem("reg_flow") || "{}");
+  // Render nothing or a fallback during prerendering
+  if (!regFlow || Object.keys(regFlow).length === 0) {
+    return <div><Loader /></div>;
+  }
+
   return (
     <Suspense fallback={<div><Loader /></div>}>
       <RegistrationForm
