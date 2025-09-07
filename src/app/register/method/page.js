@@ -10,23 +10,22 @@ export default function MethodPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userType) {
-      router.replace("/register"); 
+    const regFlow = JSON.parse(sessionStorage.getItem("reg_flow") || "{}");
+    if (!userType || !regFlow.userType) {
+      router.replace("/register");
     }
   }, [userType, router]);
 
   const handleSuccess = () => {
-    if (userType === "merchant") router.push("/dashboard/open-requests");
+    const regFlow = JSON.parse(sessionStorage.getItem("reg_flow") || "{}");
+    if (regFlow.userType === "merchant") router.push("/dashboard/open-requests");
     else router.push("/dashboard");
+    sessionStorage.removeItem("reg_flow"); // Clear session storage on success
   };
 
   return (
     <Suspense fallback={<Loader />}>
-      <RegistrationForm
-        userType={userType}
-        onSuccess={handleSuccess}
-        initialStep={1}
-      />
+      <RegistrationForm userType={userType} onSuccess={handleSuccess} initialStep={1} />
     </Suspense>
   );
 }
