@@ -48,7 +48,7 @@ export default function LoginMethod() {
         await requestUserOtp(method === 'phone' ? { number: getFullPhoneNumber() } : { email });
       }
       // persist selected method + contact and reset countdown
-      const newFlow = { ...flow, method, phone: method === 'phone' ? getFullPhoneNumber() : null, email: method === 'email' ? email : null, countdown: 3600 };
+      const newFlow = { ...flow, method, phone: method === 'phone' ? getFullPhoneNumber() : null, email: method === 'email' ? email : null, countdown: 600 };
       sessionStorage.setItem('login_flow', JSON.stringify(newFlow));
       router.push('/login/verify-otp');
     } catch (err) {

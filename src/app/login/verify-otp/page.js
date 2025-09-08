@@ -34,7 +34,7 @@ export default function VerifyOtpPage() {
     }
     const parsed = JSON.parse(raw);
     setFlow(parsed);
-    setCountdown(parsed.countdown ?? 3600);
+    setCountdown(parsed.countdown ?? 600);
   }, [router]);
 
   useEffect(() => {
@@ -95,9 +95,9 @@ export default function VerifyOtpPage() {
         await resendUserOtp(flow.method === 'phone' ? { number: flow.phone } : { email: flow.email });
       }
       // reset countdown in session and local state
-      const updated = { ...flow, countdown: 3600 };
+      const updated = { ...flow, countdown: 600 };
       sessionStorage.setItem('login_flow', JSON.stringify(updated));
-      setCountdown(3600);
+      setCountdown(600);
     } catch (err) {
       setError('Failed to resend OTP. Please try again.');
     }

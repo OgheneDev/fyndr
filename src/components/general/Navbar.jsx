@@ -215,7 +215,7 @@ const Navbar = () => {
             );
         }
         return (
-            <div className="w-15 h-15 rounded-full bg-gray-200 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
                 <User size={24} className="text-gray-500" />
             </div>
         );

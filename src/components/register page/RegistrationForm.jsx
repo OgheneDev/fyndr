@@ -36,7 +36,7 @@ export const RegistrationForm = ({
   const [method, setMethod] = useState(initMethod || "phone");
   const [email, setEmail] = useState(initEmail || "");
   const [isResending, setIsResending] = useState(false);
-  const [countdown, setCountdown] = useState(3600);
+  const [countdown, setCountdown] = useState(600);
 
   const { setAuth } = useAuthStore();
 
@@ -99,7 +99,7 @@ export const RegistrationForm = ({
       } else {
         await requestUserOtp({ number: getFullPhoneNumber() });
       }
-      setCountdown(3600);
+      setCountdown(600);
       setStep(2);
       sessionStorage.setItem(
         "reg_flow",
@@ -121,7 +121,7 @@ export const RegistrationForm = ({
       } else {
         await requestUserOtp({ email });
       }
-      setCountdown(3600);
+      setCountdown(600);
       setStep(2);
       sessionStorage.setItem(
         "reg_flow",
@@ -142,7 +142,7 @@ export const RegistrationForm = ({
       } else {
         await resendUserOtp(method === "phone" ? { number: getFullPhoneNumber() } : { email });
       }
-      setCountdown(3600);
+      setCountdown(600);
     } catch (err) {
       setError("Failed to resend OTP. Please try again.");
     }

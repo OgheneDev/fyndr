@@ -21,7 +21,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
           value={formData.name || ''}
           onChange={(e) => onChange({ ...formData, name: e.target.value })}
           placeholder="Enter your name"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
         />
       </div>
       
@@ -53,7 +53,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
             value={formData.email || ''}
             onChange={(e) => onChange({ ...formData, email: e.target.value })}
             placeholder="Enter your email"
-            className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+            className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
           />
         </div>
       )}
@@ -65,7 +65,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
           value={formData.businessName || ''}
           onChange={(e) => onChange({ ...formData, businessName: e.target.value })}
           placeholder="Enter your business name"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
         />
       </div>
       
@@ -76,7 +76,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
           value={formData.businessAddress || ''}
           onChange={(e) => onChange({ ...formData, businessAddress: e.target.value })}
           placeholder="Enter your business address"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
         />
       </div>
       
@@ -87,7 +87,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
           value={formData.businessLocation || ''}
           onChange={(e) => onChange({ ...formData, businessLocation: e.target.value })}
           placeholder="Specify your business location"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
         />
       </div>
       
@@ -152,7 +152,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
           value={formData.nin || ''}
           onChange={(e) => onChange({ ...formData, nin: e.target.value })}
           placeholder="Nin number"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
         />
       </div>
       
@@ -204,7 +204,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
               lga: '' // Reset LGA when state changes
             });
           }}
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
         >
           <option value="">Select a state</option>
           {stateOptions.map(state => (
@@ -219,7 +219,7 @@ export const MerchantDetailsForm = ({ formData, onChange, verificationMethod }) 
         <select
           value={formData.lga || ''}
           onChange={e => onChange({ ...formData, lga: e.target.value })}
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg  outline-none transition-all"
           disabled={!formData.state}
         >
           <option value="">Select an LGA</option>

@@ -17,7 +17,7 @@ export const UserDetailsForm = ({ formData, onChange, verificationMethod }) => {
           value={formData.name || ''}
           onChange={(e) => onChange({ ...formData, name: e.target.value })}
           placeholder="Enter your name"
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg   outline-none transition-all"
         />
       </div>
 
@@ -40,7 +40,7 @@ export const UserDetailsForm = ({ formData, onChange, verificationMethod }) => {
             value={formData.email || ''}
             onChange={(e) => onChange({ ...formData, email: e.target.value })}
             placeholder="Enter your email"
-            className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+            className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg   outline-none transition-all"
           />
         </div>
       )}
@@ -53,7 +53,7 @@ export const UserDetailsForm = ({ formData, onChange, verificationMethod }) => {
             // Reset LGA when state changes
             onChange({ ...formData, state: e.target.value, lga: '' })
           }}
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg   outline-none transition-all"
         >
           <option value="">Select your state</option>
           {states.map(state => (
@@ -66,7 +66,7 @@ export const UserDetailsForm = ({ formData, onChange, verificationMethod }) => {
         <select
           value={formData.lga || ''}
           onChange={(e) => onChange({ ...formData, lga: e.target.value })}
-          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all"
+          className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg   outline-none transition-all"
           disabled={!formData.state}
         >
           <option value="">Select your LGA</option>
@@ -82,7 +82,7 @@ export const UserDetailsForm = ({ formData, onChange, verificationMethod }) => {
          value={formData.location || ''}
          onChange={(e) => onChange({ ...formData, location: e.target.value })}
          placeholder="Input your location e.g Ikeja" 
-         className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg focus:ring-2 focus:ring-[#541229] focus:border-transparent outline-none transition-all" />
+         className="w-full px-4 py-3 bg-[#F5F2F2] rounded-lg   outline-none transition-all" />
       </div>
     </div>
   )
