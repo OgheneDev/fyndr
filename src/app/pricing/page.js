@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle, Users, Home, Briefcase, Shield, Zap, Heart } from 'lucide-react'
 import Navbar from '@/components/general/Navbar'
+import Footer from '@/components/landing page/Footer'
 
 const PricingPage = () => {
   const containerVariants = {
@@ -53,7 +54,7 @@ const PricingPage = () => {
   return (
     <div>
         <Navbar />
-        <div className="min-h-screen pt-12 bg-gradient-to-br from-gray-50 via-white to-green-50">
+        <div className="min-h-screen pt-16 bg-gradient-to-br from-gray-50 via-white to-green-50">
       {/* Hero Section */}
       <motion.div 
         className="relative overflow-hidden bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900"
@@ -351,7 +352,7 @@ const PricingPage = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
           >
-            Now you do. Their name is Fyndr.
+            Now you do. <br className='md:hidden' /> Their name is Fyndr.
           </motion.p>
 
           <motion.button
