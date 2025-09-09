@@ -34,7 +34,7 @@ const Footer = () => {
 
   return (
     <motion.footer 
-      className="bg-[#85CE5C] text-white px-5 md:px-12 py-8 md:py-10"
+      className="bg-gradient-to-b from-[#1A3C34] to-[#2E8B57] text-white px-5 md:px-12 py-8 md:py-10"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -58,9 +58,6 @@ const Footer = () => {
             <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
             <RiFacebookCircleFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
             <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
-            <RiLinkedinBoxFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
-            <RiYoutubeFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
-            <RiRedditFill className="w-5 h-5 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
           </div>
         </div>
       </motion.div>
@@ -120,7 +117,7 @@ const Footer = () => {
           className="w-full lg:max-w-md mt-8 lg:mt-0"
           variants={itemVariants}
         >
-          <h3 className="text-white text-xl  font-bold mb-6">Subscribe to our Newsletter</h3>
+          <h3 className="text-white text-xl font-bold mb-6">Subscribe to our Newsletter</h3>
            <div className='bg-white px-3 md:px-5 py-3 w-full md:w-fit flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-10 rounded-sm'>
               <input 
                   type="email" 

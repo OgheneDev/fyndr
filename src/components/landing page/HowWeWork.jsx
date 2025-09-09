@@ -56,7 +56,7 @@ const HowWeWork = () => {
   return (
     <motion.section 
       id='how-it-works' 
-      className='px-5 py-8 md:py-17 md:px-12 bg-[#85CE5C]'
+      className='px-5 py-8 md:py-17 md:px-12 bg-gradient-to-b from-[#1A3C34] to-[#2E8B57]'
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
