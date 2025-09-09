@@ -30,7 +30,7 @@ const HowItWorks = () => {
           key={index}
           className={`w-full ${isMobile ? '' : 'md:w-[calc(33.333%-16px)]'}`}
         >
-          <div className="bg-white md:w-[380px] md:h-[260px] h-[270px] p-5 rounded-lg space-y-4">
+          <div className="bg-white md:w-[380px] md:h-[260px] h-[280px] p-5 rounded-lg space-y-4">
             <Image
               src={work.image}
               alt="Image"

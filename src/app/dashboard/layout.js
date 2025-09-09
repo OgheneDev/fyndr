@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }) {
       ) {
         router.push("/dashboard"); // Default user route
       }
-    }, 2000); // Keep 2-second delay for logout
+    }, 500); // Keep 2-second delay for logout
     return () => clearTimeout(timeout);
   }, [isAuthenticated, userType, pathname, router]); // No need to include merchantAllowedRoutes or userAllowedRoutes
 
