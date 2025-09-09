@@ -128,10 +128,7 @@ const Footer = () => {
               className="w-full md:w-auto min-w-0 placeholder:text-[12px] outline-0 placeholder:text-[#000000]"
             />
             <button
-              className="w-full md:w-auto text-white text-sm py-2 px-5 rounded-sm cursor-pointer"
-              style={{
-                background: "radial-gradient(circle, #00b32d 0%, #004d00 100%)"
-              }}
+              className="w-full md:w-auto bg-[#004d00] text-white text-sm py-2 px-5 rounded-sm cursor-pointer"
             >
               Send
             </button>
