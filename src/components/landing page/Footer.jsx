@@ -82,10 +82,10 @@ const Footer = () => {
           <motion.div variants={itemVariants}>
             <h3 className="text-white font-medium mb-4 text-sm">Services</h3>
             <div className="space-y-2">
-              <Link href="#" className="block text-white hover:underline text-sm">Real Estate</Link>
-              <Link href="#" className="block text-white hover:underline text-sm">Car Hire</Link>
-              <Link href="#" className="block text-white hover:underline text-sm">Car Parts</Link>
-              <Link href="#" className="block text-white hover:underline text-sm">Cleaning Services</Link>
+              <Link href="/dashboard/new-request?category=real-estate" className="block text-white hover:underline text-sm">Real Estate</Link>
+              <Link href="/dashboard/new-request?category=car-hire" className="block text-white hover:underline text-sm">Car Hire</Link>
+              <Link href="/dashboard/new-request?category=car-parts" className="block text-white hover:underline text-sm">Car Parts</Link>
+              <Link href="/dashboard/new-request?category=cleaning" className="block text-white hover:underline text-sm">Cleaning Services</Link>
             </div>
           </motion.div>
 
