@@ -112,7 +112,7 @@ const HeroSection = () => {
         </article>
         {!isLoggedIn && (
           <motion.div 
-            className='flex items-center justify-center md:justify-start gap-4 md:gap-6'
+            className='flex items-center justify-center md:justify-start md:mt-5 gap-4 md:gap-6'
             variants={buttonVariants}
           >
             <Link href={'/login'}>
