@@ -1,6 +1,8 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
+import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,12 +10,27 @@ import Link from "next/link";
 const RegistrationPage = () => {
   const [selectedType, setSelectedType] = useState(null);
   const setUserType = useUserStore((state) => state.setUserType);
+  const userType = useUserStore((state) => state.userType);
+  const { isAuthenticated } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
     // Clear session storage on initial load to reset the flow
     sessionStorage.removeItem("reg_flow");
-  }, []);
+
+    // Redirect authenticated users based on userType
+    if (isAuthenticated) {
+      if (userType === "merchant") {
+        router.replace("/dashboard/open-requests");
+      } else {
+        router.replace("/dashboard"); // Default for user or if userType is null
+      }
+    }
+  }, [isAuthenticated, userType, router]);
+
+  if (isAuthenticated) {
+    return null; // Render nothing while redirecting
+  }
 
   const handleTypeSelect = (type) => {
     setSelectedType(type);

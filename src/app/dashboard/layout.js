@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }) {
       }
     }, 500);
     return () => clearTimeout(timeout);
-  }, [isAuthenticated, userType, pathname, router]); // No need to include merchantAllowedRoutes or userAllowedRoutes
+  }, [isAuthenticated, userType, pathname, router]);
 
   if (!isAuthenticated) {
     return null;
