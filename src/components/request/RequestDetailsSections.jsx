@@ -137,7 +137,7 @@ const RequestDetailsSections = ({ data }) => (
           <p><span className="">Time:</span> {data.beauty.time}</p> 
         </div>
       </div>
-    )}
+    )} 
     {data.catering && (
       <div className="text-sm">
         <div className="space-y-1">

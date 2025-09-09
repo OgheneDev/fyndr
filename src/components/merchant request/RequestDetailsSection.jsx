@@ -330,14 +330,10 @@ const RequestDetailsSections = ({ data }) => (
                 <span className="font-semibold mb-1 text-sm">Event Date</span>
                 <p className="text-gray-700 text-[12px]">{formatDate(data.catering.eventDate)}</p>
               </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
-              </article>
             </div>
           </div>
         )}
-        {data.carpentry && (
+        {data.carpentry && ( 
           <div>
             <h4 className="text-sm font-semibold mb-2">Carpentry Details</h4>
             <div className="space-y-4">
@@ -348,10 +344,6 @@ const RequestDetailsSections = ({ data }) => (
               <article>
                 <span className="font-semibold mb-1 text-sm">Date Needed</span>
                 <p className="text-gray-700 text-[12px]">{formatDate(data.carpentry.dateNeeded)}</p>
-              </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
               </article>
             </div>
           </div>
@@ -368,10 +360,6 @@ const RequestDetailsSections = ({ data }) => (
                 <span className="font-semibold mb-1 text-sm">Date Needed</span>
                 <p className="text-gray-700 text-[12px]">{formatDate(data.electrician.dateNeeded)}</p>
               </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
-              </article>
             </div>
           </div>
         )}
@@ -386,10 +374,6 @@ const RequestDetailsSections = ({ data }) => (
               <article>
                 <span className="font-semibold mb-1 text-sm">Service</span>
                 <p className="text-gray-700 text-[12px]">{data.it.service}</p>
-              </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
               </article>
             </div>
           </div>
@@ -418,10 +402,6 @@ const RequestDetailsSections = ({ data }) => (
                 <span className="font-semibold mb-1 text-sm">Transmission</span>
                 <p className="text-gray-700 text-[12px]">{data.mechanic.transmission}</p>
               </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
-              </article>
             </div>
           </div>
         )}
@@ -435,11 +415,7 @@ const RequestDetailsSections = ({ data }) => (
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Service</span>
-                <p className="text-gray-700 text-[12px]">{data.media.service}</p>
-              </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
+                <p className="text-gray-700 text-[12px]">{humanize(data.media.service)}</p>
               </article>
             </div>
           </div>
@@ -456,10 +432,6 @@ const RequestDetailsSections = ({ data }) => (
                 <span className="font-semibold mb-1 text-sm">Date Needed</span>
                 <p className="text-gray-700 text-[12px]">{formatDate(data.plumber.dateNeeded)}</p>
               </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
-              </article>
             </div>
           </div>
         )}
@@ -473,7 +445,7 @@ const RequestDetailsSections = ({ data }) => (
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Service</span>
-                <p className="text-gray-700 text-[12px]">{data.hospitality.service}</p>
+                <p className="text-gray-700 text-[12px]">{humanize(data.hospitality.service)}</p>
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Date Needed</span>
@@ -482,10 +454,6 @@ const RequestDetailsSections = ({ data }) => (
               <article>
                 <span className="font-semibold mb-1 text-sm">Time Needed</span>
                 <p className="text-gray-700 text-[12px]">{data.hospitality.timeNeeded}</p>
-              </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
               </article>
             </div>
           </div>
@@ -500,7 +468,7 @@ const RequestDetailsSections = ({ data }) => (
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Service</span>
-                <p className="text-gray-700 text-[12px]">{data.eventManagement.service}</p>
+                <p className="text-gray-700 text-[12px]">{humanize(data.eventManagement.service)}</p>
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Event Location</span>
@@ -509,10 +477,6 @@ const RequestDetailsSections = ({ data }) => (
               <article>
                 <span className="font-semibold mb-1 text-sm">Date Needed</span>
                 <p className="text-gray-700 text-[12px]">{formatDate(data.eventManagement.dateNeeded)}</p>
-              </article>
-              <article>
-                <span className="font-semibold mb-1 text-sm">Price Range</span>
-                <p className="text-gray-700 text-[12px]">{getBudgetText(data)}</p>
               </article>
             </div>
           </div>
