@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { CheckCircle, Users, Home, Briefcase, Shield, Zap, Heart } from 'lucide-react'
 import Navbar from '@/components/general/Navbar'
 import Footer from '@/components/landing page/Footer'
+import Link from 'next/link'
 
 const PricingPage = () => {
   const containerVariants = {
@@ -318,7 +319,7 @@ const PricingPage = () => {
 
       {/* CTA Section */}
       <motion.div 
-        className="bg-gradient-to-r from-green-500 to-green-600 py-20"
+        className="py-20 bg-gradient-to-br from-gray-50 to-green-50"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -326,7 +327,7 @@ const PricingPage = () => {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h2 
-            className="md:text-4xl text-3xl font-bold text-white mb-8"
+            className="md:text-4xl text-3xl font-bold text-gray-800 mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -336,7 +337,7 @@ const PricingPage = () => {
           </motion.h2>
           
           <motion.p 
-            className="md:text-xl text-sm text-green-100 mb-4"
+            className="md:text-xl text-sm text-gray-600 mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -346,7 +347,7 @@ const PricingPage = () => {
           </motion.p>
           
           <motion.p 
-            className="text-xl md:text-2xl font-bold text-white mb-10"
+            className="text-xl md:text-2xl font-bold text-green-600 mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -355,20 +356,23 @@ const PricingPage = () => {
             Now you do. <br className='md:hidden' /> Their name is Fyndr.
           </motion.p>
 
-          <motion.button
-            className="bg-white text-green-600 px-10 py-4 rounded-full text-sm cursor-pointer font-bold hover:bg-gray-100 transition-colors duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-          >
-            Get Started Today
-          </motion.button>
+          <Link href="/register">
+            <motion.button
+              className="bg-green-600 hover:bg-green-700 text-white px-10 py-4 rounded-full text-sm cursor-pointer font-bold transition-all duration-300 shadow-lg hover:shadow-xl"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+            >
+              Get Started Today
+            </motion.button>
+          </Link>
         </div>
       </motion.div>
     </div>
+    <Footer />
     </div>
   )
 }
