@@ -64,7 +64,7 @@ const HeroSection = () => {
 
   return (
     <motion.section 
-      className='flex flex-col lg:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[80px] md:py-10 md:pt-[160px] md:px-12 overflow-hidden'
+      className='flex flex-col lg:flex-row md:gap-0 md:justify-between gap-5 p-5 pt-[100px] py-8 md:py-10 md:pt-[160px] md:px-12 overflow-hidden'
       variants={containerVariants}
       initial="hidden"
       animate="visible" 
@@ -86,11 +86,9 @@ const HeroSection = () => {
             className='text-sm'
             variants={textVariants}
           >
-            Connect with nearby Merchants offering services you<br className='hidden lg:block' />
-            need Connect with nearby Merchants offering<br className='hidden lg:block' />
-            services you need Connect with nearby Merchants<br className='hidden lg:block' />
-            offering services you need Connect with nearby<br className='hidden lg:block' />
-            Merchants offering services you need
+            At Fyndr, we believe finding trusted services should be <br className='hidden lg:block' /> simple, fast, and stress-free. That’s why we created <br className='hidden lg:block' /> a smart marketplace that connects people to verified providers <br className='hidden lg:block' /> in real estate, cleaning, auto, jobs, hospitality, and more, all in minutes.<br className='hidden lg:block' />
+            For consumers, Fyndr puts everything you need at your fingertips,<br className='hidden lg:block' /> helping you compare options, save time, and choose with confidence.<br className='hidden lg:block' /> For merchants, we cut down ad costs and bring you targeted, ready-to-convert leads <br className='hidden lg:block' /> every day, so you can focus on growing your business.
+            Fyndr is more than a platform, it’s your bridge to convenience, transparency, and opportunity nationwide.
           </motion.p>
         </article>
         {!isLoggedIn && (
@@ -131,6 +129,10 @@ const HeroSection = () => {
           alt='Hero'
           className='w-full h-auto'
         />
+        <article className='space-y-5 text-center'>
+          <h3 className='text-[16px] font-bold'>LET THE CLIENTS COME TO YOU</h3>
+          <p className='text-sm'>Stop waiting for referrals. With Fyndr, your business is always visible to customers who are already searching for your services. No wasted ad spend, no guesswork, just direct, targeted requests that match what you offer. Join a nationwide hub where new clients find you every single day.</p>
+        </article>
       </motion.div>
     </motion.section>
   )

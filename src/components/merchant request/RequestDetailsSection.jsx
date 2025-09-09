@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/data/data";
 import { formatDate } from "@/utils/dateUtils";
+import { humanize } from "@/utils/humanize";
 
 const formatBudget = (lower, upper) => {
   if (lower && upper) {
@@ -116,7 +117,7 @@ const RequestDetailsSections = ({ data }) => (
         <div className="space-y-4 mb-4">
           <article>
             <span className="font-semibold mb-1 text-sm">Transaction Status</span>
-            <p className="text-gray-700 text-[12px]">{data.transaction_status}</p>
+            <p className="text-gray-700 text-[12px]">{humanize(data.transaction_status)}</p>
           </article>
           <article>
             <span className="font-semibold mb-1 text-sm">Transaction Reference</span>
@@ -124,7 +125,7 @@ const RequestDetailsSections = ({ data }) => (
           </article>
           <article>
             <span className="font-semibold mb-1 text-sm">Payment Method</span>
-            <p className="text-gray-700 text-[12px]">{data.payment_method}</p>
+            <p className="text-gray-700 text-[12px]">{humanize(data.payment_method)}</p>
           </article>
         </div>
       </div>
@@ -178,7 +179,7 @@ const RequestDetailsSections = ({ data }) => (
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Cleaning Type</span>
-                <p className="text-gray-700 text-[12px]">{data.cleaning.cleaningType}</p>
+                <p className="text-gray-700 text-[12px]">{humanize(data.cleaning.cleaningType)}</p>
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Price Range</span>
@@ -193,7 +194,7 @@ const RequestDetailsSections = ({ data }) => (
             <div className="space-y-4">
               <article>
                 <span className="font-semibold mb-1 text-sm">Rent Type</span>
-                <p className="text-gray-700 text-[12px]">{data.realEstate.rentType}</p>
+                <p className="text-gray-700 text-[12px]">{humanize(data.realEstate.rentType)}</p>
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Property Type</span>
@@ -205,7 +206,7 @@ const RequestDetailsSections = ({ data }) => (
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Condition</span>
-                <p className="text-gray-700 text-[12px]">{data.realEstate.condition}</p>
+                <p className="text-gray-700 text-[12px]">{humanize(data.realEstate.condition)}</p>
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Price Range</span>
@@ -277,7 +278,7 @@ const RequestDetailsSections = ({ data }) => (
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Transmission</span>
-                <p className="text-gray-700 text-[12px]">{data.automobile.transmission}</p>
+                <p className="text-gray-700 text-[12px]">{humanize(data.automobile.transmission)}</p>
               </article>
               <article>
                 <span className="font-semibold mb-1 text-sm">Price Range</span>

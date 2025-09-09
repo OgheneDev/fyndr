@@ -134,7 +134,7 @@ const RequestDetailsSections = ({ data }) => (
           <p><span className="">Target Location:</span> {data.beauty.targetLocation}</p>
           <p><span className="">Service:</span> {humanize(data.beauty.service)}</p>
           <p><span className="">Date:</span> {formatDate(data.beauty.date)}</p>
-          <p><span className="">Time:</span> {data.beauty.time}</p>
+          <p><span className="">Time:</span> {data.beauty.time}</p> 
         </div>
       </div>
     )}

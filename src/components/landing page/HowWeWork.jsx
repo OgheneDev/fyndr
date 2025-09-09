@@ -76,7 +76,7 @@ const HowWeWork = () => {
           className='text-sm'
           variants={textVariants}
         >
-          Connect with nearby Merchants offering services you need Connect with nearby Merchants offering services you need Connect with nearby Merchants
+          This Request • Connect • Deal model makes Fyndr fast, secure, and user-focused, cutting out noise, fake listings, and unnecessary middlemen.
         </motion.p>
       </motion.article>
       

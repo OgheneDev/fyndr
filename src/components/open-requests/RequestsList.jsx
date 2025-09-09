@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { CATEGORY_LABELS } from '@/data/data';
 import Image from 'next/image';
 import { formatRelativeTime } from '@/utils/dateUtils';
+import { Wrench } from 'lucide-react';
 
 const CATEGORY_IMAGES = {
   "real-estate": "/images/real-estate.png",
@@ -62,13 +63,17 @@ const RequestsList = ({ loading, filteredRequests, getServiceLabel }) => {
                 <div className="flex items-start gap-4 sm:gap-5">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 sm:w-13 sm:h-13 bg-gray-100 rounded-md flex items-center justify-center">
-                      <Image
-                        src={CATEGORY_IMAGES[request.category] || '/images/default.png'}
-                        alt={`${CATEGORY_LABELS[request.category]} icon`}
-                        width={30}
-                        height={30}
-                        className="object-contain filter invert"
-                      />
+                      {CATEGORY_IMAGES[request.category] ? (
+                        <Image
+                          src={CATEGORY_IMAGES[request.category]}
+                          alt={`${CATEGORY_LABELS[request.category]} icon`}
+                          width={30}
+                          height={30}
+                          className="object-contain filter invert"
+                        />
+                      ) : (
+                        <Wrench className="w-6 h-6" />
+                      )}
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">

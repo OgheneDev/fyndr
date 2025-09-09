@@ -1,61 +1,51 @@
 export const howItWorks = [
         {
-            image: '/images/picking.png',
-            title: 'Select a Service',
-            description: 'Choose from Property, Car Hire, Cleaning, Car Parts and more based on what you need.'
-        },
-        {
             image: 'images/post.png',
-            title: 'Post Your Request',
-            description: 'Fill a quick form with details like your location, what you’re looking for, and your target location or axis.'
-        },
-        {
-            image: 'images/pay.png',
-            title: 'Make a Small Payment',
-            description: 'To ensure quality and commitment, a small payment is required before merchants can see your request.'
+            title: 'Request',
+            description: 'Fill out a quick and easy form. Tell Fyndr exactly what you need, be it a car part, an apartment, a cleaning service, or a job. Add your location and key details. Pay a small fee and submit your request in seconds.'
         },
         {
             image: 'images/notify.png',
-            title: 'Get Offers',
-            description: 'Verified merchants in your target area are instantly notified via WhatsApp to view your request.'
+            title: 'Connect',
+            description: 'We send your request to verified merchants or service providers. Only those who match your category and location will receive it. They respond with real offers, prices, availability, and profiles. You can also chat with them directly within the platform.'
         },
         {
-            image: 'images/choose.png',
-            title: 'Chat & Choose',
-            description: 'Merchants who can help will reply to your request on the platform. Chat securely and choose the one that fits you best.'
-        }
+            image: 'images/pay.png',
+            title: 'Deal',
+            description: 'Compare offers and choose your preferred option. Make your selection based on price, reviews, ratings, and trust. Complete the deal, rate the service, and help others make better choices too.'
+        },
 ]
 
 export const services = [
     {
         image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970909/car_ni49wn.jpg',
         title: 'Car Parts',
-        description: 'Source genuine car parts from trusted suppliers.'
+        description: 'Source Genuine Parts from the Market, Without Leaving Home.'
     },
     {
         image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970939/house_eezlxq.png',
         title: 'Real Estate',
-        description: 'Explore property listings and make smart investments in residential or commercial real estate.'
+        description: 'Find Your Next Home. The Smarter Way.'
     },
     {
         image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970913/hire_iegyuy.jpg',
         title: 'Car Hire',
-        description: 'Rent a car for your next trip or daily commute.'
+        description: 'Request a Ride, For the Hour, Day, or Week.'
     },
     {
         image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756971555/clean_yyijvm.png',
         title: 'Cleaning Services',
-        description: 'Book professional cleaning services for your home or office.'
+        description: 'Book Reliable Cleaning Services Near You.'
     },
     {
         image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970924/auto_aq54cg.png',
         title: 'Automobile Purchase',
-        description: 'Buy new or used vehicles at competitive prices, locally or through international sourcing.'
+        description: 'Buy New or Used Cars, On Your Terms.'
     },
     {
     image: 'https://res.cloudinary.com/dgc8cd67w/image/upload/v1756970913/employment_s4utlz.jpg',
     title: 'Employment',
-    description: 'Post jobs as an employer and apply for opportunities as a job seeker.'
+    description: 'Hire or Get Hired, Faster, Easier, Smarter.'
 }
 
 ];

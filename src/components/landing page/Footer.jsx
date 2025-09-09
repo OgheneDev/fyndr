@@ -106,9 +106,9 @@ const Footer = () => {
             <h3 className="text-white font-medium mb-4 text-sm">About</h3>
             <div className="space-y-2">
               <Link href="#" className="block text-white hover:underline text-sm">About Us</Link>
-              <Link href="#" className="block text-white hover:underline text-sm">Become a Merchant</Link>
-              <Link href="#" className="block text-white hover:underline text-sm">Services on Fynder</Link>
-              <Link href="#" className="block text-white hover:underline text-sm">Pricing</Link>
+              <Link href="/register" className="block text-white hover:underline text-sm">Become a Merchant</Link>
+              <Link href="#services" className="block text-white hover:underline text-sm">Services on Fyndr</Link>
+              <Link href="/pricing" className="block text-white hover:underline text-sm">Pricing</Link>
               <Link href="#" className="block text-white hover:underline text-sm">Terms of Service</Link>
               <Link href="#" className="block text-white hover:underline text-sm">Privacy Policy</Link>
             </div>

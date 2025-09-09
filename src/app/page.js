@@ -2,7 +2,6 @@ import Navbar from "@/components/general/Navbar";
 import HeroSection from "@/components/landing page/HeroSection";
 import HowWeWork from "@/components/landing page/HowWeWork";
 import BrowseMerchants from "@/components/landing page/BrowseMerchants";
-import WorldSection from "@/components/landing page/WorldSection";
 import StatisticsSection from "@/components/landing page/StatisticsSection";
 import TestimonialsSection from "@/components/landing page/TestimonialsSection";
 import NewsletterSection from "@/components/landing page/NewsletterSection";
@@ -15,7 +14,6 @@ export default function Home() {
       <HeroSection />
       <HowWeWork />
       <BrowseMerchants />
-      <WorldSection />
       <StatisticsSection />
       <TestimonialsSection />
       <NewsletterSection />
