@@ -338,7 +338,7 @@ const Navbar = () => {
                                 {isLoggedIn ? (
                                     <motion.button 
                                         onClick={handleLogout}
-                                        className='bg-[#85CE5C] text-white py-3 cursor-pointer rounded-full text-sm w-full'
+                                        className='bg-[#004d00] text-white py-3 cursor-pointer rounded-full text-sm w-full'
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
@@ -348,7 +348,7 @@ const Navbar = () => {
                                     <>
                                         <Link href={'/login'}>
                                             <motion.button 
-                                                className='bg-[#85CE5C] text-white py-3 cursor-pointer rounded-full text-sm w-full'
+                                                className='bg-[#004d00] text-white py-3 cursor-pointer rounded-full text-sm w-full'
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
@@ -357,7 +357,7 @@ const Navbar = () => {
                                         </Link>
                                         <Link href={'register'}>
                                             <motion.button 
-                                                className='text-[#85CE5C] border border-[#85CE5C] py-3 rounded-full text-sm w-full'
+                                                className='text-[#004d00] border border-[#004d00] py-3 rounded-full text-sm w-full'
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
@@ -451,7 +451,7 @@ const Navbar = () => {
                         </Link>
                         <Link href={'register'}>
                             <motion.button 
-                                className='bg-[#85CE5C] text-white text-sm cursor-pointer py-2 px-6 rounded-md'
+                                className='bg-[#004d00] text-white text-sm cursor-pointer py-2 px-6 rounded-md'
                                 variants={buttonVariants}
                                 whileHover={{ 
                                     scale: 1.02,
