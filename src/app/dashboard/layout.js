@@ -57,7 +57,16 @@ export default function DashboardLayout({ children }) {
     return () => clearTimeout(timeout);
   }, [isAuthenticated, userType, pathname, router]);
 
+  // Return null if the user is not authenticated
   if (!isAuthenticated) {
+    return null;
+  }
+
+  // Return null if the route is not allowed for the user type
+  if (
+    (userType === "merchant" && !merchantAllowedRoutes.includes(pathname)) ||
+    (userType === "user" && !userAllowedRoutes.includes(pathname))
+  ) {
     return null;
   }
 
