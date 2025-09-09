@@ -70,7 +70,7 @@ const PricingPage = () => {
         >
           <motion.div className="text-center" variants={itemVariants}>
             <motion.h1 
-              className="text-5xl md:text-6xl font-bold text-white mb-6"
+              className="text-4xl md:text-6xl font-bold text-white mb-6"
               variants={itemVariants}
             >
               <span className="bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">
@@ -96,7 +96,7 @@ const PricingPage = () => {
           </motion.div>
 
           <motion.div 
-            className="mt-16 text-center"
+            className="md:mt-16 mt-10 text-center"
             variants={itemVariants}
           >
             <div className="inline-flex items-start md:items-center text-[10px] md:text-[16px] px-6 py-3 rounded-full bg-green-500/20 border border-green-400/30 text-green-300">
@@ -109,7 +109,7 @@ const PricingPage = () => {
 
       {/* Pricing Cards Section */}
       <motion.div 
-        className="max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8"
+        className="max-w-7xl mx-auto px-4 py-14 md:py-20 sm:px-6 lg:px-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -295,7 +295,7 @@ const PricingPage = () => {
             
             <motion.div className="text-center" variants={itemVariants}>
               <Heart className="w-12 h-12 text-green-400 mx-auto mb-4" />
-              <p className="text-white font-semibold">Deliver a smooth and helpful experience</p>
+              <p className="text-white font-semibold">Deliver a smooth and <br className='md:hidden' /> helpful experience</p>
             </motion.div>
           </motion.div>
 
@@ -325,7 +325,7 @@ const PricingPage = () => {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h2 
-            className="text-4xl font-bold text-white mb-8"
+            className="md:text-4xl text-3xl font-bold text-white mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -335,7 +335,7 @@ const PricingPage = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-xl text-green-100 mb-4"
+            className="md:text-xl text-sm text-green-100 mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -345,7 +345,7 @@ const PricingPage = () => {
           </motion.p>
           
           <motion.p 
-            className="text-2xl font-bold text-white mb-10"
+            className="text-xl md:text-2xl font-bold text-white mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
