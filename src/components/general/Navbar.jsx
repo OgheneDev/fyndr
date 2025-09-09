@@ -474,7 +474,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
             >
-                <Menu size={30} onClick={toggleMenu} className="text-[#0A2F1E] lg:hidden cursor-pointer" />
+                <Menu size={30} onClick={toggleMenu} className="text-[#004d00] lg:hidden cursor-pointer" />
             </motion.div>
 
             <AnimatePresence>
