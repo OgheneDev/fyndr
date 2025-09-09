@@ -343,7 +343,7 @@ const PricingPage = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            Tired of asking &quot;Do you know anyone who can…?&quot;
+            Tired of asking <br className='md:hidden' /> &quot;Do you know anyone who can…?&quot;
           </motion.p>
           
           <motion.p 
