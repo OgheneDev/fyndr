@@ -306,8 +306,8 @@ const PricingPage = () => {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <p className="text-2xl text-white mb-4 font-bold">This isn't about profit.</p>
-            <p className="text-2xl text-green-400 font-bold">It's about purpose.</p>
+            <p className="text-2xl text-white mb-4 font-bold">This isn&apos;t about profit.</p>
+            <p className="text-2xl text-green-400 font-bold">It&apos;s about purpose.</p>
             <p className="text-sm text-gray-300 mt-6 max-w-3xl mx-auto">
               Fyndr is built to make life easier, business better, and opportunities more <br /> accessible, for everyday Nigerians like you.
             </p>
