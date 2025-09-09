@@ -90,8 +90,8 @@ const PricingPage = () => {
               className="text-sm text-gray-300 max-w-4xl mx-auto leading-relaxed"
               variants={itemVariants}
             >
-              At Fyndr, we believe access to trusted services shouldn't come at a high cost. <br />
-              That's why our pricing is simple, fair, and designed with your everyday needs in mind.
+              At Fyndr, we believe access to trusted services shouldn&apos;t come at a high cost. <br />
+              That&apos;s why our pricing is simple, fair, and designed with your everyday needs in mind.
             </motion.p>
           </motion.div>
 
@@ -101,7 +101,7 @@ const PricingPage = () => {
           >
             <div className="inline-flex items-start md:items-center text-[10px] md:text-[16px] px-6 py-3 rounded-full bg-green-500/20 border border-green-400/30 text-green-300">
               <Heart className="w-5 h-5 mr-2 " />
-              We're not just another platform. We're building a system that empowers people.
+              We&apos;re not just another platform. We&apos;re building a system that empowers people.
             </div>
           </motion.div>
         </motion.div>
@@ -134,7 +134,7 @@ const PricingPage = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Employment</h3>
               <p className="text-gray-600 mb-6 text-sm">
                 We know how tough job hunting is, and how expensive recruiting can be. 
-                That's why, for now, all employment services on Fyndr are completely free.
+                That&apos;s why, for now, all employment services on Fyndr are completely free.
               </p>
               
               <div className="space-y-4 mb-8">
@@ -179,7 +179,7 @@ const PricingPage = () => {
               
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Real Estate</h3>
               <p className="text-gray-600 mb-6 text-sm">
-                Finding a home shouldn't break the bank.
+                Finding a home shouldn&apos;t break the bank.
               </p>
               
               <div className="bg-blue-50 rounded-2xl p-6 mb-6">
@@ -235,7 +235,7 @@ const PricingPage = () => {
               
               <div className="bg-purple-100 rounded-xl p-4">
                 <p className="text-purple-800 text-sm font-medium text-center">
-                  That's less than your transport fare to search manually.
+                  That&apos;s less than your transport fare to search manually.
                 </p>
               </div>
             </div>
@@ -341,7 +341,7 @@ const PricingPage = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            Tired of asking "Do you know anyone who can…?"
+            Tired of asking &quot;Do you know anyone who can…?&quot;
           </motion.p>
           
           <motion.p 
