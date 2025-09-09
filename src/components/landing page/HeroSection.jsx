@@ -97,7 +97,7 @@ const HeroSection = () => {
             )}
             <span className='block mt-2'>
               <motion.button
-                className='text-green-700 cursor-pointer font-bold uppercase text-[10px]'
+                className='text-[#004d00] cursor-pointer font-bold uppercase text-[10px]'
                 onClick={() => setIsExpanded(!isExpanded)}
                 variants={buttonVariants}
               >
@@ -117,7 +117,7 @@ const HeroSection = () => {
           >
             <Link href={'/login'}>
               <motion.button 
-                className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
+                className='bg-[#004d00] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -126,7 +126,7 @@ const HeroSection = () => {
             </Link>
             <Link href={'/register'}>
               <motion.button 
-                className='bg-[#85CE5C] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
+                className='bg-[#004d00] text-white py-3 px-5 cursor-pointer rounded-md text-sm'
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

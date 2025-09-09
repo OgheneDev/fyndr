@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
 import React from 'react';
 import { Instagram, Twitter } from 'lucide-react';
-import { RiFacebookCircleFill, RiLinkedinBoxFill, RiYoutubeFill, RiRedditFill } from 'react-icons/ri';
+import { RiFacebookCircleFill } from 'react-icons/ri';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
@@ -34,7 +34,10 @@ const Footer = () => {
 
   return (
     <motion.footer 
-      className="bg-gradient-to-b from-[#1A3C34] to-[#2E8B57] text-white px-5 md:px-12 py-8 md:py-10"
+      className="text-white px-5 md:px-12 py-8 md:py-10"
+      style={{
+        background: "radial-gradient(circle, #00b32d 0%, #004d00 100%)"
+      }}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -55,9 +58,9 @@ const Footer = () => {
         <div className="flex items-center space-x-3 sm:space-x-4">
           <span className="text-white text-sm">Follow Us :</span>
           <div className="flex space-x-2 sm:space-x-3">
-            <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
-            <RiFacebookCircleFill className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
-            <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFF] cursor-pointer hover:opacity-80" />
+            <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
+            <RiFacebookCircleFill className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
+            <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white cursor-pointer hover:opacity-80" />
           </div>
         </div>
       </motion.div>
@@ -118,17 +121,20 @@ const Footer = () => {
           variants={itemVariants}
         >
           <h3 className="text-white text-xl font-bold mb-6">Subscribe to our Newsletter</h3>
-           <div className='bg-white px-3 md:px-5 py-3 w-full md:w-fit flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-10 rounded-sm'>
-              <input 
-                  type="email" 
-                  placeholder='Your Email Address' 
-                  className='w-full md:w-auto min-w-0 placeholder:text-[12px] outline-0 placeholder:text-[#000000]'
-              />
-              <button
-                  className='w-full md:w-auto bg-[#85CE5C] text-white text-sm py-2 px-5 rounded-sm cursor-pointer'
-              >
-                  Send
-              </button>
+          <div className="bg-white px-3 md:px-5 py-3 w-full md:w-fit flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-10 rounded-sm">
+            <input 
+              type="email" 
+              placeholder="Your Email Address" 
+              className="w-full md:w-auto min-w-0 placeholder:text-[12px] outline-0 placeholder:text-[#000000]"
+            />
+            <button
+              className="w-full md:w-auto text-white text-sm py-2 px-5 rounded-sm cursor-pointer"
+              style={{
+                background: "radial-gradient(circle, #00b32d 0%, #004d00 100%)"
+              }}
+            >
+              Send
+            </button>
           </div>
         </motion.div>
       </motion.div>

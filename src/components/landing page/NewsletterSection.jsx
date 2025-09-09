@@ -138,7 +138,7 @@ const NewsletterSection = () => {
           }}
         />
         <motion.button
-          className='w-full md:w-auto bg-[#85CE5C] text-white cursor-pointer text-sm py-2 px-5 rounded-sm'
+          className='w-full md:w-auto bg-[#004d00] text-white cursor-pointer text-sm py-2 px-5 rounded-sm'
           variants={buttonVariants}
           whileHover={{
             scale: 1.05,
