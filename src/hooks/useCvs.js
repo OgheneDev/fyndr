@@ -1,182 +1,188 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useToast } from '@/hooks/useToast';
-import { deleteCv, updateCv, getPersonalCvs } from '@/api/cvs/requests';
+'use client'
+
+import { useRouter } from 'next/navigation'
+import { useState, useEffect, useCallback } from 'react'
+import { useToast } from '@/hooks/useToast'
+import { deleteCv, updateCv, getPersonalCvs } from '@/api/cvs/requests'
 
 export const useCvs = () => {
-  const [cvs, setCvs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [editingCv, setEditingCv] = useState(null);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(null);
-  const [modalRoot, setModalRoot] = useState(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [cvToDelete, setCvToDelete] = useState(null);
-  const { showToast, toastMessage, triggerToast } = useToast();
+  const [cvs, setCvs] = useState([])
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
+  const [activeDropdown, setActiveDropdown] = useState(null)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [editingCv, setEditingCv] = useState(null)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(null)
+  const [modalRoot, setModalRoot] = useState(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [cvToDelete, setCvToDelete] = useState(null)
+  const { showToast, toastMessage, triggerToast } = useToast()
 
-  const fetchCvs = async () => {
+  const fetchCvs = useCallback(async () => {
     try {
-      setLoading(true);
-      const response = await getPersonalCvs();
-      const cvsData = response?.data || [];
-      cvsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setCvs(cvsData);
+      setLoading(true)
+      const response = await getPersonalCvs()
+      const cvsData = response?.data || []
+      cvsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      setCvs(cvsData)
     } catch (error) {
-      console.error('Error fetching CVs:', error);
-      triggerToast('Failed to load CVs', 'error');
-      setCvs([]);
+      console.error('Error fetching CVs:', error)
+      triggerToast('Failed to load CVs', 'error')
+      setCvs([])
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }, [triggerToast]) // Include triggerToast as a dependency since it's used in fetchCvs
 
   useEffect(() => {
-    fetchCvs();
-  }, []);
+    fetchCvs()
+  }, [fetchCvs]) // Include fetchCvs in the dependency array
 
   useEffect(() => {
-    const root = document.getElementById('modal-root') || document.body;
-    setModalRoot(root);
+    const root = document.getElementById('modal-root') || document.body
+    setModalRoot(root)
 
     if (showEditModal || showDeleteModal) {
-      document.body.classList.add('no-scroll');
+      document.body.classList.add('no-scroll')
     } else {
-      document.body.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll')
     }
-    return () => document.body.classList.remove('no-scroll');
-  }, [showEditModal, showDeleteModal]);
+    return () => document.body.classList.remove('no-scroll')
+  }, [showEditModal, showDeleteModal])
 
   const [formData, setFormData] = useState({
     workExperienceDetails: [{ company: '', jobTitle: '', startYear: '', endYear: '', description: '' }],
     skills: [''],
     additionalCertificate: '',
     languages: [''],
-  });
+  })
 
   const handleDropdownToggle = (cvId, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveDropdown(activeDropdown === cvId ? null : cvId);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    setActiveDropdown(activeDropdown === cvId ? null : cvId)
+  }
 
   const handleViewCv = (cvId, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveDropdown(null);
+    e.preventDefault()
+    e.stopPropagation()
+    setActiveDropdown(null)
     router.push(
       `/dashboard/new-request?category=employment&role=employer&cvId=${encodeURIComponent(cvId)}`
-    );
-  };
+    )
+  }
 
   const handleEditCv = (cv, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveDropdown(null);
-    setEditingCv(cv);
+    e.preventDefault()
+    e.stopPropagation()
+    setActiveDropdown(null)
+    setEditingCv(cv)
     setFormData({
-      workExperienceDetails: cv.workExperienceDetails?.length ? cv.workExperienceDetails : [{ company: '', jobTitle: '', startYear: '', endYear: '', description: '' }],
+      workExperienceDetails: cv.workExperienceDetails?.length
+        ? cv.workExperienceDetails
+        : [{ company: '', jobTitle: '', startYear: '', endYear: '', description: '' }],
       skills: cv.skills?.length ? cv.skills : [''],
       additionalCertificate: cv.additionalCertificate || '',
       languages: cv.languages?.length ? cv.languages : [''],
-    });
-    setShowEditModal(true);
-  };
+    })
+    setShowEditModal(true)
+  }
 
   const handleDeleteCv = (cvId, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveDropdown(null);
-    setCvToDelete(cvId);
-    setShowDeleteModal(true);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    setActiveDropdown(null)
+    setCvToDelete(cvId)
+    setShowDeleteModal(true)
+  }
 
   const confirmDelete = async () => {
-    if (!cvToDelete) return;
+    if (!cvToDelete) return
 
-    setIsDeleting(cvToDelete);
+    setIsDeleting(cvToDelete)
     try {
-      await deleteCv({ cvId: cvToDelete });
-      await fetchCvs();
-      triggerToast('The CV has been successfully deleted!');
+      await deleteCv({ cvId: cvToDelete })
+      await fetchCvs()
+      triggerToast('The CV has been successfully deleted!')
     } catch (error) {
-      console.error('Error deleting CV:', error);
-      triggerToast('Failed to delete CV. Please try again.', 'error');
+      console.error('Error deleting CV:', error)
+      triggerToast('Failed to delete CV. Please try again.', 'error')
     } finally {
-      setIsDeleting(null);
-      setShowDeleteModal(false);
-      setCvToDelete(null);
+      setIsDeleting(null)
+      setShowDeleteModal(false)
+      setCvToDelete(null)
     }
-  };
+  }
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    setIsUpdating(true);
+    e.preventDefault()
+    setIsUpdating(true)
     try {
       const cleanedData = {
         ...formData,
-        workExperienceDetails: formData.workExperienceDetails.filter(exp => 
-          exp.company.trim() || exp.jobTitle.trim() || exp.duration.trim()
+        workExperienceDetails: formData.workExperienceDetails.filter((exp) =>
+          exp.company.trim() || exp.jobTitle.trim() || exp.description.trim()
         ),
-        skills: formData.skills.filter(skill => skill.trim()),
-        languages: formData.languages.filter(lang => lang.trim()),
-      };
-      await updateCv(cleanedData, { cvId: editingCv._id });
-      setShowEditModal(false);
-      setEditingCv(null);
-      await fetchCvs();
-      triggerToast('Your CV has been updated successfully.');
+        skills: formData.skills.filter((skill) => skill.trim()),
+        languages: formData.languages.filter((lang) => lang.trim()),
+      }
+      await updateCv(cleanedData, { cvId: editingCv._id })
+      setShowEditModal(false)
+      setEditingCv(null)
+      await fetchCvs()
+      triggerToast('Your CV has been updated successfully.')
     } catch (error) {
-      console.error('Error updating CV:', error);
-      triggerToast('Error updating CV. Please try again!', 'error');
+      console.error('Error updating CV:', error)
+      triggerToast('Error updating CV. Please try again!', 'error')
     } finally {
-      setIsUpdating(false);
+      setIsUpdating(false)
     }
-  };
+  }
 
   const addWorkExperience = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      workExperienceDetails: [...prev.workExperienceDetails, { company: '', jobTitle: '', startYear: '', endYear: '', description: '' }],
-    }));
-  };
+      workExperienceDetails: [
+        ...prev.workExperienceDetails,
+        { company: '', jobTitle: '', startYear: '', endYear: '', description: '' },
+      ],
+    }))
+  }
 
   const removeWorkExperience = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       workExperienceDetails: prev.workExperienceDetails.filter((_, i) => i !== index),
-    }));
-  };
+    }))
+  }
 
   const updateWorkExperience = (index, field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      workExperienceDetails: prev.workExperienceDetails.map((exp, i) => 
+      workExperienceDetails: prev.workExperienceDetails.map((exp, i) =>
         i === index ? { ...exp, [field]: value } : exp
       ),
-    }));
-  };
+    }))
+  }
 
   const addLanguage = () => {
-    setFormData(prev => ({ ...prev, languages: [...prev.languages, ''] }));
-  };
+    setFormData((prev) => ({ ...prev, languages: [...prev.languages, ''] }))
+  }
 
   const removeLanguage = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       languages: prev.languages.filter((_, i) => i !== index),
-    }));
-  };
+    }))
+  }
 
   const updateLanguage = (index, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      languages: prev.languages.map((lang, i) => i === index ? value : lang),
-    }));
-  };
+      languages: prev.languages.map((lang, i) => (i === index ? value : lang)),
+    }))
+  }
 
   return {
     cvs,
@@ -211,5 +217,5 @@ export const useCvs = () => {
     removeLanguage,
     updateLanguage,
     triggerToast,
-  };
-};
+  }
+}

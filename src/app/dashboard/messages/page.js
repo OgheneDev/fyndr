@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
 import { getChats } from '@/api/messages/requests'
@@ -14,24 +14,28 @@ const MessagesPage = () => {
   const router = useRouter()
 
   // Helper to reload conversations
-  const reloadConversations = () => {
+  const reloadConversations = useCallback(() => {
     setConversationsLoading(true)
     getChats()
       .then(data => setConversations(data || []))
       .finally(() => setConversationsLoading(false))
-  }
+  }, [])
 
   useEffect(() => {
     const storedChat = typeof window !== 'undefined' ? localStorage.getItem('fynder_selected_chat') : null
     if (storedChat) {
       try {
         const chatObj = JSON.parse(storedChat)
-        router.push(`/dashboard/messages/chat?chatId=${chatObj._id}`)
-      } catch (e) {}
+        if (chatObj && chatObj._id) {
+          router.push(`/dashboard/messages/chat?chatId=${chatObj._id}`)
+        }
+      } catch (e) {
+        console.error('Failed to parse stored chat:', e)
+      }
       localStorage.removeItem('fynder_selected_chat')
     }
     reloadConversations()
-  }, [])
+  }, [router, reloadConversations])
 
   const handleSelectChat = (chat) => {
     router.push(`/dashboard/messages/chat?chatId=${chat._id}`)
