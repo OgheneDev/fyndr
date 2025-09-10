@@ -142,7 +142,7 @@ const HeroSection = () => {
         variants={imageVariants}
       >
         <Image
-          src={'/images/hero.jpg'}
+          src={'https://res.cloudinary.com/dgc8cd67w/image/upload/v1757532350/conn_a3ek32.png'}
           width={100}
           height={100}
           alt='Hero'
